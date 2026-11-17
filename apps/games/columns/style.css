@@ -1,0 +1,87 @@
+/*
+ * Neon Columns — styles du jeu.
+ * Cadre et tokens : theme Neon (`packages/theme-neon`). Ici : visuels du plateau et actions.
+ */
+
+:root {
+  color-scheme: dark;
+  --teal: #69ffe1;
+  --muted: #9dc8c0;
+}
+
+.neon-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.neon-screen canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 480 / 650;
+  touch-action: none;
+}
+
+.hud {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.hud div {
+  min-width: 110px;
+  padding: 8px 14px;
+  border: 1px solid #65d8bd44;
+  border-radius: 9px;
+  background: #0a211dba;
+}
+
+.hud small,
+.hud strong {
+  display: block;
+}
+
+.hud small {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.hud strong {
+  margin-top: 3px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 14px 0;
+}
+
+.actions button {
+  padding: 9px 15px;
+  border: 1px solid #65d8bd88;
+  border-radius: 8px;
+  background: #0b2924;
+  color: #edfffa;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.actions button.primary {
+  background: linear-gradient(135deg, #147665, #0d5148);
+}
+
+.actions button:hover,
+.actions button:focus-visible {
+  border-color: var(--teal);
+  box-shadow: 0 0 16px #22ffc055;
+}
+
+.help {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
