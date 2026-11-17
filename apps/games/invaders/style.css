@@ -1,0 +1,225 @@
+/*
+ * Neon Invaders — styles du jeu.
+ * Le cadre (.neon-frame--game), le reset et les tokens de base viennent du theme
+ * Neon (`packages/theme-neon`). Ici : visuels propres au jeu.
+ */
+
+:root {
+  color-scheme: dark;
+  --teal: #69ffe1;
+  --mint: #a0ffcf;
+  --ink: #061412;
+  --muted: #9dc8c0;
+  --panel: #0b211f;
+}
+
+body.game {
+  /* Le frame 100vh et l'overflow etat sont portes par le theme (packages/theme-neon). */
+}
+
+/* Options rendues dans le header du shell (panneau specifique au jeu). */
+.game-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px 18px;
+  margin: 0 auto 14px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.game-options .option {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border: 1px solid #65d8bd33;
+  border-radius: 8px;
+  background: #0a211dba;
+}
+
+.game-options select {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #eafff8;
+  font: 700 0.82rem inherit;
+  cursor: pointer;
+}
+
+.game-options select option {
+  background: #0b211f;
+}
+
+.game-options .toggle {
+  accent-color: #51e8c1;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Zone de jeu : canvas centre, cadre identique au theme. */
+.neon-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.neon-screen canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  touch-action: none;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.below {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.game-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 18px;
+  color: var(--muted);
+  font-size: 0.83rem;
+}
+
+.control {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+kbd {
+  min-width: 27px;
+  padding: 4px 7px;
+  border: 1px solid #91cfc166;
+  border-bottom-width: 3px;
+  border-radius: 6px;
+  background: linear-gradient(#1b3932, #102720);
+  color: #f3fffb;
+  font: 700 0.76rem ui-sans-serif, system-ui;
+  box-shadow: 0 3px 8px #0004;
+}
+
+button {
+  flex: 0 0 auto;
+  padding: 11px 20px;
+  border: 1px solid #7dffe0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #147665, #0d5148);
+  color: white;
+  font: 800 0.78rem ui-sans-serif, system-ui;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 0 18px #3adfbf3d, inset 0 1px #ffffff42;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+  box-shadow: 0 0 25px #3adfff72;
+}
+
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 3px;
+}
+
+.hint {
+  margin: 12px 0 0;
+  color: #83a89e;
+  font-size: 0.76rem;
+}
+
+.touch-controls {
+  display: none;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.touch-controls button {
+  min-width: 66px;
+  padding: 12px;
+  font-size: 1.1rem;
+  touch-action: none;
+}
+
+.touch-controls [data-action='fire'] {
+  min-width: 105px;
+  font-size: 0.8rem;
+}
+
+@media (pointer: coarse) {
+  .touch-controls {
+    display: flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .below {
+    flex-direction: column;
+  }
+
+  .controls {
+    gap: 9px 13px;
+  }
+
+  .subtitle {
+    margin-bottom: 14px;
+    font-size: 0.73rem;
+  }
+
+  .game-options {
+    gap: 7px;
+    font-size: 0.77rem;
+  }
+
+  .game-options .option {
+    padding: 6px 8px;
+  }
+
+  button {
+    padding: 10px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

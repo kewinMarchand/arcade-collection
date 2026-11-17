@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#071018" />
+  <title>Démo — Shell de jeu Neon</title>
+  <link rel="stylesheet" href="../packages/theme-neon/src/index.css" />
+  <style>
+    body.game { display: block; overflow: hidden; }
+  </style>
+</head>
+<body class="game demo">
+  <div id="shell-mount"></div>
+  <script type="module">
+    import { mountGameFrame } from '../packages/ui/src/gameFrame.js';
+
+    const mount = document.getElementById('shell-mount');
+    const { frame } = mountGameFrame({
+      mount,
+      config: {
+        title: 'SHELL DEMO',
+        subtitle: 'Cadre commun — zone centrale, panneaux lateraux',
+        panels: [
+          {
+            side: 'left',
+            id: 'hud',
+            render: () => {
+              const panel = document.createElement('div');
+              panel.className = 'neon-panel';
+              panel.dataset.testid = 'demo-panel-hud';
+              const title = document.createElement('h2');
+              title.className = 'neon-panel__title';
+              title.textContent = 'Score';
+              panel.append(title);
+              const value = document.createElement('p');
+              value.className = 'neon-panel__value';
+              value.textContent = '000';
+              panel.append(value);
+              return panel;
+            },
+          },
+          {
+            side: 'right',
+            id: 'controls',
+            render: () => {
+              const panel = document.createElement('div');
+              panel.className = 'neon-panel';
+              panel.dataset.testid = 'demo-panel-controls';
+              const title = document.createElement('h2');
+              title.className = 'neon-panel__title';
+              title.textContent = 'Commandes';
+              panel.append(title);
+              const text = document.createElement('p');
+              text.className = 'neon-panel__text';
+              text.textContent = 'ESPACE : tir — A/D ou flèches : déplacement';
+              panel.append(text);
+              return panel;
+            },
+          },
+        ],
+        screen: {
+          mount: (el) => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 900;
+            canvas.height = 600;
+            canvas.setAttribute('aria-label', 'Zone de jeu de la démo');
+            el.appendChild(canvas);
+          },
+        },
+        footer: () => {
+          const p = document.createElement('p');
+          p.textContent = 'Contenu du footer du shell.';
+          return p;
+        },
+      },
+    });
+  </script>
+</body>
+</html>
