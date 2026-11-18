@@ -153,6 +153,10 @@ let powerTimer = 0;
 let lastTime = 0;
 let particles = [];
 
+// Scatter/chase cycle: alternate 20s chase and 7s scatter
+let chaseMode = true;
+let modeTimer = 20;
+
 const GHOST_COLORS = ['#ff65b5', '#ffad5c', '#79ffd0', '#75caff'];
 const GHOST_NAMES = ['Blinky', 'Pinky', 'Inky', 'Clyde'];
 
@@ -184,10 +188,12 @@ function initMaze() {
     { x: 7, y: 9, dir: {x:-1,y:0}, color: GHOST_COLORS[3], name: GHOST_NAMES[3], vulnerable: 0, home: {x:7,y:9} },
   ];
   powerTimer = 0;
+  chaseMode = true; modeTimer = 20;
 }
 
 function start() {
   score = 0; lives = 3; level = 1;
+  chaseMode = true; modeTimer = 20;
   initMaze();
   state = 'playing';
   scoreEl.textContent = '0'; livesEl.textContent = '3'; levelEl.textContent = '1'; dotsEl.textContent = totalDots;
@@ -222,27 +228,97 @@ function movePlayer(dt) {
   if (dots <= 0) { level++; initMaze(); score += 100 * level; scoreEl.textContent = score; levelEl.textContent = level; dotsEl.textContent = totalDots; tone(660, 0.2, 'triangle', 0.04); }
 }
 
+// Scatter corners for each ghost (index matches ghosts array)
+const SCATTER_TARGETS = [
+  { x: COLS - 2, y: 1 },       // Blinky: top-right
+  { x: 1,        y: 1 },       // Pinky:  top-left
+  { x: COLS - 2, y: ROWS - 2 },// Inky:   bottom-right
+  { x: 1,        y: ROWS - 2 },// Clyde:  bottom-left
+];
+
+function ghostTarget(g, idx) {
+  // Vulnerable: flee toward nearest corner away from player
+  if (g.vulnerable > 0) {
+    // Pick the corner farthest from the player as flee target
+    const corners = [{x:1,y:1},{x:COLS-2,y:1},{x:1,y:ROWS-2},{x:COLS-2,y:ROWS-2}];
+    let best = corners[0], bestD = -1;
+    for (const c of corners) {
+      const d = Math.hypot(c.x - player.x, c.y - player.y);
+      if (d > bestD) { bestD = d; best = c; }
+    }
+    return best;
+  }
+  // Scatter mode: each ghost heads to its own corner
+  if (!chaseMode) return SCATTER_TARGETS[idx];
+
+  // Chase mode: individual personalities
+  const blinky = ghosts[0];
+  switch (idx) {
+    case 0: // Blinky — directly targets player
+      return { x: player.x, y: player.y };
+
+    case 1: { // Pinky — 4 tiles ahead of player
+      const ahead = 4;
+      return { x: player.x + player.dir.x * ahead, y: player.y + player.dir.y * ahead };
+    }
+
+    case 2: { // Inky — vector from Blinky through (player + 2 ahead), doubled
+      const pivotX = player.x + player.dir.x * 2;
+      const pivotY = player.y + player.dir.y * 2;
+      return {
+        x: Math.round(pivotX + (pivotX - blinky.x)),
+        y: Math.round(pivotY + (pivotY - blinky.y)),
+      };
+    }
+
+    case 3: { // Clyde — chase if far (>8 tiles), else scatter to own corner
+      const dist = Math.hypot(g.x - player.x, g.y - player.y);
+      return dist > 8 ? { x: player.x, y: player.y } : SCATTER_TARGETS[3];
+    }
+
+    default:
+      return { x: player.x, y: player.y };
+  }
+}
+
 function moveGhosts(dt) {
+  // Update scatter/chase cycle (not during power-up)
+  if (powerTimer <= 0) {
+    modeTimer -= dt;
+    if (modeTimer <= 0) {
+      chaseMode = !chaseMode;
+      modeTimer = chaseMode ? 20 : 7;
+    }
+  }
+
   const speed = 0.5 + (level - 1) * 0.05;
-  for (const g of ghosts) {
+  for (let idx = 0; idx < ghosts.length; idx++) {
+    const g = ghosts[idx];
     if (g.vulnerable > 0) g.vulnerable -= dt;
-    // simple AI: move toward player, or away if vulnerable
     if (!g.acc) g.acc = 0;
     g.acc += dt * speed * 4;
     while (g.acc >= 1) {
       g.acc -= 1;
-      // pick direction toward/away from player
-      const dx = player.x - g.x, dy = player.y - g.y;
+      const target = ghostTarget(g, idx);
       let best = null, bestScore = -Infinity;
       const dirs = [{x:1,y:0},{x:-1,y:0},{x:0,y:1},{x:0,y:-1}];
       for (const d of dirs) {
         const nx = g.x + d.x, ny = g.y + d.y;
         if (isWall(nx, ny)) continue;
-        // don't reverse
+        // don't reverse (unless no other choice — handled by best staying null)
         if (d.x === -g.dir.x && d.y === -g.dir.y) continue;
-        const dist = Math.hypot(nx - (g.vulnerable > 0 ? 20 : player.x), ny - (g.vulnerable > 0 ? 20 : player.y));
-        const sc = g.vulnerable > 0 ? dist : -dist;
-        if (sc > bestScore) { bestScore = sc; best = d; }
+        const dist = Math.hypot(nx - target.x, ny - target.y);
+        // Always minimise distance to target (ghostTarget already picks flee corner when vulnerable)
+        if (-dist > bestScore) { bestScore = -dist; best = d; }
+      }
+      // If all moves reversed, allow reversal as fallback
+      if (!best) {
+        for (const d of dirs) {
+          const nx = g.x + d.x, ny = g.y + d.y;
+          if (isWall(nx, ny)) continue;
+          const dist = Math.hypot(nx - target.x, ny - target.y);
+          if (-dist > bestScore) { bestScore = -dist; best = d; }
+        }
       }
       if (best) { g.dir = best; g.x += best.x; g.y += best.y; }
     }
@@ -320,6 +396,9 @@ function frame(t) {
   update(dt); draw();
   requestAnimationFrame(frame);
 }
+
+initMaze();
+dotsEl.textContent = totalDots;
 
 window.addEventListener('keydown', (e) => {
   const k = e.key.toLowerCase();
