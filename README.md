@@ -70,6 +70,18 @@ Une collection de neuf mini-jeux indépendants, gratuits et jouables directement
 
 [Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/maze/) . [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/maze) - Mangez les pastilles, echappez aux fantomes, passez au niveau suivant.
 
+### Neon Pong
+
+[![Apercu de Neon Pong](apps/pong/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/pong/)
+
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/pong/) . [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/pong) - Renvoyez la balle, marquez des points, premier a 11.
+
+### Neon Strike
+
+[![Apercu de Neon Strike](apps/strike/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/strike/)
+
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/strike/) . [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/strike) - Abattez les vaisseaux avant qu'ils ne vous atteignent.
+
 ## Thème
 
 Ce portail et les jeux utilisent une base CSS partagée (`neon/neon-tokens.css`, `neon-base.css`, `neon-components.css`).

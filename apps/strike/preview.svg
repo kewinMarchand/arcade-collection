@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
+  <title id="title">Neon Strike</title>
+  <desc id="desc">FPS néon : vaisseaux ennemis convergeant vers le joueur.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0a1f"/>
+      <stop offset="1" stop-color="#04040f"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="720" height="380" rx="24" fill="url(#bg)"/>
+  <!-- grid floor -->
+  <g stroke="rgba(123,255,224,0.15)" stroke-width="1">
+    <line x1="0" y1="260" x2="720" y2="260"/>
+    <line x1="0" y1="300" x2="720" y2="300"/>
+    <line x1="0" y1="340" x2="720" y2="340"/>
+    <line x1="360" y1="190" x2="0" y2="380"/>
+    <line x1="360" y1="190" x2="180" y2="380"/>
+    <line x1="360" y1="190" x2="360" y2="380"/>
+    <line x1="360" y1="190" x2="540" y2="380"/>
+    <line x1="360" y1="190" x2="720" y2="380"/>
+  </g>
+  <!-- stars -->
+  <g fill="#fff">
+    <circle cx="80" cy="60" r="1.5"/><circle cx="200" cy="90" r="1"/><circle cx="320" cy="40" r="1.8"/><circle cx="480" cy="70" r="1.2"/><circle cx="600" cy="50" r="1.6"/><circle cx="140" cy="120" r="1"/><circle cx="520" cy="110" r="1.4"/>
+  </g>
+  <!-- far ship -->
+  <g transform="translate(280 200)" filter="url(#glow)">
+    <polygon points="0,-6 5,4 0,1 -5,4" fill="#7bffe5" opacity="0.6"/>
+  </g>
+  <!-- mid ship -->
+  <g transform="translate(460 230)" filter="url(#glow)">
+    <polygon points="0,-12 10,8 0,2 -10,8" fill="#ff6dbe" opacity="0.8"/>
+  </g>
+  <!-- near ship (boss) -->
+  <g transform="translate(360 290)" filter="url(#glow)">
+    <polygon points="0,-24 20,16 0,4 -20,16" fill="#ff4d6d"/>
+    <circle cx="0" cy="0" r="5" fill="#fff" opacity="0.8"/>
+  </g>
+  <!-- reticle -->
+  <g stroke="#7bffe5" stroke-width="2" fill="none" filter="url(#glow)">
+    <circle cx="360" cy="190" r="22"/>
+    <line x1="328" y1="190" x2="342" y2="190"/>
+    <line x1="378" y1="190" x2="392" y2="190"/>
+    <line x1="360" y1="158" x2="360" y2="172"/>
+    <line x1="360" y1="208" x2="360" y2="222"/>
+  </g>
+  <text x="360" y="50" text-anchor="middle" fill="#7bffe5" font-family="system-ui,sans-serif" font-weight="800" font-size="24" letter-spacing="6">NEON STRIKE</text>
+  <text x="360" y="365" text-anchor="middle" fill="#8db6aa" font-family="system-ui,sans-serif" font-size="14" letter-spacing="3">VISER - TIRER - SURVIVRE</text>
+</svg>
