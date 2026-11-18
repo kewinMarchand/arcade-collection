@@ -24,17 +24,20 @@ body {
 body.game {
   height: 100vh;
   height: 100dvh;
+  max-height: 100dvh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
 #shell-mount {
-  flex: 1;
+  flex: 1 1 0;
   min-height: 0;
   height: 100%;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .neon-app {
@@ -44,18 +47,21 @@ body.game {
 }
 
 .neon-frame {
-  flex: 1;
+  flex: 1 1 0;
   min-height: 0;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--bui-space-3, 12px);
-  padding: var(--bui-space-3, 12px) var(--bui-space-4, 16px);
+  gap: 16px;
+  padding: 16px 20px;
+  overflow: hidden;
 }
 
 /* Cadre de jeu commun à tous les jeux (ADR-004) : 100vh, pas de scroll de page. */
 .neon-frame--game {
   height: 100%;
   min-height: 0;
+  max-height: 100%;
   overflow: hidden;
 }
 
@@ -65,9 +71,10 @@ body.game {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   min-height: 0;
   text-align: center;
+  padding-bottom: 2px;
 }
 
 .neon-frame__brand {
@@ -117,18 +124,20 @@ body.game {
   flex: 1 1 0;
   min-height: 0;
   display: grid;
-  grid-template-columns: minmax(180px, 260px) minmax(0, 1fr) minmax(180px, 260px);
-  gap: var(--bui-space-3, 12px);
+  grid-template-columns: minmax(200px, 280px) minmax(0, 1fr) minmax(200px, 280px);
+  gap: 16px;
   align-items: stretch;
+  overflow: hidden;
 }
 
 .neon-side {
   display: flex;
   flex-direction: column;
-  gap: var(--bui-space-3, 12px);
+  gap: 12px;
   min-width: 0;
   min-height: 0;
   overflow: auto;
+  padding: 2px 0;
 }
 
 .neon-side--left,
@@ -138,7 +147,6 @@ body.game {
 
 .neon-screen {
   position: relative;
-  flex: 1 1 auto;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
@@ -148,7 +156,7 @@ body.game {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--bui-space-2, 8px);
+  padding: 12px;
 }
 
 .neon-screen > canvas,
@@ -166,8 +174,8 @@ body.game {
 .neon-panel--slot {
   display: flex;
   flex-direction: column;
-  gap: var(--bui-space-2, 8px);
-  padding: var(--bui-space-3, 12px);
+  gap: 10px;
+  padding: 14px 16px;
   border: 1px solid var(--bui-color-border-subtle, #182635);
   border-radius: var(--bui-radius-md, 10px);
   background: var(--bui-color-surface-muted, #0c1a22);
@@ -187,8 +195,8 @@ body.game {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: var(--bui-space-3, 12px);
-  padding: 0;
+  gap: 12px;
+  padding: 4px 0 0;
   color: var(--bui-color-text-muted, #a9bab8);
   font-family: var(--bui-font-family-mono, 'DM Mono', monospace);
   font-size: var(--bui-font-size-caption, 12px);
@@ -197,21 +205,58 @@ body.game {
 
 @media (max-width: 980px) {
   .neon-frame__body {
-    grid-template-columns: minmax(140px, 200px) minmax(0, 1fr) minmax(140px, 200px);
+    grid-template-columns: minmax(160px, 220px) minmax(0, 1fr) minmax(160px, 220px);
+    gap: 12px;
+  }
+  .neon-frame {
+    padding: 14px 16px;
+    gap: 14px;
   }
 }
 
 @media (max-width: 720px) {
   body.game {
     height: 100dvh;
+    max-height: 100dvh;
     overflow: hidden;
+  }
+  .neon-frame {
+    padding: 10px 12px;
+    gap: 10px;
   }
   .neon-frame__body {
     grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-rows: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
+    gap: 8px;
+    overflow: hidden;
   }
-  .neon-side--left { order: 1; flex-direction: row; flex-wrap: wrap; overflow: visible; }
-  .neon-screen { order: 2; min-height: 0; }
-  .neon-side--right { order: 3; flex-direction: row; flex-wrap: wrap; overflow: visible; }
-  .neon-side > .neon-panel--slot { flex: 1 1 140px; }
+  .neon-side--left {
+    order: 1;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-height: 22vh;
+  }
+  .neon-screen {
+    order: 2;
+    min-height: 0;
+    padding: 8px;
+  }
+  .neon-side--right {
+    order: 3;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-height: 22vh;
+  }
+  .neon-side > .neon-panel--slot {
+    flex: 0 0 auto;
+    min-width: 160px;
+  }
+  .neon-side > .neon-panel--slot:only-child {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
 }
