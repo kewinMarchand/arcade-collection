@@ -3,16 +3,16 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 
 (() => {
   let host;
-  const shell = mountGameFrame({
+  mountGameFrame({
     mount: document.getElementById('shell-mount'),
     config: {
       title: 'Neon Breach',
-      subtitle: 'Infiltrez le secteur, neutralisez les sentinelles.',
+      subtitle: 'Infiltrez le secteur, neutralisez les aliens.',
       renderHeader: () => {
         const options = document.createElement('div');
         options.className = 'game-options';
         options.setAttribute('aria-label', 'Options de jeu');
-        options.innerHTML = '<span class="option">FPS nÃ©on Â· MVP testable</span>';
+        options.innerHTML = '<span class="option">FPS néon · MVP testable</span>';
         return options;
       },
       panels: [
@@ -28,7 +28,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
             title.textContent = 'Briefing';
             const p = document.createElement('p');
             p.className = 'neon-panel__text';
-            p.textContent = 'SÃ©curisez le secteur : Ã©liminez toutes les sentinelles. RÃ©cupÃ©rez les cellules dâ€™Ã©nergie (vie) et les chargeurs.';
+            p.textContent = 'Sécurisez le secteur : éliminez tous les aliens. Récupérez les modules de réparation (vie) et les chargeurs.';
             const stats = document.createElement('div');
             stats.className = 'panel-stats';
             const mk = (label, id, value) => {
@@ -37,7 +37,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
               const v = document.createElement('strong'); v.id = `panel-${id}`; v.textContent = value;
               w.append(s, v); return w;
             };
-            stats.append(mk('SANTÃ‰', 'health', '100'), mk('MUNITIONS', 'ammo', '24'), mk('CIBLES', 'targets', '0'));
+            stats.append(mk('SANTÉ', 'health', '100'), mk('MUNITIONS', 'ammo', '24'), mk('CIBLES', 'targets', '0'));
             panel.append(title, p, stats);
             return panel;
           }
@@ -55,12 +55,12 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
             const ul = document.createElement('ul');
             ul.className = 'neon-panel__list';
             for (const t of [
-              'Clic / EntrÃ©e : capturer la souris et jouer',
-              'ZQSD ou WASD / FlÃ¨ches : se dÃ©placer',
+              'Clic / Entrée : capturer la souris et jouer',
+              'ZQSD ou WASD / Flèches : se déplacer',
               'Souris : viser',
-              'Clic gauche : tirer',
+              'Clic gauche : tirer (boules rebondissantes)',
               'R : recharger',
-              'Ã‰chap : libÃ©rer la souris (pause)'
+              'Échap : libérer la souris (pause)'
             ]) { const li = document.createElement('li'); li.className = 'neon-panel__text'; li.textContent = t; ul.appendChild(li); }
             panel.append(title, ul);
             return panel;
@@ -75,12 +75,12 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
             <div id="hud">
               <div id="hud-top">
                 <div class="hud-box">
-                  <span class="hud-label">SantÃ©</span>
+                  <span class="hud-label">Santé</span>
                   <span class="hud-value" id="hud-health">100</span>
                   <div id="health-bar-wrap"><div id="health-bar"></div></div>
                 </div>
                 <div class="hud-box" style="text-align:right">
-                  <span class="hud-label">Sentinelles</span>
+                  <span class="hud-label">Aliens</span>
                   <span class="hud-value" id="hud-targets">0</span>
                 </div>
               </div>
@@ -88,18 +88,18 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
               <div id="damage-flash"></div>
               <div id="hud-bottom">
                 <div class="hud-box" id="ammo">Munitions <span id="hud-ammo">24</span> / <span id="hud-reserve">72</span></div>
-                <div class="hud-box" id="objective">Objectif : Ã©liminez toutes les sentinelles du secteur.</div>
+                <div class="hud-box" id="objective">Objectif : éliminez tous les aliens du secteur.</div>
               </div>
             </div>
             <div id="overlay">
               <div class="card">
                 <h2><em>Neon</em> Breach</h2>
-                <p>FPS nÃ©on en vue subjective. Explorez le secteur, Ã©liminez les sentinelles et rÃ©cupÃ©rez des ressources.</p>
+                <p>FPS néon en vue subjective. Explorez le secteur, éliminez les aliens et récupérez des artefacts.</p>
                 <div class="keys">
-                  <div><kbd>Z</kbd><kbd>Q</kbd><kbd>S</kbd><kbd>D</kbd> / flÃ¨ches â€” dÃ©placement</div>
-                  <div><kbd>Souris</kbd> â€” viser</div>
-                  <div><kbd>Clic</kbd> â€” tirer</div>
-                  <div><kbd>R</kbd> â€” recharger Â· <kbd>Ã‰chap</kbd> â€” pause</div>
+                  <div><kbd>Z</kbd><kbd>Q</kbd><kbd>S</kbd><kbd>D</kbd> / flèches — déplacement</div>
+                  <div><kbd>Souris</kbd> — viser</div>
+                  <div><kbd>Clic</kbd> — tirer (boules rebondissantes)</div>
+                  <div><kbd>R</kbd> — recharger · <kbd>Échap</kbd> — pause</div>
                 </div>
                 <button id="start-btn" type="button">Entrer dans le secteur</button>
                 <div id="message"></div>
@@ -111,7 +111,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       footer: () => {
         const wrap = document.createElement('div');
         wrap.className = 'game-footer';
-        wrap.innerHTML = '<span class="neon-panel__text">Astuce : gardez vos distances, visez au centre et surveillez vos munitions.</span>';
+        wrap.innerHTML = '<span class="neon-panel__text">Astuce : les projectiles rebondissent sur les murs — utilisez les ricochets.</span>';
         return wrap;
       }
     }
@@ -164,15 +164,25 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   const cell = 4;
   const worldOf = (x, z) => ({ x: x * cell + cell / 2, z: z * cell + cell / 2 });
 
-  const wallGeo = new THREE.BoxGeometry(cell, 3.2, cell);
-  const wallMat = new THREE.MeshStandardMaterial({ color: 0x0b2230, emissive: 0x082a36, emissiveIntensity: 0.45, metalness: 0.35, roughness: 0.55 });
-  const edgeMat = new THREE.LineBasicMaterial({ color: 0x34f5d5, transparent: true, opacity: 0.35 });
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(map[0].length * cell, map.length * cell), new THREE.MeshStandardMaterial({ color: 0x07131d, metalness: 0.2, roughness: 0.8 }));
-  floor.rotation.x = -Math.PI / 2; floor.position.set((map[0].length * cell) / 2, 0, (map.length * cell) / 2); scene.add(floor);
-  const ceil = new THREE.Mesh(new THREE.PlaneGeometry(map[0].length * cell, map.length * cell), new THREE.MeshStandardMaterial({ color: 0x040b12, emissive: 0x021018, roughness: 1 }));
-  ceil.rotation.x = Math.PI / 2; ceil.position.set((map[0].length * cell) / 2, 3.2, (map.length * cell) / 2); scene.add(ceil);
+  const floor = new THREE.Mesh(
+    new THREE.PlaneGeometry(map[0].length * cell, map.length * cell),
+    new THREE.MeshStandardMaterial({ color: 0x07131d, metalness: 0.2, roughness: 0.8 })
+  );
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.set((map[0].length * cell) / 2, 0, (map.length * cell) / 2);
+  scene.add(floor);
+
+  const ceil = new THREE.Mesh(
+    new THREE.PlaneGeometry(map[0].length * cell, map.length * cell),
+    new THREE.MeshStandardMaterial({ color: 0x040b12, emissive: 0x021018, roughness: 1 })
+  );
+  ceil.rotation.x = Math.PI / 2;
+  ceil.position.set((map[0].length * cell) / 2, 3.2, (map.length * cell) / 2);
+  scene.add(ceil);
+
   const grid = new THREE.GridHelper(Math.max(map.length, map[0].length) * cell, Math.max(map.length, map[0].length), 0x134455, 0x0b2430);
-  grid.position.set((map[0].length * cell) / 2, 0.01, (map.length * cell) / 2); scene.add(grid);
+  grid.position.set((map[0].length * cell) / 2, 0.01, (map.length * cell) / 2);
+  scene.add(grid);
 
   function isWallAt(wx, wz) {
     const gx = Math.floor(wx / cell), gz = Math.floor(wz / cell);
@@ -182,9 +192,121 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 
   const pickups = [];
   const enemies = [];
+  const bullets = [];
+  const sparks = [];
+
   function addLight(x, y, z, color, intensity, dist) {
     const l = new THREE.PointLight(color, intensity, dist, 2);
     l.position.set(x, y, z); scene.add(l);
+  }
+
+  function addNeonWall(x, z) {
+    const p = worldOf(x, z);
+    const baseMat = new THREE.MeshStandardMaterial({ color: 0x0a1e2a, emissive: 0x061824, emissiveIntensity: 0.55, metalness: 0.35, roughness: 0.5 });
+    const wall = new THREE.Mesh(new THREE.BoxGeometry(cell, 3.2, cell), baseMat);
+    wall.position.set(p.x, 1.6, p.z);
+    scene.add(wall);
+
+    const edgeMat = new THREE.LineBasicMaterial({ color: 0x34f5d5, transparent: true, opacity: 0.45 });
+    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(cell, 3.2, cell)), edgeMat);
+    edges.position.copy(wall.position);
+    scene.add(edges);
+
+    const neonMatA = new THREE.MeshBasicMaterial({ color: 0x3dffe0, transparent: true, opacity: 0.95 });
+    const neonMatB = new THREE.MeshBasicMaterial({ color: 0x8b7bff, transparent: true, opacity: 0.75 });
+    const strips = [
+      { geo: new THREE.BoxGeometry(cell * 0.9, 0.06, 0.06), pos: [0, 1.05, cell / 2 + 0.03], mat: neonMatA },
+      { geo: new THREE.BoxGeometry(cell * 0.9, 0.06, 0.06), pos: [0, 1.05, -cell / 2 - 0.03], mat: neonMatA },
+      { geo: new THREE.BoxGeometry(0.06, 0.06, cell * 0.9), pos: [cell / 2 + 0.03, 1.05, 0], mat: neonMatA },
+      { geo: new THREE.BoxGeometry(0.06, 0.06, cell * 0.9), pos: [-cell / 2 - 0.03, 1.05, 0], mat: neonMatA },
+      { geo: new THREE.BoxGeometry(0.08, 2.2, 0.08), pos: [cell / 2 - 0.35, 1.4, cell / 2 - 0.35], mat: neonMatB },
+      { geo: new THREE.BoxGeometry(0.08, 2.2, 0.08), pos: [-cell / 2 + 0.35, 1.4, -cell / 2 + 0.35], mat: neonMatB },
+    ];
+    for (const s of strips) {
+      const m = new THREE.Mesh(s.geo, s.mat);
+      m.position.set(p.x + s.pos[0], s.pos[1], p.z + s.pos[2]);
+      scene.add(m);
+    }
+  }
+
+  function makeAlien(colorHex, idx) {
+    const g = new THREE.Group();
+    const mat = new THREE.MeshStandardMaterial({ color: colorHex, emissive: colorHex, emissiveIntensity: 0.85, metalness: 0.15, roughness: 0.35 });
+    const dark = new THREE.MeshStandardMaterial({ color: 0x10201c, emissive: 0x06120f, roughness: 0.8 });
+    const white = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+    const body = new THREE.Mesh(new THREE.SphereGeometry(0.42, 16, 12), mat);
+    body.scale.set(1.25, 0.85, 1.0);
+    g.add(body);
+
+    const dome = new THREE.Mesh(new THREE.SphereGeometry(0.28, 14, 10, 0, Math.PI * 2, 0, Math.PI / 2), mat);
+    dome.position.set(0, 0.08, 0.05);
+    g.add(dome);
+
+    const finGeo = new THREE.BoxGeometry(0.32, 0.12, 0.22);
+    const finL = new THREE.Mesh(finGeo, mat); finL.position.set(-0.55, -0.02, 0); finL.rotation.z = 0.35; g.add(finL);
+    const finR = new THREE.Mesh(finGeo, mat); finR.position.set(0.55, -0.02, 0); finR.rotation.z = -0.35; g.add(finR);
+
+    const eyeGeo = new THREE.SphereGeometry(0.09, 10, 10);
+    const eyeL = new THREE.Mesh(eyeGeo, dark); eyeL.position.set(-0.14, 0.02, 0.34); eyeL.scale.set(1, 1.25, 0.6); g.add(eyeL);
+    const eyeR = new THREE.Mesh(eyeGeo, dark); eyeR.position.set(0.14, 0.02, 0.34); eyeR.scale.set(1, 1.25, 0.6); g.add(eyeR);
+    const pupGeo = new THREE.SphereGeometry(0.03, 8, 8);
+    const pupL = new THREE.Mesh(pupGeo, white); pupL.position.set(-0.13, 0.04, 0.39); g.add(pupL);
+    const pupR = new THREE.Mesh(pupGeo, white); pupR.position.set(0.15, 0.04, 0.39); g.add(pupR);
+
+    const footGeo = new THREE.BoxGeometry(0.12, 0.18, 0.1);
+    const footL = new THREE.Mesh(footGeo, mat); footL.position.set(-0.18, -0.38, 0.05); g.add(footL);
+    const footR = new THREE.Mesh(footGeo, mat); footR.position.set(0.18, -0.38, 0.05); g.add(footR);
+
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.62, 0.03, 8, 28), new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.55 }));
+    ring.rotation.x = Math.PI / 2;
+    ring.position.y = -0.05;
+    g.add(ring);
+
+    g.userData.kind = 'alien';
+    g.userData.variant = idx % 5;
+    return g;
+  }
+
+  function makeHealthPickup() {
+    const g = new THREE.Group();
+    const cyan = new THREE.MeshStandardMaterial({ color: 0x69ffe1, emissive: 0x2affd8, emissiveIntensity: 1.1, metalness: 0.25, roughness: 0.25 });
+    const white = new THREE.MeshStandardMaterial({ color: 0xeaffff, emissive: 0x9dfff0, emissiveIntensity: 0.6, metalness: 0.1, roughness: 0.3 });
+    const body = new THREE.Mesh(new THREE.ConeGeometry(0.22, 0.55, 4), cyan);
+    body.rotation.x = Math.PI;
+    body.rotation.y = Math.PI / 4;
+    g.add(body);
+    const wingGeo = new THREE.BoxGeometry(0.55, 0.06, 0.18);
+    const wing = new THREE.Mesh(wingGeo, cyan);
+    wing.position.y = -0.05;
+    g.add(wing);
+    const cockpit = new THREE.Mesh(new THREE.SphereGeometry(0.09, 12, 12), white);
+    cockpit.position.set(0, 0.08, 0.08);
+    g.add(cockpit);
+    const engine = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.09, 0.14, 10), new THREE.MeshBasicMaterial({ color: 0x7bffe5 }));
+    engine.position.y = -0.28;
+    g.add(engine);
+    const halo = new THREE.Mesh(new THREE.TorusGeometry(0.34, 0.025, 8, 24), new THREE.MeshBasicMaterial({ color: 0x69ffe1, transparent: true, opacity: 0.8 }));
+    halo.rotation.x = Math.PI / 2;
+    g.add(halo);
+    g.scale.setScalar(1.05);
+    return g;
+  }
+
+  function makeAmmoPickup() {
+    const g = new THREE.Group();
+    const gold = new THREE.MeshStandardMaterial({ color: 0xffd36b, emissive: 0xffa020, emissiveIntensity: 1.0, metalness: 0.35, roughness: 0.3 });
+    const core = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 0.42, 12), gold);
+    g.add(core);
+    const cap1 = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.19, 0.06, 12), new THREE.MeshStandardMaterial({ color: 0xfff0a8, emissive: 0xffc84a, emissiveIntensity: 0.7 }));
+    cap1.position.y = 0.22; g.add(cap1);
+    const cap2 = cap1.clone(); cap2.position.y = -0.22; g.add(cap2);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.24, 0.03, 8, 24), new THREE.MeshBasicMaterial({ color: 0xffe08a, transparent: true, opacity: 0.85 }));
+    ring.rotation.x = Math.PI / 2; ring.position.y = 0.02; g.add(ring);
+    const crystal = new THREE.Mesh(new THREE.OctahedronGeometry(0.11, 0), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+    crystal.position.y = 0.32; g.add(crystal);
+    g.scale.setScalar(1.05);
+    return g;
   }
 
   for (let z = 0; z < map.length; z++) {
@@ -192,42 +314,39 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       const t = map[z][x];
       const p = worldOf(x, z);
       if (t === 1) {
-        const w = new THREE.Mesh(wallGeo, wallMat.clone());
-        w.position.set(p.x, 1.6, p.z); scene.add(w);
-        const edges = new THREE.LineSegments(new THREE.EdgesGeometry(wallGeo), edgeMat);
-        edges.position.copy(w.position); scene.add(edges);
+        addNeonWall(x, z);
       } else {
         if ((x + z) % 4 === 0) addLight(p.x, 2.7, p.z, 0x32ffd8, 0.55, 10);
         if (t === 3) {
-          const m = new THREE.Mesh(new THREE.OctahedronGeometry(0.35, 0), new THREE.MeshStandardMaterial({ color: 0x69ffe1, emissive: 0x2affd8, emissiveIntensity: 1.2, metalness: 0.1, roughness: 0.2 }));
-          m.position.set(p.x, 1.1, p.z); scene.add(m);
-          pickups.push({ mesh: m, type: 'health', amount: 35, baseY: 1.1, alive: true });
+          const m = makeHealthPickup();
+          m.position.set(p.x, 1.1, p.z);
+          scene.add(m);
+          pickups.push({ mesh: m, type: 'health', amount: 35, baseY: 1.1, alive: true, light: null });
           addLight(p.x, 1.2, p.z, 0x2affd8, 0.5, 5);
         } else if (t === 4) {
-          const m = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.3, 0.35), new THREE.MeshStandardMaterial({ color: 0xffd36a, emissive: 0xffa020, emissiveIntensity: 1.0, roughness: 0.35 }));
-          m.position.set(p.x, 1.0, p.z); scene.add(m);
-          pickups.push({ mesh: m, type: 'ammo', amount: 18, baseY: 1.0, alive: true });
+          const m = makeAmmoPickup();
+          m.position.set(p.x, 1.0, p.z);
+          scene.add(m);
+          pickups.push({ mesh: m, type: 'ammo', amount: 18, baseY: 1.0, alive: true, light: null });
           addLight(p.x, 1.1, p.z, 0xffb020, 0.45, 5);
         }
       }
     }
   }
 
-  function spawnEnemy(x, z) {
+  const alienColors = [0xff65b5, 0xffad5c, 0xffe36e, 0x79ffd0, 0x75caff];
+  function spawnEnemy(x, z, idx) {
     const p = worldOf(x, z);
-    const group = new THREE.Group();
-    const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.55, 0), new THREE.MeshStandardMaterial({ color: 0xff4f78, emissive: 0xff2d60, emissiveIntensity: 1.1, metalness: 0.2, roughness: 0.25 }));
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.85, 0.05, 8, 32), new THREE.MeshBasicMaterial({ color: 0xff8ab0, transparent: true, opacity: 0.9 }));
-    ring.rotation.x = Math.PI / 2;
-    const eye = new THREE.Mesh(new THREE.SphereGeometry(0.12, 12, 12), new THREE.MeshBasicMaterial({ color: 0xffffff }));
-    eye.position.set(0, 0, 0.52);
-    group.add(core, ring, eye);
+    const color = alienColors[idx % alienColors.length];
+    const group = makeAlien(color, idx);
     group.position.set(p.x, 1.3, p.z);
     scene.add(group);
-    const light = new THREE.PointLight(0xff3366, 0.7, 7, 2); light.position.copy(group.position); scene.add(light);
-    enemies.push({ group, light, hp: 60, alive: true, cooldown: Math.random() * 1.2, t: Math.random() * 10, base: p, phase: Math.random() * Math.PI * 2 });
+    const light = new THREE.PointLight(color, 0.7, 7, 2);
+    light.position.copy(group.position);
+    scene.add(light);
+    enemies.push({ group, light, hp: 60, alive: true, cooldown: Math.random() * 1.2, t: Math.random() * 10, base: p, phase: Math.random() * Math.PI * 2, radius: 0.55 });
   }
-  spawnEnemy(7, 1); spawnEnemy(12, 1); spawnEnemy(5, 5); spawnEnemy(10, 7); spawnEnemy(2, 9); spawnEnemy(12, 11);
+  [[7,1],[12,1],[5,5],[10,7],[2,9],[12,11]].forEach((pos, i) => spawnEnemy(pos[0], pos[1], i));
 
   const state = {
     running: false, over: false, won: false,
@@ -238,11 +357,10 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     damageT: 0, time: 0
   };
 
-  function isMoveKey(k, c, names) { return names.includes(k) || names.includes(c); }
-  function moveForward() { const k = state.keys; return k['z'] || k['w'] || k['arrowup'] || k['keyw'] || k['keyz'] || k['arrowup_code']; }
-  function moveBack() { const k = state.keys; return k['s'] || k['arrowdown'] || k['keys'] || k['arrowdown_code']; }
-  function moveLeft() { const k = state.keys; return k['q'] || k['a'] || k['arrowleft'] || k['keya'] || k['keyq'] || k['arrowleft_code']; }
-  function moveRight() { const k = state.keys; return k['d'] || k['arrowright'] || k['keyd'] || k['arrowright_code']; }
+  function moveForward() { const k = state.keys; return k['z'] || k['w'] || k['arrowup'] || k['keyw'] || k['keyz']; }
+  function moveBack() { const k = state.keys; return k['s'] || k['arrowdown'] || k['keys']; }
+  function moveLeft() { const k = state.keys; return k['q'] || k['a'] || k['arrowleft'] || k['keya'] || k['keyq']; }
+  function moveRight() { const k = state.keys; return k['d'] || k['arrowright'] || k['keyd']; }
 
   function syncHud() {
     const t = enemies.filter(e => e.alive).length;
@@ -273,6 +391,11 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     msgEl.textContent = msg;
   }
 
+  function clearBullets() {
+    for (const b of bullets) scene.remove(b.mesh);
+    bullets.length = 0;
+  }
+
   function resetGame() {
     state.running = false; state.over = false; state.won = false;
     state.health = 100; state.ammo = 24; state.reserve = 72;
@@ -280,8 +403,9 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     camera.position.set(6, 1.6, 6);
     camera.rotation.y = state.yaw; camera.rotation.x = state.pitch;
     camera.updateMatrixWorld();
-    for (const e of enemies) { e.hp = 60; e.alive = true; e.group.visible = true; e.light.visible = true; e.cooldown = Math.random() * 1.2; }
+    for (const e of enemies) { e.hp = 60; e.alive = true; e.group.visible = true; e.light.visible = true; e.cooldown = Math.random() * 1.2; e.group.position.set(e.base.x, 1.3, e.base.z); }
     for (const p of pickups) { p.alive = true; p.mesh.visible = true; }
+    clearBullets();
     syncHud();
   }
   resetGame();
@@ -295,7 +419,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       state.running = true; overlay.classList.add('hidden');
     } else {
       state.running = false;
-      if (!state.over && !state.won) setOverlay(true, '<em>Pause</em>', 'La souris a Ã©tÃ© libÃ©rÃ©e. Cliquez pour reprendre.', 'Reprendre');
+      if (!state.over && !state.won) setOverlay(true, '<em>Pause</em>', 'La souris a été libérée. Cliquez pour reprendre.', 'Reprendre');
     }
   });
 
@@ -317,61 +441,58 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   };
   window.addEventListener('keydown', onKey(true));
   window.addEventListener('keyup', onKey(false));
+
   function reload() {
     if (state.reloading || state.ammo >= 24 || state.reserve <= 0) return;
     state.reloading = true; state.reloadT = 1.1;
-    msgEl.textContent = 'Rechargementâ€¦';
-    if (objectiveEl) objectiveEl.textContent = 'Rechargementâ€¦';
+    msgEl.textContent = 'Rechargement…';
+    if (objectiveEl) objectiveEl.textContent = 'Rechargement…';
   }
 
-  const raycaster = new THREE.Raycaster();
   const tmpV = new THREE.Vector3();
   function shoot() {
     if (!state.running || state.over || state.won) return;
     if (state.reloading) return;
     const now = performance.now() / 1000;
-    if (now - state.lastShot < 0.14) return;
+    if (now - state.lastShot < 0.16) return;
     if (state.ammo <= 0) { reload(); return; }
     state.lastShot = now; state.ammo--; syncHud();
     muzzleFlash();
     camera.getWorldDirection(tmpV);
-    raycaster.set(camera.position, tmpV);
-    const targets = enemies.filter(e => e.alive).map(e => e.group);
-    const hits = raycaster.intersectObjects(targets, true);
-    if (hits.length) {
-      let obj = hits[0].object;
-      while (obj && !obj.userData.enemyRef && obj.parent) obj = obj.parent;
-      const ref = obj && obj.userData.enemyRef ? obj.userData.enemyRef : enemies.find(e => e.group === obj || e.group.children.includes(hits[0].object));
-      if (ref && ref.alive) {
-        ref.hp -= 34;
-        spawnSparks(hits[0].point, 0xff6b8f);
-        if (ref.hp <= 0) killEnemy(ref);
-      }
-    } else {
-      spawnSparks(camera.position.clone().add(tmpV.clone().multiplyScalar(8)), 0x69ffe1, 4);
-    }
+    const dir = tmpV.clone().normalize();
+    const pos = camera.position.clone().add(dir.clone().multiplyScalar(0.7)).add(new THREE.Vector3(0, -0.05, 0));
+    const mesh = new THREE.Mesh(
+      new THREE.SphereGeometry(0.14, 16, 16),
+      new THREE.MeshStandardMaterial({ color: 0xbffff6, emissive: 0x69ffe1, emissiveIntensity: 1.6, metalness: 0.05, roughness: 0.15 })
+    );
+    mesh.position.copy(pos);
+    scene.add(mesh);
+    const vel = dir.multiplyScalar(20);
+    bullets.push({ mesh, vel, life: 2.8, bounces: 5, radius: 0.14, squash: 0 });
     if (state.ammo === 0 && state.reserve > 0) reload();
   }
   window.addEventListener('mousedown', (e) => { if (e.button === 0) shoot(); });
 
   const flashLight = new THREE.PointLight(0x8ffff0, 0, 6, 2);
-  flashLight.position.set(0.2, -0.15, -0.6); camera.add(flashLight); scene.add(camera);
+  flashLight.position.set(0.2, -0.15, -0.6);
+  camera.add(flashLight);
+  scene.add(camera);
   let flashT = 0;
   function muzzleFlash() { flashT = 0.06; flashLight.intensity = 2.2; }
 
-  const sparks = [];
   function spawnSparks(pos, color, n = 10) {
     for (let i = 0; i < n; i++) {
       const m = new THREE.Mesh(new THREE.SphereGeometry(0.04, 6, 6), new THREE.MeshBasicMaterial({ color }));
       m.position.copy(pos);
-      const v = new THREE.Vector3((Math.random()-0.5)*4, (Math.random()-0.2)*4, (Math.random()-0.5)*4);
-      scene.add(m); sparks.push({ m, v, life: 0.4 + Math.random()*0.3 });
+      const v = new THREE.Vector3((Math.random() - 0.5) * 4, (Math.random() - 0.2) * 4, (Math.random() - 0.5) * 4);
+      scene.add(m);
+      sparks.push({ m, v, life: 0.4 + Math.random() * 0.3 });
     }
   }
 
   function killEnemy(e) {
     e.alive = false; e.group.visible = false; e.light.visible = false;
-    spawnSparks(e.group.position.clone(), 0xff5f88, 24);
+    spawnSparks(e.group.position.clone(), 0xff7ab0, 26);
     const left = enemies.filter(x => x.alive).length;
     syncHud();
     if (left === 0) win();
@@ -387,19 +508,19 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 
   function win() {
     state.won = true; state.running = false; document.exitPointerLock?.();
-    setOverlay(true, '<em>Secteur sÃ©curisÃ©</em>', 'Toutes les sentinelles ont Ã©tÃ© neutralisÃ©es. Mission accomplie.', 'Rejouer', `SantÃ© restante : ${Math.max(0, Math.round(state.health))}`);
+    setOverlay(true, '<em>Secteur sécurisé</em>', 'Tous les aliens ont été neutralisés. Mission accomplie.', 'Rejouer', `Santé restante : ${Math.max(0, Math.round(state.health))}`);
   }
   function lose() {
     state.over = true; state.running = false; document.exitPointerLock?.();
-    setOverlay(true, 'Mission <em>Ã©chouÃ©e</em>', 'Vous avez Ã©tÃ© neutralisÃ© par les sentinelles du secteur.', 'RÃ©essayer', `Sentinelles restantes : ${enemies.filter(e=>e.alive).length}`);
+    setOverlay(true, 'Mission <em>échouée</em>', 'Vous avez été neutralisé par les aliens du secteur.', 'Réessayer', `Aliens restants : ${enemies.filter(e => e.alive).length}`);
   }
 
   for (const e of enemies) e.group.userData.enemyRef = e;
 
   function canMoveTo(nx, nz) {
     const r = 0.45;
-    const pts = [[nx-r,nz-r],[nx+r,nz-r],[nx-r,nz+r],[nx+r,nz+r]];
-    for (const [px,pz] of pts) if (isWallAt(px,pz)) return false;
+    const pts = [[nx - r, nz - r], [nx + r, nz - r], [nx - r, nz + r], [nx + r, nz + r]];
+    for (const [px, pz] of pts) if (isWallAt(px, pz)) return false;
     return true;
   }
 
@@ -424,18 +545,79 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 
     if (flashT > 0) { flashT -= dt; if (flashT <= 0) flashLight.intensity = 0; }
     if (state.damageT > 0) { state.damageT -= dt; if (state.damageT <= 0) damageFlash.style.opacity = '0'; }
+
     for (let i = sparks.length - 1; i >= 0; i--) {
-      const s = sparks[i]; s.life -= dt; s.m.position.addScaledVector(s.v, dt); s.v.y -= 5 * dt; s.m.material.opacity = Math.max(0, s.life / 0.6); s.m.material.transparent = true;
-      if (s.life <= 0) { scene.remove(s.m); sparks.splice(i,1); }
+      const s = sparks[i];
+      s.life -= dt;
+      s.m.position.addScaledVector(s.v, dt);
+      s.v.y -= 5 * dt;
+      s.m.material.opacity = Math.max(0, s.life / 0.6);
+      s.m.material.transparent = true;
+      if (s.life <= 0) { scene.remove(s.m); sparks.splice(i, 1); }
     }
 
     for (const p of pickups) {
       if (!p.alive) continue;
-      p.mesh.rotation.y += dt * 1.6; p.mesh.position.y = p.baseY + Math.sin(state.time * 2 + p.baseY) * 0.12;
+      p.mesh.rotation.y += dt * 1.6;
+      p.mesh.position.y = p.baseY + Math.sin(state.time * 2 + p.baseY) * 0.12;
       const dx = camera.position.x - p.mesh.position.x, dz = camera.position.z - p.mesh.position.z;
-      if (dx*dx + dz*dz < 1.2) {
+      if (dx * dx + dz * dz < 1.2) {
         if (p.type === 'health' && state.health < 100) { state.health = Math.min(100, state.health + p.amount); p.alive = false; p.mesh.visible = false; syncHud(); }
         else if (p.type === 'ammo') { state.reserve = Math.min(120, state.reserve + p.amount); p.alive = false; p.mesh.visible = false; syncHud(); }
+      }
+    }
+
+    for (let i = bullets.length - 1; i >= 0; i--) {
+      const b = bullets[i];
+      b.life -= dt;
+      b.squash = Math.max(0, b.squash - dt * 8);
+      b.vel.y -= 6.5 * dt;
+      const prev = b.mesh.position.clone();
+      b.mesh.position.addScaledVector(b.vel, dt);
+
+      // floor/ceiling bounce
+      if (b.mesh.position.y <= b.radius) {
+        b.mesh.position.y = b.radius;
+        if (b.vel.y < 0) { b.vel.y = -b.vel.y * 0.72; b.vel.x *= 0.94; b.vel.z *= 0.94; b.bounces--; b.squash = 1; }
+      } else if (b.mesh.position.y >= 3.2 - b.radius) {
+        b.mesh.position.y = 3.2 - b.radius;
+        if (b.vel.y > 0) { b.vel.y = -b.vel.y * 0.72; b.bounces--; b.squash = 1; }
+      }
+
+      // wall bounces
+      if (isWallAt(b.mesh.position.x, prev.z)) {
+        b.mesh.position.x = prev.x;
+        b.vel.x = -b.vel.x * 0.82; b.vel.y *= 0.96; b.vel.z *= 0.96; b.bounces--; b.squash = 1;
+        spawnSparks(b.mesh.position.clone(), 0x69ffe1, 4);
+      }
+      if (isWallAt(b.mesh.position.x, b.mesh.position.z)) {
+        b.mesh.position.z = prev.z;
+        b.vel.z = -b.vel.z * 0.82; b.vel.y *= 0.96; b.vel.x *= 0.96; b.bounces--; b.squash = 1;
+        spawnSparks(b.mesh.position.clone(), 0x69ffe1, 4);
+      }
+
+      const stretch = 1 + b.squash * 0.35;
+      b.mesh.scale.set(1 / Math.sqrt(stretch), stretch, 1 / Math.sqrt(stretch));
+
+      let hit = false;
+      for (const e of enemies) {
+        if (!e.alive) continue;
+        const dx = b.mesh.position.x - e.group.position.x;
+        const dy = b.mesh.position.y - e.group.position.y;
+        const dz = b.mesh.position.z - e.group.position.z;
+        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        if (dist < b.radius + e.radius) {
+          e.hp -= 34;
+          spawnSparks(b.mesh.position.clone(), 0xff8fb0, 8);
+          if (e.hp <= 0) killEnemy(e);
+          hit = true;
+          break;
+        }
+      }
+
+      if (hit || b.life <= 0 || b.bounces < 0 || b.vel.length() < 1.5) {
+        scene.remove(b.mesh);
+        bullets.splice(i, 1);
       }
     }
 
@@ -444,7 +626,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       if (state.reloadT <= 0) {
         const need = 24 - state.ammo; const take = Math.min(need, state.reserve);
         state.ammo += take; state.reserve -= take; state.reloading = false; msgEl.textContent = '';
-        if (objectiveEl) objectiveEl.textContent = state.won ? 'Secteur sÃ©curisÃ©.' : 'Objectif : Ã©liminez toutes les sentinelles du secteur.';
+        if (objectiveEl) objectiveEl.textContent = state.won ? 'Secteur sécurisé.' : 'Objectif : éliminez tous les aliens du secteur.';
         syncHud();
       }
     }
@@ -474,7 +656,6 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
         if (!e.alive) continue;
         e.t += dt; e.cooldown -= dt;
         e.group.position.y = 1.3 + Math.sin(e.t * 2 + e.phase) * 0.12;
-        e.group.rotation.y += dt * 0.8;
         e.light.position.copy(e.group.position);
         const toPlayer = playerPos.clone().sub(e.group.position); toPlayer.y = 0;
         const dist = toPlayer.length();
@@ -488,13 +669,14 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
           }
           if (e.cooldown <= 0 && dist < 16) {
             e.cooldown = 1.15 + Math.random() * 0.6;
-            if (Math.random() < 0.55) { damagePlayer(8 + Math.random() * 6); spawnSparks(playerPos.clone().add(new THREE.Vector3((Math.random()-0.5)*0.5, -0.2, (Math.random()-0.5)*0.5)), 0xff5577, 6); }
+            if (Math.random() < 0.55) { damagePlayer(8 + Math.random() * 6); spawnSparks(playerPos.clone().add(new THREE.Vector3((Math.random() - 0.5) * 0.5, -0.2, (Math.random() - 0.5) * 0.5)), 0xff5577, 6); }
           }
         } else {
           const ox = Math.sin(e.t * 0.7 + e.phase) * 0.4;
           const oz = Math.cos(e.t * 0.9 + e.phase) * 0.4;
           e.group.position.x += (e.base.x + ox - e.group.position.x) * dt * 0.8;
           e.group.position.z += (e.base.z + oz - e.group.position.z) * dt * 0.8;
+          e.group.rotation.y += dt * 0.6;
         }
       }
     }
