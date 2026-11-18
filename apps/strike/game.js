@@ -149,22 +149,15 @@ function shoot() {
   ammo--; 
   bullets.push({ x: aimX, y: aimY, life: 0.15 });
   // hit test
-  let hit = null, bestZ = -1;
+  // find the enemy closest to the camera (smallest z) whose hitbox contains the aim
+  let nearest = null, nearestZ = Infinity;
   for (const e of enemies) {
-    const sx = CX + e.x * (1 - e.z) * 400;
-    const sy = CY + e.y * (1 - e.z) * 300;
-    const size = (1 - e.z) * 60 + 8;
+    const s = 1 - e.z;
+    const sx = CX + e.x * s * 400;
+    const sy = CY + e.y * s * 300;
+    const size = s * 60 + 8;
     const dx = aimX - sx, dy = aimY - sy;
-    if (Math.hypot(dx, dy) < size && e.z < bestZ || bestZ < 0) { bestZ = e.z; hit = e; }
-  }
-  // find closest enemy to camera (highest z-depth = nearest)
-  let nearest = null, nearestZ = -1;
-  for (const e of enemies) {
-    const sx = CX + e.x * (1 - e.z) * 400;
-    const sy = CY + e.y * (1 - e.z) * 300;
-    const size = (1 - e.z) * 60 + 8;
-    const dx = aimX - sx, dy = aimY - sy;
-    if (Math.hypot(dx, dy) < size && e.z > nearestZ) { nearestZ = e.z; nearest = e; }
+    if (Math.hypot(dx, dy) < size && e.z < nearestZ) { nearestZ = e.z; nearest = e; }
   }
   if (nearest) {
     nearest.hp--;
@@ -256,18 +249,34 @@ function draw() {
     // ship body
     ctx.save();
     ctx.translate(x, y);
-    ctx.fillStyle = e.color; ctx.shadowColor = e.color; ctx.shadowBlur = 18;
+    // ship body (fuselage + wings)
+    ctx.shadowColor = e.color; ctx.shadowBlur = 18;
+    // wings
+    ctx.fillStyle = e.color; ctx.globalAlpha = 0.85;
     ctx.beginPath();
-    if (e.boss) {
-      ctx.moveTo(0, -size); ctx.lineTo(size, size * 0.6); ctx.lineTo(0, size * 0.2); ctx.lineTo(-size, size * 0.6);
-    } else {
-      ctx.moveTo(0, -size); ctx.lineTo(size * 0.7, size * 0.5); ctx.lineTo(0, size * 0.2); ctx.lineTo(-size * 0.7, size * 0.5);
-    }
+    ctx.moveTo(0, -size * 0.9);
+    ctx.lineTo(size * 1.1, size * 0.4);
+    ctx.lineTo(size * 0.6, size * 0.7);
+    ctx.lineTo(0, size * 0.3);
+    ctx.lineTo(-size * 0.6, size * 0.7);
+    ctx.lineTo(-size * 1.1, size * 0.4);
+    ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
+    // fuselage
+    ctx.fillStyle = e.color;
+    ctx.beginPath();
+    ctx.moveTo(0, -size * 1.1);
+    ctx.lineTo(size * 0.35, size * 0.6);
+    ctx.lineTo(0, size * 0.8);
+    ctx.lineTo(-size * 0.35, size * 0.6);
     ctx.closePath(); ctx.fill(); ctx.shadowBlur = 0;
-    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.2; ctx.stroke();
     // cockpit
-    ctx.fillStyle = 'rgba(255,255,255,0.7)';
-    ctx.beginPath(); ctx.arc(0, 0, size * 0.25, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.85)';
+    ctx.beginPath(); ctx.ellipse(0, -size * 0.1, size * 0.18, size * 0.25, 0, 0, Math.PI * 2); ctx.fill();
+    // engine glow
+    ctx.fillStyle = e.boss ? '#ff4d6d' : '#ffd36b';
+    ctx.shadowColor = e.boss ? '#ff4d6d' : '#ffd36b'; ctx.shadowBlur = 12;
+    ctx.beginPath(); ctx.ellipse(0, size * 0.75, size * 0.2, size * 0.12, 0, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
     // hp bar
     if (e.hp > 1) {
       ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(-size, -size - 8, size * 2, 4);
