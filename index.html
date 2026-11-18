@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Neon Games — Jeux d'arcade Neon</title>
+    <meta
+      name="description"
+      content="Neon Games : portail et collection des neuf jeux d'arcade Neon, jouables dans le navigateur. Base technique boilerplate-html, shell de jeu 100vh et thème Neon."
+    />
+    <meta name="theme-color" content="#071018" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #071018;
+        --surface: #0c1a22;
+        --line: #253842;
+        --text: #f2f7f5;
+        --muted: #a9bab8;
+        --lime: #bada55;
+        --lime-ink: #17200a;
+        --mint: #69ffe1;
+        --pink: #ff72bb;
+        --violet: #c48cff;
+        --yellow: #ffd166;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 90px;
+      }
+      body {
+        margin: 0;
+        background: radial-gradient(ellipse at 82% -10%, #193b3a 0, transparent 30%), var(--bg);
+        color: var(--text);
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        line-height: 1.55;
+      }
+      a {
+        color: var(--lime);
+      }
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        background: var(--lime);
+        color: var(--lime-ink);
+        padding: 10px 16px;
+        z-index: 50;
+      }
+      .skip-link:focus {
+        left: 12px;
+        top: 12px;
+      }
+      .container {
+        width: min(1160px, calc(100% - 40px));
+        margin-inline: auto;
+      }
+      .topbar {
+        border-bottom: 1px solid #ffffff12;
+        background: #071018d9;
+        backdrop-filter: blur(6px);
+      }
+      .topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 16px 0;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text);
+        font: 700 0.85rem 'DM Mono', monospace;
+        letter-spacing: 0.11em;
+        text-decoration: none;
+      }
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border: 1px solid var(--lime);
+        border-radius: 10px;
+        color: var(--lime);
+        font-weight: 500;
+        font-size: 1.15rem;
+      }
+      .brand-accent {
+        color: var(--lime);
+      }
+      .topbar nav {
+        display: flex;
+        gap: 26px;
+      }
+      .topbar nav a {
+        color: var(--muted);
+        font-size: 0.88rem;
+        text-decoration: none;
+      }
+      .topbar nav a:hover {
+        color: var(--lime);
+      }
+      .repo-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--muted);
+        font: 500 0.72rem 'DM Mono', monospace;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        text-decoration: none;
+      }
+      .repo-link:hover {
+        color: var(--lime);
+      }
+      .repo-link svg {
+        width: 16px;
+        height: 16px;
+      }
+      main {
+        display: block;
+      }
+      .hero {
+        padding: 72px 0 56px;
+      }
+      .kicker {
+        margin: 0 0 18px;
+        color: var(--lime);
+        font: 500 0.7rem 'DM Mono', monospace;
+        letter-spacing: 0.13em;
+      }
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(3rem, 7.2vw, 6.4rem);
+        line-height: 0.98;
+        letter-spacing: -0.075em;
+      }
+      .hero h1 span {
+        color: var(--lime);
+      }
+      .lead {
+        max-width: 580px;
+        margin: 24px 0 30px;
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 15px 28px;
+        border-radius: 12px;
+        background: var(--lime);
+        color: var(--lime-ink);
+        font: 700 0.8rem 'DM Mono', monospace;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        text-decoration: none;
+      }
+      .button:hover {
+        filter: brightness(1.08);
+      }
+      .button--ghost {
+        background: transparent;
+        color: var(--lime);
+        border: 1px solid var(--lime);
+      }
+      .collection {
+        padding: 18px 0 70px;
+      }
+      .section-title {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 26px;
+      }
+      .section-title h2 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.1;
+        letter-spacing: -0.045em;
+      }
+      .collection-count {
+        margin: 0;
+        color: var(--muted);
+        font: 500 0.66rem 'DM Mono', monospace;
+        letter-spacing: 0.1em;
+        text-align: right;
+      }
+      .collection-count span {
+        color: var(--lime);
+        font-size: 1rem;
+      }
+      .game-grid {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .game-card {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        height: 100%;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: linear-gradient(155deg, #10212a, #0a151d);
+        color: inherit;
+        text-decoration: none;
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .game-card:hover {
+        transform: translateY(-4px);
+        border-color: #bada5588;
+        box-shadow: 0 12px 35px #0005;
+      }
+      .game-card h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        letter-spacing: -0.02em;
+      }
+      .game-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .game-card .play {
+        margin-top: auto;
+        color: var(--lime);
+        font: 500 0.7rem 'DM Mono', monospace;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .societe {
+        padding: 0 0 80px;
+      }
+      .societe h2 {
+        margin: 0 0 8px;
+        font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+        letter-spacing: -0.04em;
+      }
+      .societe > p {
+        max-width: 720px;
+        color: var(--muted);
+      }
+      .societe-grid {
+        list-style: none;
+        margin: 26px 0 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .societe-card {
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--surface);
+      }
+      .societe-card h3 {
+        margin: 0 0 8px;
+        font-size: 1.05rem;
+        color: var(--lime);
+      }
+      .societe-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      footer {
+        border-top: 1px solid #ffffff12;
+        padding: 26px 0 40px;
+        color: var(--muted);
+        font: 500 0.65rem 'DM Mono', monospace;
+        letter-spacing: 0.06em;
+      }
+      footer .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+        justify-content: space-between;
+      }
+      footer a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+      footer a:hover {
+        color: var(--lime);
+      }
+      a:focus-visible {
+        outline: 3px solid var(--lime);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+      @media (max-width: 900px) {
+        .game-grid,
+        .societe-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 620px) {
+        .topbar nav {
+          gap: 14px;
+        }
+        .topbar nav a {
+          font-size: 0.78rem;
+        }
+        .game-grid,
+        .societe-grid {
+          grid-template-columns: 1fr;
+        }
+        .section-title {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 6px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu principal</a>
+
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="https://kewinmarchand.github.io/neon-games/">
+          <span class="brand-mark" aria-hidden="true">N</span>
+          <span><span class="brand-accent">NEON</span> GAMES</span>
+        </a>
+        <nav aria-label="Navigation principale">
+          <a href="#collection">Jeux</a>
+          <a href="#portail">Portail</a>
+          <a href="https://github.com/kewinMarchand/neon-games" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="contenu">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="container">
+          <p class="kicker">MONOREPO · ARCADE NEON</p>
+          <h1 id="hero-title">Neon <span>Games</span></h1>
+          <p class="lead">
+            Le portail et la collection complète des jeux d'arcade <strong>Neon</strong> : neuf mini-jeux
+            jouables directement dans le navigateur, au sein d'un même monorepo. Base technique
+            <strong>boilerplate-html</strong>, shell de jeu identique pour tous, thème <strong>Neon</strong>
+            attaché.
+          </p>
+          <div class="actions">
+            <a class="button" href="https://kewinmarchand.github.io/neon-games/apps/portal/">Accéder au portail</a>
+            <a
+              class="button button--ghost"
+              href="https://github.com/kewinMarchand/neon-games"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Code source sur GitHub</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="collection" id="collection" aria-labelledby="collection-title">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="kicker">CHOISISSEZ VOTRE PARTIE</p>
+              <h2 id="collection-title">La collection</h2>
+            </div>
+            <p class="collection-count"><span>09</span> JEUX DISPONIBLES</p>
+          </div>
+          <ul class="game-grid">
+            <li>
+              <a class="game-card" href="https://kewinmarchand.github.io/neon-games/apps/games/invaders/">
+                <h3>Neon Invaders</h3>
+                <p>Défendez votre base contre des vagues d’envahisseurs.</p>
+                <span class="play">Jouer ↗</span>
+              </a>
+            </li>
+            <li>
+              <a class="game-card" href="https://kewinmarchand.github.io/neon-games/apps/games/breaker/">
+                <h3>Neon Breaker</h3>
+                <p>Cassez les briques et gardez la balle en jeu.</p>
+                <span class="play">Jouer ↗</span>
+              </a>
+            </li>
+            <li>
+              <a class="game-card" href="https://kewinmarchand.github.io/neon-games/apps/games/columns/">
+                <h3>Neon Columns</h3>
+                <p>Alignez des gemmes pour déclencher des réactions en chaîne.</p>
+                <span class="play">Jouer ↗</span>
+              </a>
+            </li>
+            <li>
+              <a class="game-card" href="https://kewinmarchand.github.io/neon-games/apps/games/drift/">
+                <h3>Neon Drift</h3>
+                <p>Pilotez votre voiture sur le circuit, évitez les obstacles et récoltez les orbes.</p>
+                <span class="play">Jouer ↗</span>
+              </a>
+            </li>
+            <li>
+              <a class="game-card" href="https://kewinmarchand.github.io/neon-games/apps/games/runner/">
+                <h3>Neon Runner</h3>
+                <p>Sautez et glissez pour éviter les obstacles et tenir la distance.</p>
+                <span class="play">Jouer ↗</span>
+              </a>
+            </li>
+            <li>
+              <a class="game-card" href="https://kewinmarchand.github.io/neon-games/apps/games/defender/">
+                <h3>Neon Defender</h3>
+                <p>Orientez le bouclier pour intercepter les photons.</p>
+                <span class="play">Jouer ↗</span>
+              </a>
+            </li>
+            <li>
+              <a class="game-card" href="https://kewinmarchand.github.io/neon-games/apps/games/mines/">
+                <h3>Neon Mines</h3>
+                <p>Déduisez l’emplacement des mines à partir des indices.</p>
+                <span class="play">Jouer ↗</span>
+              </a>
+            </li>
+            <li>
+              <a class="game-card" href="https://kewinmarchand.github.io/neon-games/apps/games/serpent/">
+                <h3>Neon Serpent</h3>
+                <p>Grandissez sans vous mordre, la vitesse s’emballe.</p>
+                <span class="play">Jouer ↗</span>
+              </a>
+            </li>
+            <li>
+              <a class="game-card" href="https://kewinmarchand.github.io/neon-games/apps/games/orbiter/">
+                <h3>Neon Orbiter</h3>
+                <p>Alunissez en douceur : gravité, carburant et plates-formes bonus.</p>
+                <span class="play">Jouer ↗</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="societe" id="portail" aria-labelledby="societe-title">
+        <div class="container">
+          <h2 id="societe-title">Le socle technique</h2>
+          <p>
+            Chaque jeu repose sur la même base : du <strong>HTML/CSS/JS natif</strong> (sans build
+            lourd), monté via le <strong>shell de jeu 100&nbsp;vh</strong> identique, et illustré par le
+            <strong>thème Neon</strong> (tokens <code>--bui-*</code> et overrides).
+          </p>
+          <ul class="societe-grid">
+            <li class="societe-card">
+              <h3>Base technique</h3>
+              <p>
+                <strong>boilerplate-html</strong> : pages statiques accessibles, outillées pour la QA,
+                les tests et l’accessibilité.
+              </p>
+            </li>
+            <li class="societe-card">
+              <h3>Shell 100&nbsp;vh</h3>
+              <p>
+                Cadre commun (en-tête / zone centrale / panneaux latéraux) avec zone de jeu centrée et
+                panneaux dédiés aux options spécifiques.
+              </p>
+            </li>
+            <li class="societe-card">
+              <h3>Thème Neon</h3>
+              <p>
+                Tokens et overrides visuels Neon appliqués aux composants communs, sans composant
+                métier « Neon ».
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <span><span class="brand-accent">NEON</span> GAMES · UNE COLLECTION D’ARCADE INDEPENDANTE</span>
+        <span>
+          <a href="https://kewinmarchand.github.io/neon-games/apps/portal/">Portail</a>
+          ·
+          <a href="https://github.com/kewinMarchand/neon-games" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>
