@@ -66,6 +66,6 @@ Une collection de neuf mini-jeux indépendants, gratuits et jouables directement
 
 ## Thème
 
-Ce portail et les jeux utilisent la base CSS du [Boilerplate Neon](https://github.com/kewinMarchand/boilerplate-neon) (`neon/neon-tokens.css`, `neon-base.css`, `neon-components.css`).
+Ce portail et les jeux utilisent une base CSS partagée (`neon/neon-tokens.css`, `neon-base.css`, `neon-components.css`).
 
 Ce dépôt (monorepo `neon-games`) regroupe le portail et les jeux de la collection.
