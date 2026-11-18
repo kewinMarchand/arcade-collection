@@ -1,5 +1,5 @@
 /*
- * Theme Neon — composants (overrides visuels) sur les composants commons `bui-*`.
+ * Theme Neon - composants (overrides visuels) sur les composants commons `bui-*`.
  * Les classes demontables (`.bui-button`, `.bui-card`, `.bui-link`, ...) gardent leur
  * logique ; le theme n'introduit aucune brique Neon metier.
  */
@@ -38,16 +38,212 @@
   .neon-panel__title {
     margin: 0;
     color: var(--bui-color-primary, #69ffe1);
-    font-size: var(--bui-font-size-h4, 18px);
-    font-weight: var(--bui-font-weight-bold, 700);
+    font-size: 0.9rem;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
-  .neon-panel__value,
-  .neon-panel__text {
+  .neon-panel__value {
     margin: 0;
     color: var(--bui-color-text, #f2f7f5);
-    font-size: var(--bui-font-size-body-sm, 14px);
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .neon-panel__text {
+    margin: 0;
+    color: var(--bui-color-text-muted, #a9bab8);
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .neon-panel__list {
+    margin: 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 6px;
+    color: var(--bui-color-text-muted, #a9bab8);
+    font-size: 0.88rem;
+  }
+
+  .panel-stats {
+    display: grid;
+    gap: 8px;
+  }
+
+  .panel-stat {
+    padding: 8px 10px;
+    border: 1px solid #65d8bd44;
+    border-radius: 9px;
+    background: #0a211dba;
+  }
+
+  .panel-stat small,
+  .panel-stat strong {
+    display: block;
+  }
+
+  .panel-stat small {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--bui-color-text-muted, #a9bab8);
+  }
+
+  .panel-stat strong {
+    margin-top: 3px;
+    font-size: 1.02rem;
+    color: var(--bui-color-text, #f2f7f5);
+  }
+
+  .panel-actions,
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .panel-actions button,
+  .actions button,
+  .game-footer button {
+    padding: 9px 12px;
+    border: 1px solid #65d8bd88;
+    border-radius: 8px;
+    background: #0b2924;
+    color: #edfffa;
+    font: 700 0.9rem inherit;
+    cursor: pointer;
+  }
+
+  .panel-actions button.primary,
+  .actions button.primary,
+  .game-footer button.primary {
+    background: linear-gradient(135deg, #147665, #0d5148);
+  }
+
+  .panel-actions button:hover,
+  .actions button:hover,
+  .game-footer button:hover,
+  .panel-actions button:focus-visible,
+  .actions button:focus-visible,
+  .game-footer button:focus-visible {
+    border-color: var(--bui-color-primary, #69ffe1);
+    box-shadow: 0 0 16px #22ffc055;
+  }
+
+  .help {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--bui-color-text-muted, #a9bab8);
+    line-height: 1.45;
+  }
+
+  .game-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin: 0;
+  }
+
+  .game-options .option {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border: 1px solid #65d8bd33;
+    border-radius: 8px;
+    background: #0a211dba;
+    color: var(--bui-color-text-muted, #a9bab8);
+    font-size: 0.82rem;
+  }
+
+  .game-options select {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #eafff8;
+    font: 700 0.82rem inherit;
+    cursor: pointer;
+  }
+
+  .game-options select option {
+    background: #0b211f;
+    color: #eafff8;
+  }
+
+  .game-options .toggle {
+    accent-color: #51e8c1;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+
+  .next-preview {
+    display: grid;
+    place-items: center;
+    min-height: 110px;
+    border: 1px solid #65d8bd33;
+    border-radius: 8px;
+    background: #04100e;
+    padding: 8px;
+  }
+
+  .next-preview canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .game-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .game-footer .controls {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+  }
+
+  .game-footer .control {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--bui-color-text-muted, #a9bab8);
+    font-size: 0.82rem;
+  }
+
+  .game-footer kbd {
+    padding: 2px 6px;
+    border: 1px solid #65d8bd55;
+    border-radius: 6px;
+    background: #0a211dba;
+    color: #edfffa;
+    font: 700 0.78rem inherit;
+  }
+
+  .game-footer .hint {
+    margin: 0;
+    color: var(--bui-color-text-muted, #a9bab8);
+    font-size: 0.8rem;
+  }
+
+  .touch-controls {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .touch-controls button {
+    min-width: 56px;
+    padding: 10px 12px;
   }
 }

@@ -49,19 +49,21 @@ export function mountGameFrame({ mount, config }) {
   mark.className = 'neon-frame__mark';
   mark.setAttribute('aria-hidden', 'true');
   mark.textContent = '✦';
+  const titles = document.createElement('div');
+  titles.className = 'neon-frame__titles';
   const h1 = document.createElement('h1');
   h1.className = 'neon-frame__title';
   h1.textContent = title;
-  const markClose = mark.cloneNode(true);
-  brand.append(mark, h1, markClose);
+  titles.append(h1);
   if (subtitle) {
     const p = document.createElement('p');
     p.className = 'neon-frame__subtitle';
     p.textContent = subtitle;
-    header.append(brand, p);
-  } else {
-    header.append(brand);
+    titles.append(p);
   }
+  const markClose = mark.cloneNode(true);
+  brand.append(mark, titles, markClose);
+  header.append(brand);
   if (typeof config.renderHeader === 'function') header.append(config.renderHeader());
 
   const body = document.createElement('div');
@@ -85,25 +87,24 @@ export function mountGameFrame({ mount, config }) {
   footerEl.className = 'neon-frame__footer';
   footerEl.dataset.testid = FRAME_TESTIDS.footer;
   if (typeof footer === 'function') footerEl.append(footer());
+  if (typeof footer === 'string') footerEl.textContent = footer;
+  if (footerEl.childNodes.length || footerEl.textContent) frame.append(footerEl);
 
   mount.append(frame);
 
-  const placed = new Set();
   for (const panel of panels) {
     const slot = panel.side === 'left' ? left : right;
-    const el = document.createElement('div');
-    el.className = `neon-panel neon-panel--${panel.side}`;
-    el.dataset.testid = `game-panel-${panel.side}`;
-    if (typeof panel.render === 'function') el.append(panel.render());
-    slot.append(el);
-    placed.add(`${panel.side}-${panel.id}`);
+    if (typeof panel.render === 'function') {
+      const rendered = panel.render();
+      if (rendered) {
+        rendered.dataset.testid = rendered.dataset.testid || `game-panel-${panel.side}`;
+        rendered.classList.add('neon-panel--slot');
+        slot.append(rendered);
+      }
+    }
   }
 
-  const cleanup = () => {
-    // Le shell ne gere pas le cycle de vie du jeu : cleanup = retrait du frame.
-  };
-
-  return { frame, header, body, screen: screenEl, panels: { left, right }, mount };
+  return { frame, header, body, screen: screenEl, panels: { left, right }, footer: footerEl, mount };
 }
 
 /**
