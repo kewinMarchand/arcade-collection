@@ -193,8 +193,10 @@ function update(dt) {
 
   spawn -= dt;
   if (spawn <= 0) {
-    const type = Math.random() < 0.34 ? 'high' : 'low';
-    obstacles.push({ x: W + 40, y: type === 'high' ? ground - 96 : ground - 34, w: type === 'high' ? 34 : 46, h: type === 'high' ? 52 : 34, type, seed: Math.random() * Math.PI * 2 });
+    const r = Math.random();
+    const type = r < 0.34 ? 'high' : r < 0.67 ? 'low' : 'wall';
+    const dims = type === 'high' ? { y: ground - 96, w: 34, h: 52 } : type === 'wall' ? { y: ground - 90, w: 22, h: 50 } : { y: ground - 34, w: 46, h: 34 };
+    obstacles.push({ x: W + 40, y: dims.y, w: dims.w, h: dims.h, type, seed: Math.random() * Math.PI * 2 });
     spawn = Math.max(d.spawnMin, d.spawn - elapsed * 0.004) + Math.random() * 0.35;
   }
 
@@ -254,10 +256,15 @@ function drawRunner(x, y, rx, ry, spin) {
 }
 
 function drawObstacle(o) {
+  const color = o.type === 'wall' ? '#ffd36b' : o.type === 'high' ? '#ff6dbd' : '#ff8fd1';
   ctx.save(); ctx.translate(o.x + o.w / 2, o.y + o.h / 2);
-  ctx.fillStyle = '#1b1140'; ctx.strokeStyle = '#ff6dbd'; ctx.shadowColor = '#ff6dbd'; ctx.shadowBlur = 14; ctx.lineWidth = 3; ctx.beginPath();
+  ctx.fillStyle = '#1b1140'; ctx.strokeStyle = color; ctx.shadowColor = color; ctx.shadowBlur = 14; ctx.lineWidth = 3; ctx.beginPath();
   if (o.type === 'low') {
     ctx.moveTo(-o.w / 2, o.h / 2); ctx.lineTo(-o.w / 6, -o.h / 2); ctx.lineTo(o.w / 6, -o.h / 2); ctx.lineTo(o.w / 2, o.h / 2);
+  } else if (o.type === 'wall') {
+    const k = 4;
+    ctx.moveTo(-o.w / 2, -o.h / 2 + k); ctx.lineTo(-o.w / 2 + k, -o.h / 2); ctx.lineTo(o.w / 2 - k, -o.h / 2); ctx.lineTo(o.w / 2, -o.h / 2 + k);
+    ctx.lineTo(o.w / 2, o.h / 2 - k); ctx.lineTo(o.w / 2 - k, o.h / 2); ctx.lineTo(-o.w / 2 + k, o.h / 2); ctx.lineTo(-o.w / 2, o.h / 2 - k);
   } else {
     const k = 6; ctx.moveTo(-o.w / 2, -o.h / 2 + k); ctx.lineTo(-o.w / 2 + k, -o.h / 2); ctx.lineTo(o.w / 2 - k, -o.h / 2); ctx.lineTo(o.w / 2, -o.h / 2 + k); ctx.lineTo(o.w / 2, o.h / 2 - k); ctx.lineTo(o.w / 2 - k, o.h / 2); ctx.lineTo(-o.w / 2 + k, o.h / 2); ctx.lineTo(-o.w / 2, o.h / 2 - k);
   }
@@ -268,7 +275,9 @@ function drawObstacle(o) {
 function draw(t) {
   ctx.clearRect(0, 0, W, H); ctx.save();
   if (shake > 0) ctx.translate((Math.random() - 0.5) * 12 * shake, (Math.random() - 0.5) * 8 * shake);
-  const sky = ctx.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#20133c'); sky.addColorStop(1, '#090b1c'); ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  const skies = [['#20133c','#090b1c'],['#1a2a4a','#0a1220'],['#3a1a2a','#120818'],['#1a3a2a','#081812']];
+  const skyPair = skies[level % skies.length];
+  const sky = ctx.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, skyPair[0]); sky.addColorStop(1, skyPair[1]); ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
   for (let i = 0; i < 90; i++) {
     const sx = ((i * 137 + 40 - scroll * (0.03 + (i % 5) * 0.01)) % (W + 20) + W + 20) % (W + 20) - 10;
     const sy = (i * 79 + 18) % 220;
