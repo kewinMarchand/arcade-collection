@@ -149,6 +149,7 @@ let rings = [];
 let powerups = [];
 let banner = '';
 let bannerTimer = 0;
+let level = 1;
 let effects = { wide: 0 };
 let shake = 0;
 let audioContext;
@@ -192,6 +193,7 @@ function tone(freq, duration = 0.07, type = 'square', volume = 0.03) {
 
 function reset() {
   score = 0;
+  level = 1;
   lives = 3;
   paddle.x = W / 2;
   paddle.w = 120;
@@ -207,9 +209,10 @@ function reset() {
   powerups = [];
   shake = 0;
   initStars();
-  for (let r = 0; r < 5; r++) {
+  const rows = Math.min(5 + (level - 1), 8);
+  for (let r = 0; r < rows; r++) {
     for (let c = 0; c < 10; c++) {
-      bricks.push({ x: 70 + c * 77, y: 70 + r * 30, w: 68, h: 22, color: r, pulse: 0, scale: 1 });
+      bricks.push({ x: 70 + c * 77, y: 70 + r * 30, w: 68, h: 22, color: r % 5, pulse: 0, scale: 1 });
     }
   }
   $('#score').textContent = '0';
@@ -354,8 +357,20 @@ function update(dt) {
   }
 
   if (!bricks.length) {
-    state = 'won';
-    $('#status').textContent = 'Gagné';
+    if (level >= 10) {
+      state = 'won';
+      $('#status').textContent = 'Gagné';
+    } else {
+      level++;
+      const rows = Math.min(5 + (level - 1), 8);
+      bricks = [];
+      for (let r = 0; r < rows; r++) for (let c = 0; c < 10; c++) bricks.push({ x: 70 + c * 77, y: 70 + r * 30, w: 68, h: 22, color: r % 5, pulse: 0, scale: 1 });
+      ball = { x: W / 2, y: H - 70, vx: ball.vx, vy: -Math.abs(ball.vy), r: 8, stuck: true, sx: 1, sy: 1, trail: [] };
+      paddle.w = 120; effects.wide = 0;
+      banner = `NIVEAU ${level}`; bannerTimer = 1.6;
+      $('#status').textContent = `Niveau ${level}`;
+      tone(520 + level * 40, 0.16, 'triangle', 0.03);
+    }
   }
   $('#score').textContent = String(score);
 }
@@ -578,7 +593,7 @@ function draw() {
     ctx.fillText(title, W / 2, H / 2);
     ctx.fillStyle = '#edfffa';
     ctx.font = '16px system-ui';
-    const hint = state === 'ready' ? 'Espace ou clic pour lancer' : state === 'paused' ? 'Clique sur Pause pour reprendre' : 'Recommencer pour rejouer';
+    const hint = state === 'ready' ? 'Espace ou clic pour lancer' : state === 'paused' ? 'Clique sur Pause pour reprendre' : state === 'won' ? `Score final : ${score} - Niveau ${level}` : 'Recommencer pour rejouer';
     ctx.fillText(hint, W / 2, H / 2 + 35);
   }
 }
