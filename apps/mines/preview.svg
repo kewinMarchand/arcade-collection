@@ -1,1 +1,209 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc"><title id="title">Neon Mines</title><desc id="desc">Grille de démineur néon avec indices et une mine.</desc><defs><linearGradient id="bg" y2="1"><stop stop-color="#10212a"/><stop offset="1" stop-color="#071018"/></linearGradient><filter id="g"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="720" height="380" rx="24" fill="url(#bg)"/><text x="360" y="55" text-anchor="middle" fill="#7af7e0" font-family="system-ui" font-weight="800" font-size="28" letter-spacing="6">NEON MINES</text><g transform="translate(222 80)" stroke="#52647b" stroke-width="2"><g fill="#162c42"><rect x="0" y="0" width="52" height="52" rx="5"/><rect x="58" y="0" width="52" height="52" rx="5"/><rect x="116" y="0" width="52" height="52" rx="5"/><rect x="174" y="0" width="52" height="52" rx="5"/><rect x="232" y="0" width="52" height="52" rx="5"/><rect x="0" y="58" width="52" height="52" rx="5"/><rect x="58" y="58" width="52" height="52" rx="5"/><rect x="116" y="58" width="52" height="52" rx="5"/><rect x="174" y="58" width="52" height="52" rx="5"/><rect x="232" y="58" width="52" height="52" rx="5"/><rect x="0" y="116" width="52" height="52" rx="5"/><rect x="58" y="116" width="52" height="52" rx="5"/><rect x="116" y="116" width="52" height="52" rx="5"/><rect x="174" y="116" width="52" height="52" rx="5"/><rect x="232" y="116" width="52" height="52" rx="5"/><rect x="0" y="174" width="52" height="52" rx="5"/><rect x="58" y="174" width="52" height="52" rx="5"/><rect x="116" y="174" width="52" height="52" rx="5"/><rect x="174" y="174" width="52" height="52" rx="5"/><rect x="232" y="174" width="52" height="52" rx="5"/></g><g fill="#70dcff" stroke="none" font-family="system-ui" font-weight="800" font-size="27" text-anchor="middle"><text x="84" y="37">1</text><text x="142" y="37">2</text><text x="200" y="95">1</text><text x="26" y="153">1</text><text x="142" y="211">3</text></g><g transform="translate(258 84)" fill="#ff6a92" stroke="#ff9ab3" filter="url(#g)"><circle cx="0" cy="0" r="15"/><path d="M-3-15l8-10 5 4-5 9M-14-6l-9-4m-1 14h10m10 11 4 9m9-14 8 7"/></g></g><text x="360" y="354" text-anchor="middle" fill="#b9c9e8" font-family="system-ui" font-size="16" letter-spacing="3">RÉVÉLEZ LES CASES SÛRES · ÉVITEZ LES MINES</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
+  <title id="title">Neon Mines</title>
+  <desc id="desc">Grille néon de démineur : cases révélées avec chiffres colorés, tuiles brillantes, un drapeau et une mine.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#10212a"/>
+      <stop offset="1" stop-color="#071018"/>
+    </linearGradient>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f8aa0" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#174c66" stop-opacity="0.98"/>
+    </linearGradient>
+    <linearGradient id="tileHi" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="rev" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e2130"/>
+      <stop offset="1" stop-color="#081722"/>
+    </linearGradient>
+    <linearGradient id="flag" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff3b0"/>
+      <stop offset="1" stop-color="#ff9b3d"/>
+    </linearGradient>
+    <radialGradient id="mineGlow" cx="50%" cy="45%" r="50%">
+      <stop offset="0" stop-color="#ffb0be"/>
+      <stop offset="0.45" stop-color="#ff648f"/>
+      <stop offset="1" stop-color="#ff648f" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowC" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowS" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="720" height="380" rx="24" fill="url(#bg)"/>
+  <rect x="12" y="12" width="696" height="356" rx="18" fill="none" stroke="#69ffe1" stroke-opacity="0.08"/>
+
+  <text x="360" y="52" text-anchor="middle" fill="#7af7e0" font-family="'Space Grotesk', system-ui, sans-serif" font-weight="800" font-size="30" letter-spacing="7" filter="url(#glowS)">NEON MINES</text>
+
+  <!-- board: 7 cols x 5 rows, cell 64, gap 6 -->
+  <g transform="translate(118 78)">
+    <!-- grid background plate -->
+    <rect x="-10" y="-10" width="500" height="360" rx="14" fill="#06131d" stroke="#1a3344" stroke-width="2"/>
+
+    <!-- helper: we draw by positions -->
+    <!-- Row 0 -->
+    <g transform="translate(0,0)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#49c8ff" filter="url(#glowS)">1</text>
+    </g>
+    <g transform="translate(70,0)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#69ffe1" filter="url(#glowS)">2</text>
+    </g>
+    <g transform="translate(140,0)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#ff648f" filter="url(#glowS)">3</text>
+    </g>
+    <g transform="translate(210,0)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#tile)" stroke="#5ab8d0" stroke-opacity="0.55"/>
+      <rect x="4" y="4" width="56" height="18" rx="6" fill="url(#tileHi)"/>
+    </g>
+    <g transform="translate(280,0)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#tile)" stroke="#5ab8d0" stroke-opacity="0.55"/>
+      <rect x="4" y="4" width="56" height="18" rx="6" fill="url(#tileHi)"/>
+      <!-- flag -->
+      <g filter="url(#glowS)">
+        <line x1="26" y1="14" x2="26" y2="48" stroke="#cfefff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M26 14 L46 22 L26 30 Z" fill="url(#flag)" stroke="#fff0b8" stroke-width="1"/>
+        <circle cx="26" cy="49" r="3" fill="#e8fbff"/>
+      </g>
+    </g>
+    <g transform="translate(350,0)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#69ffe1" filter="url(#glowS)">2</text>
+    </g>
+    <g transform="translate(420,0)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+    </g>
+
+    <!-- Row 1 -->
+    <g transform="translate(0,70)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#tile)" stroke="#5ab8d0" stroke-opacity="0.55"/>
+      <rect x="4" y="4" width="56" height="18" rx="6" fill="url(#tileHi)"/>
+    </g>
+    <g transform="translate(70,70)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <!-- mine -->
+      <circle cx="32" cy="32" r="28" fill="url(#mineGlow)" filter="url(#glowC)"/>
+      <circle cx="32" cy="32" r="10" fill="#1b2230" stroke="#ffd6df" stroke-width="2"/>
+      <g stroke="#ffd6df" stroke-width="2.5" stroke-linecap="round">
+        <line x1="32" y1="14" x2="32" y2="20"/><line x1="32" y1="44" x2="32" y2="50"/>
+        <line x1="14" y1="32" x2="20" y2="32"/><line x1="44" y1="32" x2="50" y2="32"/>
+        <line x1="19" y1="19" x2="23" y2="23"/><line x1="41" y1="41" x2="45" y2="45"/>
+        <line x1="45" y1="19" x2="41" y2="23"/><line x1="23" y1="41" x2="19" y2="45"/>
+      </g>
+      <circle cx="29" cy="29" r="3" fill="#ffffff" opacity="0.9"/>
+    </g>
+    <g transform="translate(140,70)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#ffd36b" filter="url(#glowS)">4</text>
+    </g>
+    <g transform="translate(210,70)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#49c8ff" filter="url(#glowS)">1</text>
+    </g>
+    <g transform="translate(280,70)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#49c8ff" filter="url(#glowS)">1</text>
+    </g>
+    <g transform="translate(350,70)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#69ffe1" filter="url(#glowS)">2</text>
+    </g>
+    <g transform="translate(420,70)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#tile)" stroke="#5ab8d0" stroke-opacity="0.55"/>
+      <rect x="4" y="4" width="56" height="18" rx="6" fill="url(#tileHi)"/>
+    </g>
+
+    <!-- Row 2 -->
+    <g transform="translate(0,140)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#49c8ff" filter="url(#glowS)">1</text>
+    </g>
+    <g transform="translate(70,140)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#69ffe1" filter="url(#glowS)">2</text>
+    </g>
+    <g transform="translate(140,140)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#69ffe1" filter="url(#glowS)">2</text>
+    </g>
+    <g transform="translate(210,140)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+    </g>
+    <g transform="translate(280,140)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+    </g>
+    <g transform="translate(350,140)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#49c8ff" filter="url(#glowS)">1</text>
+    </g>
+    <g transform="translate(420,140)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#tile)" stroke="#5ab8d0" stroke-opacity="0.55"/>
+      <rect x="4" y="4" width="56" height="18" rx="6" fill="url(#tileHi)"/>
+      <rect x="52" y="8" width="3" height="3" rx="1" fill="#eaffff" opacity="0.8"/>
+    </g>
+
+    <!-- Row 3 -->
+    <g transform="translate(0,210)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+    </g>
+    <g transform="translate(70,210)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+    </g>
+    <g transform="translate(140,210)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#49c8ff" filter="url(#glowS)">1</text>
+    </g>
+    <g transform="translate(210,210)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#tile)" stroke="#5ab8d0" stroke-opacity="0.55"/>
+      <rect x="4" y="4" width="56" height="18" rx="6" fill="url(#tileHi)"/>
+    </g>
+    <g transform="translate(280,210)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#tile)" stroke="#5ab8d0" stroke-opacity="0.55"/>
+      <rect x="4" y="4" width="56" height="18" rx="6" fill="url(#tileHi)"/>
+    </g>
+    <g transform="translate(350,210)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#49c8ff" filter="url(#glowS)">1</text>
+    </g>
+    <g transform="translate(420,210)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+    </g>
+
+    <!-- Row 4 -->
+    <g transform="translate(0,280)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+    </g>
+    <g transform="translate(70,280)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+    </g>
+    <g transform="translate(140,280)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#49c8ff" filter="url(#glowS)">1</text>
+    </g>
+    <g transform="translate(210,280)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#rev)" stroke="#20384a"/>
+      <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="800" fill="#69ffe1" filter="url(#glowS)">2</text>
+    </g>
+    <g transform="translate(280,280)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#tile)" stroke="#5ab8d0" stroke-opacity="0.55"/>
+      <rect x="4" y="4" width="56" height="18" rx="6" fill="url(#tileHi)"/>
+    </g>
+    <g transform="translate(350,280)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#tile)" stroke="#5ab8d0" stroke-opacity="0.55"/>
+      <rect x="4" y="4" width="56" height="18" rx="6" fill="url(#tileHi)"/>
+    </g>
+    <g transform="translate(420,280)">
+      <rect x="0" y="0" width="64" height="64" rx="10" fill="url(#tile)" stroke="#5ab8d0" stroke-opacity="0.55"/>
+      <rect x="4" y="4" width="56" height="18" rx="6" fill="url(#tileHi)"/>
+    </g>
+  </g>
+</svg>
