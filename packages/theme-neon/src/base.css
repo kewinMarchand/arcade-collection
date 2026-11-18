@@ -112,6 +112,12 @@ body.game {
   line-height: 1.1;
   text-shadow: 0 0 12px color-mix(in srgb, var(--bui-color-primary, #69ffe1) 53%, transparent), 0 0 24px color-mix(in srgb, var(--bui-color-primary, #69ffe1) 30%, transparent);
   text-align: center;
+  animation: neon-title-pulse 3.6s ease-in-out infinite;
+}
+
+@keyframes neon-title-pulse {
+  0%, 100% { text-shadow: 0 0 12px color-mix(in srgb, var(--bui-color-primary, #69ffe1) 53%, transparent), 0 0 24px color-mix(in srgb, var(--bui-color-primary, #69ffe1) 30%, transparent); }
+  50% { text-shadow: 0 0 16px color-mix(in srgb, var(--bui-color-primary, #69ffe1) 70%, transparent), 0 0 34px color-mix(in srgb, var(--bui-color-primary, #69ffe1) 40%, transparent), 0 0 50px color-mix(in srgb, var(--bui-color-primary, #69ffe1) 18%, transparent); }
 }
 
 .neon-frame__subtitle {
@@ -162,6 +168,13 @@ body.game {
   align-items: center;
   justify-content: center;
   padding: 12px;
+  box-shadow: 0 0 0 1px #69ffe110, 0 0 28px #69ffe10d, inset 0 0 40px #00100866;
+  animation: neon-screen-glow 4s ease-in-out infinite;
+}
+
+@keyframes neon-screen-glow {
+  0%, 100% { box-shadow: 0 0 0 1px #69ffe110, 0 0 24px #69ffe10a, inset 0 0 40px #00100866; }
+  50% { box-shadow: 0 0 0 1px #69ffe118, 0 0 36px #69ffe114, inset 0 0 50px #00100855; }
 }
 
 .neon-screen > canvas,
@@ -270,5 +283,12 @@ body.game {
   .neon-side > .neon-panel--slot:only-child {
     flex: 1 1 auto;
     min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neon-screen,
+  .neon-frame__title {
+    animation: none !important;
   }
 }

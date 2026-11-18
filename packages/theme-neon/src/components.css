@@ -78,6 +78,12 @@
     border: 1px solid #65d8bd44;
     border-radius: 9px;
     background: #0a211dba;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .panel-stat:hover {
+    border-color: #65d8bd77;
+    box-shadow: 0 0 14px #22ffc022;
   }
 
   .panel-stat small,
@@ -114,6 +120,7 @@
     color: #edfffa;
     font: 700 0.9rem inherit;
     cursor: pointer;
+    transition: transform 0.14s ease, box-shadow 0.18s ease, border-color 0.18s ease, filter 0.18s ease, background 0.18s ease;
   }
 
   .panel-actions button.primary,
@@ -129,7 +136,17 @@
   .actions button:focus-visible,
   .game-footer button:focus-visible {
     border-color: var(--bui-color-primary, #69ffe1);
-    box-shadow: 0 0 16px #22ffc055;
+    box-shadow: 0 0 18px #22ffc055, inset 0 0 12px #69ffe122;
+    transform: translateY(-1px);
+    filter: brightness(1.06);
+  }
+
+  .panel-actions button:active,
+  .actions button:active,
+  .game-footer button:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 0 8px #22ffc033;
+    filter: brightness(0.98);
   }
 
   .help {
@@ -158,6 +175,13 @@
     background: #0a211dba;
     color: var(--bui-color-text-muted, #a9bab8);
     font-size: 0.82rem;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  }
+
+  .game-options .option:hover {
+    border-color: #65d8bd66;
+    box-shadow: 0 0 12px #22ffc018;
+    background: #0d2a25cc;
   }
 
   .game-options select {
