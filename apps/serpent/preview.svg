@@ -1,26 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
   <title id="title">Neon Serpent</title>
-  <desc id="desc">Un serpent néon réaliste serpente sur une grille vers une orbe rose.</desc>
+  <desc id="desc">Serpent lumineux sur une grille néon vers une orbe rose.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#10212a"/>
       <stop offset="1" stop-color="#071018"/>
     </linearGradient>
-    <linearGradient id="body" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#3fd9c0"/>
-      <stop offset="0.5" stop-color="#69ffe1"/>
-      <stop offset="1" stop-color="#a0ffcf"/>
-    </linearGradient>
-    <linearGradient id="belly" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#b8fff0"/>
-      <stop offset="1" stop-color="#69ffe1"/>
-    </linearGradient>
     <filter id="g" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="5" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feGaussianBlur stdDeviation="4" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
@@ -51,53 +38,34 @@
     <path d="M110 80v260M170 80v260M230 80v260M290 80v260M350 80v260M410 80v260M470 80v260M530 80v260M590 80v260"/>
     <path d="M110 108h520M110 168h520M110 228h520M110 288h520"/>
   </g>
-
-  <!-- Snake body: tapered segments forming a slithering S-curve -->
-  <g filter="url(#g)" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <!-- tail (thin) -->
-    <path d="M130 288 C160 288, 180 270, 200 250" stroke="#3fd9c0" stroke-width="6"/>
-    <path d="M200 250 C220 230, 230 200, 260 188" stroke="#4ae0c8" stroke-width="8"/>
-    <path d="M260 188 C290 176, 300 150, 320 138" stroke="#56e7d0" stroke-width="10"/>
-    <path d="M320 138 C350 126, 370 130, 400 148" stroke="#60eed8" stroke-width="12"/>
-    <path d="M400 148 C430 166, 440 195, 420 220" stroke="#69ffe1" stroke-width="13"/>
-    <path d="M420 220 C400 245, 370 250, 340 238" stroke="#69ffe1" stroke-width="13"/>
-    <path d="M340 238 C310 226, 300 200, 330 180" stroke="#60eed8" stroke-width="12"/>
-    <path d="M330 180 C360 160, 395 162, 425 178" stroke="#56e7d0" stroke-width="11"/>
-    <!-- belly highlight along the body -->
+  <!-- snake body (blocky cells like the game) -->
+  <g filter="url(#g)">
+    <!-- tail segment -->
+    <rect x="130" y="268" width="28" height="28" rx="6" fill="#3fd9c0" opacity="0.7"/>
+    <rect x="160" y="268" width="28" height="28" rx="6" fill="#4ae0c8" opacity="0.75"/>
+    <rect x="190" y="238" width="28" height="28" rx="6" fill="#56e7d0" opacity="0.8"/>
+    <rect x="190" y="208" width="28" height="28" rx="6" fill="#60eed8" opacity="0.85"/>
+    <rect x="220" y="208" width="28" height="28" rx="6" fill="#69ffe1" opacity="0.9"/>
+    <rect x="250" y="208" width="28" height="28" rx="6" fill="#69ffe1" opacity="0.9"/>
+    <rect x="280" y="208" width="28" height="28" rx="6" fill="#69ffe1" opacity="0.9"/>
+    <rect x="310" y="208" width="28" height="28" rx="6" fill="#69ffe1" opacity="0.9"/>
+    <rect x="340" y="208" width="28" height="28" rx="6" fill="#69ffe1" opacity="0.9"/>
+    <rect x="340" y="178" width="28" height="28" rx="6" fill="#60eed8" opacity="0.9"/>
+    <rect x="340" y="148" width="28" height="28" rx="6" fill="#56e7d0" opacity="0.9"/>
+    <rect x="370" y="148" width="28" height="28" rx="6" fill="#60eed8" opacity="0.9"/>
+    <rect x="400" y="148" width="28" height="28" rx="6" fill="#69ffe1" opacity="0.9"/>
+    <rect x="400" y="178" width="28" height="28" rx="6" fill="#69ffe1" opacity="0.9"/>
+    <!-- head -->
+    <rect x="400" y="208" width="28" height="28" rx="6" fill="#7bffe5"/>
+    <circle cx="410" cy="218" r="3" fill="#06231d"/>
+    <circle cx="420" cy="218" r="3" fill="#06231d"/>
+    <circle cx="411" cy="217" r="1.2" fill="#fff"/>
+    <circle cx="421" cy="217" r="1.2" fill="#fff"/>
   </g>
-  <!-- belly scales (small dots along the body) -->
-  <g fill="#b8fff0" opacity="0.5">
-    <circle cx="200" cy="250" r="2"/><circle cx="230" cy="215" r="2"/><circle cx="260" cy="188" r="2"/>
-    <circle cx="290" cy="162" r="2"/><circle cx="320" cy="138" r="2"/><circle cx="350" cy="132" r="2"/>
-    <circle cx="380" cy="140" r="2"/><circle cx="410" cy="158" r="2"/><circle cx="420" cy="190" r="2"/>
-    <circle cx="415" cy="220" r="2"/><circle cx="395" cy="240" r="2"/><circle cx="365" cy="242" r="2"/>
-    <circle cx="335" cy="230" r="2"/><circle cx="315" cy="205" r="2"/><circle cx="330" cy="180" r="2"/>
-    <circle cx="360" cy="168" r="2"/><circle cx="395" cy="166" r="2"/><circle cx="425" cy="178" r="2"/>
-  </g>
-  <!-- head -->
-  <g transform="translate(425 178)" filter="url(#g)">
-    <!-- head shape -->
-    <ellipse cx="0" cy="0" rx="16" ry="12" fill="url(#body)" stroke="#a0ffcf" stroke-width="1.5"/>
-    <!-- belly -->
-    <ellipse cx="2" cy="3" rx="9" ry="6" fill="url(#belly)" opacity="0.6"/>
-    <!-- eyes -->
-    <circle cx="-5" cy="-3" r="4" fill="#06231d"/>
-    <circle cx="-5" cy="-3" r="2.2" fill="#ff6dbe"/>
-    <circle cx="-4" cy="-4" r="0.9" fill="#fff"/>
-    <circle cx="5" cy="-3" r="4" fill="#06231d"/>
-    <circle cx="5" cy="-3" r="2.2" fill="#ff6dbe"/>
-    <circle cx="6" cy="-4" r="0.9" fill="#fff"/>
-    <!-- nostrils -->
-    <circle cx="12" cy="-1" r="1.2" fill="#06231d"/>
-    <circle cx="12" cy="3" r="1.2" fill="#06231d"/>
-    <!-- tongue -->
-    <path d="M16 1 Q26 1, 30 -3 M26 1 L30 5" stroke="#ff6dbe" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-  </g>
-  <!-- food orb -->
-  <g transform="translate(170 248)" filter="url(#g)">
-    <circle cx="0" cy="0" r="13" fill="#ff6dbe"/>
-    <circle cx="-4" cy="-4" r="4" fill="#ffdcec" opacity="0.8"/>
-    <path d="M16 -12 a22 22 0 0 1 8 18" fill="none" stroke="#ff6dbe" stroke-width="2.5" opacity="0.7" stroke-dasharray="3 5"/>
+  <!-- food -->
+  <g transform="translate(220 130)" filter="url(#g)">
+    <circle cx="0" cy="0" r="10" fill="#ff6dbe"/>
+    <circle cx="-3" cy="-3" r="3" fill="#ffdcec" opacity="0.8"/>
   </g>
   <text x="360" y="55" text-anchor="middle" fill="#7af7e0" font-family="system-ui,sans-serif" font-weight="800" font-size="28" letter-spacing="6">NEON SERPENT</text>
   <text x="360" y="354" text-anchor="middle" fill="#b9c9e8" font-family="system-ui,sans-serif" font-size="16" letter-spacing="3">GRANDIS SANS TE MORDRE</text>
