@@ -20,7 +20,7 @@ const shell = mountGameFrame({
         } else {
           const input = document.createElement('input');
           input.id = id; input.className = 'toggle'; input.type = 'checkbox';
-          if (id === 'sound') input.checked = true;
+          // sound off by default
           wrap.append(` ${label} `, input);
         }
         return wrap;

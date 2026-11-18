@@ -20,7 +20,7 @@ const shell = mountGameFrame({
         } else {
           const input = document.createElement('input');
           input.id = id; input.className = 'toggle'; input.type = 'checkbox';
-          if (id === 'sound') input.checked = true;
+          // sound off by default
           wrap.append(` ${label} `, input);
         }
         return wrap;
@@ -249,89 +249,127 @@ function update(dt) {
 // FIX 4: Draw 3 distinct ship silhouettes
 function drawShip(ctx, e, x, y, size, t) {
   const pulse = 0.7 + 0.3 * Math.sin(t * 3 + e.spawnTime * 0.001);
-  ctx.shadowColor = e.color;
-  ctx.shadowBlur = 18 * pulse;
+  const hull = e.color;
+  const trim = 'rgba(255,255,255,0.55)';
+  ctx.shadowColor = hull;
+  ctx.shadowBlur = 16 * pulse;
 
-  ctx.fillStyle = e.color;
-  ctx.globalAlpha = 0.9;
-
+  // base hull silhouette
+  ctx.fillStyle = hull;
+  ctx.globalAlpha = 0.92;
+  ctx.beginPath();
   if (e.shape === 0) {
-    // Classic delta-wing fighter
-    ctx.beginPath();
-    ctx.moveTo(0, -size * 1.1);
-    ctx.lineTo(size * 1.1, size * 0.5);
-    ctx.lineTo(size * 0.5, size * 0.8);
-    ctx.lineTo(0, size * 0.4);
-    ctx.lineTo(-size * 0.5, size * 0.8);
-    ctx.lineTo(-size * 1.1, size * 0.5);
-    ctx.closePath();
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    // fuselage
-    ctx.beginPath();
-    ctx.moveTo(0, -size * 1.2);
-    ctx.lineTo(size * 0.3, size * 0.5);
-    ctx.lineTo(0, size * 0.9);
-    ctx.lineTo(-size * 0.3, size * 0.5);
-    ctx.closePath();
-    ctx.fill();
-
+    ctx.moveTo(0, -size * 1.15);
+    ctx.lineTo(size * 1.15, size * 0.45);
+    ctx.lineTo(size * 0.45, size * 0.75);
+    ctx.lineTo(0, size * 0.35);
+    ctx.lineTo(-size * 0.45, size * 0.75);
+    ctx.lineTo(-size * 1.15, size * 0.45);
   } else if (e.shape === 1) {
-    // Wide beetle / bomber shape
-    ctx.beginPath();
-    ctx.moveTo(0, -size * 0.7);
-    ctx.lineTo(size * 1.3, -size * 0.1);
-    ctx.lineTo(size * 1.1, size * 0.7);
-    ctx.lineTo(size * 0.4, size * 1.0);
-    ctx.lineTo(0, size * 0.6);
-    ctx.lineTo(-size * 0.4, size * 1.0);
-    ctx.lineTo(-size * 1.1, size * 0.7);
-    ctx.lineTo(-size * 1.3, -size * 0.1);
-    ctx.closePath();
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    // cockpit dome
-    ctx.fillStyle = 'rgba(255,255,255,0.7)';
-    ctx.beginPath(); ctx.ellipse(0, -size * 0.1, size * 0.25, size * 0.35, 0, 0, Math.PI * 2); ctx.fill();
-
+    ctx.moveTo(0, -size * 0.75);
+    ctx.lineTo(size * 1.3, -size * 0.05);
+    ctx.lineTo(size * 1.05, size * 0.65);
+    ctx.lineTo(size * 0.35, size * 0.95);
+    ctx.lineTo(0, size * 0.55);
+    ctx.lineTo(-size * 0.35, size * 0.95);
+    ctx.lineTo(-size * 1.05, size * 0.65);
+    ctx.lineTo(-size * 1.3, -size * 0.05);
   } else {
-    // Arrow / interceptor — narrow and aggressive
-    ctx.beginPath();
-    ctx.moveTo(0, -size * 1.4);
-    ctx.lineTo(size * 0.6, size * 0.2);
-    ctx.lineTo(size * 1.0, size * 0.6);
-    ctx.lineTo(size * 0.3, size * 0.4);
+    ctx.moveTo(0, -size * 1.45);
+    ctx.lineTo(size * 0.55, size * 0.15);
+    ctx.lineTo(size * 1.05, size * 0.55);
+    ctx.lineTo(size * 0.25, size * 0.4);
     ctx.lineTo(0, size * 1.0);
-    ctx.lineTo(-size * 0.3, size * 0.4);
-    ctx.lineTo(-size * 1.0, size * 0.6);
-    ctx.lineTo(-size * 0.6, size * 0.2);
-    ctx.closePath();
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    // spine line
-    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.moveTo(0, -size * 1.4); ctx.lineTo(0, size * 1.0); ctx.stroke();
+    ctx.lineTo(-size * 0.25, size * 0.4);
+    ctx.lineTo(-size * 1.05, size * 0.55);
+    ctx.lineTo(-size * 0.55, size * 0.15);
   }
+  ctx.closePath();
+  ctx.fill();
 
-  ctx.globalAlpha = 1;
+  // armor overlay / fuselage
+  ctx.globalAlpha = 0.55;
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath();
+  if (e.shape === 0) {
+    ctx.moveTo(0, -size * 1.0); ctx.lineTo(size * 0.28, size * 0.45); ctx.lineTo(0, size * 0.8); ctx.lineTo(-size * 0.28, size * 0.45);
+  } else if (e.shape === 1) {
+    if (ctx.roundRect) ctx.roundRect(-size * 0.45, -size * 0.25, size * 0.9, size * 0.55, size * 0.12);
+    else ctx.rect(-size * 0.45, -size * 0.25, size * 0.9, size * 0.55);
+  } else {
+    ctx.moveTo(0, -size * 1.2); ctx.lineTo(size * 0.18, size * 0.5); ctx.lineTo(0, size * 0.85); ctx.lineTo(-size * 0.18, size * 0.5);
+  }
+  ctx.closePath();
+  ctx.fill();
+
   ctx.shadowBlur = 0;
+  ctx.globalAlpha = 1;
 
-  // Cockpit (shapes 0 and 2)
-  if (e.shape !== 1) {
-    ctx.fillStyle = 'rgba(255,255,255,0.85)';
-    ctx.beginPath(); ctx.ellipse(0, -size * 0.1, size * 0.18, size * 0.25, 0, 0, Math.PI * 2); ctx.fill();
+  // neon trim / panel lines
+  ctx.strokeStyle = trim;
+  ctx.lineWidth = Math.max(1, size * 0.06);
+  ctx.beginPath();
+  if (e.shape === 0) {
+    ctx.moveTo(-size * 0.9, size * 0.35); ctx.lineTo(0, -size * 0.2); ctx.lineTo(size * 0.9, size * 0.35);
+  } else if (e.shape === 1) {
+    ctx.moveTo(-size * 1.05, size * 0.1); ctx.lineTo(size * 1.05, size * 0.1);
+    ctx.moveTo(0, -size * 0.45); ctx.lineTo(0, size * 0.35);
+  } else {
+    ctx.moveTo(0, -size * 1.35); ctx.lineTo(0, size * 0.9);
+  }
+  ctx.stroke();
+
+  // wingtip / hull lights
+  ctx.fillStyle = '#ffffff';
+  const tips = e.shape === 1 ? [[-1.15, 0.0], [1.15, 0.0]] : [[-1.0, 0.45], [1.0, 0.45]];
+  for (const [tx, ty] of tips) {
+    ctx.globalAlpha = 0.9;
+    ctx.beginPath(); ctx.arc(tx * size, ty * size, Math.max(1.2, size * 0.07), 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
+  // cockpit canopy (ship/lander inspired)
+  const cockpitG = ctx.createRadialGradient(0, -size * 0.15, size * 0.05, 0, -size * 0.05, size * 0.32);
+  cockpitG.addColorStop(0, 'rgba(240,255,255,0.95)');
+  cockpitG.addColorStop(1, 'rgba(150,240,255,0.35)');
+  ctx.fillStyle = cockpitG;
+  ctx.beginPath();
+  ctx.ellipse(0, e.shape === 1 ? -size * 0.05 : -size * 0.12, size * 0.22, size * 0.28, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+  ctx.lineWidth = Math.max(1, size * 0.04);
+  ctx.stroke();
+
+  // engine thrusters / exhausts
+  const ex = e.boss ? '#ff4d6d' : '#ffd36b';
+  const thrusters = e.shape === 1 ? [[-0.35, 0.9], [0.35, 0.9]] : [[0, 0.85]];
+  for (const [px, py] of thrusters) {
+    ctx.save();
+    ctx.shadowColor = ex; ctx.shadowBlur = 16 * pulse;
+    const eg = ctx.createRadialGradient(px * size, py * size, 0, px * size, (py + 0.15) * size, size * 0.28);
+    eg.addColorStop(0, '#ffffff');
+    eg.addColorStop(0.35, ex);
+    eg.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = eg;
+    ctx.beginPath(); ctx.ellipse(px * size, (py + 0.08) * size, size * 0.16, size * 0.22, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
   }
 
-  // Engine glow (pulsed)
-  ctx.fillStyle = e.boss ? '#ff4d6d' : '#ffd36b';
-  ctx.shadowColor = e.boss ? '#ff4d6d' : '#ffd36b'; ctx.shadowBlur = 14 * pulse;
-  ctx.beginPath(); ctx.ellipse(0, size * 0.85, size * 0.22, size * 0.13, 0, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+  // underside glow ring accent (lander-inspired)
+  ctx.strokeStyle = hull;
+  ctx.globalAlpha = 0.35;
+  ctx.lineWidth = Math.max(1, size * 0.05);
+  ctx.beginPath(); ctx.ellipse(0, size * 0.15, size * 0.5, size * 0.18, 0, 0, Math.PI * 2); ctx.stroke();
+  ctx.globalAlpha = 1;
 
   // hp bar
-  if (e.hp > 1) {
-    const maxHp = e.boss ? 4 : (DIFF[difficultyInput.value] || DIFF.arcade).hp;
-    ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(-size, -size - 8, size * 2, 4);
-    ctx.fillStyle = e.color; ctx.fillRect(-size, -size - 8, size * 2 * (e.hp / (maxHp * (e.boss ? 4 : 1))), 4);
+  const diff = DIFF[difficultyInput.value] || DIFF.arcade;
+  const maxHp = e.boss ? diff.hp * 4 : diff.hp;
+  if (maxHp > 1 || e.boss) {
+    const ratio = Math.max(0, Math.min(1, e.hp / maxHp));
+    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(-size, -size - 8, size * 2, 4);
+    ctx.fillStyle = hull; ctx.fillRect(-size, -size - 8, size * 2 * ratio, 4);
+    ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 1; ctx.strokeRect(-size, -size - 8, size * 2, 4);
   }
 }
 
