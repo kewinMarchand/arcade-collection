@@ -157,7 +157,7 @@ function spawnEnemy() {
 
   // FIX 4: assign random shape (0, 1, 2) on spawn
   enemies.push({
-    x, y, z: 1.0,
+    x, y, z: 0.88,
     hp: isBoss ? d.hp * 4 : d.hp,
     boss: isBoss,
     color: isBoss ? '#ff4d6d' : ['#7bffe5', '#ff6dbe', '#ffd36b', '#8b8bff'][Math.floor(Math.random() * 4)],
@@ -174,8 +174,8 @@ function shoot() {
   if (state !== 'playing') return;
   if (ammo <= 0) { if (!reloading) { reloading = 1.2; audio.tone(180, 0.1, 'sawtooth', 0.03); } return; }
   ammo--;
-  // FIX 2: store start and end of tracer line
-  bullets.push({ x: aimX, y: aimY, fromX: CX, fromY: CY, life: 0.15 });
+  // tracer from player weapon toward aim point
+  bullets.push({ x: aimX, y: aimY, fromX: CX + 70, fromY: H - 30, life: 0.15 });
   // hit test: find the enemy closest to camera (smallest z) whose hitbox contains the aim
   let nearest = null, nearestZ = Infinity;
   for (const e of enemies) {
@@ -368,8 +368,8 @@ function draw() {
   }
   ctx.globalAlpha = 1;
 
-  // enemies sorted by z (far to near)
-  const sorted = enemies.slice().sort((a, b) => a.z - b.z);
+  // enemies sorted far to near for correct overlap
+  const sorted = enemies.slice().sort((a, b) => b.z - a.z);
   const t = elapsed;
 
   for (const e of sorted) {
