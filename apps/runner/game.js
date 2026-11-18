@@ -115,12 +115,12 @@ const DIFF = {
   chaos: { baseSpeed: 340, gain: 6, spawn: 0.9, spawnMin: 0.45 },
 };
 
-let state = 'ready', player = { y: ground - 48, vy: 0, slide: 0, angle: 0, squash: 1 }, obstacles = [], orbs = [], score = 0, best = Number(localStorage.getItem('prismRunnerBest')) || 0, last = 0, elapsed = 0, spawn = 1.2, orbSpawn = 2.2, shake = 0, particles = [], trail = [], scroll = 0, crouchHeld = false, pulses = [];
+let state = 'ready', player = { y: ground - 48, vy: 0, slide: 0, angle: 0, squash: 1 }, obstacles = [], orbs = [], score = 0, best = Number(localStorage.getItem('prismRunnerBest')) || 0, last = 0, elapsed = 0, spawn = 1.2, orbSpawn = 2.2, shake = 0, particles = [], trail = [], scroll = 0, crouchHeld = false, pulses = [], level = 1;
 bestEl.textContent = String(best);
 
 function start() {
   const d = DIFF[difficultyInput.value] || DIFF.arcade;
-  state = 'playing'; player = { y: ground - 48, vy: 0, slide: 0, angle: 0, squash: 1 }; obstacles = []; orbs = []; score = 0; elapsed = 0; spawn = d.spawn * 0.7; orbSpawn = 1.8; shake = 0; particles = []; trail = []; pulses = []; statusEl.textContent = 'En course';
+  state = 'playing'; player = { y: ground - 48, vy: 0, slide: 0, angle: 0, squash: 1 }; obstacles = []; orbs = []; score = 0; elapsed = 0; spawn = d.spawn * 0.7; orbSpawn = 1.8; shake = 0; particles = []; trail = []; pulses = []; level = 1; statusEl.textContent = 'En course';
   audio.tone(520, 0.08, 'triangle', 0.03);
 }
 
@@ -152,7 +152,7 @@ function ring(x, y, color) { pulses.push({ x, y, r: 6, life: 0.35, color }); }
 
 function speedNow() {
   const d = DIFF[difficultyInput.value] || DIFF.arcade;
-  return d.baseSpeed + Math.min(260, elapsed * d.gain);
+  return d.baseSpeed + Math.min(260, elapsed * d.gain) + (level - 1) * 22;
 }
 
 function update(dt) {
@@ -168,6 +168,13 @@ function update(dt) {
   const sp = speedNow();
   elapsed += dt;
   score = Math.floor(elapsed * 10);
+  const newLevel = Math.floor(score / 500) + 1;
+  if (newLevel > level) {
+    level = newLevel;
+    shake = 0.7;
+    pulses.push({ x: W / 2, y: H / 2, r: 10, life: 0.6, color: '#7bffe5' });
+    audio.tone(520 + level * 40, 0.16, 'triangle', 0.03);
+  }
   scroll += dt * sp;
   player.vy += 1500 * dt;
   player.y += player.vy * dt;
@@ -279,6 +286,8 @@ function draw(t) {
   ctx.strokeStyle = '#2a3f66'; ctx.lineWidth = 1;
   for (let x = -(scroll % 60); x < W; x += 60) { ctx.beginPath(); ctx.moveTo(x, ground); ctx.lineTo(x - 40, H); ctx.stroke(); }
   ctx.strokeStyle = '#7bffe5'; ctx.shadowColor = '#7bffe5'; ctx.shadowBlur = 12; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(0, ground); ctx.lineTo(W, ground); ctx.stroke(); ctx.shadowBlur = 0;
+  ctx.textAlign = 'center'; ctx.fillStyle = 'rgba(123,255,224,0.7)'; ctx.font = '700 11px ui-sans-serif,system-ui'; ctx.fillText('NIVEAU', W / 2, 22);
+  ctx.fillStyle = '#eafff8'; ctx.font = '800 20px ui-sans-serif,system-ui'; ctx.fillText(String(level), W / 2, 44);
 
   for (const o of orbs) {
     const r = o.r * (1 + 0.1 * Math.sin(t * 0.008 + o.phase));
@@ -314,7 +323,7 @@ function draw(t) {
     ctx.fillStyle = '#04100ddc'; ctx.fillRect(0, 0, W, H); ctx.textAlign = 'center'; ctx.fillStyle = '#c7a2ff'; ctx.font = '800 32px system-ui';
     ctx.fillText(state === 'ready' ? 'NEON RUNNER' : state === 'paused' ? 'PAUSE' : 'CHUTE !', W / 2, H / 2);
     ctx.fillStyle = '#edfffa'; ctx.font = '16px system-ui';
-    ctx.fillText(state === 'ready' ? 'Espace ou clic pour courir' : state === 'paused' ? 'Clique sur Pause pour reprendre' : 'Clique ou Recommencer pour retenter', W / 2, H / 2 + 34);
+    ctx.fillText(state === 'ready' ? 'Espace ou clic pour courir' : state === 'paused' ? 'Clique sur Pause pour reprendre' : `Niveau ${level} - Clique ou Recommencer pour retenter`, W / 2, H / 2 + 34);
   }
 }
 
