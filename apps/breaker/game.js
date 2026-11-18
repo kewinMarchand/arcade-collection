@@ -538,6 +538,21 @@ function draw() {
   if (state === 'ready' || state === 'paused' || state === 'over' || state === 'won') {
     ctx.fillStyle = '#04100ddc';
     ctx.fillRect(0, 0, W, H);
+
+    const overlayTime = performance.now() * 0.001;
+    for (const s of stars) {
+      const tw = 0.5 + 0.5 * Math.sin(overlayTime * s.sp + s.tw);
+      ctx.globalAlpha = 0.3 + 0.6 * s.a * tw;
+      ctx.fillStyle = s.r > 2.2 ? '#ffffff' : '#e6fffb';
+      ctx.shadowColor = '#8fffe8';
+      ctx.shadowBlur = s.r > 1.8 ? 10 : 5;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+
     ctx.textAlign = 'center';
     ctx.fillStyle = '#69ffe1';
     ctx.font = '900 36px system-ui';

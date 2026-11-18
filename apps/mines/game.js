@@ -381,6 +381,21 @@ function draw(t) {
   if (state === 'paused' || state === 'ready' || state === 'over' || state === 'won') {
     ctx.fillStyle = 'rgba(2, 8, 18, 0.78)';
     ctx.fillRect(0, 0, W, W);
+
+    const overlayTime = performance.now() * 0.001;
+    for (const s0 of stars) {
+      const tw = 0.55 + 0.45 * Math.sin(overlayTime * s0.sp + s0.tw);
+      ctx.globalAlpha = 0.35 + 0.55 * s0.a * tw;
+      ctx.fillStyle = s0.r > 1.8 ? '#ffffff' : '#dffcff';
+      ctx.shadowColor = '#8be9ff';
+      ctx.shadowBlur = s0.r > 1.4 ? 8 : 4;
+      ctx.beginPath();
+      ctx.arc(s0.x, s0.y, s0.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+
     const title = state === 'paused' ? 'PAUSE' : state === 'over' ? 'MINE !' : state === 'won' ? 'GRILLE SÉCURISÉE' : 'NEON MINES';
     const sub = state === 'ready' ? 'Révèle ta première case' : state === 'paused' ? 'Clique sur Pause pour reprendre' : 'Recommencer pour rejouer';
     ctx.textAlign = 'center';
