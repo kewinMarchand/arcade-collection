@@ -2,7 +2,6 @@
 
 Labyrinthe néon : mangez les pastilles, échappez aux fantômes, passez au niveau suivant.
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github&logoColor=white)](https://github.com/kewinMarchand/neon-games)
 
 ## Ouvrir Neon Maze
 

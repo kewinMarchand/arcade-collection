@@ -1,6 +1,5 @@
 # Neon Runner
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github&logoColor=white)](https://github.com/kewinMarchand/neon-runner)
 
 ![Aperçu de Neon Runner : un coureur lumineux saute par-dessus des obstacles néon](preview.svg)
 

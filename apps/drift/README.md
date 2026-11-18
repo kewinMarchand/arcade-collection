@@ -1,6 +1,5 @@
 # Neon Drift
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github&logoColor=white)](https://github.com/kewinMarchand/neon-drift)
 
 ![Aperçu de Neon Drift : une voiture de course dérive sur une piste sous des portails néon](preview.svg)
 

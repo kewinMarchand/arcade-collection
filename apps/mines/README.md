@@ -1,6 +1,5 @@
 # Neon Mines
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github&logoColor=white)](https://github.com/kewinMarchand/neon-mines)
 
 ![Aperçu de Neon Mines : grille de démineur néon avec indices et mine](preview.svg)
 

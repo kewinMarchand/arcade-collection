@@ -1,6 +1,5 @@
 # Neon Orbiter
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github&logoColor=white)](https://github.com/kewinMarchand/neon-orbiter)
 
 ![Aperçu de Neon Orbiter : un lander néon alunit sur une plate-forme bonus](preview.svg)
 

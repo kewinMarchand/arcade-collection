@@ -1,6 +1,5 @@
 # Neon Invaders
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github&logoColor=white)](https://github.com/kewinMarchand/neon-invaders)
 
 ![Aperçu de Neon Invaders : un vaisseau défend la Terre contre une flotte d'aliens néon](preview.svg)
 

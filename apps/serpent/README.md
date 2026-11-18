@@ -1,6 +1,5 @@
 # Neon Serpent
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github&logoColor=white)](https://github.com/kewinMarchand/neon-serpent)
 
 ![Aperçu de Neon Serpent : un serpent lumineux sur une grille néon](preview.svg)
 
