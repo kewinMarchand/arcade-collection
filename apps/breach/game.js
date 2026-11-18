@@ -139,7 +139,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   const scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(0x02060a, 0.045);
   const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 120);
-  camera.position.set(2.5, 1.6, 2.5);
+  camera.position.set(6, 1.6, 6);
 
   scene.add(new THREE.AmbientLight(0x3fd6ff, 0.35));
   scene.add(new THREE.HemisphereLight(0x2aa8ff, 0x041018, 0.45));
@@ -270,7 +270,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     state.running = false; state.over = false; state.won = false;
     state.health = 100; state.ammo = 24; state.reserve = 72;
     state.yaw = Math.PI * 0.75; state.pitch = 0; state.reloading = false; state.reloadT = 0; state.damageT = 0;
-    camera.position.set(2.5, 1.6, 2.5);
+    camera.position.set(6, 1.6, 6);
     for (const e of enemies) { e.hp = 60; e.alive = true; e.group.visible = true; e.light.visible = true; e.cooldown = Math.random() * 1.2; }
     for (const p of pickups) { p.alive = true; p.mesh.visible = true; }
     syncHud();
