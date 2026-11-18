@@ -155,15 +155,15 @@ let audioContext;
 let stars = [];
 
 function initStars() {
-  stars = Array.from({ length: 120 }, () => ({
+  stars = Array.from({ length: 160 }, () => ({
     x: Math.random() * W,
     y: Math.random() * H,
-    r: Math.random() < 0.12 ? 2.2 : Math.random() * 1.5 + 0.5,
-    a: 0.3 + Math.random() * 0.7,
+    r: Math.random() < 0.15 ? 2.8 : Math.random() < 0.35 ? 2.0 : 1.1 + Math.random() * 0.8,
+    a: 0.45 + Math.random() * 0.55,
     tw: Math.random() * Math.PI * 2,
-    sp: 0.6 + Math.random() * 1.6,
-    vy: 10 + Math.random() * 28,
-    vx: (Math.random() - 0.5) * 8,
+    sp: 0.8 + Math.random() * 2.0,
+    vy: 12 + Math.random() * 30,
+    vx: (Math.random() - 0.5) * 10,
   }));
 }
 
@@ -380,11 +380,11 @@ function draw() {
 
   const time = performance.now() * 0.001;
   for (const s of stars) {
-    const tw = 0.55 + 0.45 * Math.sin(time * s.sp + s.tw);
-    ctx.globalAlpha = Math.min(1, s.a * tw);
-    ctx.fillStyle = s.r > 1.8 ? '#ffffff' : '#dffcff';
-    ctx.shadowColor = '#7af7e0';
-    ctx.shadowBlur = s.r > 1.6 ? 8 : 0;
+    const tw = 0.5 + 0.5 * Math.sin(time * s.sp + s.tw);
+    ctx.globalAlpha = 0.35 + 0.65 * s.a * tw;
+    ctx.fillStyle = s.r > 2.2 ? '#ffffff' : '#e6fffb';
+    ctx.shadowColor = '#8fffe8';
+    ctx.shadowBlur = s.r > 1.8 ? 10 : 5;
     ctx.beginPath();
     ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
     ctx.fill();

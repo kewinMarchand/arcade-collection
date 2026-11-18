@@ -222,10 +222,10 @@ function draw(t) {
     ctx.save();
     if (!isRevealed) {
       const g = ctx.createLinearGradient(px, py, px, py + CELL);
-      g.addColorStop(0, '#0f2540');
-      g.addColorStop(1, '#081629');
+      g.addColorStop(0, 'rgba(15, 37, 64, 0.78)');
+      g.addColorStop(1, 'rgba(8, 22, 41, 0.82)');
       ctx.fillStyle = g;
-      ctx.strokeStyle = 'rgba(105, 255, 225, 0.35)';
+      ctx.strokeStyle = 'rgba(105, 255, 225, 0.4)';
       ctx.lineWidth = 1.5;
       ctx.shadowColor = 'rgba(105, 255, 225, 0.18)';
       ctx.shadowBlur = 8;
@@ -235,23 +235,23 @@ function draw(t) {
       ctx.stroke();
       ctx.shadowBlur = 0;
       // inner sheen
-      ctx.strokeStyle = 'rgba(180, 255, 245, 0.12)';
+      ctx.strokeStyle = 'rgba(180, 255, 245, 0.14)';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.roundRect(px + pad + 3, py + pad + 3, CELL - pad * 2 - 6, CELL * 0.28, 6);
       ctx.stroke();
       // tiny corner stars
-      ctx.fillStyle = 'rgba(200, 245, 255, 0.18)';
+      ctx.fillStyle = 'rgba(220, 250, 255, 0.28)';
       ctx.fillRect(px + 8, py + 8, 2, 2);
       ctx.fillRect(px + CELL - 10, py + 8, 2, 2);
     } else {
       const g = ctx.createLinearGradient(px, py, px, py + CELL);
-      g.addColorStop(0, '#071a1f');
-      g.addColorStop(1, '#041015');
+      g.addColorStop(0, 'rgba(7, 26, 31, 0.72)');
+      g.addColorStop(1, 'rgba(4, 16, 21, 0.78)');
       ctx.fillStyle = g;
-      ctx.strokeStyle = mines.has(i) ? 'rgba(255, 100, 143, 0.55)' : 'rgba(105, 255, 225, 0.18)';
+      ctx.strokeStyle = mines.has(i) ? 'rgba(255, 100, 143, 0.55)' : 'rgba(105, 255, 225, 0.22)';
       ctx.lineWidth = 1.5;
-      ctx.shadowColor = mines.has(i) ? 'rgba(255, 100, 143, 0.25)' : 'rgba(105, 255, 225, 0.08)';
+      ctx.shadowColor = mines.has(i) ? 'rgba(255, 100, 143, 0.25)' : 'rgba(105, 255, 225, 0.1)';
       ctx.shadowBlur = mines.has(i) ? 14 : 6;
       ctx.beginPath();
       ctx.roundRect(px + pad, py + pad, CELL - pad * 2, CELL - pad * 2, 8);
