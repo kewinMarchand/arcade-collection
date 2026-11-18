@@ -276,7 +276,8 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 6px 10px;
+    min-height: 34px;
+    padding: 0 12px;
     border: 1px solid #65d8bd55;
     border-radius: 8px;
     background: #0a211dba;
@@ -302,8 +303,10 @@
 
   .neon-frame__action--source {
     width: 34px;
+    min-height: 34px;
     height: 34px;
     padding: 0;
+    flex: 0 0 34px;
   }
 
   .neon-frame__action--source svg {
@@ -334,10 +337,13 @@
   .neon-frame--game:fullscreen .neon-frame__body,
   .neon-frame--game.is-fullscreen .neon-frame__body {
     flex: 1 1 auto;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: minmax(0, 1fr) !important;
     gap: 0;
     padding: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
   }
 
