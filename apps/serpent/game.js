@@ -1,4 +1,4 @@
-import { mountGameFrame } from '../../../packages/ui/src/gameFrame.js';
+import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 import { nextCell, hitsWall, hitsSelf, opposite, freeCell } from './game-logic.js';
 
 const shell = mountGameFrame({

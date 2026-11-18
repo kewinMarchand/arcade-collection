@@ -1,5 +1,5 @@
 
-import { mountGameFrame } from '../../../packages/ui/src/gameFrame.js';
+import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 
     (() => {
       const shell = mountGameFrame({

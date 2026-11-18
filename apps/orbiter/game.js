@@ -1,4 +1,4 @@
-import { mountGameFrame } from '../../../packages/ui/src/gameFrame.js';
+import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 import { safeLanding, padBonus, groundAt } from './game-logic.js';
 
 const shell = mountGameFrame({
