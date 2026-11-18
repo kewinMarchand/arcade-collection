@@ -12,60 +12,60 @@ Une collection de neuf mini-jeux indépendants, gratuits et jouables directement
 
 ### Neon Invaders
 
-[![Aperçu de Neon Invaders](https://raw.githubusercontent.com/kewinMarchand/neon-invaders/main/preview.svg)](https://kewinmarchand.github.io/neon-invaders/)
+[![Aperçu de Neon Invaders](apps/invaders/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/invaders/)
 
-[Code source](https://github.com/kewinMarchand/neon-invaders) — Défendez votre base contre des vagues d'envahisseurs.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/invaders/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/invaders) — Défendez votre base contre des vagues d'envahisseurs.
 
 ### Neon Breaker
 
-[![Aperçu de Neon Breaker](https://raw.githubusercontent.com/kewinMarchand/neon-breaker/main/preview.svg)](https://kewinMarchand.github.io/neon-breaker/)
+[![Aperçu de Neon Breaker](apps/breaker/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/breaker/)
 
-[Code source](https://github.com/kewinMarchand/neon-breaker) — Cassez les briques et gardez la balle en jeu.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/breaker/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/breaker) — Cassez les briques et gardez la balle en jeu.
 
 ### Neon Columns
 
-[![Aperçu de Neon Columns](https://raw.githubusercontent.com/kewinMarchand/neon-columns/main/preview.svg)](https://kewinMarchand.github.io/neon-columns/)
+[![Aperçu de Neon Columns](apps/columns/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/columns/)
 
-[Code source](https://github.com/kewinMarchand/neon-columns) — Alignez des gemmes pour déclencher des réactions en chaîne.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/columns/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/columns) — Alignez des gemmes pour déclencher des réactions en chaîne.
 
 ### Neon Drift
 
-[![Aperçu de Neon Drift](https://raw.githubusercontent.com/kewinMarchand/neon-drift/main/preview.svg)](https://kewinMarchand.github.io/neon-drift/)
+[![Aperçu de Neon Drift](apps/drift/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/drift/)
 
-[Code source](https://github.com/kewinMarchand/neon-drift) — Pilotez une voiture sur le circuit, évitez les obstacles et récoltez les orbes.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/drift/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/drift) — Pilotez une voiture sur le circuit, évitez les obstacles et récoltez les orbes.
 
 ### Neon Runner
 
-[![Aperçu de Neon Runner](https://raw.githubusercontent.com/kewinMarchand/neon-runner/main/preview.svg)](https://kewinMarchand.github.io/neon-runner/)
+[![Aperçu de Neon Runner](apps/runner/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/runner/)
 
-[Code source](https://github.com/kewinMarchand/neon-runner) — Sautez et glissez pour éviter les obstacles.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/runner/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/runner) — Sautez et glissez pour éviter les obstacles.
 
 ### Neon Defender
 
-[![Aperçu de Neon Defender](https://raw.githubusercontent.com/kewinMarchand/neon-defender/main/preview.svg)](https://kewinMarchand.github.io/neon-defender/)
+[![Aperçu de Neon Defender](apps/defender/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/defender/)
 
-[Code source](https://github.com/kewinMarchand/neon-defender) — Orientez le bouclier pour intercepter les photons.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/defender/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/defender) — Orientez le bouclier pour intercepter les photons.
 
 ### Neon Mines
 
-[![Aperçu de Neon Mines](https://raw.githubusercontent.com/kewinMarchand/neon-mines/main/preview.svg)](https://kewinMarchand.github.io/neon-mines/)
+[![Aperçu de Neon Mines](apps/mines/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/mines/)
 
-[Code source](https://github.com/kewinMarchand/neon-mines) — Déduisez l'emplacement des mines à partir des indices.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/mines/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/mines) — Déduisez l'emplacement des mines à partir des indices.
 
 ### Neon Serpent
 
-[![Aperçu de Neon Serpent](https://raw.githubusercontent.com/kewinMarchand/neon-serpent/main/preview.svg)](https://kewinMarchand.github.io/neon-serpent/)
+[![Aperçu de Neon Serpent](apps/serpent/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/serpent/)
 
-[Code source](https://github.com/kewinMarchand/neon-serpent) — Grandissez sans vous mordre, la vitesse s'emballe.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/serpent/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/serpent) — Grandissez sans vous mordre, la vitesse s'emballe.
 
 ### Neon Orbiter
 
-[![Aperçu de Neon Orbiter](https://raw.githubusercontent.com/kewinMarchand/neon-orbiter/main/preview.svg)](https://kewinMarchand.github.io/neon-orbiter/)
+[![Aperçu de Neon Orbiter](apps/orbiter/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/orbiter/)
 
-[Code source](https://github.com/kewinMarchand/neon-orbiter) — Alunissez en douceur : gravité, carburant et plates-formes bonus.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/orbiter/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/orbiter) — Alunissez en douceur : gravité, carburant et plates-formes bonus.
 
 ## Thème
 
 Ce portail et les jeux utilisent la base CSS du [Boilerplate Neon](https://github.com/kewinMarchand/boilerplate-neon) (`neon/neon-tokens.css`, `neon-base.css`, `neon-components.css`).
 
-Les jeux restent autonomes dans leurs dépôts respectifs ; ce dépôt fournit le portail et l'identité visuelle de la collection.
+Ce dépôt (monorepo `neon-games`) regroupe le portail et les jeux de la collection.
