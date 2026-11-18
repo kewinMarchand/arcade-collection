@@ -19,7 +19,7 @@ Lander de lune version néon : gravité, carburant limité et plates-formes d'al
 
 Un alunissage réussi demande une vitesse verticale et latérale faible et un module bien droit. Le meilleur score est conservé dans le navigateur.
 
-[Retour à la collection Neon Arcade](https://kewinmarchand.github.io/neon-arcade/)
+[Retour à la collection Neon Games](https://kewinmarchand.github.io/neon-games/)
 
 ## Thème
 

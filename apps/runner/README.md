@@ -21,7 +21,7 @@ Jeu de course arcade : sautez et glissez pour éviter les obstacles et tenir la 
 
 Le meilleur score est conservé dans le navigateur.
 
-[Retour à la collection Neon Arcade](https://kewinmarchand.github.io/neon-arcade/)
+[Retour à la collection Neon Games](https://kewinmarchand.github.io/neon-games/)
 
 ## Thème
 

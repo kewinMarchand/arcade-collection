@@ -19,7 +19,7 @@ Le classique du serpent, version néon : grandissez sans vous mordre, la vitesse
 
 Chaque orbe attrapée allonge le serpent et accélère le rythme. Le meilleur score est conservé dans le navigateur.
 
-[Retour à la collection Neon Arcade](https://kewinmarchand.github.io/neon-arcade/)
+[Retour à la collection Neon Games](https://kewinmarchand.github.io/neon-games/)
 
 ## Thème
 

@@ -21,7 +21,7 @@ Jeu d'arcade de défense : orientez le bouclier pour intercepter les photons et 
 
 Le meilleur score est conservé dans le navigateur.
 
-[Retour à la collection Neon Arcade](https://kewinmarchand.github.io/neon-arcade/)
+[Retour à la collection Neon Games](https://kewinmarchand.github.io/neon-games/)
 
 ## Thème
 

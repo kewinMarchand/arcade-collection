@@ -20,7 +20,7 @@ Jeu d'arcade spatial : défendez votre base contre des vagues d'envahisseurs.
 
 Éliminez les envahisseurs avant qu'ils n'atteignent la base.
 
-[Retour à la collection Neon Arcade](https://kewinmarchand.github.io/neon-arcade/)
+[Retour à la collection Neon Games](https://kewinmarchand.github.io/neon-games/)
 
 ## Thème
 

@@ -21,7 +21,7 @@ Jeu d'arcade de casse-briques : détruisez les briques et gardez la balle en jeu
 
 Cassez les briques pour marquer des points et passer les niveaux.
 
-[Retour à la collection Neon Arcade](https://kewinmarchand.github.io/neon-arcade/)
+[Retour à la collection Neon Games](https://kewinmarchand.github.io/neon-games/)
 
 ## Thème
 

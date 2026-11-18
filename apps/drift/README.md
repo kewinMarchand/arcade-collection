@@ -21,7 +21,7 @@ Jeu d'arcade de pilotage : dirigez votre voiture sur la piste, évitez les obsta
 
 Le meilleur score est conservé dans le navigateur.
 
-[Retour à la collection Neon Arcade](https://kewinmarchand.github.io/neon-arcade/)
+[Retour à la collection Neon Games](https://kewinmarchand.github.io/neon-games/)
 
 ## Thème
 

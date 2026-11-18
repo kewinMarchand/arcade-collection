@@ -21,7 +21,7 @@ Jeu de puzzle arcade : faites tomber des colonnes de gemmes et alignez les coule
 
 Alignez au moins trois gemmes de même couleur horizontalement, verticalement ou en diagonale. Les gemmes restantes tombent et peuvent créer des réactions en chaîne.
 
-[Retour à la collection Neon Arcade](https://kewinmarchand.github.io/neon-arcade/)
+[Retour à la collection Neon Games](https://kewinmarchand.github.io/neon-games/)
 
 ## Thème
 

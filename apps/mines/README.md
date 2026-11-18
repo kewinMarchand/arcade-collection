@@ -20,7 +20,7 @@ Jeu de puzzle logique : déduisez l'emplacement des mines grâce aux indices et 
 
 La première case révélée est toujours sûre. Le meilleur temps est conservé dans le navigateur.
 
-[Retour à la collection Neon Arcade](https://kewinmarchand.github.io/neon-arcade/)
+[Retour à la collection Neon Games](https://kewinmarchand.github.io/neon-games/)
 
 ## Thème
 
