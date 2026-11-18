@@ -1,48 +1,67 @@
-# Neon Games
+# Neon Arcade
 
-Monorepo des jeux d’arcade **Neon** : portail + jeux, basé sur la base technique **`boilerplate-html`** (HTML/CSS/JS natifs, sans build lourd), avec socle de composants communs et thème **Neon** attaché.
+Une collection de neuf mini-jeux indépendants, gratuits et jouables directement dans le navigateur.
 
-## Structure
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github&logoColor=white)](https://github.com/kewinMarchand/neon-games)
 
-```
-neon-games/
-  apps/
-    portal/            # portail (ex-neon-arcade) : apps/portal/
-    games/
-      invaders/        # apps/games/invaders/
-      breaker/         # apps/games/breaker/
-      columns/         # apps/games/columns/
-      drift/           # apps/games/drift/
-      runner/          # apps/games/runner/
-      defender/        # apps/games/defender/
-      mines/           # apps/games/mines/
-      serpent/         # apps/games/serpent/
-      orbiter/         # apps/games/orbiter/
-  packages/
-    ui/                # composants commons + shell de jeu (mountGameFrame)
-    theme-neon/       # tokens + overrides Neon (attaches aux tokens --bui-* de boilerplates-ui)
-    shared/           # utilitaires / ressources partagés
-  docs/
-    adr/               # ADRs du monorepo
-  demo/
-    game-shell.html   # page de démo/validation du shell
-```
+## Jouer à la collection
 
-## URLs (nouvelles — sans redirection)
+[Ouvrir Neon Arcade](https://kewinmarchand.github.io/neon-games/)
 
-- Portail : `https://kewinmarchand.github.io/neon-games/`
-- Jeux : `https://kewinmarchand.github.io/neon-games/apps/games/<slug>/`
+## Les jeux
 
-## Règles métier (ADR-004)
+### Neon Invaders
 
-- Viewport jeu : `100vh` / `100dvh`, sans scroll de page, pas d’overflow.
-- Cadre de jeu identique pour tous les jeux (header / zone centrale / panneaux latéraux).
-- Zone centrale (canvas/plateau) centrée ; éléments spécifiques (score, niveau, prochain élément, contrôles) dans les panneaux latéraux.
+[![Aperçu de Neon Invaders](https://raw.githubusercontent.com/kewinMarchand/neon-invaders/main/preview.svg)](https://kewinMarchand.github.io/neon-invaders/)
 
-## Déploiement
+[Code source](https://github.com/kewinMarchand/neon-invaders) · Défendez votre base contre des vagues d’envahisseurs.
 
-GitHub Pages du monorepo (`main` → `/`). Voir l’ADR-0004 du chantier de consolidation (`boilerplates-commun/doc/adr/0004-deploiement-nouvelles-urls-coexistence.md`).
+### Neon Breaker
 
-## ADRs
+[![Aperçu de Neon Breaker](https://raw.githubusercontent.com/kewinMarchand/neon-breaker/main/preview.svg)](https://kewinMarchand.github.io/neon-breaker/)
 
-- `docs/adr/0001-base-boilerplate-html-shell-100vh-cadre-identique.md`
+[Code source](https://github.com/kewinMarchand/neon-breaker) · Cassez les briques et gardez la balle en jeu.
+
+### Neon Columns
+
+[![Aperçu de Neon Columns](https://raw.githubusercontent.com/kewinMarchand/neon-columns/main/preview.svg)](https://kewinMarchand.github.io/neon-columns/)
+
+[Code source](https://github.com/kewinMarchand/neon-columns) · Alignez des gemmes pour déclencher des réactions en chaîne.
+
+### Neon Drift
+
+[![Aperçu de Neon Drift](https://raw.githubusercontent.com/kewinMarchand/neon-drift/main/preview.svg)](https://kewinMarchand.github.io/neon-drift/)
+
+[Code source](https://github.com/kewinMarchand/neon-drift) · Pilotez une voiture sur le circuit, évitez les obstacles et récoltez les orbes.
+
+### Neon Runner
+
+[![Aperçu de Neon Runner](https://raw.githubusercontent.com/kewinMarchand/neon-runner/main/preview.svg)](https://kewinMarchand.github.io/neon-runner/)
+
+[Code source](https://github.com/kewinMarchand/neon-runner) · Sautez et glissez pour éviter les obstacles.
+
+### Neon Defender
+
+[![Aperçu de Neon Defender](https://raw.githubusercontent.com/kewinMarchand/neon-defender/main/preview.svg)](https://kewinMarchand.github.io/neon-defender/)
+
+[Code source](https://github.com/kewinMarchand/neon-defender) · Orientez le bouclier pour intercepter les photons.
+
+### Neon Mines
+
+[![Aperçu de Neon Mines](https://raw.githubusercontent.com/kewinMarchand/neon-mines/main/preview.svg)](https://kewinMarchand.github.io/neon-mines/)
+
+[Code source](https://github.com/kewinMarchand/neon-mines) · Déduisez l’emplacement des mines à partir des indices.
+
+### Neon Serpent
+
+[![Aperçu de Neon Serpent](https://raw.githubusercontent.com/kewinMarchand/neon-serpent/main/preview.svg)](https://kewinMarchand.github.io/neon-serpent/)
+
+[Code source](https://github.com/kewinMarchand/neon-serpent) · Grandissez sans vous mordre, la vitesse s’emballe.
+
+### Neon Orbiter
+
+[![Aperçu de Neon Orbiter](https://raw.githubusercontent.com/kewinMarchand/neon-orbiter/main/preview.svg)](https://kewinMarchand.github.io/neon-orbiter/)
+
+[Code source](https://github.com/kewinMarchand/neon-orbiter) · Alunissez en douceur : gravité, carburant et plates-formes bonus.
+
+Les jeux restent autonomes dans leurs dépôts respectifs ; ce dépôt fournit le portail et l’identité visuelle de la collection.
