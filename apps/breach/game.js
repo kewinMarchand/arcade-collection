@@ -308,7 +308,6 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   });
 
   const onKey = (v) => (e) => {
-  const onKey = (v) => (e) => {
     const k = e.key.toLowerCase();
     const c = e.code ? e.code.toLowerCase() : '';
     state.keys[k] = v;
