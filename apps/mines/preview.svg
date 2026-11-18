@@ -43,7 +43,7 @@
   <text x="360" y="52" text-anchor="middle" fill="#7af7e0" font-family="'Space Grotesk', system-ui, sans-serif" font-weight="800" font-size="30" letter-spacing="7" filter="url(#glowS)">NEON MINES</text>
 
   <!-- board: 7 cols x 5 rows, cell 64, gap 6 -->
-  <g transform="translate(118 78)">
+  <g transform="translate(148 76) scale(0.84)">
     <!-- grid background plate -->
     <rect x="-10" y="-10" width="500" height="360" rx="14" fill="#06131d" stroke="#1a3344" stroke-width="2"/>
 
