@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
   <title id="title">Neon Defender</title>
-  <desc id="desc">Un vaisseau néon protège son secteur avec un bouclier rotatif face aux photons, dans l'espace.</desc>
+  <desc id="desc">Un vaisseau néon au centre de l'espace oriente son bouclier rotatif pour intercepter des photons entrants.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="space" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#061327"/>
       <stop offset="0.55" stop-color="#071420"/>
       <stop offset="1" stop-color="#040b14"/>
     </linearGradient>
-    <linearGradient id="shipBody" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="hull" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#ffffff"/>
       <stop offset="0.32" stop-color="#caffed"/>
       <stop offset="0.72" stop-color="#48e2c3"/>
@@ -15,65 +15,95 @@
     </linearGradient>
     <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#fff3a0"/>
-      <stop offset="0.4" stop-color="#73ffe2" stop-opacity="0.8"/>
+      <stop offset="0.35" stop-color="#73ffe2" stop-opacity="0.85"/>
       <stop offset="1" stop-color="#00b998" stop-opacity="0"/>
     </linearGradient>
+    <radialGradient id="neb1" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#00e0a5" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#00e0a5" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="neb2" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#2468b9" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#2468b9" stop-opacity="0"/>
+    </radialGradient>
     <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="7" result="b"/>
+      <feGaussianBlur stdDeviation="6" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feGaussianBlur stdDeviation="3" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
 
-  <rect width="720" height="380" rx="24" fill="url(#bg)"/>
+  <rect width="720" height="380" rx="24" fill="url(#space)"/>
+  <ellipse cx="180" cy="120" rx="190" ry="140" fill="url(#neb1)"/>
+  <ellipse cx="560" cy="280" rx="220" ry="160" fill="url(#neb2)"/>
 
-  <!-- starfield -->
-  <g fill="#d5e9ff">
-    <circle cx="60" cy="50" r="2"/><circle cx="140" cy="90" r="1.5"/><circle cx="220" cy="40" r="2"/>
-    <circle cx="310" cy="70" r="1.5"/><circle cx="480" cy="45" r="2"/><circle cx="560" cy="95" r="1.5"/>
-    <circle cx="640" cy="55" r="2"/><circle cx="680" cy="140" r="1.5"/><circle cx="90" cy="300" r="2"/>
-    <circle cx="180" cy="330" r="1.5"/><circle cx="520" cy="310" r="2"/><circle cx="610" cy="290" r="1.5"/>
-    <circle cx="40" cy="180" r="1.5"/><circle cx="690" cy="230" r="2"/>
+  <!-- starfield with motion streaks -->
+  <g fill="#dffcff">
+    <circle cx="55" cy="45" r="2"/><circle cx="130" cy="85" r="1.5"/><circle cx="210" cy="35" r="2"/>
+    <circle cx="300" cy="65" r="1.5"/><circle cx="470" cy="40" r="2"/><circle cx="560" cy="90" r="1.5"/>
+    <circle cx="650" cy="50" r="2"/><circle cx="690" cy="140" r="1.5"/><circle cx="80" cy="310" r="2"/>
+    <circle cx="170" cy="340" r="1.5"/><circle cx="520" cy="320" r="2"/><circle cx="620" cy="300" r="1.5"/>
+    <circle cx="35" cy="170" r="1.5"/><circle cx="690" cy="240" r="2"/><circle cx="420" cy="350" r="1.5"/>
   </g>
-  <g stroke="#9fe7ff" stroke-width="2" stroke-linecap="round" opacity="0.25">
-    <line x1="120" y1="20" x2="120" y2="55"/><line x1="500" y1="10" x2="500" y2="48"/><line x1="640" y1="260" x2="640" y2="300"/>
+  <g stroke="#9fe7ff" stroke-linecap="round" opacity="0.22">
+    <line x1="110" y1="20" x2="110" y2="58" stroke-width="1.5"/><line x1="250" y1="10" x2="250" y2="46" stroke-width="1.2"/>
+    <line x1="500" y1="300" x2="500" y2="345" stroke-width="1.5"/><line x1="640" y1="250" x2="640" y2="292" stroke-width="1.2"/>
+    <line x1="60" y1="250" x2="60" y2="286" stroke-width="1.2"/>
   </g>
 
-  <text x="360" y="54" text-anchor="middle" fill="#7af7e0" font-family="system-ui,Segoe UI,sans-serif" font-weight="800" font-size="28" letter-spacing="6">NEON DEFENDER</text>
+  <text x="360" y="52" text-anchor="middle" fill="#69ffe1" font-family="system-ui,Segoe UI,sans-serif" font-weight="800" font-size="28" letter-spacing="6">NEON DEFENDER</text>
 
   <!-- orbit rings -->
-  <g fill="none" stroke="#69ffe1" opacity="0.22">
-    <circle cx="360" cy="200" r="72"/><circle cx="360" cy="200" r="115"/><circle cx="360" cy="200" r="165"/>
+  <g fill="none" stroke="#69ffe1">
+    <circle cx="360" cy="205" r="72" opacity="0.18"/>
+    <circle cx="360" cy="205" r="108" opacity="0.28"/>
+    <circle cx="360" cy="205" r="160" opacity="0.14"/>
   </g>
 
-  <!-- shield arc -->
-  <path d="M 286 128 A 115 115 0 0 1 392 102" fill="none" stroke="#69ffe1" stroke-width="20" stroke-linecap="round" filter="url(#glow)"/>
-  <path d="M 296 134 A 115 115 0 0 1 384 112" fill="none" stroke="#eaffff" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
-
-  <!-- photons -->
+  <!-- incoming photons -->
   <g filter="url(#glow)">
-    <circle cx="210" cy="120" r="9" fill="#ffd36b"/><circle cx="210" cy="120" r="13" fill="none" stroke="#fff3c4" stroke-width="2"/>
-    <circle cx="500" cy="270" r="9" fill="#ffd36b"/><circle cx="500" cy="270" r="13" fill="none" stroke="#fff3c4" stroke-width="2"/>
-    <circle cx="420" cy="70" r="8" fill="#ffd36b"/><circle cx="420" cy="70" r="12" fill="none" stroke="#fff3c4" stroke-width="2"/>
-  </g>
-  <g stroke="#ffd36b" stroke-width="2" stroke-dasharray="5 7" opacity="0.6">
-    <path d="M219 128 l34 18"/><path d="M492 262 l-30 -18"/><path d="M416 78 l-14 30"/>
-  </g>
-
-  <!-- ship -->
-  <g transform="translate(360 200)" filter="url(#glow)">
-    <path d="M-10 14 L-6 36 L0 18 L6 36 L10 14 Z" fill="url(#flame)" opacity="0.95"/>
-    <rect x="-24" y="-22" width="48" height="40" rx="17" fill="url(#shipBody)" stroke="#eaffff" stroke-width="2" stroke-opacity="0.7"/>
-    <path d="M-24 -2 L-38 12 L-24 14 Z" fill="#1fa88f"/>
-    <path d="M24 -2 L38 12 L24 14 Z" fill="#1fa88f"/>
-    <ellipse cx="0" cy="-5" rx="10" ry="11" fill="#237d73"/>
-    <ellipse cx="0" cy="-8" rx="5.5" ry="6.5" fill="#c2fff1"/>
-    <rect x="-18" y="5" width="4.5" height="7" rx="1" fill="#faffc4"/>
-    <rect x="13.5" y="5" width="4.5" height="7" rx="1" fill="#faffc4"/>
+    <g>
+      <line x1="205" y1="110" x2="245" y2="132" stroke="#ffd36b" stroke-width="2" stroke-dasharray="4 6" opacity="0.6"/>
+      <circle cx="200" cy="105" r="8" fill="#ffd36b"/>
+      <circle cx="200" cy="105" r="12" fill="none" stroke="#fff3c4" stroke-width="2"/>
+    </g>
+    <g>
+      <line x1="535" y1="110" x2="500" y2="138" stroke="#ffd36b" stroke-width="2" stroke-dasharray="4 6" opacity="0.6"/>
+      <circle cx="540" cy="105" r="8" fill="#ffd36b"/>
+      <circle cx="540" cy="105" r="12" fill="none" stroke="#fff3c4" stroke-width="2"/>
+    </g>
+    <g>
+      <line x1="560" y1="300" x2="520" y2="268" stroke="#ffd36b" stroke-width="2" stroke-dasharray="4 6" opacity="0.6"/>
+      <circle cx="565" cy="305" r="8" fill="#ffd36b"/>
+      <circle cx="565" cy="305" r="12" fill="none" stroke="#fff3c4" stroke-width="2"/>
+    </g>
   </g>
 
-  <text x="360" y="352" text-anchor="middle" fill="#b9c9e8" font-family="system-ui,Segoe UI,sans-serif" font-size="16" letter-spacing="3">PILOTEZ • PROTÉGEZ • TENEZ LA LIGNE</text>
+  <!-- ship at center -->
+  <g transform="translate(360 205)" filter="url(#glow)">
+    <!-- engine flame -->
+    <path d="M-10 18 L-6 46 L0 24 L6 46 L10 18 Z" fill="url(#flame)"/>
+    <!-- hull -->
+    <rect x="-24" y="-28" width="48" height="44" rx="17" fill="url(#hull)" stroke="#eaffff" stroke-width="2" stroke-opacity="0.7"/>
+    <!-- wings -->
+    <path d="M-24 -2 L-38 14 L-24 16 Z" fill="#1fa88f"/>
+    <path d="M24 -2 L38 14 L24 16 Z" fill="#1fa88f"/>
+    <!-- cockpit -->
+    <ellipse cx="0" cy="-8" rx="10" ry="11" fill="#237d73"/>
+    <ellipse cx="0" cy="-11" rx="5.5" ry="6.5" fill="#c2fff1"/>
+    <!-- lights -->
+    <rect x="-18" y="6" width="4.5" height="7" rx="1" fill="#faffc4"/>
+    <rect x="13.5" y="6" width="4.5" height="7" rx="1" fill="#faffc4"/>
+  </g>
+
+  <!-- rotating shield arc -->
+  <g filter="url(#glow)">
+    <path d="M 360 97 A 108 108 0 0 1 454 150" fill="none" stroke="#69ffe1" stroke-width="20" stroke-linecap="round"/>
+    <path d="M 362 103 A 108 108 0 0 1 446 150" fill="none" stroke="#eaffff" stroke-width="3.5" stroke-linecap="round" opacity="0.55"/>
+  </g>
+
+  <text x="360" y="352" text-anchor="middle" fill="#b9c9e8" font-family="system-ui,Segoe UI,sans-serif" font-size="16" letter-spacing="3">PILOTEZ • ORIENTEZ • PROTÉGEZ</text>
 </svg>

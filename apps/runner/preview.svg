@@ -1,91 +1,85 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
   <title id="title">Neon Runner</title>
-  <desc id="desc">Un coureur néon file à toute vitesse entre les obstacles sur une piste lumineuse.</desc>
+  <desc id="desc">Un coureur néon elliptique saute et glisse entre des obstacles roses sur une piste lumineuse, en ramassant des orbes.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#120a26"/>
-      <stop offset="0.5" stop-color="#0a1024"/>
-      <stop offset="1" stop-color="#061018"/>
-    </linearGradient>
-    <linearGradient id="track" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#7bffe5" stop-opacity="0.95"/>
-      <stop offset="1" stop-color="#7bffe5" stop-opacity="0.1"/>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#20133c"/>
+      <stop offset="1" stop-color="#090b1c"/>
     </linearGradient>
     <linearGradient id="runner" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#62ffe0"/>
-      <stop offset="0.45" stop-color="#8b8bff"/>
+      <stop offset="0.52" stop-color="#8b8bff"/>
       <stop offset="1" stop-color="#ff6bbe"/>
     </linearGradient>
-    <linearGradient id="speed" x1="1" y1="0" x2="0" y2="0">
-      <stop offset="0" stop-color="#69ffe1" stop-opacity="0.8"/>
-      <stop offset="1" stop-color="#69ffe1" stop-opacity="0"/>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#101a30"/>
+      <stop offset="1" stop-color="#0a1020"/>
     </linearGradient>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="8" result="b"/>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feGaussianBlur stdDeviation="3.5" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
 
-  <rect width="720" height="380" rx="24" fill="url(#bg)"/>
+  <rect width="720" height="380" rx="24" fill="url(#sky)"/>
 
-  <!-- speed streaks -->
-  <g stroke="url(#speed)" stroke-linecap="round" opacity="0.5">
-    <line x1="40" y1="90" x2="180" y2="90" stroke-width="3"/>
-    <line x1="60" y1="130" x2="150" y2="130" stroke-width="2"/>
-    <line x1="500" y1="70" x2="620" y2="70" stroke-width="2.5"/>
-    <line x1="470" y1="110" x2="560" y2="110" stroke-width="2"/>
-    <line x1="20" y1="200" x2="120" y2="200" stroke-width="2"/>
-  </g>
-  <g fill="#d5e0ff" opacity="0.85">
-    <circle cx="110" cy="55" r="2"/><circle cx="250" cy="42" r="1.5"/><circle cx="420" cy="60" r="2"/>
-    <circle cx="590" cy="48" r="1.5"/><circle cx="650" cy="120" r="2"/><circle cx="300" cy="140" r="1.5"/>
+  <!-- stars -->
+  <g fill="#d5e0ff" opacity="0.8">
+    <circle cx="60" cy="40" r="1.8"/><circle cx="140" cy="70" r="1.4"/><circle cx="230" cy="35" r="1.8"/>
+    <circle cx="340" cy="60" r="1.2"/><circle cx="430" cy="30" r="1.8"/><circle cx="520" cy="75" r="1.4"/>
+    <circle cx="610" cy="45" r="1.8"/><circle cx="680" cy="90" r="1.2"/><circle cx="300" cy="110" r="1.2"/>
   </g>
 
-  <!-- skyline -->
-  <path d="M0 270 L70 225 L130 250 L210 185 L300 240 L400 170 L500 230 L590 195 L660 235 L720 210 L720 380 L0 380 Z" fill="#241a4f" opacity="0.85"/>
-  <path d="M0 298 L90 255 L170 282 L270 215 L360 268 L470 225 L560 260 L640 240 L720 265 L720 380 L0 380 Z" fill="#171233" opacity="0.95"/>
+  <!-- parallax mountains -->
+  <path d="M0 250 L80 210 L150 235 L230 170 L320 220 L420 160 L520 215 L610 185 L720 220 L720 300 L0 300 Z" fill="#241a4f" opacity="0.9"/>
+  <path d="M0 275 L90 235 L170 260 L270 200 L360 250 L460 215 L560 245 L650 225 L720 245 L720 300 L0 300 Z" fill="#171233" opacity="0.95"/>
 
-  <text x="360" y="54" text-anchor="middle" fill="#c7a2ff" font-family="system-ui,Segoe UI,sans-serif" font-weight="800" font-size="30" letter-spacing="7">NEON RUNNER</text>
+  <text x="360" y="52" text-anchor="middle" fill="#c7a2ff" font-family="system-ui,Segoe UI,sans-serif" font-weight="800" font-size="28" letter-spacing="6">NEON RUNNER</text>
 
-  <!-- track -->
-  <rect x="0" y="292" width="720" height="88" fill="#0f1830"/>
+  <!-- ground and perspective grid -->
+  <rect x="0" y="292" width="720" height="88" fill="url(#ground)"/>
   <g stroke="#2a3f66" stroke-width="1.2" opacity="0.9">
-    <path d="M30 292l-26 88"/><path d="M110 292l-20 88"/><path d="M190 292l-14 88"/><path d="M270 292l-8 88"/>
-    <path d="M350 292l-2 88"/><path d="M430 292l4 88"/><path d="M510 292l10 88"/><path d="M590 292l16 88"/><path d="M670 292l22 88"/>
+    <path d="M40 292l-34 88"/><path d="M120 292l-24 88"/><path d="M200 292l-16 88"/><path d="M280 292l-8 88"/>
+    <path d="M360 292v88"/><path d="M440 292l8 88"/><path d="M520 292l16 88"/><path d="M600 292l24 88"/><path d="M680 292l34 88"/>
   </g>
-  <rect x="0" y="286" width="720" height="7" fill="url(#track)" filter="url(#glow)"/>
+  <line x1="0" y1="292" x2="720" y2="292" stroke="#7bffe5" stroke-width="5" filter="url(#glow)"/>
 
   <!-- obstacles -->
   <g filter="url(#glow)">
-    <path d="M455 286 l20 -62 l20 62 Z" fill="#1b1140" stroke="#ff6dbd" stroke-width="3.5"/>
-    <rect x="545" y="238" width="36" height="48" rx="5" fill="#1b1140" stroke="#ff6dbd" stroke-width="3.5"/>
-    <path d="M610 286 l16 -38 l16 38 Z" fill="#1b1140" stroke="#ff6dbd" stroke-width="3"/>
+    <!-- low spike -->
+    <path d="M455 292 L480 238 L505 292 Z" fill="#1b1140" stroke="#ff6dbd" stroke-width="3.5" stroke-linejoin="round"/>
+    <rect x="474" y="255" width="3" height="22" fill="#ffffff" opacity="0.7"/>
+    <!-- high block -->
+    <rect x="565" y="210" width="36" height="52" rx="4" fill="#1b1140" stroke="#ff6dbd" stroke-width="3.5"/>
+    <rect x="575" y="223" width="3" height="24" fill="#ffffff" opacity="0.7"/>
   </g>
 
-  <!-- runner body (streaking) -->
+  <!-- bonus orb -->
   <g filter="url(#glow)">
-    <ellipse cx="240" cy="210" rx="78" ry="16" fill="url(#speed)" opacity="0.55"/>
-    <ellipse cx="200" cy="218" rx="50" ry="10" fill="#8b8bff" opacity="0.25"/>
-    <g transform="translate(320 175) rotate(-18)">
-      <ellipse cx="0" cy="0" rx="42" ry="30" fill="url(#runner)" stroke="#efffff" stroke-width="3"/>
-      <ellipse cx="-12" cy="-7" rx="11" ry="7" fill="#ffffff" opacity="0.9"/>
-      <ellipse cx="0" cy="0" rx="48" ry="30" fill="none" stroke="#efffff" stroke-opacity="0.22" stroke-width="2"/>
-      <circle cx="18" cy="-2" r="4" fill="#fff" opacity="0.85"/>
-    </g>
-    <!-- motion arcs -->
-    <path d="M120 175 q90 -35 170 -10" fill="none" stroke="#69ffe1" stroke-width="4" stroke-linecap="round" opacity="0.35"/>
-    <path d="M145 205 q80 -20 140 5" fill="none" stroke="#ff6bbe" stroke-width="3" stroke-linecap="round" opacity="0.28"/>
+    <circle cx="360" cy="185" r="13" fill="#ffd36b"/>
+    <circle cx="360" cy="185" r="20" fill="none" stroke="#fff3c4" stroke-width="2.5"/>
+    <circle cx="355" cy="180" r="3.5" fill="#fffbe8"/>
   </g>
 
-  <!-- jump arc -->
-  <path d="M250 255 Q360 95 500 235" fill="none" stroke="#7c88ff" stroke-width="3.5" stroke-dasharray="10 10" opacity="0.65"/>
-  <g fill="#69ffe1" filter="url(#soft)">
-    <circle cx="330" cy="155" r="5"/><circle cx="360" cy="132" r="3.5"/><circle cx="392" cy="148" r="4"/>
+  <!-- runner trail -->
+  <g fill="#8b8bff" filter="url(#soft)">
+    <ellipse cx="170" cy="232" rx="18" ry="10" opacity="0.18"/>
+    <ellipse cx="205" cy="228" rx="14" ry="8" opacity="0.28"/>
+    <ellipse cx="235" cy="224" rx="10" ry="6" opacity="0.38"/>
   </g>
+
+  <!-- runner (jumping ellipse) -->
+  <g filter="url(#glow)" transform="translate(270 205) rotate(-12)">
+    <ellipse cx="0" cy="0" rx="24" ry="28" fill="url(#runner)" stroke="#efffff" stroke-width="3"/>
+    <circle cx="8" cy="-6" r="4" fill="#ffffff" opacity="0.9"/>
+  </g>
+
+  <!-- jump arc hint -->
+  <path d="M210 250 Q320 120 430 250" fill="none" stroke="#7c88ff" stroke-width="3" stroke-dasharray="9 9" opacity="0.55"/>
 
   <text x="360" y="352" text-anchor="middle" fill="#c9bee8" font-family="system-ui,Segoe UI,sans-serif" font-size="16" letter-spacing="4">SAUTEZ • GLISSEZ • FONCEZ</text>
 </svg>
