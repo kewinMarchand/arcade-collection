@@ -152,6 +152,18 @@ let bannerTimer = 0;
 let effects = { wide: 0 };
 let shake = 0;
 let audioContext;
+let stars = [];
+
+function initStars() {
+  stars = Array.from({ length: 90 }, () => ({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: Math.random() * 1.6 + 0.4,
+    a: 0.2 + Math.random() * 0.7,
+    tw: Math.random() * Math.PI * 2,
+    sp: 0.4 + Math.random() * 1.2,
+  }));
+}
 
 function ballSpeed() {
   const spd = { chill: 0.85, arcade: 1, chaos: 1.22 }[difficultyInput.value] || 1;
@@ -356,6 +368,17 @@ function draw() {
   g.addColorStop(1, '#06100f');
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, W, H);
+
+  const time = performance.now() * 0.001;
+  for (const s of stars) {
+    const tw = 0.55 + 0.45 * Math.sin(time * s.sp + s.tw);
+    ctx.globalAlpha = Math.min(1, s.a * tw);
+    ctx.fillStyle = '#dffcff';
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
 
   bricks.forEach((b) => {
     const color = ['#ff6d9c', '#ffbd69', '#ffe36e', '#69ffe1', '#72bdff'][b.color];

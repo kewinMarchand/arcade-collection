@@ -115,9 +115,21 @@ const DIFF = {
   chaos: { speed: 0.52, speedGain: 0.012, spawn: 0.72, spawnMin: 0.26, orb: 0.22 },
 };
 
-let state = 'ready', lane = 2, carX = 0, score = 0, best = Number(localStorage.getItem('neonDriftBest')) || 0, items = [], elapsed = 0, last = 0, spawn = 0.7, shake = 0, particles = [], pulses = [], carSquash = 1;
+let state = 'ready', lane = 2, carX = 0, score = 0, best = Number(localStorage.getItem('neonDriftBest')) || 0, items = [], elapsed = 0, last = 0, spawn = 0.7, shake = 0, particles = [], pulses = [], carSquash = 1, stars = [];
 bestEl.textContent = String(best);
 carX = W * 0.5;
+
+function initStars() {
+  stars = Array.from({ length: 90 }, () => ({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: Math.random() * 1.5 + 0.4,
+    a: 0.2 + Math.random() * 0.7,
+    tw: Math.random() * Math.PI * 2,
+    sp: 0.3 + Math.random() * 1.0,
+  }));
+}
+initStars();
 const BOTTOM = [W * 0.212, W * 0.356, W * 0.5, W * 0.644, W * 0.788];
 const BOUND = [W * 0.284, W * 0.428, W * 0.572, W * 0.716];
 const ease = (p) => Math.pow(clamp(p, 0, 1), 1.7);
@@ -130,6 +142,7 @@ function lanePos(l, p) {
 function start() {
   const d = DIFF[difficultyInput.value] || DIFF.arcade;
   state = 'playing'; lane = 2; carX = BOTTOM[2]; score = 0; elapsed = 0; spawn = d.spawn; shake = 0; items = []; particles = []; pulses = []; carSquash = 1;
+  initStars();
   statusEl.textContent = 'En course';
   audio.tone(440, 0.08, 'triangle', 0.03);
 }
@@ -207,6 +220,19 @@ function update(dt) {
 function drawRoad() {
   ctx.fillStyle = '#0b1836'; ctx.fillRect(0, 0, W, HORIZON);
   const sky = ctx.createLinearGradient(0, 0, 0, HORIZON); sky.addColorStop(0, '#101c3b'); sky.addColorStop(1, '#0b1836'); ctx.fillStyle = sky; ctx.fillRect(0, 0, W, HORIZON);
+
+  const starTime = performance.now() * 0.001;
+  for (const s of stars) {
+    if (s.y > HORIZON + 10) continue;
+    const tw = 0.5 + 0.5 * Math.sin(starTime * s.sp + s.tw);
+    ctx.globalAlpha = Math.min(1, s.a * tw);
+    ctx.fillStyle = '#dffcff';
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
   ctx.fillStyle = '#060a18'; ctx.fillRect(0, HORIZON, W, H - HORIZON);
   const glow = ctx.createLinearGradient(0, HORIZON - 26, 0, HORIZON + 8); glow.addColorStop(0, 'rgba(255,101,189,0)'); glow.addColorStop(1, 'rgba(255,101,189,.5)'); ctx.fillStyle = glow; ctx.fillRect(0, HORIZON - 26, W, 34);
   ctx.strokeStyle = '#ff64bc'; ctx.shadowColor = '#ff64bc'; ctx.shadowBlur = 14; ctx.lineWidth = 3;

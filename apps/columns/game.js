@@ -168,6 +168,18 @@ let shake = 0;
 let CELL = 40;
 let offsetX = 0;
 let offsetY = 0;
+let stars = [];
+
+function initStars() {
+  stars = Array.from({ length: 100 }, () => ({
+    x: Math.random(),
+    y: Math.random(),
+    r: Math.random() * 1.6 + 0.3,
+    a: 0.15 + Math.random() * 0.65,
+    tw: Math.random() * Math.PI * 2,
+    sp: 0.4 + Math.random() * 1.1,
+  }));
+}
 
 const empty = () => Array.from({ length: ROWS }, () => Array(COLS).fill(-1));
 const newPiece = () => ({ col: 3, row: 0, gems: Array.from({ length: 3 }, () => Math.floor(Math.random() * colors.length)) });
@@ -328,6 +340,7 @@ function reset() {
   particles = [];
   pulses = [];
   shake = 0;
+  initStars();
   $('#score').textContent = '0';
   $('#status').textContent = 'Prêt';
   drawNext();
@@ -490,6 +503,17 @@ function draw(t) {
   bg.addColorStop(1, '#061713');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  const time = (t || 0) * 0.001;
+  for (const s of stars) {
+    const tw = 0.55 + 0.45 * Math.sin(time * s.sp + s.tw);
+    ctx.globalAlpha = Math.min(1, s.a * tw);
+    ctx.fillStyle = '#dffcff';
+    ctx.beginPath();
+    ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
 
   const boardW = COLS * CELL;
   const boardH = ROWS * CELL;

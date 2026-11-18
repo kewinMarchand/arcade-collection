@@ -115,7 +115,19 @@ const DIFF = {
 let state = 'ready', dir = 'right', pending = null, snake = [], food = null, bonusFood = null, bonusTimer = 0, score = 0, best = Number(localStorage.getItem('neonSerpentBest')) || 0, tick = 0.14, acc = 0, last = 0, eatPulse = 0, shake = 0, particles = [], rings = [], headScale = 1;
 let digesting = [];
 let tailShrink = 0;
+let stars = [];
 $('#best').textContent = String(best);
+
+function initStars() {
+  stars = Array.from({ length: 80 }, () => ({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: Math.random() * 1.5 + 0.4,
+    a: 0.15 + Math.random() * 0.55,
+    tw: Math.random() * Math.PI * 2,
+    sp: 0.4 + Math.random() * 1.0,
+  }));
+}
 
 function spawnFood() { food = freeCell(snake, COLS, ROWS); }
 function spawnBonus() {
@@ -130,6 +142,7 @@ function reset() {
   snake = [{ x: 9, y: 10 }, { x: 8, y: 10 }, { x: 7, y: 10 }];
   dir = 'right'; pending = null; score = 0; tick = d.startTick; acc = 0; shake = 0; particles = []; rings = []; eatPulse = 0; headScale = 1; bonusFood = null; bonusTimer = 0;
   digesting = []; tailShrink = 0;
+  initStars();
   spawnFood();
   $('#score').textContent = '0'; $('#speed').textContent = '1'; $('#status').textContent = 'Prêt';
 }
@@ -226,6 +239,18 @@ function draw(t) {
   ctx.clearRect(0, 0, W, H); ctx.save();
   if (shake > 0) ctx.translate((Math.random() - 0.5) * 10 * shake, (Math.random() - 0.5) * 10 * shake);
   const bg = ctx.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#0c211d'); bg.addColorStop(1, '#06100f'); ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+  const time = (t || 0) * 0.001;
+  for (const s of stars) {
+    const tw = 0.55 + 0.45 * Math.sin(time * s.sp + s.tw);
+    ctx.globalAlpha = Math.min(1, s.a * tw);
+    ctx.fillStyle = '#dffcff';
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
   ctx.strokeStyle = '#69ffe112'; ctx.lineWidth = 1;
   for (let i = 1; i < COLS; i++) { ctx.beginPath(); ctx.moveTo(i * CELL, 0); ctx.lineTo(i * CELL, H); ctx.stroke(); }
   for (let i = 1; i < ROWS; i++) { ctx.beginPath(); ctx.moveTo(0, i * CELL); ctx.lineTo(W, i * CELL); ctx.stroke(); }
