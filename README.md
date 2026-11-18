@@ -64,6 +64,12 @@ Une collection de neuf mini-jeux indépendants, gratuits et jouables directement
 
 [Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/orbiter/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/orbiter) — Alunissez en douceur : gravité, carburant et plates-formes bonus.
 
+### Neon Maze
+
+[![Apercu de Neon Maze](apps/maze/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/maze/)
+
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/maze/) . [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/maze) - Mangez les pastilles, echappez aux fantomes, passez au niveau suivant.
+
 ## Thème
 
 Ce portail et les jeux utilisent une base CSS partagée (`neon/neon-tokens.css`, `neon-base.css`, `neon-components.css`).
