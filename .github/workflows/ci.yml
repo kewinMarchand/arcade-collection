@@ -17,15 +17,8 @@ jobs:
       - name: Basic checks
         run: |
           node --version
-          node --check apps/breaker/game.js
-          node --check apps/columns/game.js
-          node --check apps/defender/game.js
-          node --check apps/drift/game.js
-          node --check apps/invaders/game.js
-          node --check apps/mines/game.js
-          node --check apps/orbiter/game.js
-          node --check apps/runner/game.js
-          node --check apps/serpent/game.js
+          for f in apps/*/game.js; do echo "checking $f"; node --check "$f"; done
           test -f index.html
           test -f site/index.html
+          test -f apps/breach/index.html
           echo "CI checks passed"

@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-label="Aperçu de Neon Breach">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#071b22"/>
+      <stop offset="0.55" stop-color="#041117"/>
+      <stop offset="1" stop-color="#02070b"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d2430"/>
+      <stop offset="1" stop-color="#06131d"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="45%" r="50%">
+      <stop offset="0" stop-color="#39ffd9" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#39ffd9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="enemyGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#ff5a86" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#ff2f66" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="neon" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="720" height="380" rx="24" fill="url(#bg)"/>
+  <ellipse cx="360" cy="200" rx="320" ry="180" fill="url(#glow)"/>
+
+  <g opacity="0.5">
+    <circle cx="80" cy="60" r="1.4" fill="#dffcff"/>
+    <circle cx="140" cy="40" r="1.2" fill="#ffffff"/>
+    <circle cx="220" cy="72" r="1.8" fill="#9fffe9"/>
+    <circle cx="310" cy="35" r="1.2" fill="#ffffff"/>
+    <circle cx="420" cy="55" r="1.6" fill="#dffcff"/>
+    <circle cx="520" cy="28" r="1.3" fill="#ffffff"/>
+    <circle cx="610" cy="66" r="1.7" fill="#9fffe9"/>
+    <circle cx="660" cy="38" r="1.2" fill="#ffffff"/>
+  </g>
+
+  <!-- corridor walls -->
+  <path d="M80 320 L250 170 L250 110 L80 40 Z" fill="#0b2030" stroke="#2fead0" stroke-opacity="0.22"/>
+  <path d="M640 320 L470 170 L470 110 L640 40 Z" fill="#0b2030" stroke="#2fead0" stroke-opacity="0.22"/>
+  <rect x="250" y="110" width="220" height="60" fill="#071723" stroke="#2fead0" stroke-opacity="0.18"/>
+  <rect x="250" y="170" width="220" height="150" fill="url(#floor)"/>
+
+  <!-- floor grid perspective -->
+  <g stroke="#36e8c8" stroke-opacity="0.35" stroke-width="1.2">
+    <line x1="360" y1="170" x2="120" y2="320"/>
+    <line x1="360" y1="170" x2="240" y2="320"/>
+    <line x1="360" y1="170" x2="360" y2="320"/>
+    <line x1="360" y1="170" x2="480" y2="320"/>
+    <line x1="360" y1="170" x2="600" y2="320"/>
+    <line x1="250" y1="170" x2="470" y2="170"/>
+    <line x1="228" y1="198" x2="492" y2="198"/>
+    <line x1="198" y1="232" x2="522" y2="232"/>
+    <line x1="160" y1="274" x2="560" y2="274"/>
+  </g>
+  <line x1="250" y1="170" x2="470" y2="170" stroke="#69ffe1" stroke-width="3" filter="url(#neon)"/>
+
+  <!-- side neon strips -->
+  <line x1="250" y1="110" x2="250" y2="170" stroke="#69ffe1" stroke-width="3" filter="url(#soft)"/>
+  <line x1="470" y1="110" x2="470" y2="170" stroke="#69ffe1" stroke-width="3" filter="url(#soft)"/>
+  <line x1="250" y1="110" x2="470" y2="110" stroke="#69ffe1" stroke-width="2.5" opacity="0.8"/>
+  <line x1="80" y1="320" x2="250" y2="170" stroke="#69ffe1" stroke-width="2.5" opacity="0.35"/>
+  <line x1="640" y1="320" x2="470" y2="170" stroke="#69ffe1" stroke-width="2.5" opacity="0.35"/>
+
+  <!-- enemy sentinel -->
+  <circle cx="360" cy="150" r="34" fill="url(#enemyGlow)" opacity="0.8"/>
+  <g transform="translate(360 150)" filter="url(#neon)">
+    <polygon points="0,-18 16,-9 16,9 0,18 -16,9 -16,-9" fill="#1a1020" stroke="#ff5d86" stroke-width="3"/>
+    <circle cx="0" cy="0" r="6" fill="#ff8fb0"/>
+    <ellipse cx="0" cy="24" rx="26" ry="4" fill="none" stroke="#ff7aa0" stroke-width="2" opacity="0.8"/>
+  </g>
+
+  <!-- muzzle flash / projectile hint -->
+  <path d="M360 270 L348 292 L372 292 Z" fill="#69ffe1" opacity="0.85" filter="url(#soft)"/>
+  <line x1="360" y1="168" x2="360" y2="258" stroke="#69ffe1" stroke-width="2" stroke-dasharray="6 8" opacity="0.7"/>
+
+  <!-- crosshair -->
+  <g stroke="#eaffff" stroke-width="2.5" filter="url(#soft)">
+    <line x1="360" y1="188" x2="360" y2="200"/>
+    <line x1="360" y1="216" x2="360" y2="228"/>
+    <line x1="340" y1="208" x2="352" y2="208"/>
+    <line x1="368" y1="208" x2="380" y2="208"/>
+  </g>
+
+  <!-- HUD hints -->
+  <rect x="36" y="284" width="150" height="44" rx="10" fill="#06131d" fill-opacity="0.7" stroke="#69ffe1" stroke-opacity="0.2"/>
+  <text x="52" y="304" fill="#9ab8c8" font-family="system-ui,Segoe UI,sans-serif" font-size="11" letter-spacing="2">SANTÉ</text>
+  <rect x="52" y="312" width="118" height="6" rx="3" fill="#133040"/>
+  <rect x="52" y="312" width="86" height="6" rx="3" fill="#69ffe1"/>
+  <rect x="534" y="284" width="150" height="44" rx="10" fill="#06131d" fill-opacity="0.7" stroke="#ff6b8f" stroke-opacity="0.25"/>
+  <text x="550" y="304" fill="#9ab8c8" font-family="system-ui,Segoe UI,sans-serif" font-size="11" letter-spacing="2">CIBLES</text>
+  <text x="550" y="322" fill="#ff8fb0" font-family="system-ui,Segoe UI,sans-serif" font-size="18" font-weight="700">05</text>
+
+  <text x="360" y="52" text-anchor="middle" fill="#69ffe1" font-family="system-ui,Segoe UI,sans-serif" font-weight="800" font-size="28" letter-spacing="6">NEON BREACH</text>
+  <text x="360" y="350" text-anchor="middle" fill="#b9d8e8" font-family="system-ui,Segoe UI,sans-serif" font-size="16" letter-spacing="3">INFILTREZ • VISEZ • SÉCURISEZ</text>
+</svg>

@@ -1,7 +1,7 @@
 {
   "name": "Neon Games",
   "short_name": "Neon Games",
-  "description": "Collection de neuf mini-jeux néon jouables dans le navigateur.",
+  "description": "Collection de treize mini-jeux néon jouables dans le navigateur.",
   "lang": "fr",
   "start_url": "/neon-games/",
   "display": "standalone",
