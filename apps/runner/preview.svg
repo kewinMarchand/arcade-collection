@@ -3,18 +3,27 @@
   <desc id="desc">Un coureur néon elliptique saute et glisse entre des obstacles roses sur une piste lumineuse, en ramassant des orbes.</desc>
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#20133c"/>
-      <stop offset="1" stop-color="#090b1c"/>
+      <stop offset="0" stop-color="#0c2230"/>
+      <stop offset="0.55" stop-color="#081925"/>
+      <stop offset="1" stop-color="#061015"/>
     </linearGradient>
     <linearGradient id="runner" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#62ffe0"/>
-      <stop offset="0.52" stop-color="#8b8bff"/>
-      <stop offset="1" stop-color="#ff6bbe"/>
+      <stop offset="0.52" stop-color="#6fb6ff"/>
+      <stop offset="1" stop-color="#69ffe1"/>
     </linearGradient>
     <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#101a30"/>
-      <stop offset="1" stop-color="#0a1020"/>
+      <stop offset="0" stop-color="#0f2230"/>
+      <stop offset="1" stop-color="#08131d"/>
     </linearGradient>
+    <radialGradient id="neb1" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#00e0a5" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#00e0a5" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="neb2" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#2aa8ff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#2aa8ff" stop-opacity="0"/>
+    </radialGradient>
     <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
       <feGaussianBlur stdDeviation="6" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
@@ -26,6 +35,8 @@
   </defs>
 
   <rect width="720" height="380" rx="24" fill="url(#sky)"/>
+  <ellipse cx="180" cy="140" rx="220" ry="140" fill="url(#neb1)"/>
+  <ellipse cx="560" cy="170" rx="240" ry="150" fill="url(#neb2)"/>
   <g class="stars" aria-hidden="true">
     <circle cx="18" cy="26" r="2.2" fill="#ffffff" opacity="0.95"/>
     <circle cx="54" cy="64" r="1.4" fill="#dffcff" opacity="0.8"/>
@@ -90,18 +101,18 @@
 
 
   <!-- parallax mountains -->
-  <path d="M0 250 L80 210 L150 235 L230 170 L320 220 L420 160 L520 215 L610 185 L720 220 L720 300 L0 300 Z" fill="#241a4f" opacity="0.9"/>
-  <path d="M0 275 L90 235 L170 260 L270 200 L360 250 L460 215 L560 245 L650 225 L720 245 L720 300 L0 300 Z" fill="#171233" opacity="0.95"/>
+  <path d="M0 250 L80 210 L150 235 L230 170 L320 220 L420 160 L520 215 L610 185 L720 220 L720 300 L0 300 Z" fill="#10263a" opacity="0.95"/>
+  <path d="M0 275 L90 235 L170 260 L270 200 L360 250 L460 215 L560 245 L650 225 L720 245 L720 300 L0 300 Z" fill="#0b1826" opacity="0.98"/>
 
-  <text x="360" y="52" text-anchor="middle" fill="#c7a2ff" font-family="system-ui,Segoe UI,sans-serif" font-weight="800" font-size="28" letter-spacing="6">NEON RUNNER</text>
+  <text x="360" y="52" text-anchor="middle" fill="#69ffe1" font-family="system-ui,Segoe UI,sans-serif" font-weight="800" font-size="28" letter-spacing="6">NEON RUNNER</text>
 
   <!-- ground and perspective grid -->
   <rect x="0" y="292" width="720" height="88" fill="url(#ground)"/>
-  <g stroke="#2a3f66" stroke-width="1.2" opacity="0.9">
+  <g stroke="#2a4a5e" stroke-width="1.2" opacity="0.9">
     <path d="M40 292l-34 88"/><path d="M120 292l-24 88"/><path d="M200 292l-16 88"/><path d="M280 292l-8 88"/>
     <path d="M360 292v88"/><path d="M440 292l8 88"/><path d="M520 292l16 88"/><path d="M600 292l24 88"/><path d="M680 292l34 88"/>
   </g>
-  <line x1="0" y1="292" x2="720" y2="292" stroke="#7bffe5" stroke-width="5" filter="url(#glow)"/>
+  <line x1="0" y1="292" x2="720" y2="292" stroke="#69ffe1" stroke-width="5" filter="url(#glow)"/>
 
   <!-- obstacles -->
   <g filter="url(#glow)">
@@ -134,7 +145,7 @@
   </g>
 
   <!-- jump arc hint -->
-  <path d="M210 250 Q320 120 430 250" fill="none" stroke="#7c88ff" stroke-width="3" stroke-dasharray="9 9" opacity="0.55"/>
+  <path d="M210 250 Q320 120 430 250" fill="none" stroke="#69ffe1" stroke-width="3" stroke-dasharray="9 9" opacity="0.45"/>
 
-  <text x="360" y="352" text-anchor="middle" fill="#c9bee8" font-family="system-ui,Segoe UI,sans-serif" font-size="16" letter-spacing="4">SAUTEZ • GLISSEZ • FONCEZ</text>
+  <text x="360" y="352" text-anchor="middle" fill="#b9d8e8" font-family="system-ui,Segoe UI,sans-serif" font-size="16" letter-spacing="4">SAUTEZ • GLISSEZ • FONCEZ</text>
 </svg>
