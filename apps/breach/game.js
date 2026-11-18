@@ -1,4 +1,4 @@
-import * as THREE from 'https://esm.sh/three@0.160.0';
+﻿import * as THREE from 'https://esm.sh/three@0.160.0';
 import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 
 (() => {
@@ -12,7 +12,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
         const options = document.createElement('div');
         options.className = 'game-options';
         options.setAttribute('aria-label', 'Options de jeu');
-        options.innerHTML = '<span class="option">FPS néon · MVP testable</span>';
+        options.innerHTML = '<span class="option">FPS nÃ©on Â· MVP testable</span>';
         return options;
       },
       panels: [
@@ -28,7 +28,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
             title.textContent = 'Briefing';
             const p = document.createElement('p');
             p.className = 'neon-panel__text';
-            p.textContent = 'Sécurisez le secteur : éliminez toutes les sentinelles. Récupérez les cellules d’énergie (vie) et les chargeurs.';
+            p.textContent = 'SÃ©curisez le secteur : Ã©liminez toutes les sentinelles. RÃ©cupÃ©rez les cellules dâ€™Ã©nergie (vie) et les chargeurs.';
             const stats = document.createElement('div');
             stats.className = 'panel-stats';
             const mk = (label, id, value) => {
@@ -37,7 +37,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
               const v = document.createElement('strong'); v.id = `panel-${id}`; v.textContent = value;
               w.append(s, v); return w;
             };
-            stats.append(mk('SANTÉ', 'health', '100'), mk('MUNITIONS', 'ammo', '24'), mk('CIBLES', 'targets', '0'));
+            stats.append(mk('SANTÃ‰', 'health', '100'), mk('MUNITIONS', 'ammo', '24'), mk('CIBLES', 'targets', '0'));
             panel.append(title, p, stats);
             return panel;
           }
@@ -55,12 +55,12 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
             const ul = document.createElement('ul');
             ul.className = 'neon-panel__list';
             for (const t of [
-              'Clic / Entrée : capturer la souris et jouer',
-              'ZQSD ou WASD / Flèches : se déplacer',
+              'Clic / EntrÃ©e : capturer la souris et jouer',
+              'ZQSD ou WASD / FlÃ¨ches : se dÃ©placer',
               'Souris : viser',
               'Clic gauche : tirer',
               'R : recharger',
-              'Échap : libérer la souris (pause)'
+              'Ã‰chap : libÃ©rer la souris (pause)'
             ]) { const li = document.createElement('li'); li.className = 'neon-panel__text'; li.textContent = t; ul.appendChild(li); }
             panel.append(title, ul);
             return panel;
@@ -75,7 +75,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
             <div id="hud">
               <div id="hud-top">
                 <div class="hud-box">
-                  <span class="hud-label">Santé</span>
+                  <span class="hud-label">SantÃ©</span>
                   <span class="hud-value" id="hud-health">100</span>
                   <div id="health-bar-wrap"><div id="health-bar"></div></div>
                 </div>
@@ -88,18 +88,18 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
               <div id="damage-flash"></div>
               <div id="hud-bottom">
                 <div class="hud-box" id="ammo">Munitions <span id="hud-ammo">24</span> / <span id="hud-reserve">72</span></div>
-                <div class="hud-box" id="objective">Objectif : éliminez toutes les sentinelles du secteur.</div>
+                <div class="hud-box" id="objective">Objectif : Ã©liminez toutes les sentinelles du secteur.</div>
               </div>
             </div>
             <div id="overlay">
               <div class="card">
                 <h2><em>Neon</em> Breach</h2>
-                <p>FPS néon en vue subjective. Explorez le secteur, éliminez les sentinelles et récupérez des ressources.</p>
+                <p>FPS nÃ©on en vue subjective. Explorez le secteur, Ã©liminez les sentinelles et rÃ©cupÃ©rez des ressources.</p>
                 <div class="keys">
-                  <div><kbd>Z</kbd><kbd>Q</kbd><kbd>S</kbd><kbd>D</kbd> / flèches — déplacement</div>
-                  <div><kbd>Souris</kbd> — viser</div>
-                  <div><kbd>Clic</kbd> — tirer</div>
-                  <div><kbd>R</kbd> — recharger · <kbd>Échap</kbd> — pause</div>
+                  <div><kbd>Z</kbd><kbd>Q</kbd><kbd>S</kbd><kbd>D</kbd> / flÃ¨ches â€” dÃ©placement</div>
+                  <div><kbd>Souris</kbd> â€” viser</div>
+                  <div><kbd>Clic</kbd> â€” tirer</div>
+                  <div><kbd>R</kbd> â€” recharger Â· <kbd>Ã‰chap</kbd> â€” pause</div>
                 </div>
                 <button id="start-btn" type="button">Entrer dans le secteur</button>
                 <div id="message"></div>
@@ -139,6 +139,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   const scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(0x02060a, 0.045);
   const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 120);
+  camera.rotation.order = 'YXZ';
   camera.position.set(6, 1.6, 6);
 
   scene.add(new THREE.AmbientLight(0x3fd6ff, 0.35));
@@ -237,6 +238,12 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     damageT: 0, time: 0
   };
 
+  function isMoveKey(k, c, names) { return names.includes(k) || names.includes(c); }
+  function moveForward() { const k = state.keys; return k['z'] || k['w'] || k['arrowup'] || k['keyw'] || k['keyz'] || k['arrowup_code']; }
+  function moveBack() { const k = state.keys; return k['s'] || k['arrowdown'] || k['keys'] || k['arrowdown_code']; }
+  function moveLeft() { const k = state.keys; return k['q'] || k['a'] || k['arrowleft'] || k['keya'] || k['keyq'] || k['arrowleft_code']; }
+  function moveRight() { const k = state.keys; return k['d'] || k['arrowright'] || k['keyd'] || k['arrowright_code']; }
+
   function syncHud() {
     const t = enemies.filter(e => e.alive).length;
     hudHealth.textContent = String(Math.max(0, Math.round(state.health)));
@@ -271,6 +278,8 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     state.health = 100; state.ammo = 24; state.reserve = 72;
     state.yaw = Math.PI * 0.75; state.pitch = 0; state.reloading = false; state.reloadT = 0; state.damageT = 0;
     camera.position.set(6, 1.6, 6);
+    camera.rotation.y = state.yaw; camera.rotation.x = state.pitch;
+    camera.updateMatrixWorld();
     for (const e of enemies) { e.hp = 60; e.alive = true; e.group.visible = true; e.light.visible = true; e.cooldown = Math.random() * 1.2; }
     for (const p of pickups) { p.alive = true; p.mesh.visible = true; }
     syncHud();
@@ -286,7 +295,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       state.running = true; overlay.classList.add('hidden');
     } else {
       state.running = false;
-      if (!state.over && !state.won) setOverlay(true, '<em>Pause</em>', 'La souris a été libérée. Cliquez pour reprendre.', 'Reprendre');
+      if (!state.over && !state.won) setOverlay(true, '<em>Pause</em>', 'La souris a Ã©tÃ© libÃ©rÃ©e. Cliquez pour reprendre.', 'Reprendre');
     }
   });
 
@@ -299,19 +308,21 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   });
 
   const onKey = (v) => (e) => {
-    const k = e.key.toLower();
+  const onKey = (v) => (e) => {
+    const k = e.key.toLowerCase();
+    const c = e.code ? e.code.toLowerCase() : '';
     state.keys[k] = v;
-    if (v && k === 'r') reload();
+    if (c) state.keys[c] = v;
+    if (v && (k === 'r' || c === 'keyr')) reload();
     if (v && e.key === 'Enter' && document.pointerLockElement !== renderer.domElement) { if (state.over || state.won) resetGame(); tryLock(); }
   };
   window.addEventListener('keydown', onKey(true));
   window.addEventListener('keyup', onKey(false));
-
   function reload() {
     if (state.reloading || state.ammo >= 24 || state.reserve <= 0) return;
     state.reloading = true; state.reloadT = 1.1;
-    msgEl.textContent = 'Rechargement…';
-    if (objectiveEl) objectiveEl.textContent = 'Rechargement…';
+    msgEl.textContent = 'Rechargementâ€¦';
+    if (objectiveEl) objectiveEl.textContent = 'Rechargementâ€¦';
   }
 
   const raycaster = new THREE.Raycaster();
@@ -377,11 +388,11 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 
   function win() {
     state.won = true; state.running = false; document.exitPointerLock?.();
-    setOverlay(true, '<em>Secteur sécurisé</em>', 'Toutes les sentinelles ont été neutralisées. Mission accomplie.', 'Rejouer', `Santé restante : ${Math.max(0, Math.round(state.health))}`);
+    setOverlay(true, '<em>Secteur sÃ©curisÃ©</em>', 'Toutes les sentinelles ont Ã©tÃ© neutralisÃ©es. Mission accomplie.', 'Rejouer', `SantÃ© restante : ${Math.max(0, Math.round(state.health))}`);
   }
   function lose() {
     state.over = true; state.running = false; document.exitPointerLock?.();
-    setOverlay(true, 'Mission <em>échouée</em>', 'Vous avez été neutralisé par les sentinelles du secteur.', 'Réessayer', `Sentinelles restantes : ${enemies.filter(e=>e.alive).length}`);
+    setOverlay(true, 'Mission <em>Ã©chouÃ©e</em>', 'Vous avez Ã©tÃ© neutralisÃ© par les sentinelles du secteur.', 'RÃ©essayer', `Sentinelles restantes : ${enemies.filter(e=>e.alive).length}`);
   }
 
   for (const e of enemies) e.group.userData.enemyRef = e;
@@ -434,7 +445,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       if (state.reloadT <= 0) {
         const need = 24 - state.ammo; const take = Math.min(need, state.reserve);
         state.ammo += take; state.reserve -= take; state.reloading = false; msgEl.textContent = '';
-        if (objectiveEl) objectiveEl.textContent = state.won ? 'Secteur sécurisé.' : 'Objectif : éliminez toutes les sentinelles du secteur.';
+        if (objectiveEl) objectiveEl.textContent = state.won ? 'Secteur sÃ©curisÃ©.' : 'Objectif : Ã©liminez toutes les sentinelles du secteur.';
         syncHud();
       }
     }
@@ -443,14 +454,15 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       const speed = 5.2;
       camera.rotation.order = 'YXZ';
       camera.rotation.y = state.yaw; camera.rotation.x = state.pitch;
+      camera.updateMatrixWorld();
       const forward = new THREE.Vector3();
       camera.getWorldDirection(forward); forward.y = 0; if (forward.lengthSq() > 0) forward.normalize();
       const right = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
       let move = new THREE.Vector3();
-      if (state.keys['z'] || state.keys['w'] || state.keys['arrowup']) move.add(forward);
-      if (state.keys['s'] || state.keys['arrowdown']) move.sub(forward);
-      if (state.keys['q'] || state.keys['a'] || state.keys['arrowleft']) move.sub(right);
-      if (state.keys['d'] || state.keys['arrowright']) move.add(right);
+      if (moveForward()) move.add(forward);
+      if (moveBack()) move.sub(forward);
+      if (moveLeft()) move.sub(right);
+      if (moveRight()) move.add(right);
       if (move.lengthSq() > 0) {
         move.normalize().multiplyScalar(speed * dt);
         const nx = camera.position.x + move.x; const nz = camera.position.z + move.z;
