@@ -22,21 +22,18 @@ body {
 }
 
 body.game {
+  margin: 0;
   height: 100vh;
   height: 100dvh;
   max-height: 100dvh;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
 #shell-mount {
-  flex: 1 1 0;
-  min-height: 0;
+  width: 100%;
   height: 100%;
+  min-height: 0;
   max-height: 100%;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
 }
 
@@ -47,21 +44,23 @@ body.game {
 }
 
 .neon-frame {
-  flex: 1 1 0;
+  width: 100%;
+  height: 100%;
   min-height: 0;
   max-height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 16px 20px;
+  gap: 20px;
+  padding: 16px 20px 20px;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 /* Cadre de jeu commun à tous les jeux (ADR-004) : 100vh, pas de scroll de page. */
 .neon-frame--game {
-  height: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
   min-height: 0;
-  max-height: 100%;
   overflow: hidden;
 }
 
@@ -74,7 +73,7 @@ body.game {
   gap: 8px;
   min-height: 0;
   text-align: center;
-  padding-bottom: 2px;
+  padding-bottom: 4px;
 }
 
 .neon-frame__brand {
@@ -125,7 +124,8 @@ body.game {
   min-height: 0;
   display: grid;
   grid-template-columns: minmax(200px, 280px) minmax(0, 1fr) minmax(200px, 280px);
-  gap: 16px;
+  grid-template-rows: minmax(0, 1fr);
+  gap: 20px;
   align-items: stretch;
   overflow: hidden;
 }
@@ -221,13 +221,15 @@ body.game {
     overflow: hidden;
   }
   .neon-frame {
-    padding: 10px 12px;
+    height: 100dvh;
+    max-height: 100dvh;
+    padding: 10px 12px 12px;
     gap: 10px;
   }
   .neon-frame__body {
     grid-template-columns: 1fr;
     grid-template-rows: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
-    gap: 8px;
+    gap: 10px;
     overflow: hidden;
   }
   .neon-side--left {
@@ -236,7 +238,7 @@ body.game {
     flex-wrap: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
-    max-height: 22vh;
+    max-height: 20vh;
   }
   .neon-screen {
     order: 2;
@@ -249,7 +251,7 @@ body.game {
     flex-wrap: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
-    max-height: 22vh;
+    max-height: 20vh;
   }
   .neon-side > .neon-panel--slot {
     flex: 0 0 auto;
