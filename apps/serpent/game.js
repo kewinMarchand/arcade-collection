@@ -1,4 +1,5 @@
 import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
+import { createAudio } from '../../packages/shared/src/audio.js';
 import { nextCell, hitsWall, hitsSelf, opposite, freeCell } from './game-logic.js';
 
 const shell = mountGameFrame({
@@ -6,6 +7,35 @@ const shell = mountGameFrame({
   config: {
     title: 'Neon Serpent',
     subtitle: 'Grandis sans te mordre.',
+    renderHeader: () => {
+      const options = document.createElement('div');
+      options.className = 'game-options';
+      options.setAttribute('aria-label', 'Options de jeu');
+      const mk = (label, id, type = 'toggle', inner = '') => {
+        const wrap = document.createElement('label');
+        wrap.className = 'option';
+        if (type === 'select') {
+          wrap.append(`${label} `);
+          const sel = document.createElement('select');
+          sel.id = id;
+          sel.setAttribute('aria-label', label);
+          sel.innerHTML = inner;
+          wrap.appendChild(sel);
+        } else {
+          const input = document.createElement('input');
+          input.id = id; input.className = 'toggle'; input.type = 'checkbox';
+          if (id === 'bonus') input.checked = true;
+          wrap.append(` ${label} `, input);
+        }
+        return wrap;
+      };
+      options.append(
+        mk('Difficulté', 'difficulty', 'select', '<option value="chill">Chill</option><option value="arcade" selected>Arcade</option><option value="chaos">Chaos</option>'),
+        mk('Bonus', 'bonus'),
+        mk('Sons', 'sound')
+      );
+      return options;
+    },
     panels: [
       {
         side: 'left',
@@ -47,7 +77,7 @@ const shell = mountGameFrame({
           actions.append(b('pause', 'Pause'), b('restart', 'Recommencer'), b('new-game', 'Nouvelle partie', 'primary'));
           const help = document.createElement('p');
           help.className = 'help';
-          help.textContent = 'Flèches ou ZQSD : diriger · Espace : démarrer · P : pause';
+          help.textContent = 'Flèches ou ZQSD : diriger • Espace : démarrer • P : pause';
           panel.append(title, actions, help);
           return panel;
         },
@@ -69,21 +99,39 @@ const shell = mountGameFrame({
 const canvas = shell.screen.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 const $ = (s) => document.querySelector(s);
+const difficultyInput = $('#difficulty');
+const bonusInput = $('#bonus');
+const soundInput = $('#sound');
+const audio = createAudio(() => soundInput && soundInput.checked);
+
 const COLS = 20, ROWS = 20, CELL = 30, W = canvas.width, H = canvas.height;
 const SEG = ['#69ffe1', '#5cf2d6', '#8bffd8', '#a5ffd0', '#baffe0', '#8fe8ff', '#7dd8ff', '#9debd6'];
-let state = 'ready', dir = 'right', pending = null, snake = [], food = null, score = 0, best = Number(localStorage.getItem('neonSerpentBest')) || 0, tick = 0.14, acc = 0, last = 0, eatPulse = 0, shake = 0, particles = [];
+const DIFF = {
+  chill: { startTick: 0.17, minTick: 0.095, accel: 0.0003 },
+  arcade: { startTick: 0.14, minTick: 0.075, accel: 0.0004 },
+  chaos: { startTick: 0.11, minTick: 0.055, accel: 0.00055 },
+};
+
+let state = 'ready', dir = 'right', pending = null, snake = [], food = null, bonusFood = null, bonusTimer = 0, score = 0, best = Number(localStorage.getItem('neonSerpentBest')) || 0, tick = 0.14, acc = 0, last = 0, eatPulse = 0, shake = 0, particles = [], rings = [], headScale = 1;
 $('#best').textContent = String(best);
 
 function spawnFood() { food = freeCell(snake, COLS, ROWS); }
+function spawnBonus() {
+  if (!bonusInput.checked) { bonusFood = null; return; }
+  const taken = snake.concat(food ? [food] : []);
+  bonusFood = freeCell(taken, COLS, ROWS);
+  bonusTimer = 5.5;
+}
 
 function reset() {
+  const d = DIFF[difficultyInput.value] || DIFF.arcade;
   snake = [{ x: 9, y: 10 }, { x: 8, y: 10 }, { x: 7, y: 10 }];
-  dir = 'right'; pending = null; score = 0; tick = 0.14; acc = 0; shake = 0; particles = []; eatPulse = 0;
+  dir = 'right'; pending = null; score = 0; tick = d.startTick; acc = 0; shake = 0; particles = []; rings = []; eatPulse = 0; headScale = 1; bonusFood = null; bonusTimer = 0;
   spawnFood();
   $('#score').textContent = '0'; $('#speed').textContent = '1'; $('#status').textContent = 'Prêt';
 }
 
-function start() { if (state === 'playing') return; reset(); state = 'playing'; $('#status').textContent = 'En jeu'; }
+function start() { if (state === 'playing') return; reset(); state = 'playing'; $('#status').textContent = 'En jeu'; audio.tone(480, 0.08, 'triangle', 0.03); }
 
 function pause() {
   if (state === 'playing') { state = 'paused'; $('#status').textContent = 'Pause'; }
@@ -93,42 +141,68 @@ function pause() {
 
 function burst(x, y, color, n) {
   for (let i = 0; i < n; i++) {
-    const a = Math.random() * Math.PI * 2, sp = 40 + Math.random() * 140;
-    particles.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0.35 + Math.random() * 0.3, color, s: 2 + Math.random() * 2.5 });
+    const a = Math.random() * Math.PI * 2, sp = 40 + Math.random() * 160;
+    particles.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0.35 + Math.random() * 0.35, color, s: 2 + Math.random() * 2.5 });
   }
 }
+function ring(x, y, color) { rings.push({ x, y, r: 8, life: 0.4, color }); }
 
 function setDir(d) {
   if (state === 'ready') start();
   if (state !== 'playing') return;
   if (opposite(d, dir) && snake.length > 1) return;
+  if (pending !== d) audio.tone(300, 0.02, 'square', 0.01);
   pending = d;
 }
 
 function update(dt) {
-  shake = Math.max(0, shake - dt * 3); eatPulse = Math.max(0, eatPulse - dt * 4);
+  shake = Math.max(0, shake - dt * 3); eatPulse = Math.max(0, eatPulse - dt * 4); headScale += (1 - headScale) * Math.min(1, dt * 10);
   for (let i = particles.length - 1; i >= 0; i--) {
     const p = particles[i]; p.x += p.vx * dt; p.y += p.vy * dt; p.vx *= 0.97; p.vy *= 0.97; p.life -= dt; if (p.life <= 0) particles.splice(i, 1);
   }
+  for (let i = rings.length - 1; i >= 0; i--) { rings[i].r += 80 * dt; if ((rings[i].life -= dt) <= 0) rings.splice(i, 1); }
+
+  if (bonusFood) {
+    bonusTimer -= dt;
+    if (bonusTimer <= 0) bonusFood = null;
+  }
+
   if (state !== 'playing') return;
   acc += dt;
   if (acc < tick) return;
   acc = 0;
   if (pending) { dir = pending; pending = null; }
-  const head = nextCell(snake[0], dir), ate = food && head.x === food.x && head.y === food.y;
-  if (hitsWall(head, COLS, ROWS) || hitsSelf(snake, head, ate)) {
-    burst(head.x * CELL + 15, head.y * CELL + 15, '#ff6dbe', 20); shake = 1; state = 'over'; $('#status').textContent = 'Mordu !';
+
+  const head = nextCell(snake[0], dir);
+  const ate = food && head.x === food.x && head.y === food.y;
+  const ateBonus = bonusFood && head.x === bonusFood.x && head.y === bonusFood.y;
+
+  if (hitsWall(head, COLS, ROWS) || hitsSelf(snake, head, ate || ateBonus)) {
+    const px = head.x * CELL + 15, py = head.y * CELL + 15;
+    burst(px, py, '#ff6dbe', 24); ring(px, py, '#ff6dbe'); shake = 1; headScale = 0.7;
+    state = 'over'; $('#status').textContent = 'Mordu !';
+    audio.seq([[220, 0.12, 'sawtooth', 0.05, 0], [150, 0.2, 'sawtooth', 0.04, 0.07]]);
     if (score > best) { best = score; localStorage.setItem('neonSerpentBest', String(best)); $('#best').textContent = String(best); }
     return;
   }
-  if (ate) {
-    score += 10; $('#score').textContent = String(score);
-    burst(head.x * CELL + 15, head.y * CELL + 15, '#ffd36b', 14); eatPulse = 1;
-    tick = Math.max(0.075, 0.14 - score * 0.0004); $('#speed').textContent = String(1 + Math.floor(score / 60));
-    spawnFood();
+
+  const d = DIFF[difficultyInput.value] || DIFF.arcade;
+  if (ate || ateBonus) {
+    const gain = ateBonus ? 40 : 10;
+    const px = head.x * CELL + 15, py = head.y * CELL + 15;
+    score += gain; $('#score').textContent = String(score);
+    burst(px, py, ateBonus ? '#69ffe1' : '#ffd36b', 16); ring(px, py, ateBonus ? '#69ffe1' : '#ffd36b');
+    eatPulse = 1; headScale = 1.18;
+    tick = Math.max(d.minTick, tick - d.accel * 20);
+    $('#speed').textContent = String(1 + Math.floor(score / 60));
+    audio.tone(ateBonus ? 880 : 640, 0.07, 'sine', 0.03);
+    if (ate) spawnFood();
+    if (ateBonus) bonusFood = null;
+    if (ate && bonusInput.checked && !bonusFood && Math.random() < 0.28) spawnBonus();
   }
+
   snake.unshift(head);
-  if (!ate) snake.pop();
+  if (!ate && !ateBonus) snake.pop();
 }
 
 function draw(t) {
@@ -138,16 +212,27 @@ function draw(t) {
   ctx.strokeStyle = '#69ffe112'; ctx.lineWidth = 1;
   for (let i = 1; i < COLS; i++) { ctx.beginPath(); ctx.moveTo(i * CELL, 0); ctx.lineTo(i * CELL, H); ctx.stroke(); }
   for (let i = 1; i < ROWS; i++) { ctx.beginPath(); ctx.moveTo(0, i * CELL); ctx.lineTo(W, i * CELL); ctx.stroke(); }
+
   if (food) {
     const pulse = 1 + 0.15 * Math.sin(t * 0.008) + eatPulse * 0.4;
     ctx.fillStyle = '#ff6dbe'; ctx.shadowColor = '#ff6dbe'; ctx.shadowBlur = 18 + 8 * Math.sin(t * 0.008);
     ctx.beginPath(); ctx.arc(food.x * CELL + 15, food.y * CELL + 15, 8 * pulse, 0, Math.PI * 2); ctx.fill();
     ctx.shadowBlur = 0; ctx.fillStyle = '#ffdcec'; ctx.beginPath(); ctx.arc(food.x * CELL + 12, food.y * CELL + 12, 2.5, 0, Math.PI * 2); ctx.fill();
   }
+  if (bonusFood) {
+    const pulse = 1 + 0.2 * Math.sin(t * 0.012);
+    ctx.fillStyle = '#69ffe1'; ctx.shadowColor = '#69ffe1'; ctx.shadowBlur = 20;
+    ctx.beginPath(); ctx.arc(bonusFood.x * CELL + 15, bonusFood.y * CELL + 15, 9 * pulse, 0, Math.PI * 2); ctx.fill();
+    ctx.shadowBlur = 0; ctx.strokeStyle = '#ffffffaa'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(bonusFood.x * CELL + 15, bonusFood.y * CELL + 15, 13, 0, Math.PI * 2); ctx.stroke();
+  }
+
   snake.forEach((s, i) => {
     const col = i === 0 ? '#69ffe1' : SEG[i % SEG.length];
+    const sc = i === 0 ? headScale : 1;
+    const size = (CELL - 4) * sc;
+    const off = (CELL - size) / 2;
     ctx.fillStyle = col; ctx.shadowColor = col; ctx.shadowBlur = i === 0 ? 16 : 8;
-    ctx.beginPath(); ctx.roundRect(s.x * CELL + 2, s.y * CELL + 2, CELL - 4, CELL - 4, i === 0 ? 9 : 7); ctx.fill();
+    ctx.beginPath(); ctx.roundRect(s.x * CELL + off, s.y * CELL + off, size, size, i === 0 ? 9 : 7); ctx.fill();
     ctx.shadowBlur = 0;
     if (i === 0) {
       ctx.fillStyle = '#06231d';
@@ -157,8 +242,12 @@ function draw(t) {
       ctx.beginPath(); ctx.ellipse(s.x * CELL + 15 + ex - px, s.y * CELL + 15 + ey - py, 2.6, 2.6, 0, 0, Math.PI * 2); ctx.fill();
     }
   });
+
+  for (const r of rings) { ctx.globalAlpha = Math.max(0, r.life / 0.4); ctx.strokeStyle = r.color; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(r.x, r.y, r.r, 0, Math.PI * 2); ctx.stroke(); }
+  ctx.globalAlpha = 1;
   for (const p of particles) { ctx.globalAlpha = Math.min(1, p.life * 2.4); ctx.fillStyle = p.color; ctx.fillRect(p.x, p.y, p.s, p.s); }
   ctx.globalAlpha = 1; ctx.restore();
+
   if (state !== 'playing') {
     ctx.fillStyle = '#04100ddc'; ctx.fillRect(0, 0, W, H); ctx.textAlign = 'center';
     ctx.fillStyle = '#69ffe1'; ctx.font = '800 32px system-ui';

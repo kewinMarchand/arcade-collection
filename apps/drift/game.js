@@ -1,4 +1,5 @@
 import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
+import { createAudio } from '../../packages/shared/src/audio.js';
 import { clamp, overlaps, nextLane } from './game-logic.js';
 
 const shell = mountGameFrame({
@@ -6,6 +7,37 @@ const shell = mountGameFrame({
   config: {
     title: 'Neon Drift',
     subtitle: 'Glisse entre les portails, évite les obstacles.',
+    renderHeader: () => {
+      const options = document.createElement('div');
+      options.className = 'game-options';
+      options.setAttribute('aria-label', 'Options de jeu');
+      const mk = (label, id, type = 'toggle', inner = '') => {
+        const wrap = document.createElement('label');
+        wrap.className = 'option';
+        if (type === 'select') {
+          wrap.append(`${label} `);
+          const sel = document.createElement('select');
+          sel.id = id;
+          sel.setAttribute('aria-label', label);
+          sel.innerHTML = inner;
+          wrap.appendChild(sel);
+        } else {
+          const input = document.createElement('input');
+          input.id = id;
+          input.className = 'toggle';
+          input.type = 'checkbox';
+          if (id === 'bonus') input.checked = true;
+          wrap.append(` ${label} `, input);
+        }
+        return wrap;
+      };
+      options.append(
+        mk('Difficulté', 'difficulty', 'select', '<option value="chill">Chill</option><option value="arcade" selected>Arcade</option><option value="chaos">Chaos</option>'),
+        mk('Bonus', 'bonus'),
+        mk('Sons', 'sound')
+      );
+      return options;
+    },
     panels: [
       {
         side: 'left',
@@ -47,7 +79,7 @@ const shell = mountGameFrame({
           actions.append(b('pause', 'Pause'), b('restart', 'Recommencer'), b('new-game', 'Nouvelle partie', 'primary'));
           const help = document.createElement('p');
           help.className = 'help';
-          help.textContent = '← → ou A / D : piloter · Espace : démarrer · P : pause';
+          help.textContent = '← → ou A / D : piloter • Espace : démarrer • P : pause';
           panel.append(title, actions, help);
           return panel;
         },
@@ -71,8 +103,19 @@ const ctx = canvas.getContext('2d');
 const scoreEl = document.querySelector('#score');
 const bestEl = document.querySelector('#best');
 const statusEl = document.querySelector('#status');
+const difficultyInput = document.querySelector('#difficulty');
+const bonusInput = document.querySelector('#bonus');
+const soundInput = document.querySelector('#sound');
+const audio = createAudio(() => soundInput && soundInput.checked);
+
 const W = canvas.width, H = canvas.height, HORIZON = 148, keys = new Set();
-let state = 'ready', lane = 2, carX = 0, score = 0, best = Number(localStorage.getItem('neonDriftBest')) || 0, items = [], elapsed = 0, last = 0, spawn = 0.7, shake = 0, particles = [];
+const DIFF = {
+  chill: { speed: 0.36, speedGain: 0.005, spawn: 1.0, spawnMin: 0.45, orb: 0.38 },
+  arcade: { speed: 0.42, speedGain: 0.008, spawn: 0.9, spawnMin: 0.34, orb: 0.28 },
+  chaos: { speed: 0.52, speedGain: 0.012, spawn: 0.72, spawnMin: 0.26, orb: 0.22 },
+};
+
+let state = 'ready', lane = 2, carX = 0, score = 0, best = Number(localStorage.getItem('neonDriftBest')) || 0, items = [], elapsed = 0, last = 0, spawn = 0.7, shake = 0, particles = [], pulses = [], carSquash = 1;
 bestEl.textContent = String(best);
 carX = W * 0.5;
 const BOTTOM = [W * 0.212, W * 0.356, W * 0.5, W * 0.644, W * 0.788];
@@ -85,7 +128,10 @@ function lanePos(l, p) {
 }
 
 function start() {
-  state = 'playing'; lane = 2; carX = BOTTOM[2]; score = 0; elapsed = 0; spawn = 0.7; shake = 0; items = []; particles = []; statusEl.textContent = 'En course';
+  const d = DIFF[difficultyInput.value] || DIFF.arcade;
+  state = 'playing'; lane = 2; carX = BOTTOM[2]; score = 0; elapsed = 0; spawn = d.spawn; shake = 0; items = []; particles = []; pulses = []; carSquash = 1;
+  statusEl.textContent = 'En course';
+  audio.tone(440, 0.08, 'triangle', 0.03);
 }
 
 function pause() {
@@ -101,17 +147,37 @@ function burst(x, y, color, n, up) {
   }
 }
 
+function ring(x, y, color) { pulses.push({ x, y, r: 8, life: 0.4, color }); }
+
+function moveLane(dir) {
+  const next = nextLane(lane, dir);
+  if (next !== lane) {
+    lane = next;
+    carSquash = 0.88;
+    audio.tone(300 + next * 30, 0.03, 'square', 0.015);
+  }
+}
+
 function update(dt) {
+  carSquash += (1 - carSquash) * Math.min(1, dt * 12);
+  shake = Math.max(0, shake - dt * 2.5);
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const p = particles[i]; p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 260 * dt; p.life -= dt; if (p.life <= 0) particles.splice(i, 1);
+  }
+  for (let i = pulses.length - 1; i >= 0; i--) { pulses[i].r += 120 * dt; if ((pulses[i].life -= dt) <= 0) pulses.splice(i, 1); }
+
   if (state !== 'playing') return;
+  const d = DIFF[difficultyInput.value] || DIFF.arcade;
   elapsed += dt;
   score = Math.floor(elapsed * 12);
   carX += (BOTTOM[lane] - carX) * Math.min(1, dt * 9);
   spawn -= dt;
   if (spawn <= 0) {
-    items.push({ lane: Math.floor(Math.random() * 5), p: 0, kind: Math.random() < 0.72 ? 'rock' : 'orb', spin: Math.random() * Math.PI * 2, collected: false });
-    spawn = Math.max(0.34, 0.9 - elapsed * 0.004);
+    const orbChance = bonusInput.checked ? d.orb : d.orb * 0.5;
+    items.push({ lane: Math.floor(Math.random() * 5), p: 0, kind: Math.random() < (1 - orbChance) ? 'rock' : 'orb', spin: Math.random() * Math.PI * 2, collected: false });
+    spawn = Math.max(d.spawnMin, d.spawn - elapsed * 0.003);
   }
-  const v = 0.42 + Math.min(0.32, elapsed * 0.008);
+  const v = d.speed + Math.min(0.28, elapsed * d.speedGain);
   for (const o of items) { o.p += v * dt; o.spin += dt * 2; }
   items = items.filter((o) => o.p < 1.06 && !o.collected);
   const car = { x: carX - 20, y: H - 95, w: 40, h: 55 };
@@ -122,9 +188,16 @@ function update(dt) {
     const box = { x: pos.x - (size * pos.s) / 2, y: pos.y - (size * pos.s) / 2, w: size * pos.s, h: size * pos.s };
     if (!overlaps(car, box)) continue;
     if (o.kind === 'orb') {
-      o.collected = true; score += 50; burst(pos.x, pos.y, '#ffd36b', 12, true);
+      o.collected = true;
+      const gain = bonusInput.checked ? 50 : 30;
+      score += gain;
+      carSquash = 1.12;
+      burst(pos.x, pos.y, '#ffd36b', 14, true); ring(pos.x, pos.y, '#ffeaa0');
+      audio.tone(740, 0.08, 'sine', 0.03);
     } else {
-      burst(carX, H - 70, '#ff648f', 18); burst(pos.x, pos.y, '#ff648f', 10); shake = 1; state = 'over'; statusEl.textContent = 'Terminé';
+      burst(carX, H - 70, '#ff648f', 22); burst(pos.x, pos.y, '#ff648f', 12); ring(pos.x, pos.y, '#ff648f');
+      shake = 1; carSquash = 0.75; state = 'over'; statusEl.textContent = 'Terminé';
+      audio.seq([[180, 0.12, 'sawtooth', 0.05, 0], [120, 0.2, 'sawtooth', 0.04, 0.06]]);
     }
   }
   scoreEl.textContent = String(score);
@@ -172,6 +245,7 @@ function drawOrb(pos, t) {
 function drawCar(t) {
   const tilt = (BOTTOM[lane] - carX) * 0.012;
   ctx.save(); ctx.translate(carX, H - 64); ctx.rotate(tilt);
+  ctx.scale(1 / Math.sqrt(carSquash), carSquash);
   const fl = 10 + Math.random() * 14;
   ctx.fillStyle = t % 160 < 80 ? '#7df3ff' : '#c9fbff'; ctx.shadowColor = '#7df3ff'; ctx.shadowBlur = 12;
   ctx.beginPath(); ctx.moveTo(-14, 18); ctx.quadraticCurveTo(-10, 18 + fl, -6, 18); ctx.closePath(); ctx.fill();
@@ -192,6 +266,8 @@ function draw(t) {
   drawRoad();
   items.slice().sort((a, b) => a.p - b.p).forEach((o) => { const pos = lanePos(o.lane, o.p); o.kind === 'rock' ? drawRock(pos, o.spin) : drawOrb(pos, t); });
   drawCar(t);
+  for (const p of pulses) { ctx.globalAlpha = Math.max(0, p.life / 0.4); ctx.strokeStyle = p.color; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.stroke(); }
+  ctx.globalAlpha = 1;
   for (const p of particles) { ctx.globalAlpha = Math.min(1, p.life * 2.2); ctx.fillStyle = p.color; ctx.fillRect(p.x, p.y, p.s, p.s); }
   ctx.globalAlpha = 1;
   if (state === 'playing' && elapsed > 2) {
@@ -219,18 +295,14 @@ function draw(t) {
 function frame(t) {
   const dt = Math.min((t - last) / 1000 || 0, 0.04);
   last = t;
-  shake = Math.max(0, shake - dt * 2);
-  for (let i = particles.length - 1; i >= 0; i--) {
-    const p = particles[i]; p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 260 * dt; p.life -= dt; if (p.life <= 0) particles.splice(i, 1);
-  }
   update(dt); draw(t); requestAnimationFrame(frame);
 }
 
 window.addEventListener('keydown', (e) => {
   const k = e.key.toLowerCase();
   if (['arrowleft', 'arrowright', ' '].includes(k)) e.preventDefault();
-  if (k === 'arrowleft' || k === 'a') lane = nextLane(lane, -1);
-  if (k === 'arrowright' || k === 'd') lane = nextLane(lane, 1);
+  if (k === 'arrowleft' || k === 'a') moveLane(-1);
+  if (k === 'arrowright' || k === 'd') moveLane(1);
   if (k === ' ' && state !== 'playing') start();
   if (k === 'p') pause();
 });
@@ -241,7 +313,7 @@ document.querySelector('#new-game').onclick = start;
 canvas.addEventListener('pointerdown', (e) => {
   if (state === 'over') { start(); return; }
   const r = canvas.getBoundingClientRect();
-  lane = nextLane(lane, e.clientX < r.left + r.width / 2 ? -1 : 1);
+  moveLane(e.clientX < r.left + r.width / 2 ? -1 : 1);
   if (state === 'ready') start();
 });
 last = performance.now();
