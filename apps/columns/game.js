@@ -171,13 +171,15 @@ let offsetY = 0;
 let stars = [];
 
 function initStars() {
-  stars = Array.from({ length: 100 }, () => ({
+  stars = Array.from({ length: 120 }, () => ({
     x: Math.random(),
     y: Math.random(),
-    r: Math.random() * 1.6 + 0.3,
-    a: 0.15 + Math.random() * 0.65,
+    r: Math.random() < 0.12 ? 2.2 : Math.random() * 1.5 + 0.4,
+    a: 0.25 + Math.random() * 0.7,
     tw: Math.random() * Math.PI * 2,
-    sp: 0.4 + Math.random() * 1.1,
+    sp: 0.6 + Math.random() * 1.5,
+    vy: 0.01 + Math.random() * 0.03,
+    vx: (Math.random() - 0.5) * 0.01,
   }));
 }
 
@@ -481,6 +483,13 @@ function update(dt) {
     pulses[i].r += 90 * dt;
     if ((pulses[i].life -= dt) <= 0) pulses.splice(i, 1);
   }
+  for (const s of stars) {
+    s.y += s.vy * dt;
+    s.x += s.vx * dt;
+    if (s.y > 1.02) { s.y = -0.02; s.x = Math.random(); }
+    if (s.x < -0.02) s.x = 1.02;
+    if (s.x > 1.02) s.x = -0.02;
+  }
 
   if (state !== 'playing') return;
   timer += dt;
@@ -508,12 +517,15 @@ function draw(t) {
   for (const s of stars) {
     const tw = 0.55 + 0.45 * Math.sin(time * s.sp + s.tw);
     ctx.globalAlpha = Math.min(1, s.a * tw);
-    ctx.fillStyle = '#dffcff';
+    ctx.fillStyle = s.r > 1.8 ? '#ffffff' : '#dffcff';
+    ctx.shadowColor = '#7af7e0';
+    ctx.shadowBlur = s.r > 1.6 ? 7 : 0;
     ctx.beginPath();
     ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
     ctx.fill();
   }
   ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
 
   const boardW = COLS * CELL;
   const boardH = ROWS * CELL;

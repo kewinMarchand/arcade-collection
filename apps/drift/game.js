@@ -120,13 +120,15 @@ bestEl.textContent = String(best);
 carX = W * 0.5;
 
 function initStars() {
-  stars = Array.from({ length: 90 }, () => ({
+  stars = Array.from({ length: 140 }, () => ({
     x: Math.random() * W,
-    y: Math.random() * H,
-    r: Math.random() * 1.5 + 0.4,
-    a: 0.2 + Math.random() * 0.7,
+    y: Math.random() * (HORIZON + 20),
+    r: Math.random() < 0.12 ? 2.2 : Math.random() * 1.5 + 0.4,
+    a: 0.3 + Math.random() * 0.7,
     tw: Math.random() * Math.PI * 2,
-    sp: 0.3 + Math.random() * 1.0,
+    sp: 0.5 + Math.random() * 1.4,
+    vy: 4 + Math.random() * 10,
+    vx: -6 + Math.random() * 12,
   }));
 }
 initStars();
@@ -178,6 +180,13 @@ function update(dt) {
     const p = particles[i]; p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 260 * dt; p.life -= dt; if (p.life <= 0) particles.splice(i, 1);
   }
   for (let i = pulses.length - 1; i >= 0; i--) { pulses[i].r += 120 * dt; if ((pulses[i].life -= dt) <= 0) pulses.splice(i, 1); }
+  for (const s of stars) {
+    s.y += s.vy * dt;
+    s.x += s.vx * dt;
+    if (s.y > HORIZON + 10) { s.y = -4; s.x = Math.random() * W; }
+    if (s.x < -4) s.x = W + 4;
+    if (s.x > W + 4) s.x = -4;
+  }
 
   if (state !== 'playing') return;
   const d = DIFF[difficultyInput.value] || DIFF.arcade;
@@ -226,12 +235,15 @@ function drawRoad() {
     if (s.y > HORIZON + 10) continue;
     const tw = 0.5 + 0.5 * Math.sin(starTime * s.sp + s.tw);
     ctx.globalAlpha = Math.min(1, s.a * tw);
-    ctx.fillStyle = '#dffcff';
+    ctx.fillStyle = s.r > 1.8 ? '#ffffff' : '#dffcff';
+    ctx.shadowColor = '#7af7e0';
+    ctx.shadowBlur = s.r > 1.6 ? 7 : 0;
     ctx.beginPath();
     ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
     ctx.fill();
   }
   ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
 
   ctx.fillStyle = '#060a18'; ctx.fillRect(0, HORIZON, W, H - HORIZON);
   const glow = ctx.createLinearGradient(0, HORIZON - 26, 0, HORIZON + 8); glow.addColorStop(0, 'rgba(255,101,189,0)'); glow.addColorStop(1, 'rgba(255,101,189,.5)'); ctx.fillStyle = glow; ctx.fillRect(0, HORIZON - 26, W, 34);

@@ -90,13 +90,15 @@ function setup() {
   const diff = difficultyInput?.value || 'arcade';
   mineCount = DIFF[diff] || 12;
   mines = new Set(); revealed = new Set(); flags = new Set(); state = 'ready'; first = true; score = 0; elapsed = 0; particles = []; pulses = []; shake = 0;
-  stars = Array.from({ length: 90 }, () => ({
+  stars = Array.from({ length: 120 }, () => ({
     x: Math.random() * W,
     y: Math.random() * W,
-    r: Math.random() * 1.8 + 0.4,
-    a: 0.25 + Math.random() * 0.75,
+    r: Math.random() < 0.12 ? 2.2 : Math.random() * 1.6 + 0.4,
+    a: 0.3 + Math.random() * 0.7,
     tw: Math.random() * Math.PI * 2,
-    sp: 0.15 + Math.random() * 0.45,
+    sp: 0.5 + Math.random() * 1.2,
+    vy: 6 + Math.random() * 14,
+    vx: (Math.random() - 0.5) * 5,
   }));
   $('#score').textContent = '0'; $('#mines-left').textContent = String(mineCount); $('#status').textContent = 'Prêt'; draw(0);
 }
@@ -427,12 +429,20 @@ $('#new-game').onclick = setup;
 window.addEventListener('keydown', (e) => { if (e.key.toLowerCase() === 'p') togglePause(); });
 
 function frame(t) {
-  if (state === 'playing') { elapsed += (t - last) / 1000; last = t; $('#status').textContent = 'En jeu • ' + Math.floor(elapsed) + 's'; }
-  else { last = t; }
-  for (let i = particles.length - 1; i >= 0; i--) {
-    const p = particles[i]; p.x += p.vx * (1/60); p.y += p.vy * (1/60); p.vy += 120 * (1/60); p.life -= 0.016; if (p.life <= 0) particles.splice(i, 1);
+  const dt = Math.min((t - last) / 1000 || 0, 0.05);
+  if (state === 'playing') { elapsed += dt; $('#status').textContent = 'En jeu • ' + Math.floor(elapsed) + 's'; }
+  last = t;
+  for (const s of stars) {
+    s.y += s.vy * dt;
+    s.x += s.vx * dt;
+    if (s.y > W + 4) { s.y = -4; s.x = Math.random() * W; }
+    if (s.x < -4) s.x = W + 4;
+    if (s.x > W + 4) s.x = -4;
   }
-  for (let i = pulses.length - 1; i >= 0; i--) { pulses[i].r += 80 * 0.016; if ((pulses[i].life -= 0.016) <= 0) pulses.splice(i, 1); }
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const p = particles[i]; p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 120 * dt; p.life -= dt; if (p.life <= 0) particles.splice(i, 1);
+  }
+  for (let i = pulses.length - 1; i >= 0; i--) { pulses[i].r += 80 * dt; if ((pulses[i].life -= dt) <= 0) pulses.splice(i, 1); }
   draw(t);
   requestAnimationFrame(frame);
 }

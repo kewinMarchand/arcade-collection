@@ -88,7 +88,17 @@ const DIFF = {
 let state = 'ready', round = 1, score = 0, gravity = 60, best = Number(localStorage.getItem('neonOrbiterBest')) || 0, last = 0, elapsed = 0, shake = 0, terrain = [], pads = [], stars = [], particles = [], rings = [], banner = '', bannerTimer = 0, keys = new Set(), ship = { x: 110, y: 70, vx: 14, vy: 0, tilt: 0, fuel: 100 }, shipScale = 1;
 $('#best').textContent = String(best);
 
-function makeStars() { stars = Array.from({ length: 90 }, () => ({ x: Math.random() * W, y: Math.random() * 320, s: Math.random() < 0.15 ? 2 : 1, tw: Math.random() * Math.PI * 2, z: 0.3 + Math.random() * 0.7 })); }
+function makeStars() {
+  stars = Array.from({ length: 120 }, () => ({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    s: Math.random() < 0.15 ? 2.2 : 0.8 + Math.random() * 1.2,
+    tw: Math.random() * Math.PI * 2,
+    z: 0.3 + Math.random() * 0.7,
+    vy: 4 + Math.random() * 10,
+    vx: (Math.random() - 0.5) * 4,
+  }));
+}
 
 function makeTerrain() {
   terrain = []; const n = 21;
@@ -142,6 +152,13 @@ function update(dt) {
     const p = particles[i]; p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 120 * dt; p.life -= dt; if (p.life <= 0) particles.splice(i, 1);
   }
   for (let i = rings.length - 1; i >= 0; i--) { rings[i].r = (rings[i].r || 8) + 90 * dt; if ((rings[i].life -= dt) <= 0) rings.splice(i, 1); }
+  for (const s of stars) {
+    s.y += s.vy * dt;
+    s.x += s.vx * dt;
+    if (s.y > H + 4) { s.y = -4; s.x = Math.random() * W; }
+    if (s.x < -4) s.x = W + 4;
+    if (s.x > W + 4) s.x = -4;
+  }
 
   if (state !== 'playing') return;
   const d = DIFF[difficultyInput.value] || DIFF.arcade;
@@ -184,8 +201,15 @@ function draw(t) {
   ctx.clearRect(0, 0, W, H); ctx.save();
   if (shake > 0) ctx.translate((Math.random() - 0.5) * 12 * shake, (Math.random() - 0.5) * 8 * shake);
   const bg = ctx.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#0c1a33'); bg.addColorStop(1, '#061013'); ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
-  for (const s of stars) { ctx.globalAlpha = 0.3 + 0.6 * Math.abs(Math.sin(s.tw + t * 0.002)) * s.z; ctx.fillStyle = '#d5e9ff'; ctx.fillRect(s.x, s.y, s.s, s.s); }
+  for (const s of stars) {
+    ctx.globalAlpha = 0.35 + 0.65 * Math.abs(Math.sin(s.tw + t * 0.002)) * s.z;
+    ctx.fillStyle = s.s > 1.8 ? '#ffffff' : '#d5e9ff';
+    ctx.shadowColor = '#7af7e0';
+    ctx.shadowBlur = s.s > 1.6 ? 7 : 0;
+    ctx.fillRect(s.x, s.y, s.s, s.s);
+  }
   ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
 
   ctx.beginPath(); ctx.moveTo(terrain[0].x, terrain[0].y);
   for (const p of terrain) ctx.lineTo(p.x, p.y);

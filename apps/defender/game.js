@@ -166,11 +166,11 @@ let thrust = 0;
 bestEl.textContent = String(best);
 
 function makeStars() {
-  stars = Array.from({ length: 140 }, () => ({
+  stars = Array.from({ length: 160 }, () => ({
     x: Math.random() * W,
     y: Math.random() * H,
     z: 0.2 + Math.random() * 1,
-    r: Math.random() < 0.2 ? 2 : 1,
+    r: Math.random() < 0.18 ? 2.4 : Math.random() < 0.4 ? 1.6 : 1,
     tw: Math.random() * Math.PI * 2,
   }));
 }
@@ -462,16 +462,20 @@ function draw(t) {
 
   // Starfield (motion = impression d'avancer)
   for (const s of stars) {
-    const a = 0.25 + 0.55 * s.z + 0.2 * Math.sin(t * 0.003 + s.tw);
+    const a = 0.3 + 0.55 * s.z + 0.25 * Math.sin(t * 0.003 + s.tw);
     ctx.globalAlpha = Math.min(1, a);
-    ctx.fillStyle = s.z > 0.7 ? '#dffcff' : '#9fe7ff';
+    ctx.fillStyle = s.z > 0.7 ? '#ffffff' : '#bff6ff';
+    ctx.shadowColor = '#7af7e0';
+    ctx.shadowBlur = s.r >= 2 ? 7 : 0;
     ctx.fillRect(s.x, s.y, s.r, s.r);
-    if (state === 'playing' && s.z > 0.8) {
+    if (s.z > 0.75) {
+      ctx.shadowBlur = 0;
       ctx.globalAlpha = a * 0.35;
-      ctx.fillRect(s.x, s.y - 6 * s.z, 1, 8 * s.z);
+      ctx.fillRect(s.x, s.y - 7 * s.z, 1, 10 * s.z);
     }
   }
   ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
 
   // Orbit rings
   for (const r of [76, SHIELD_RADIUS, 260]) {

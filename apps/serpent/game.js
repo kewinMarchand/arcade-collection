@@ -119,13 +119,15 @@ let stars = [];
 $('#best').textContent = String(best);
 
 function initStars() {
-  stars = Array.from({ length: 80 }, () => ({
+  stars = Array.from({ length: 110 }, () => ({
     x: Math.random() * W,
     y: Math.random() * H,
-    r: Math.random() * 1.5 + 0.4,
-    a: 0.15 + Math.random() * 0.55,
+    r: Math.random() < 0.12 ? 2.2 : Math.random() * 1.5 + 0.4,
+    a: 0.25 + Math.random() * 0.65,
     tw: Math.random() * Math.PI * 2,
-    sp: 0.4 + Math.random() * 1.0,
+    sp: 0.6 + Math.random() * 1.4,
+    vy: 6 + Math.random() * 16,
+    vx: (Math.random() - 0.5) * 6,
   }));
 }
 
@@ -184,6 +186,13 @@ function update(dt) {
   if (bonusFood) {
     bonusTimer -= dt;
     if (bonusTimer <= 0) bonusFood = null;
+  }
+  for (const s of stars) {
+    s.y += s.vy * dt;
+    s.x += s.vx * dt;
+    if (s.y > H + 4) { s.y = -4; s.x = Math.random() * W; }
+    if (s.x < -4) s.x = W + 4;
+    if (s.x > W + 4) s.x = -4;
   }
 
   if (state !== 'playing') return;
@@ -244,12 +253,15 @@ function draw(t) {
   for (const s of stars) {
     const tw = 0.55 + 0.45 * Math.sin(time * s.sp + s.tw);
     ctx.globalAlpha = Math.min(1, s.a * tw);
-    ctx.fillStyle = '#dffcff';
+    ctx.fillStyle = s.r > 1.8 ? '#ffffff' : '#dffcff';
+    ctx.shadowColor = '#7af7e0';
+    ctx.shadowBlur = s.r > 1.6 ? 7 : 0;
     ctx.beginPath();
     ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
     ctx.fill();
   }
   ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
 
   ctx.strokeStyle = '#69ffe112'; ctx.lineWidth = 1;
   for (let i = 1; i < COLS; i++) { ctx.beginPath(); ctx.moveTo(i * CELL, 0); ctx.lineTo(i * CELL, H); ctx.stroke(); }

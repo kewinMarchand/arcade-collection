@@ -262,7 +262,17 @@ function draw(t) {
   ctx.clearRect(0, 0, W, H); ctx.save();
   if (shake > 0) ctx.translate((Math.random() - 0.5) * 12 * shake, (Math.random() - 0.5) * 8 * shake);
   const sky = ctx.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#20133c'); sky.addColorStop(1, '#090b1c'); ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
-  for (let i = 0; i < 40; i++) { ctx.globalAlpha = 0.5; ctx.fillStyle = '#d5e0ff'; ctx.fillRect((i * 211 + 70 - scroll * 0.05) % W, (i * 97) % 200, 2, 2); }
+  for (let i = 0; i < 90; i++) {
+    const sx = ((i * 137 + 40 - scroll * (0.03 + (i % 5) * 0.01)) % (W + 20) + W + 20) % (W + 20) - 10;
+    const sy = (i * 79 + 18) % 220;
+    const r = i % 7 === 0 ? 2.2 : i % 3 === 0 ? 1.6 : 1.1;
+    const tw = 0.55 + 0.45 * Math.sin(t * 0.002 + i * 1.7);
+    ctx.globalAlpha = (0.35 + (i % 4) * 0.12) * tw;
+    ctx.fillStyle = r > 1.8 ? '#ffffff' : '#d5e0ff';
+    ctx.beginPath();
+    ctx.arc(sx, sy, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
   ctx.globalAlpha = 1;
   drawMountain(0.25, ground - 40, 150, '#241a4f', 0.9); drawMountain(0.55, ground - 8, 90, '#171233', 0.95);
   ctx.fillStyle = '#101a30'; ctx.fillRect(0, ground, W, H - ground);
