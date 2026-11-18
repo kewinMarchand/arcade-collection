@@ -151,9 +151,10 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   const keys = new Set();
   const alienColors = ['#ff65b5', '#ffad5c', '#ffe36e', '#79ffd0', '#75caff'];
   const modes = { chill: { speed: 20, fire: 1.55 }, arcade: { speed: 29, fire: 1.12 }, chaos: { speed: 42, fire: 0.72 } };
-  let state = 'ready', score = 0, lives = 3, lastTime = 0, elapsed = 0;
+  let state = 'ready', score = 0, lives = 3, lastTime = 0, elapsed = 0, level = 1, totalAliens = 50;
   let player, aliens = [], playerBullets = [], enemyBullets = [], stars = [], particles = [], powerups = [], rings = [];
   let fleetDirection = 1, enemyFireTimer = 1.2, shake = 0, screenFlash = 0, banner = '', bannerTimer = 0;
+  let fleetSpeedMult = 1;
   let audioContext, playerScaleX = 1, playerScaleY = 1, recoil = 0;
 
   const randomBetween = (min, max) => min + Math.random() * (max - min);
@@ -175,12 +176,18 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   }
   function resetPlayer() { player = { x: W / 2, y: 520, w: 44, h: 26, speed: 360, cooldown: 0, invulnerable: 0, shield: 0, rapid: 0 }; }
   function resetFleet() {
+    const rows = Math.min(5 + (level - 1), 8);
+    const cols = Math.min(10 + (level - 1), 12);
     aliens = [];
-    for (let row = 0; row < 5; row++) for (let col = 0; col < 10; col++) aliens.push({ x: 120 + col * 62, y: 90 + row * 45, w: 32, h: 26, row, phase: (row + col) * 0.65, hit: 0, scale: 1 });
+    const spacingX = cols > 10 ? 56 : 62;
+    const startX = 120 - (cols - 10) * 14;
+    for (let row = 0; row < rows; row++) for (let col = 0; col < cols; col++) aliens.push({ x: startX + col * spacingX, y: 90 + row * 45, w: 32, h: 26, row, phase: (row + col) * 0.65, hit: 0, scale: 1 });
+    totalAliens = aliens.length;
+    fleetSpeedMult = 1 + 0.12 * (level - 1);
     fleetDirection = 1; enemyFireTimer = 1.1;
   }
   function resetGame() {
-    score = 0; lives = 3; elapsed = 0; shake = 0; screenFlash = 0; banner = ''; playerScaleX = 1; playerScaleY = 1; recoil = 0;
+    score = 0; lives = 3; elapsed = 0; shake = 0; screenFlash = 0; banner = ''; playerScaleX = 1; playerScaleY = 1; recoil = 0; level = 1;
     resetPlayer(); resetFleet(); playerBullets = []; enemyBullets = []; particles = []; powerups = []; rings = [];
   }
   function startGame() { resetGame(); state = 'playing'; startButton.textContent = 'Recommencer'; tone(660, 0.12, 'triangle'); }
@@ -245,7 +252,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     for (let i = powerups.length - 1; i >= 0; i--) { const p = powerups[i]; p.y += p.speed * dt; p.phase += dt * 5; if (p.y > H + 20) powerups.splice(i, 1); }
 
     const mode = modes[difficultyInput.value] || modes.arcade;
-    const alienSpeed = mode.speed + (50 - aliens.length) * 0.75;
+    const alienSpeed = (mode.speed + (totalAliens - aliens.length) * 0.75) * fleetSpeedMult;
     const hitEdge = aliens.some(a => a.x + alienSpeed * fleetDirection * dt <= 20 || a.x + a.w + alienSpeed * fleetDirection * dt >= W - 20);
     if (hitEdge) { fleetDirection *= -1; for (const alien of aliens) alien.y += 17; }
     else { for (const alien of aliens) alien.x += alienSpeed * fleetDirection * dt; }
@@ -256,7 +263,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       for (const alien of aliens) { const col = Math.round((alien.x - 120) / 62); if (!columns.has(col) || alien.y > columns.get(col).y) columns.set(col, alien); }
       const shooters = [...columns.values()], shooter = shooters[Math.floor(Math.random() * shooters.length)];
       enemyBullets.push({ x: shooter.x + shooter.w / 2, y: shooter.y + shooter.h, speed: difficultyInput.value === 'chaos' ? 280 : 230 });
-      enemyFireTimer = Math.max(0.32, mode.fire - (50 - aliens.length) * 0.009) + Math.random() * 0.35;
+      enemyFireTimer = Math.max(0.24, mode.fire - (totalAliens - aliens.length) * 0.009 - (level - 1) * 0.05) + Math.random() * 0.35;
     }
 
     const playerBox = { x: player.x - player.w / 2, y: player.y - player.h / 2, w: player.w, h: player.h };
@@ -286,7 +293,18 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       else { score += 100; banner = '+100 BONUS !'; }
       bannerTimer = 1.4; burst(p.x, p.y, '#b7ff66', 18); playerScaleX = 1.15; playerScaleY = 0.9; tone(880, 0.13, 'sine'); powerups.splice(i, 1);
     }
-    if (aliens.length === 0) { state = 'won'; tone(660, 0.2, 'triangle'); }
+    if (aliens.length === 0) {
+      if (level >= 10) { state = 'won'; tone(660, 0.2, 'triangle'); }
+      else {
+        level++;
+        playerBullets = []; enemyBullets = []; powerups = []; rings = [];
+        resetFleet();
+        banner = `NIVEAU ${level}`;
+        bannerTimer = 1.6;
+        screenFlash = 1; shake = 8;
+        tone(520 + level * 40, 0.16, 'triangle', 0.03);
+      }
+    }
   }
 
   function drawBackground() {
@@ -392,6 +410,8 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     ctx.beginPath(); ctx.roundRect(16, 14, 190, 43, 9); ctx.fill(); ctx.stroke(); ctx.beginPath(); ctx.roundRect(W - 174, 14, 158, 43, 9); ctx.fill(); ctx.stroke();
     ctx.textAlign = 'left'; ctx.fillStyle = '#8db6aa'; ctx.font = '700 10px ui-sans-serif,system-ui'; ctx.fillText('SCORE', 29, 31);
     ctx.fillStyle = '#eafff8'; ctx.font = '800 18px ui-sans-serif,system-ui'; ctx.fillText(String(score).padStart(4, '0'), 29, 49);
+      ctx.textAlign = 'center'; ctx.fillStyle = '#8db6aa'; ctx.font = '700 10px ui-sans-serif,system-ui'; ctx.fillText('NIVEAU', W / 2, 31);
+      ctx.fillStyle = '#eafff8'; ctx.font = '800 18px ui-sans-serif,system-ui'; ctx.fillText(String(level), W / 2, 49);
     ctx.textAlign = 'right'; ctx.fillStyle = '#8db6aa'; ctx.font = '700 10px ui-sans-serif,system-ui'; ctx.fillText('VIES', W - 29, 31);
     for (let i = 0; i < 3; i++) { const x = W - 42 - i * 27; ctx.fillStyle = i < lives ? '#ff709d' : '#34415c'; ctx.shadowColor = i < lives ? '#ff5486' : 'transparent'; ctx.shadowBlur = i < lives ? 9 : 0; ctx.beginPath(); ctx.moveTo(x, 49); ctx.bezierCurveTo(x - 15, 40, x - 9, 32, x, 39); ctx.bezierCurveTo(x + 9, 32, x + 15, 40, x, 49); ctx.fill(); }
     if (player.rapid > 0 || player.shield > 0) {
@@ -414,7 +434,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     drawBullets(); drawPowerups(); drawParticles(); drawPlayer(); drawHUD();
     if (state === 'ready') drawOverlay('NEON INVADERS', 'La flotte approche…', '#69ffe1');
     else if (state === 'gameover') drawOverlay('MISSION ÉCHOUÉE', `Score final : ${score}`, '#ff719c');
-    else if (state === 'won') drawOverlay('SECTEUR SÉCURISÉ', `Score final : ${score}`, '#78ffd0');
+    else if (state === 'won') drawOverlay('SECTEUR SECURISE', `Niveau ${level} - Score final : ${score}`, '#78ffd0');
     if (bannerTimer > 0 && state === 'playing') {
       ctx.globalAlpha = Math.min(1, bannerTimer * 2); ctx.textAlign = 'center'; ctx.font = '900 22px ui-sans-serif,system-ui'; ctx.fillStyle = '#d9ff76'; ctx.shadowColor = '#d9ff76'; ctx.shadowBlur = 18; ctx.fillText(banner, W / 2, 102); ctx.shadowBlur = 0; ctx.globalAlpha = 1;
     }
