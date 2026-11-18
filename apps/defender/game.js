@@ -503,18 +503,63 @@ function draw(t) {
   for (const p of shots) {
     const px = cx + Math.cos(p.a) * p.r;
     const py = cy + Math.sin(p.a) * p.r;
-    ctx.fillStyle = '#ffd36b';
-    ctx.shadowColor = '#ffd36b';
-    ctx.shadowBlur = 14;
+    const tx = cx + Math.cos(p.a) * (p.r + 22);
+    const ty = cy + Math.sin(p.a) * (p.r + 22);
+    const pulse = 1 + 0.12 * Math.sin(t * 0.012 + p.r * 0.05);
+
+    // trailing energy tail (outward, opposite motion)
+    const tail = ctx.createLinearGradient(px, py, tx, ty);
+    tail.addColorStop(0, 'rgba(255,211,107,0.85)');
+    tail.addColorStop(1, 'rgba(255,211,107,0)');
+    ctx.strokeStyle = tail;
+    ctx.lineWidth = 3.5;
+    ctx.lineCap = 'round';
     ctx.beginPath();
-    ctx.arc(px, py, PHOTON_RADIUS, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.shadowBlur = 0;
-    ctx.strokeStyle = '#fff3c4';
+    ctx.moveTo(px, py);
+    ctx.lineTo(tx, ty);
+    ctx.stroke();
+
+    // outer halo
+    ctx.save();
+    ctx.translate(px, py);
+    ctx.rotate(p.a + t * 0.003);
+    ctx.strokeStyle = 'rgba(255,243,196,0.55)';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
-    ctx.arc(px, py, PHOTON_RADIUS + 3, 0, Math.PI * 2);
+    ctx.arc(0, 0, (PHOTON_RADIUS + 6) * pulse, 0, Math.PI * 2);
     ctx.stroke();
+
+    // flare cross
+    ctx.shadowColor = '#ffd36b';
+    ctx.shadowBlur = 10;
+    ctx.strokeStyle = 'rgba(255,249,220,0.9)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(-PHOTON_RADIUS - 5, 0);
+    ctx.lineTo(PHOTON_RADIUS + 5, 0);
+    ctx.moveTo(0, -PHOTON_RADIUS - 5);
+    ctx.lineTo(0, PHOTON_RADIUS + 5);
+    ctx.stroke();
+
+    // core
+    const core = ctx.createRadialGradient(-2, -2, 1, 0, 0, PHOTON_RADIUS * pulse);
+    core.addColorStop(0, '#fffbe8');
+    core.addColorStop(0.45, '#ffe58a');
+    core.addColorStop(1, '#ffbf3b');
+    ctx.fillStyle = core;
+    ctx.shadowColor = '#ffd36b';
+    ctx.shadowBlur = 18;
+    ctx.beginPath();
+    ctx.arc(0, 0, PHOTON_RADIUS * pulse, 0, Math.PI * 2);
+    ctx.fill();
+
+    // inner highlight
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = 'rgba(255,255,255,0.85)';
+    ctx.beginPath();
+    ctx.arc(-2.5, -2.5, 2.2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
   }
 
   // Ship at center

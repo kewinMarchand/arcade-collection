@@ -82,7 +82,7 @@ const W = 600, N = 10, CELL = 60;
 const DIFF = { chill: 8, arcade: 12, chaos: 18 };
 let mineCount = DIFF.arcade;
 
-let mines = new Set(), revealed = new Set(), flags = new Set(), state = 'ready', first = true, score = 0, best = Number(localStorage.getItem('neonMinesBest')) || 0, last = 0, elapsed = 0, particles = [], pulses = [], shake = 0;
+let mines = new Set(), revealed = new Set(), flags = new Set(), state = 'ready', first = true, score = 0, best = Number(localStorage.getItem('neonMinesBest')) || 0, last = 0, elapsed = 0, particles = [], pulses = [], shake = 0, stars = [];
 $('#best').textContent = best || '-';
 $('#mines-left').textContent = String(mineCount);
 
@@ -90,6 +90,14 @@ function setup() {
   const diff = difficultyInput?.value || 'arcade';
   mineCount = DIFF[diff] || 12;
   mines = new Set(); revealed = new Set(); flags = new Set(); state = 'ready'; first = true; score = 0; elapsed = 0; particles = []; pulses = []; shake = 0;
+  stars = Array.from({ length: 90 }, () => ({
+    x: Math.random() * W,
+    y: Math.random() * W,
+    r: Math.random() * 1.8 + 0.4,
+    a: 0.25 + Math.random() * 0.75,
+    tw: Math.random() * Math.PI * 2,
+    sp: 0.15 + Math.random() * 0.45,
+  }));
   $('#score').textContent = '0'; $('#mines-left').textContent = String(mineCount); $('#status').textContent = 'Prêt'; draw(0);
 }
 
@@ -147,59 +155,244 @@ function reveal(x, y) {
 }
 
 function draw(t) {
+  const time = t || 0;
   shake = Math.max(0, shake - 0.05);
   ctx.clearRect(0, 0, W, W);
+
+  // Space background
+  const bg = ctx.createLinearGradient(0, 0, 0, W);
+  bg.addColorStop(0, '#040814');
+  bg.addColorStop(0.45, '#071326');
+  bg.addColorStop(1, '#02060f');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, W);
+
+  // Nebula glow
+  const neb = (x, y, r, c) => {
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, c);
+    g.addColorStop(1, 'transparent');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  };
+  neb(W * 0.18, W * 0.22, 220, 'rgba(0, 210, 255, 0.10)');
+  neb(W * 0.82, W * 0.78, 240, 'rgba(120, 80, 255, 0.12)');
+  neb(W * 0.55, W * 0.15, 180, 'rgba(105, 255, 225, 0.07)');
+
+  // Stars
+  for (const s0 of stars) {
+    const tw = 0.55 + 0.45 * Math.sin(time * 0.002 * s0.sp + s0.tw);
+    ctx.globalAlpha = Math.min(1, s0.a * tw);
+    ctx.fillStyle = '#dffcff';
+    ctx.shadowColor = '#8be9ff';
+    ctx.shadowBlur = s0.r > 1.4 ? 6 : 0;
+    ctx.beginPath();
+    ctx.arc(s0.x, s0.y, s0.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
+
   ctx.save();
   if (shake > 0) ctx.translate((Math.random() - 0.5) * 8 * shake, (Math.random() - 0.5) * 8 * shake);
+
+  // Subtle scan grid
+  ctx.save();
+  ctx.strokeStyle = 'rgba(105, 255, 225, 0.06)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= N; i++) {
+    const p = i * CELL;
+    ctx.beginPath(); ctx.moveTo(p, 0); ctx.lineTo(p, W); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, p); ctx.lineTo(W, p); ctx.stroke();
+  }
+  ctx.restore();
+
+  const numColors = ['', '#69ffe1', '#ffd36b', '#ff648f', '#b58aff', '#8bffbd', '#ff9d65', '#72bdff', '#fff'];
 
   for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
     const i = indexOf(x, y, N), px = x * CELL, py = y * CELL;
     const isRevealed = revealed.has(i);
-    ctx.fillStyle = isRevealed ? '#102923' : '#174139';
-    ctx.strokeStyle = '#69ffe155'; ctx.lineWidth = 2;
-    ctx.fillRect(px + 2, py + 2, CELL - 4, CELL - 4); ctx.strokeRect(px + 2, py + 2, CELL - 4, CELL - 4);
+    const cx = px + CELL / 2, cy = py + CELL / 2;
+    const pad = 3;
+
+    ctx.save();
+    if (!isRevealed) {
+      const g = ctx.createLinearGradient(px, py, px, py + CELL);
+      g.addColorStop(0, '#0f2540');
+      g.addColorStop(1, '#081629');
+      ctx.fillStyle = g;
+      ctx.strokeStyle = 'rgba(105, 255, 225, 0.35)';
+      ctx.lineWidth = 1.5;
+      ctx.shadowColor = 'rgba(105, 255, 225, 0.18)';
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.roundRect(px + pad, py + pad, CELL - pad * 2, CELL - pad * 2, 8);
+      ctx.fill();
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+      // inner sheen
+      ctx.strokeStyle = 'rgba(180, 255, 245, 0.12)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(px + pad + 3, py + pad + 3, CELL - pad * 2 - 6, CELL * 0.28, 6);
+      ctx.stroke();
+      // tiny corner stars
+      ctx.fillStyle = 'rgba(200, 245, 255, 0.18)';
+      ctx.fillRect(px + 8, py + 8, 2, 2);
+      ctx.fillRect(px + CELL - 10, py + 8, 2, 2);
+    } else {
+      const g = ctx.createLinearGradient(px, py, px, py + CELL);
+      g.addColorStop(0, '#071a1f');
+      g.addColorStop(1, '#041015');
+      ctx.fillStyle = g;
+      ctx.strokeStyle = mines.has(i) ? 'rgba(255, 100, 143, 0.55)' : 'rgba(105, 255, 225, 0.18)';
+      ctx.lineWidth = 1.5;
+      ctx.shadowColor = mines.has(i) ? 'rgba(255, 100, 143, 0.25)' : 'rgba(105, 255, 225, 0.08)';
+      ctx.shadowBlur = mines.has(i) ? 14 : 6;
+      ctx.beginPath();
+      ctx.roundRect(px + pad, py + pad, CELL - pad * 2, CELL - pad * 2, 8);
+      ctx.fill();
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+    ctx.restore();
+
     if (isRevealed) {
-      const pulse = 1 + 0.03 * Math.sin((t || 0) * 0.005 + x + y);
+      const pulse = 1 + 0.03 * Math.sin(time * 0.005 + x + y);
       ctx.save();
-      ctx.translate(px + CELL / 2, py + CELL / 2);
+      ctx.translate(cx, cy);
       ctx.scale(pulse, pulse);
       if (mines.has(i)) {
-        ctx.fillStyle = '#ff648f';
+        // space mine: core + rotating spikes + rings
+        const rot = time * 0.002 + (x + y);
         ctx.shadowColor = '#ff648f';
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 18;
+        ctx.strokeStyle = '#ff9ab8';
+        ctx.lineWidth = 2.5;
+        for (let k = 0; k < 8; k++) {
+          const a = rot + (Math.PI * 2 * k) / 8;
+          const r1 = 8, r2 = 16;
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(a) * r1, Math.sin(a) * r1);
+          ctx.lineTo(Math.cos(a) * r2, Math.sin(a) * r2);
+          ctx.stroke();
+          ctx.fillStyle = '#ffd1de';
+          ctx.beginPath();
+          ctx.arc(Math.cos(a) * r2, Math.sin(a) * r2, 1.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        const core = ctx.createRadialGradient(-2, -2, 1, 0, 0, 11);
+        core.addColorStop(0, '#fff0f5');
+        core.addColorStop(0.45, '#ff8fb0');
+        core.addColorStop(1, '#ff3f74');
+        ctx.fillStyle = core;
         ctx.beginPath();
-        ctx.arc(0, 0, 13, 0, Math.PI * 2);
+        ctx.arc(0, 0, 11, 0, Math.PI * 2);
         ctx.fill();
         ctx.shadowBlur = 0;
+        ctx.strokeStyle = 'rgba(255, 220, 235, 0.7)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(0, 0, 14.5, 0, Math.PI * 2);
+        ctx.stroke();
       } else {
         const n = countAdjacent(mines, x, y, N, N);
         if (n) {
-          ctx.fillStyle = ['', '#69ffe1', '#ffd36b', '#ff648f', '#b58aff', '#8bffbd', '#ff9d65', '#72bdff', '#fff'][n];
-          ctx.font = 'bold 25px system-ui';
+          const col = numColors[n] || '#fff';
+          ctx.fillStyle = col;
+          ctx.shadowColor = col;
+          ctx.shadowBlur = 14;
+          ctx.font = '800 26px "Space Grotesk", system-ui, sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText(String(n), 0, 1);
+          ctx.shadowBlur = 0;
         }
       }
       ctx.restore();
     } else if (flags.has(i)) {
-      ctx.fillStyle = '#ffd36b'; ctx.font = 'bold 28px system-ui'; ctx.textAlign = 'center'; ctx.fillText('⚑', px + 30, py + 39);
+      // neon flag beacon
+      const bob = Math.sin(time * 0.004 + x * 0.7 + y) * 1.5;
+      ctx.save();
+      ctx.translate(cx, cy + bob);
+      ctx.shadowColor = '#ffd36b';
+      ctx.shadowBlur = 14;
+      // pole
+      ctx.strokeStyle = '#cfefff';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(-6, 14);
+      ctx.lineTo(-6, -14);
+      ctx.stroke();
+      // pennant
+      const pg = ctx.createLinearGradient(-6, -14, 14, -4);
+      pg.addColorStop(0, '#fff3b0');
+      pg.addColorStop(1, '#ff9b3d');
+      ctx.fillStyle = pg;
+      ctx.beginPath();
+      ctx.moveTo(-6, -14);
+      ctx.lineTo(14, -6);
+      ctx.lineTo(-6, 1);
+      ctx.closePath();
+      ctx.fill();
+      // base glow
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = 'rgba(255, 211, 107, 0.35)';
+      ctx.beginPath();
+      ctx.ellipse(-2, 15, 10, 3, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
     }
   }
 
-  for (const p of pulses) { ctx.globalAlpha = Math.max(0, p.life / 0.4); ctx.strokeStyle = p.color; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.stroke(); }
+  // Pulses
+  for (const p of pulses) {
+    ctx.globalAlpha = Math.max(0, p.life / 0.4);
+    ctx.strokeStyle = p.color;
+    ctx.shadowColor = p.color;
+    ctx.shadowBlur = 12;
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.stroke();
+  }
   ctx.globalAlpha = 1;
-  for (const p of particles) { ctx.globalAlpha = Math.min(1, p.life * 2.4); ctx.fillStyle = p.color; ctx.fillRect(p.x, p.y, p.s, p.s); }
+  ctx.shadowBlur = 0;
+
+  // Particles
+  for (const p of particles) {
+    ctx.globalAlpha = Math.min(1, p.life * 2.4);
+    ctx.fillStyle = p.color;
+    ctx.shadowColor = p.color;
+    ctx.shadowBlur = 8;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.s, 0, Math.PI * 2);
+    ctx.fill();
+  }
   ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
+
   ctx.restore();
 
   if (state === 'paused' || state === 'ready' || state === 'over' || state === 'won') {
-    ctx.fillStyle = '#04100dc9'; ctx.fillRect(0, 0, W, W);
-    ctx.fillStyle = '#69ffe1'; ctx.textAlign = 'center'; ctx.font = '800 30px system-ui';
-    ctx.fillText(state === 'paused' ? 'PAUSE' : state === 'over' ? 'MINE !' : state === 'won' ? 'GRILLE SÉCURISÉE' : 'NEON MINES', W / 2, W / 2);
-    ctx.fillStyle = '#edfffa'; ctx.font = '15px system-ui';
-    ctx.fillText(state === 'ready' ? 'Révèle ta première case' : state === 'paused' ? 'Clique sur Pause pour reprendre' : 'Recommencer pour rejouer', W / 2, W / 2 + 32);
+    ctx.fillStyle = 'rgba(2, 8, 18, 0.78)';
+    ctx.fillRect(0, 0, W, W);
+    const title = state === 'paused' ? 'PAUSE' : state === 'over' ? 'MINE !' : state === 'won' ? 'GRILLE SÉCURISÉE' : 'NEON MINES';
+    const sub = state === 'ready' ? 'Révèle ta première case' : state === 'paused' ? 'Clique sur Pause pour reprendre' : 'Recommencer pour rejouer';
+    ctx.textAlign = 'center';
+    ctx.shadowColor = '#69ffe1';
+    ctx.shadowBlur = 22;
+    ctx.fillStyle = '#69ffe1';
+    ctx.font = '800 34px "Space Grotesk", system-ui, sans-serif';
+    ctx.fillText(title, W / 2, W / 2 - 6);
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#e8fbff';
+    ctx.font = '15px "Space Grotesk", system-ui, sans-serif';
+    ctx.fillText(sub, W / 2, W / 2 + 30);
   }
+}
 }
 
 function togglePause() {

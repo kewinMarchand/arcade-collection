@@ -1,1 +1,90 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc"><title id="title">Neon Invaders</title><desc id="desc">Une flotte d’aliens expressifs descend vers un vaisseau qui défend sa base.</desc><defs><linearGradient id="bg" y2="1"><stop stop-color="#10212a"/><stop offset="1" stop-color="#071018"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="720" height="380" rx="24" fill="url(#bg)"/><g fill="#d5e9ff"><circle cx="72" cy="52" r="2"/><circle cx="624" cy="64" r="2"/><circle cx="554" cy="292" r="2"/><circle cx="132" cy="250" r="2"/><circle cx="398" cy="58" r="2"/></g><text x="360" y="58" text-anchor="middle" fill="#7af7e0" font-family="system-ui" font-weight="800" font-size="28" letter-spacing="7">NEON INVADERS</text><g filter="url(#glow)" stroke="#ff70bd" stroke-width="3" fill="#77275f"><path d="M130 125h24v-15h25v15h24v23h-9v17h-13v-12h-29v12h-13v-17h-9z"/><path d="M238 125h24v-15h25v15h24v23h-9v17h-13v-12h-29v12h-13v-17h-9z"/><path d="M346 125h24v-15h25v15h24v23h-9v17h-13v-12h-29v12h-13v-17h-9z"/><path d="M454 125h24v-15h25v15h24v23h-9v17h-13v-12h-29v12h-13v-17h-9z"/><path d="M562 125h24v-15h25v15h24v23h-9v17h-13v-12h-29v12h-13v-17h-9z"/><path d="M184 194h24v-15h25v15h24v23h-9v17h-13v-12h-29v12h-13v-17h-9z"/><path d="M292 194h24v-15h25v15h24v23h-9v17h-13v-12h-29v12h-13v-17h-9z"/><path d="M400 194h24v-15h25v15h24v23h-9v17h-13v-12h-29v12h-13v-17h-9z"/><path d="M508 194h24v-15h25v15h24v23h-9v17h-13v-12h-29v12h-13v-17h-9z"/></g><g fill="#fff"><circle cx="145" cy="137" r="3"/><circle cx="166" cy="137" r="3"/><circle cx="253" cy="137" r="3"/><circle cx="274" cy="137" r="3"/><circle cx="361" cy="137" r="3"/><circle cx="382" cy="137" r="3"/><circle cx="469" cy="137" r="3"/><circle cx="490" cy="137" r="3"/><circle cx="577" cy="137" r="3"/><circle cx="598" cy="137" r="3"/></g><path d="M110 271h500" stroke="#ffdb70" stroke-width="3" stroke-dasharray="5 15" opacity=".8"/><g transform="translate(360 278)" filter="url(#glow)" fill="#72ffe2"><path d="M0-44l-30 47h20L0-12 10 3h20z"/><rect x="-4" y="-72" width="8" height="34" rx="4"/><path d="M-20 4h40v8h-40z" opacity=".65"/></g><text x="360" y="350" text-anchor="middle" fill="#b9c9e8" font-family="system-ui" font-size="16" letter-spacing="3">DÉFENDEZ LA BASE · SECTEUR 07</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
+  <title id="title">Neon Invaders</title>
+  <desc id="desc">Une flotte d'aliens néon expressifs descend vers un vaisseau défenseur qui tire.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c211d"/>
+      <stop offset="0.52" stop-color="#071713"/>
+      <stop offset="1" stop-color="#06100f"/>
+    </linearGradient>
+    <linearGradient id="player" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.32" stop-color="#caffed"/>
+      <stop offset="0.72" stop-color="#48e2c3"/>
+      <stop offset="1" stop-color="#137d6d"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff3a0"/>
+      <stop offset="0.4" stop-color="#73ffe2" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#00b998" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#37bfff" stop-opacity="0"/>
+      <stop offset="0.45" stop-color="#aaffef"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="720" height="380" rx="24" fill="url(#bg)"/>
+
+  <!-- stars -->
+  <g fill="#dffcff">
+    <circle cx="60" cy="45" r="1.8"/><circle cx="140" cy="80" r="1.4"/><circle cx="240" cy="55" r="2"/>
+    <circle cx="350" cy="70" r="1.4"/><circle cx="470" cy="40" r="2"/><circle cx="560" cy="85" r="1.4"/>
+    <circle cx="640" cy="50" r="2"/><circle cx="680" cy="120" r="1.4"/><circle cx="90" cy="210" r="1.6"/>
+    <circle cx="610" cy="230" r="1.6"/><circle cx="420" cy="30" r="1.4"/>
+  </g>
+  <g stroke="#9bfff0" stroke-width="1" opacity="0.08">
+    <path d="M0 70h720M0 130h720M0 190h720M0 250h720M0 310h720"/>
+    <path d="M80 40v300M160 40v300M240 40v300M320 40v300M400 40v300M480 40v300M560 40v300M640 40v300"/>
+  </g>
+
+  <text x="360" y="52" text-anchor="middle" fill="#69ffe1" font-family="system-ui,Segoe UI,sans-serif" font-weight="800" font-size="28" letter-spacing="6">NEON INVADERS</text>
+
+  <!-- alien fleet (in-game style) -->
+  <g filter="url(#glow)">
+    <!-- row 1 -->
+    <g transform="translate(170 125)" fill="#ff65b5"><path d="M-16 -5 L-12 -12 L-6 -14 L6 -14 L12 -10 L16 -3 L13 7 L9 8 L7 13 L2 9 L-2 9 L-7 13 L-9 7 L-14 6 Z"/><rect x="-20" y="-5" width="5" height="9"/><rect x="15" y="-5" width="5" height="9"/><g fill="#10201c"><ellipse cx="-6" cy="-2" rx="3" ry="4"/><ellipse cx="6" cy="-2" rx="3" ry="4"/></g><g fill="#fff"><rect x="-7" y="-4" width="1" height="1"/><rect x="5" y="-4" width="1" height="1"/></g><rect x="-8" y="-11" width="7" height="2" fill="#fff" opacity="0.5"/></g>
+    <g transform="translate(280 125)" fill="#ff65b5"><path d="M-16 -5 L-12 -12 L-6 -14 L6 -14 L12 -10 L16 -3 L13 7 L9 8 L7 13 L2 9 L-2 9 L-7 13 L-9 7 L-14 6 Z"/><rect x="-20" y="-5" width="5" height="9"/><rect x="15" y="-5" width="5" height="9"/><g fill="#10201c"><ellipse cx="-6" cy="-2" rx="3" ry="4"/><ellipse cx="6" cy="-2" rx="3" ry="4"/></g><g fill="#fff"><rect x="-7" y="-4" width="1" height="1"/><rect x="5" y="-4" width="1" height="1"/></g><rect x="-8" y="-11" width="7" height="2" fill="#fff" opacity="0.5"/></g>
+    <g transform="translate(390 125)" fill="#ff65b5"><path d="M-16 -5 L-12 -12 L-6 -14 L6 -14 L12 -10 L16 -3 L13 7 L9 8 L7 13 L2 9 L-2 9 L-7 13 L-9 7 L-14 6 Z"/><rect x="-20" y="-5" width="5" height="9"/><rect x="15" y="-5" width="5" height="9"/><g fill="#10201c"><ellipse cx="-6" cy="-2" rx="3" ry="4"/><ellipse cx="6" cy="-2" rx="3" ry="4"/></g><g fill="#fff"><rect x="-7" y="-4" width="1" height="1"/><rect x="5" y="-4" width="1" height="1"/></g><rect x="-8" y="-11" width="7" height="2" fill="#fff" opacity="0.5"/></g>
+    <g transform="translate(500 125)" fill="#ff65b5"><path d="M-16 -5 L-12 -12 L-6 -14 L6 -14 L12 -10 L16 -3 L13 7 L9 8 L7 13 L2 9 L-2 9 L-7 13 L-9 7 L-14 6 Z"/><rect x="-20" y="-5" width="5" height="9"/><rect x="15" y="-5" width="5" height="9"/><g fill="#10201c"><ellipse cx="-6" cy="-2" rx="3" ry="4"/><ellipse cx="6" cy="-2" rx="3" ry="4"/></g><g fill="#fff"><rect x="-7" y="-4" width="1" height="1"/><rect x="5" y="-4" width="1" height="1"/></g><rect x="-8" y="-11" width="7" height="2" fill="#fff" opacity="0.5"/></g>
+    <!-- row 2 -->
+    <g transform="translate(225 175)" fill="#ffad5c"><path d="M-16 -5 L-12 -12 L-6 -14 L6 -14 L12 -10 L16 -3 L13 7 L9 8 L7 11 L2 9 L-2 9 L-7 11 L-9 7 L-14 6 Z"/><rect x="-20" y="-5" width="5" height="9"/><rect x="15" y="-5" width="5" height="9"/><g fill="#10201c"><ellipse cx="-6" cy="-2" rx="3" ry="4"/><ellipse cx="6" cy="-2" rx="3" ry="4"/></g><g fill="#fff"><rect x="-7" y="-4" width="1" height="1"/><rect x="5" y="-4" width="1" height="1"/></g><rect x="-8" y="-11" width="7" height="2" fill="#fff" opacity="0.5"/></g>
+    <g transform="translate(335 175)" fill="#ffe36e"><path d="M-16 -5 L-12 -12 L-6 -14 L6 -14 L12 -10 L16 -3 L13 7 L9 8 L7 13 L2 9 L-2 9 L-7 13 L-9 7 L-14 6 Z"/><rect x="-20" y="-5" width="5" height="9"/><rect x="15" y="-5" width="5" height="9"/><g fill="#10201c"><ellipse cx="-6" cy="-2" rx="3" ry="4"/><ellipse cx="6" cy="-2" rx="3" ry="4"/></g><g fill="#fff"><rect x="-7" y="-4" width="1" height="1"/><rect x="5" y="-4" width="1" height="1"/></g><rect x="-8" y="-11" width="7" height="2" fill="#fff" opacity="0.5"/></g>
+    <g transform="translate(445 175)" fill="#79ffd0"><path d="M-16 -5 L-12 -12 L-6 -14 L6 -14 L12 -10 L16 -3 L13 7 L9 8 L7 11 L2 9 L-2 9 L-7 11 L-9 7 L-14 6 Z"/><rect x="-20" y="-5" width="5" height="9"/><rect x="15" y="-5" width="5" height="9"/><g fill="#10201c"><ellipse cx="-6" cy="-2" rx="3" ry="4"/><ellipse cx="6" cy="-2" rx="3" ry="4"/></g><g fill="#fff"><rect x="-7" y="-4" width="1" height="1"/><rect x="5" y="-4" width="1" height="1"/></g><rect x="-8" y="-11" width="7" height="2" fill="#fff" opacity="0.5"/></g>
+  </g>
+
+  <!-- enemy bullet -->
+  <g filter="url(#glow)"><path d="M335 220 L331 209 Q335 203 339 209 Z" fill="#ff6b85"/></g>
+
+  <!-- player beam -->
+  <rect x="357" y="225" width="6" height="70" rx="3" fill="url(#beam)" filter="url(#glow)"/>
+
+  <!-- ground -->
+  <rect x="0" y="332" width="720" height="6" fill="#2ebd9c" filter="url(#glow)" opacity="0.9"/>
+  <g fill="#69f8c7" opacity="0.9">
+    <rect x="20" y="342" width="10" height="2"/><rect x="60" y="342" width="10" height="2"/><rect x="100" y="342" width="10" height="2"/>
+    <rect x="140" y="342" width="10" height="2"/><rect x="180" y="342" width="10" height="2"/><rect x="220" y="342" width="10" height="2"/>
+    <rect x="260" y="342" width="10" height="2"/><rect x="300" y="342" width="10" height="2"/><rect x="340" y="342" width="10" height="2"/>
+    <rect x="380" y="342" width="10" height="2"/><rect x="420" y="342" width="10" height="2"/><rect x="460" y="342" width="10" height="2"/>
+    <rect x="500" y="342" width="10" height="2"/><rect x="540" y="342" width="10" height="2"/><rect x="580" y="342" width="10" height="2"/>
+    <rect x="620" y="342" width="10" height="2"/><rect x="660" y="342" width="10" height="2"/>
+  </g>
+
+  <!-- player ship -->
+  <g transform="translate(360 318)" filter="url(#glow)">
+    <path d="M-11 8 L-8 26 L-2 10 Z" fill="url(#flame)"/>
+    <path d="M11 8 L8 26 L2 10 Z" fill="url(#flame)"/>
+    <rect x="-22" y="-14" width="44" height="28" rx="14" fill="url(#player)" stroke="#ffffff" stroke-opacity="0.6" stroke-width="1.2"/>
+    <ellipse cx="0" cy="-1" rx="10" ry="8" fill="#237d73"/>
+    <ellipse cx="0" cy="-3" rx="6" ry="4" fill="#c2fff1"/>
+    <rect x="-18" y="-4" width="3" height="7" fill="#faffc4"/>
+    <rect x="15" y="-4" width="3" height="7" fill="#faffc4"/>
+  </g>
+
+  <text x="360" y="365" text-anchor="middle" fill="#b9c9e8" font-family="system-ui,Segoe UI,sans-serif" font-size="15" letter-spacing="3">DÉFENDEZ LA BASE • SECTEUR 07</text>
+</svg>

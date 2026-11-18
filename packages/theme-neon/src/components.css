@@ -300,9 +300,16 @@
     transform: translateY(1px) scale(0.98);
   }
 
-  .neon-frame__action--source::before {
-    content: '⟨/⟩';
-    font-size: 0.72rem;
+  .neon-frame__action--source {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+  }
+
+  .neon-frame__action--source svg {
+    width: 18px;
+    height: 18px;
+    display: block;
   }
 
   .neon-frame--game:fullscreen,
