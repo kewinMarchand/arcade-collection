@@ -1,4 +1,4 @@
-import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
+﻿import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 import { createAudio } from '../../packages/shared/src/audio.js';
 import { indexOf, countAdjacent } from './game-logic.js';
 
@@ -6,7 +6,7 @@ const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
     title: 'Neon Mines',
-    subtitle: 'Révèle les cases, évite les mines.',
+    subtitle: 'RÃ©vÃ¨le les cases, Ã©vite les mines.',
     renderHeader: () => {
       const options = document.createElement('div');
       options.className = 'game-options';
@@ -27,7 +27,7 @@ const shell = mountGameFrame({
         return wrap;
       };
       options.append(
-        mk('Difficulté', 'difficulty', 'select', '<option value="chill">Chill</option><option value="arcade" selected>Arcade</option><option value="chaos">Chaos</option>'),
+        mk('DifficultÃ©', 'difficulty', 'select', '<option value="chill">Chill</option><option value="arcade" selected>Arcade</option><option value="chaos">Chaos</option>'),
         mk('Bonus', 'bonus'),
         mk('Sons', 'sound')
       );
@@ -42,7 +42,7 @@ const shell = mountGameFrame({
           const title = document.createElement('h2'); title.className = 'neon-panel__title'; title.textContent = 'Statut';
           const stats = document.createElement('div'); stats.className = 'panel-stats';
           const stat = (label, id, value) => { const wrap = document.createElement('div'); wrap.className = 'panel-stat'; const small = document.createElement('small'); small.textContent = label; const strong = document.createElement('strong'); strong.id = id; strong.textContent = value; wrap.append(small, strong); return wrap; };
-          stats.append(stat('RÉVÉLÉES', 'score', '0'), stat('RECORD', 'best', '-'), stat('MINES', 'mines-left', '12'), stat('ÉTAT', 'status', 'Prêt'));
+          stats.append(stat('RÃ‰VÃ‰LÃ‰ES', 'score', '0'), stat('RECORD', 'best', '-'), stat('MINES', 'mines-left', '12'), stat('Ã‰TAT', 'status', 'PrÃªt'));
           panel.append(title, stats); return panel;
         },
       },
@@ -55,7 +55,7 @@ const shell = mountGameFrame({
           const actions = document.createElement('div'); actions.className = 'panel-actions';
           const b = (id, text, cls) => { const btn = document.createElement('button'); btn.id = id; btn.type = 'button'; btn.textContent = text; if (cls) btn.className = cls; return btn; };
           actions.append(b('pause', 'Pause'), b('restart', 'Recommencer'), b('new-game', 'Nouvelle partie', 'primary'));
-          const help = document.createElement('p'); help.className = 'help'; help.textContent = 'Clic : révéler • Clic droit : drapeau • P : pause';
+          const help = document.createElement('p'); help.className = 'help'; help.textContent = 'Clic : rÃ©vÃ©ler â€¢ Clic droit : drapeau â€¢ P : pause';
           panel.append(title, actions, help); return panel;
         },
       },
@@ -98,7 +98,7 @@ function setup() {
     tw: Math.random() * Math.PI * 2,
     sp: 0.15 + Math.random() * 0.45,
   }));
-  $('#score').textContent = '0'; $('#mines-left').textContent = String(mineCount); $('#status').textContent = 'Prêt'; draw(0);
+  $('#score').textContent = '0'; $('#mines-left').textContent = String(mineCount); $('#status').textContent = 'PrÃªt'; draw(0);
 }
 
 function placeMines(safeX, safeY) {
@@ -145,7 +145,7 @@ function reveal(x, y) {
   }
   score = revealed.size; $('#score').textContent = String(score);
   if (score === N * N - mineCount) {
-    state = 'won'; $('#status').textContent = 'Gagné';
+    state = 'won'; $('#status').textContent = 'GagnÃ©';
     let timeBest = best;
     if (!timeBest || elapsed < timeBest) { timeBest = Math.floor(elapsed); localStorage.setItem('neonMinesBest', String(timeBest)); $('#best').textContent = timeBest + 's'; }
     if (bonusInput.checked) audio.seq([[520, 0.08, 'sine', 0.03, 0], [660, 0.1, 'sine', 0.03, 0.08], [880, 0.12, 'sine', 0.03, 0.16]]);
@@ -379,8 +379,8 @@ function draw(t) {
   if (state === 'paused' || state === 'ready' || state === 'over' || state === 'won') {
     ctx.fillStyle = 'rgba(2, 8, 18, 0.78)';
     ctx.fillRect(0, 0, W, W);
-    const title = state === 'paused' ? 'PAUSE' : state === 'over' ? 'MINE !' : state === 'won' ? 'GRILLE SÉCURISÉE' : 'NEON MINES';
-    const sub = state === 'ready' ? 'Révèle ta première case' : state === 'paused' ? 'Clique sur Pause pour reprendre' : 'Recommencer pour rejouer';
+    const title = state === 'paused' ? 'PAUSE' : state === 'over' ? 'MINE !' : state === 'won' ? 'GRILLE SÃ‰CURISÃ‰E' : 'NEON MINES';
+    const sub = state === 'ready' ? 'RÃ©vÃ¨le ta premiÃ¨re case' : state === 'paused' ? 'Clique sur Pause pour reprendre' : 'Recommencer pour rejouer';
     ctx.textAlign = 'center';
     ctx.shadowColor = '#69ffe1';
     ctx.shadowBlur = 22;
@@ -392,7 +392,6 @@ function draw(t) {
     ctx.font = '15px "Space Grotesk", system-ui, sans-serif';
     ctx.fillText(sub, W / 2, W / 2 + 30);
   }
-}
 }
 
 function togglePause() {
@@ -428,7 +427,7 @@ $('#new-game').onclick = setup;
 window.addEventListener('keydown', (e) => { if (e.key.toLowerCase() === 'p') togglePause(); });
 
 function frame(t) {
-  if (state === 'playing') { elapsed += (t - last) / 1000; last = t; $('#status').textContent = 'En jeu • ' + Math.floor(elapsed) + 's'; }
+  if (state === 'playing') { elapsed += (t - last) / 1000; last = t; $('#status').textContent = 'En jeu â€¢ ' + Math.floor(elapsed) + 's'; }
   else { last = t; }
   for (let i = particles.length - 1; i >= 0; i--) {
     const p = particles[i]; p.x += p.vx * (1/60); p.y += p.vy * (1/60); p.vy += 120 * (1/60); p.life -= 0.016; if (p.life <= 0) particles.splice(i, 1);
