@@ -50,8 +50,8 @@ body.game {
   max-height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 16px 20px 20px;
+  gap: 24px;
+  padding: 16px 20px 16px;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -70,17 +70,17 @@ body.game {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   min-height: 0;
   text-align: center;
-  padding-bottom: 4px;
+  padding-bottom: 0;
 }
 
 .neon-frame__brand {
-  display: flex;
-  align-items: center;
+  display: inline-flex;
+  align-items: flex-start;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   min-width: 0;
 }
 
@@ -88,14 +88,19 @@ body.game {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  justify-content: center;
+  gap: 4px;
   min-width: 0;
+  text-align: center;
 }
 
 .neon-frame__mark {
   color: var(--bui-color-secondary, #ff72bb);
-  font-size: 1rem;
+  font-size: 0.95rem;
+  line-height: 1;
   text-shadow: 0 0 16px var(--bui-color-primary, #69ffe1);
+  flex: 0 0 auto;
+  margin-top: 0.55em;
 }
 
 .neon-frame__title {
@@ -196,11 +201,16 @@ body.game {
   justify-content: center;
   align-items: center;
   gap: 12px;
-  padding: 4px 0 0;
+  padding: 0;
   color: var(--bui-color-text-muted, #a9bab8);
   font-family: var(--bui-font-family-mono, 'DM Mono', monospace);
   font-size: var(--bui-font-size-caption, 12px);
   min-height: 0;
+  max-width: 100%;
+}
+
+.neon-frame__footer > * {
+  max-width: 100%;
 }
 
 @media (max-width: 980px) {

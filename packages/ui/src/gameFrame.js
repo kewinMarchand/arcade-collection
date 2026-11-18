@@ -48,7 +48,7 @@ export function mountGameFrame({ mount, config }) {
   const mark = document.createElement('span');
   mark.className = 'neon-frame__mark';
   mark.setAttribute('aria-hidden', 'true');
-  mark.textContent = '✦';
+  mark.textContent = '◆';
   const titles = document.createElement('div');
   titles.className = 'neon-frame__titles';
   const h1 = document.createElement('h1');
