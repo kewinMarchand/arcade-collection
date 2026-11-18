@@ -120,7 +120,7 @@ bestEl.textContent = String(best);
 
 function start() {
   const d = DIFF[difficultyInput.value] || DIFF.arcade;
-  state = 'playing'; player = { y: ground - 48, vy: 0, slide: 0, angle: 0, squash: 1 }; obstacles = []; orbs = []; score = 0; elapsed = 0; spawn = d.spawn * 0.7; orbSpawn = 1.8; shake = 0; particles = []; trail = []; pulses = []; level = 1; statusEl.textContent = 'En course';
+  state = 'playing'; player = { y: ground - 48, vy: 0, slide: 0, angle: 0, squash: 1, jumps: 0 }; obstacles = []; orbs = []; score = 0; elapsed = 0; spawn = d.spawn * 0.7; orbSpawn = 1.8; shake = 0; particles = []; trail = []; pulses = []; level = 1; statusEl.textContent = 'En course';
   audio.tone(520, 0.08, 'triangle', 0.03);
 }
 
@@ -133,11 +133,19 @@ function pause() {
 function jump() {
   if (state === 'ready') { start(); return; }
   if (state === 'over') { start(); return; }
-  if (state === 'playing' && player.y >= ground - 48) {
+  if (state !== 'playing') return;
+  if (player.y >= ground - 48) {
     player.vy = -640;
     player.squash = 1.18;
+    player.jumps = 1;
     for (let i = 0; i < 8; i++) particles.push({ x: 120 + Math.random() * 40, y: ground - 4, vx: (Math.random() - 0.5) * 140, vy: -Math.random() * 110, life: 0.35, color: '#7bffe5', s: 2 + Math.random() * 2 });
     audio.tone(520, 0.06, 'square', 0.025);
+  } else if (player.jumps < 2) {
+    player.vy = -560;
+    player.squash = 1.12;
+    player.jumps = 2;
+    for (let i = 0; i < 10; i++) particles.push({ x: 120 + Math.random() * 40, y: player.y + 24, vx: (Math.random() - 0.5) * 160, vy: -Math.random() * 130, life: 0.4, color: '#ffd36b', s: 2 + Math.random() * 3 });
+    audio.tone(760, 0.07, 'sine', 0.03);
   }
 }
 
@@ -186,7 +194,7 @@ function update(dt) {
       for (let i = 0; i < 8; i++) particles.push({ x: 120 + Math.random() * 40, y: ground - 2, vx: (Math.random() - 0.5) * 160, vy: -Math.random() * 70, life: 0.28, color: '#8b8bff', s: 2 });
       audio.tone(220, 0.04, 'triangle', 0.02);
     }
-    player.vy = 0; player.angle = 0;
+    player.vy = 0; player.angle = 0; player.jumps = 0;
   }
   if (player.y < ground - 48) player.angle += dt * 7;
   player.slide = crouchHeld ? 0.5 : Math.max(0, player.slide - dt);
