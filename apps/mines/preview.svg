@@ -245,4 +245,6 @@
       <rect x="4" y="4" width="56" height="18" rx="6" fill="url(#tileHi)"/>
     </g>
   </g>
+
+  <text x="360" y="354" text-anchor="middle" fill="#b9c9e8" font-family="system-ui" font-size="16" letter-spacing="3">RÉVÉLEZ • DÉDUISEZ • SURVIVEZ</text>
 </svg>
