@@ -206,6 +206,7 @@ function reset() {
   rings = [];
   powerups = [];
   shake = 0;
+  initStars();
   for (let r = 0; r < 5; r++) {
     for (let c = 0; c < 10; c++) {
       bricks.push({ x: 70 + c * 77, y: 70 + r * 30, w: 68, h: 22, color: r, pulse: 0, scale: 1 });
@@ -381,16 +382,33 @@ function draw() {
   const time = performance.now() * 0.001;
   for (const s of stars) {
     const tw = 0.5 + 0.5 * Math.sin(time * s.sp + s.tw);
-    ctx.globalAlpha = 0.35 + 0.65 * s.a * tw;
-    ctx.fillStyle = s.r > 2.2 ? '#ffffff' : '#e6fffb';
-    ctx.shadowColor = '#8fffe8';
-    ctx.shadowBlur = s.r > 1.8 ? 10 : 5;
+    ctx.globalAlpha = 0.3 + 0.6 * s.a * tw;
+    ctx.fillStyle = s.r > 2.2 ? '#ffffff' : '#dffcff';
+    ctx.shadowColor = '#7af7e0';
+    ctx.shadowBlur = s.r > 1.8 ? 8 : 3;
     ctx.beginPath();
     ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
     ctx.fill();
   }
   ctx.globalAlpha = 1;
   ctx.shadowBlur = 0;
+
+  // Atmospheric layers over stars (depth) while keeping gameplay readable
+  const neb = (x, y, r, c) => {
+    const rg = ctx.createRadialGradient(x, y, 0, x, y, r);
+    rg.addColorStop(0, c);
+    rg.addColorStop(1, 'transparent');
+    ctx.fillStyle = rg;
+    ctx.fillRect(x - r, y - r, r * 2, r * 2);
+  };
+  neb(W * 0.22, H * 0.18, 260, 'rgba(0, 224, 165, 0.08)');
+  neb(W * 0.78, H * 0.28, 240, 'rgba(36, 185, 155, 0.07)');
+  neb(W * 0.5, H * 0.75, 320, 'rgba(6, 40, 34, 0.22)');
+  const haze = ctx.createLinearGradient(0, 0, 0, H);
+  haze.addColorStop(0, 'rgba(6, 18, 16, 0.12)');
+  haze.addColorStop(1, 'rgba(4, 12, 11, 0.28)');
+  ctx.fillStyle = haze;
+  ctx.fillRect(0, 0, W, H);
 
   bricks.forEach((b) => {
     const color = ['#ff6d9c', '#ffbd69', '#ffe36e', '#69ffe1', '#72bdff'][b.color];

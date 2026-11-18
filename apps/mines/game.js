@@ -78,7 +78,10 @@ const bonusInput = $('#bonus');
 const soundInput = $('#sound');
 const audio = createAudio(() => soundInput && soundInput.checked);
 
-const W = 600, N = 10, CELL = 60;
+const W = 600, N = 10, CELL = 44;
+const GRID = N * CELL;
+const OFFSET_X = Math.floor((W - GRID) / 2);
+const OFFSET_Y = Math.floor((W - GRID) / 2);
 const DIFF = { chill: 8, arcade: 12, chaos: 18 };
 let mineCount = DIFF.arcade;
 
@@ -112,7 +115,7 @@ function placeMines(safeX, safeY) {
 }
 
 function burstCell(x, y, color, n = 14) {
-  const px = x * CELL + CELL / 2, py = y * CELL + CELL / 2;
+  const px = OFFSET_X + x * CELL + CELL / 2, py = OFFSET_Y + y * CELL + CELL / 2;
   for (let i = 0; i < n; i++) {
     const a = Math.random() * Math.PI * 2, sp = 40 + Math.random() * 180;
     particles.push({ x: px, y: py, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0.35 + Math.random() * 0.4, color, s: 2 + Math.random() * 3 });
@@ -206,18 +209,31 @@ function draw(t) {
   ctx.lineWidth = 1;
   for (let i = 0; i <= N; i++) {
     const p = i * CELL;
-    ctx.beginPath(); ctx.moveTo(p, 0); ctx.lineTo(p, W); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(0, p); ctx.lineTo(W, p); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(OFFSET_X + p, OFFSET_Y); ctx.lineTo(OFFSET_X + p, OFFSET_Y + GRID); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(OFFSET_X, OFFSET_Y + p); ctx.lineTo(OFFSET_X + GRID, OFFSET_Y + p); ctx.stroke();
   }
   ctx.restore();
 
   const numColors = ['', '#69ffe1', '#ffd36b', '#ff648f', '#b58aff', '#8bffbd', '#ff9d65', '#72bdff', '#fff'];
 
+  // Board frame (lets starfield breathe around the grid)
+  ctx.save();
+  ctx.fillStyle = 'rgba(4, 14, 22, 0.35)';
+  ctx.strokeStyle = 'rgba(105, 255, 225, 0.22)';
+  ctx.lineWidth = 2;
+  ctx.shadowColor = 'rgba(105, 255, 225, 0.12)';
+  ctx.shadowBlur = 12;
+  ctx.beginPath();
+  ctx.roundRect(OFFSET_X - 10, OFFSET_Y - 10, GRID + 20, GRID + 20, 14);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+
   for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
-    const i = indexOf(x, y, N), px = x * CELL, py = y * CELL;
+    const i = indexOf(x, y, N), px = OFFSET_X + x * CELL, py = OFFSET_Y + y * CELL;
     const isRevealed = revealed.has(i);
     const cx = px + CELL / 2, cy = py + CELL / 2;
-    const pad = 3;
+    const pad = 2;
 
     ctx.save();
     if (!isRevealed) {
@@ -417,21 +433,29 @@ function togglePause() {
   else if (state === 'ready') { state = 'playing'; $('#status').textContent = 'En jeu'; draw(0); }
 }
 
+function cellFromEvent(e) {
+  const r = canvas.getBoundingClientRect();
+  const cx = (e.clientX - r.left) * W / r.width;
+  const cy = (e.clientY - r.top) * W / r.height;
+  const x = Math.floor((cx - OFFSET_X) / CELL);
+  const y = Math.floor((cy - OFFSET_Y) / CELL);
+  if (x < 0 || x >= N || y < 0 || y >= N) return null;
+  return { x, y };
+}
+
 canvas.addEventListener('click', (e) => {
   if (state === 'over' || state === 'won') { setup(); return; }
-  const r = canvas.getBoundingClientRect();
-  const x = Math.floor(((e.clientX - r.left) * N) / r.width);
-  const y = Math.floor(((e.clientY - r.top) * N) / r.height);
-  reveal(x, y);
+  const cell = cellFromEvent(e);
+  if (!cell) return;
+  reveal(cell.x, cell.y);
 });
 
 canvas.addEventListener('contextmenu', (e) => {
   e.preventDefault();
   if (state === 'paused' || state === 'over' || state === 'won') return;
-  const r = canvas.getBoundingClientRect();
-  const x = Math.floor(((e.clientX - r.left) * N) / r.width);
-  const y = Math.floor(((e.clientY - r.top) * N) / r.height);
-  const i = indexOf(x, y, N);
+  const cell = cellFromEvent(e);
+  if (!cell) return;
+  const i = indexOf(cell.x, cell.y, N);
   if (revealed.has(i)) return;
   if (flags.has(i)) flags.delete(i); else { flags.add(i); audio.tone(350, 0.03, 'square', 0.015); }
   $('#mines-left').textContent = String(mineCount - flags.size);
