@@ -76,6 +76,14 @@ body.game {
   padding-bottom: 0;
 }
 
+.neon-frame__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
 .neon-frame__brand {
   display: inline-flex;
   align-items: flex-start;

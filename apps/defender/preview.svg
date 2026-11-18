@@ -1,1 +1,79 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc"><title id="title">Neon Defender</title><desc id="desc">Bouclier orbital protégeant un noyau contre des photons entrants.</desc><defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#10212a"/><stop offset="1" stop-color="#071018"/></linearGradient><filter id="g"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="720" height="380" rx="24" fill="url(#bg)"/><text x="360" y="55" text-anchor="middle" fill="#7af7e0" font-family="system-ui" font-weight="800" font-size="28" letter-spacing="6">Neon Defender</text><g fill="none" stroke="#6affdf" opacity=".32"><circle cx="360" cy="205" r="63"/><circle cx="360" cy="205" r="103"/><circle cx="360" cy="205" r="145"/></g><circle cx="360" cy="205" r="40" fill="#ff638f" filter="url(#g)"/><text x="360" y="210" text-anchor="middle" fill="#fff" font-family="system-ui" font-weight="800" font-size="12">NOYAU</text><path d="M290 128a106 106 0 0 1 98-23" fill="none" stroke="#65ffe1" stroke-width="17" stroke-linecap="round" filter="url(#g)"/><g fill="#ffd36b" filter="url(#g)"><circle cx="225" cy="113" r="8"/><circle cx="487" cy="268" r="8"/><circle cx="405" cy="87" r="7"/></g><path d="M233 119l40 32M481 261l-33-24M401 95l-18 37" stroke="#ffd36b" stroke-width="3" stroke-dasharray="4 6"/><text x="360" y="354" text-anchor="middle" fill="#b9c9e8" font-family="system-ui" font-size="16" letter-spacing="3">INTERCEPTEZ LES PHOTONS · PROTÉGEZ LE NOYAU</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
+  <title id="title">Neon Defender</title>
+  <desc id="desc">Un vaisseau néon protège son secteur avec un bouclier rotatif face aux photons, dans l'espace.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#061327"/>
+      <stop offset="0.55" stop-color="#071420"/>
+      <stop offset="1" stop-color="#040b14"/>
+    </linearGradient>
+    <linearGradient id="shipBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.32" stop-color="#caffed"/>
+      <stop offset="0.72" stop-color="#48e2c3"/>
+      <stop offset="1" stop-color="#137d6d"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff3a0"/>
+      <stop offset="0.4" stop-color="#73ffe2" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#00b998" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="720" height="380" rx="24" fill="url(#bg)"/>
+
+  <!-- starfield -->
+  <g fill="#d5e9ff">
+    <circle cx="60" cy="50" r="2"/><circle cx="140" cy="90" r="1.5"/><circle cx="220" cy="40" r="2"/>
+    <circle cx="310" cy="70" r="1.5"/><circle cx="480" cy="45" r="2"/><circle cx="560" cy="95" r="1.5"/>
+    <circle cx="640" cy="55" r="2"/><circle cx="680" cy="140" r="1.5"/><circle cx="90" cy="300" r="2"/>
+    <circle cx="180" cy="330" r="1.5"/><circle cx="520" cy="310" r="2"/><circle cx="610" cy="290" r="1.5"/>
+    <circle cx="40" cy="180" r="1.5"/><circle cx="690" cy="230" r="2"/>
+  </g>
+  <g stroke="#9fe7ff" stroke-width="2" stroke-linecap="round" opacity="0.25">
+    <line x1="120" y1="20" x2="120" y2="55"/><line x1="500" y1="10" x2="500" y2="48"/><line x1="640" y1="260" x2="640" y2="300"/>
+  </g>
+
+  <text x="360" y="54" text-anchor="middle" fill="#7af7e0" font-family="system-ui,Segoe UI,sans-serif" font-weight="800" font-size="28" letter-spacing="6">NEON DEFENDER</text>
+
+  <!-- orbit rings -->
+  <g fill="none" stroke="#69ffe1" opacity="0.22">
+    <circle cx="360" cy="200" r="72"/><circle cx="360" cy="200" r="115"/><circle cx="360" cy="200" r="165"/>
+  </g>
+
+  <!-- shield arc -->
+  <path d="M 286 128 A 115 115 0 0 1 392 102" fill="none" stroke="#69ffe1" stroke-width="20" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M 296 134 A 115 115 0 0 1 384 112" fill="none" stroke="#eaffff" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- photons -->
+  <g filter="url(#glow)">
+    <circle cx="210" cy="120" r="9" fill="#ffd36b"/><circle cx="210" cy="120" r="13" fill="none" stroke="#fff3c4" stroke-width="2"/>
+    <circle cx="500" cy="270" r="9" fill="#ffd36b"/><circle cx="500" cy="270" r="13" fill="none" stroke="#fff3c4" stroke-width="2"/>
+    <circle cx="420" cy="70" r="8" fill="#ffd36b"/><circle cx="420" cy="70" r="12" fill="none" stroke="#fff3c4" stroke-width="2"/>
+  </g>
+  <g stroke="#ffd36b" stroke-width="2" stroke-dasharray="5 7" opacity="0.6">
+    <path d="M219 128 l34 18"/><path d="M492 262 l-30 -18"/><path d="M416 78 l-14 30"/>
+  </g>
+
+  <!-- ship -->
+  <g transform="translate(360 200)" filter="url(#glow)">
+    <path d="M-10 14 L-6 36 L0 18 L6 36 L10 14 Z" fill="url(#flame)" opacity="0.95"/>
+    <rect x="-24" y="-22" width="48" height="40" rx="17" fill="url(#shipBody)" stroke="#eaffff" stroke-width="2" stroke-opacity="0.7"/>
+    <path d="M-24 -2 L-38 12 L-24 14 Z" fill="#1fa88f"/>
+    <path d="M24 -2 L38 12 L24 14 Z" fill="#1fa88f"/>
+    <ellipse cx="0" cy="-5" rx="10" ry="11" fill="#237d73"/>
+    <ellipse cx="0" cy="-8" rx="5.5" ry="6.5" fill="#c2fff1"/>
+    <rect x="-18" y="5" width="4.5" height="7" rx="1" fill="#faffc4"/>
+    <rect x="13.5" y="5" width="4.5" height="7" rx="1" fill="#faffc4"/>
+  </g>
+
+  <text x="360" y="352" text-anchor="middle" fill="#b9c9e8" font-family="system-ui,Segoe UI,sans-serif" font-size="16" letter-spacing="3">PILOTEZ • PROTÉGEZ • TENEZ LA LIGNE</text>
+</svg>

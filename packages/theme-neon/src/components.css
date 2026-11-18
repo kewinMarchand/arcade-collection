@@ -270,4 +270,46 @@
     min-width: 56px;
     padding: 10px 12px;
   }
+
+  .neon-frame__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border: 1px solid #65d8bd55;
+    border-radius: 8px;
+    background: #0a211dba;
+    color: var(--bui-color-text-muted, #a9bab8);
+    font: 700 0.78rem var(--bui-font-family-mono, 'DM Mono', monospace);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, color 0.18s ease, transform 0.14s ease;
+  }
+
+  .neon-frame__action:hover,
+  .neon-frame__action:focus-visible {
+    border-color: var(--bui-color-primary, #69ffe1);
+    color: var(--bui-color-primary, #69ffe1);
+    box-shadow: 0 0 14px #22ffc033;
+    transform: translateY(-1px);
+  }
+
+  .neon-frame__action:active {
+    transform: translateY(1px) scale(0.98);
+  }
+
+  .neon-frame__action--source::before {
+    content: '⟨/⟩';
+    font-size: 0.72rem;
+  }
+
+  .neon-frame--game:fullscreen,
+  .neon-frame--game.is-fullscreen {
+    width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    background: radial-gradient(ellipse at 82% 4%, #193b3a 0, transparent 32%), #071018;
+  }
 }

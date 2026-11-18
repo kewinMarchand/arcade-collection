@@ -2,7 +2,7 @@
  * UI commons Neon — composants + shell de jeu.
  *
  * Règle du domaine : pas de composant « Neon ». Le shell de jeu est un COMPOSANT
- * générique (contenu central + panneaux latéraux) rendu avec le theme Neon.
+ * générique (contenu central + panneaux latéraux) rendu avec le thème Neon.
  */
 
 const FRAME_TESTIDS = {
@@ -14,21 +14,50 @@ const FRAME_TESTIDS = {
   footer: 'game-footer',
 };
 
+function inferSourceUrl() {
+  try {
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    const idx = parts.lastIndexOf('apps');
+    if (idx !== -1 && parts[idx + 1]) {
+      const slug = parts[idx + 1];
+      return `https://github.com/kewinMarchand/neon-games/tree/main/apps/${slug}`;
+    }
+  } catch (_) {}
+  return 'https://github.com/kewinMarchand/neon-games';
+}
+
+function createFullscreenButton(target) {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'neon-frame__action neon-frame__action--fullscreen';
+  const sync = () => {
+    const active = typeof document !== 'undefined' && document.fullscreenElement === target;
+    btn.textContent = active ? 'Quitter plein écran' : 'Plein écran';
+    btn.setAttribute('aria-label', active ? 'Quitter le plein écran' : 'Passer en plein écran');
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    target.classList.toggle('is-fullscreen', active);
+  };
+  btn.addEventListener('click', async () => {
+    try {
+      if (!document.fullscreenElement) await target.requestFullscreen();
+      else if (document.fullscreenElement === target) await document.exitFullscreen();
+      else {
+        await document.exitFullscreen();
+        await target.requestFullscreen();
+      }
+      sync();
+    } catch (_) {}
+  });
+  document.addEventListener('fullscreenchange', sync);
+  sync();
+  return btn;
+}
+
 /**
  * Monte le cadre de jeu identique pour tous les jeux du monorepo.
  *
  * Structure commune (ADR-004) :
  *   header (titre / sous-titre / options) > corps (panneau gauche | zone jeu | panneau droit) > footer.
- *
- * @param {Object} params
- * @param {HTMLElement} params.mount Elément racine de montage (le shell devient son unique enfant).
- * @param {Object} params.config
- * @param {string} params.config.title Titre du jeu (h1).
- * @param {string} [params.config.subtitle] Sous-titre.
- * @param {Array<{id:string}>} [params.config.panels] Panneaux lateraux specifiques (options du jeu).
- * @param {Object} [params.screen] Zone centrale (canvas/plateau) fournie par le jeu.
- * @param {string} [params.footer] Contenu du footer (commandes, hint...).
- * @returns {{ frame: HTMLElement, screen: HTMLElement, panels: {left: HTMLElement, right: HTMLElement} }}
  */
 export function mountGameFrame({ mount, config }) {
   const { title, subtitle, panels = [], screen, footer } = config;
@@ -64,6 +93,23 @@ export function mountGameFrame({ mount, config }) {
   const markClose = mark.cloneNode(true);
   brand.append(mark, titles, markClose);
   header.append(brand);
+
+  const actions = document.createElement('div');
+  actions.className = 'neon-frame__actions';
+  if (config.showFullscreenToggle !== false) actions.append(createFullscreenButton(frame));
+  const sourceUrl = config.sourceUrl || inferSourceUrl();
+  if (config.showSourceLink !== false && sourceUrl) {
+    const sourceLink = document.createElement('a');
+    sourceLink.className = 'neon-frame__action neon-frame__action--source';
+    sourceLink.href = sourceUrl;
+    sourceLink.target = '_blank';
+    sourceLink.rel = 'noopener noreferrer';
+    sourceLink.textContent = 'Code source';
+    sourceLink.setAttribute('aria-label', `Voir le code source de ${title} sur GitHub`);
+    actions.append(sourceLink);
+  }
+  if (actions.childNodes.length) header.append(actions);
+
   if (typeof config.renderHeader === 'function') header.append(config.renderHeader());
 
   const body = document.createElement('div');
@@ -87,7 +133,7 @@ export function mountGameFrame({ mount, config }) {
   footerEl.className = 'neon-frame__footer';
   footerEl.dataset.testid = FRAME_TESTIDS.footer;
   if (typeof footer === 'function') footerEl.append(footer());
-  if (typeof footer === 'string') footerEl.textContent = footer;
+  else if (typeof footer === 'string') footerEl.textContent = footer;
   if (footerEl.childNodes.length || footerEl.textContent) frame.append(footerEl);
 
   mount.append(frame);
@@ -104,12 +150,11 @@ export function mountGameFrame({ mount, config }) {
     }
   }
 
-  return { frame, header, body, screen: screenEl, panels: { left, right }, footer: footerEl, mount };
+  return { frame, header, body, screen: screenEl, panels: { left, right }, footer: footerEl, mount, actions };
 }
 
 /**
- * Idem pour les composants commons generiques utiles aux jeux/portails :
- * lien repo, carte, badge, retour focus. (Factories legieres, sans framework.)
+ * Lien dépôt GitHub (composant utilitaire).
  */
 export function createRepoLink({ href, label, className = 'bui-link' } = {}) {
   const a = document.createElement('a');
@@ -117,7 +162,7 @@ export function createRepoLink({ href, label, className = 'bui-link' } = {}) {
   a.href = href;
   a.target = '_blank';
   a.rel = 'noopener noreferrer';
-  a.setAttribute('aria-label', label ?? `Voir le code source de ${label ?? 'ce projet'} sur GitHub`);
+  a.setAttribute('aria-label', label ?? 'Voir le code source sur GitHub');
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', '0 0 24 24');
   svg.setAttribute('width', '16');

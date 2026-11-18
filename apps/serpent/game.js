@@ -113,6 +113,8 @@ const DIFF = {
 };
 
 let state = 'ready', dir = 'right', pending = null, snake = [], food = null, bonusFood = null, bonusTimer = 0, score = 0, best = Number(localStorage.getItem('neonSerpentBest')) || 0, tick = 0.14, acc = 0, last = 0, eatPulse = 0, shake = 0, particles = [], rings = [], headScale = 1;
+let digesting = [];
+let tailShrink = 0;
 $('#best').textContent = String(best);
 
 function spawnFood() { food = freeCell(snake, COLS, ROWS); }
@@ -127,6 +129,7 @@ function reset() {
   const d = DIFF[difficultyInput.value] || DIFF.arcade;
   snake = [{ x: 9, y: 10 }, { x: 8, y: 10 }, { x: 7, y: 10 }];
   dir = 'right'; pending = null; score = 0; tick = d.startTick; acc = 0; shake = 0; particles = []; rings = []; eatPulse = 0; headScale = 1; bonusFood = null; bonusTimer = 0;
+  digesting = []; tailShrink = 0;
   spawnFood();
   $('#score').textContent = '0'; $('#speed').textContent = '1'; $('#status').textContent = 'Prêt';
 }
@@ -155,8 +158,11 @@ function setDir(d) {
   pending = d;
 }
 
+function cellCenter(cell) { return { x: cell.x * CELL + CELL / 2, y: cell.y * CELL + CELL / 2 }; }
+
 function update(dt) {
   shake = Math.max(0, shake - dt * 3); eatPulse = Math.max(0, eatPulse - dt * 4); headScale += (1 - headScale) * Math.min(1, dt * 10);
+  tailShrink = Math.max(0, tailShrink - dt * 2.4);
   for (let i = particles.length - 1; i >= 0; i--) {
     const p = particles[i]; p.x += p.vx * dt; p.y += p.vy * dt; p.vx *= 0.97; p.vy *= 0.97; p.life -= dt; if (p.life <= 0) particles.splice(i, 1);
   }
@@ -196,6 +202,7 @@ function update(dt) {
     tick = Math.max(d.minTick, tick - d.accel * 20);
     $('#speed').textContent = String(1 + Math.floor(score / 60));
     audio.tone(ateBonus ? 880 : 640, 0.07, 'sine', 0.03);
+    digesting.push({ progress: 0, color: ateBonus ? '#69ffe1' : '#ffd36b' });
     if (ate) spawnFood();
     if (ateBonus) bonusFood = null;
     if (ate && bonusInput.checked && !bonusFood && Math.random() < 0.28) spawnBonus();
@@ -203,6 +210,16 @@ function update(dt) {
 
   snake.unshift(head);
   if (!ate && !ateBonus) snake.pop();
+
+  for (let i = digesting.length - 1; i >= 0; i--) {
+    digesting[i].progress += 1;
+    if (digesting[i].progress >= snake.length - 1) {
+      tailShrink = 1;
+      const tail = snake[snake.length - 1];
+      if (tail) ring(tail.x * CELL + 15, tail.y * CELL + 15, digesting[i].color);
+      digesting.splice(i, 1);
+    }
+  }
 }
 
 function draw(t) {
@@ -228,7 +245,8 @@ function draw(t) {
 
   snake.forEach((s, i) => {
     const col = i === 0 ? '#69ffe1' : SEG[i % SEG.length];
-    const sc = i === 0 ? headScale : 1;
+    let sc = i === 0 ? headScale : 1;
+    if (i === snake.length - 1 && tailShrink > 0) sc *= 1 - 0.28 * tailShrink;
     const size = (CELL - 4) * sc;
     const off = (CELL - size) / 2;
     ctx.fillStyle = col; ctx.shadowColor = col; ctx.shadowBlur = i === 0 ? 16 : 8;
@@ -242,6 +260,34 @@ function draw(t) {
       ctx.beginPath(); ctx.ellipse(s.x * CELL + 15 + ex - px, s.y * CELL + 15 + ey - py, 2.6, 2.6, 0, 0, Math.PI * 2); ctx.fill();
     }
   });
+
+  for (const d of digesting) {
+    const idx = Math.min(d.progress, snake.length - 1);
+    const prev = snake[Math.max(0, idx - 1)] || snake[0];
+    const curr = snake[idx] || snake[snake.length - 1];
+    if (!prev || !curr) continue;
+    const a = cellCenter(prev);
+    const b = cellCenter(curr);
+    const x = (a.x + b.x) / 2;
+    const y = (a.y + b.y) / 2;
+    const nearTail = idx >= snake.length - 2;
+    const radius = nearTail ? 5.2 : 6.4;
+    ctx.save();
+    ctx.fillStyle = d.color;
+    ctx.shadowColor = d.color;
+    ctx.shadowBlur = 18;
+    ctx.globalAlpha = 0.95;
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.globalAlpha = 0.7;
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(x - 1.5, y - 1.5, 1.8, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
 
   for (const r of rings) { ctx.globalAlpha = Math.max(0, r.life / 0.4); ctx.strokeStyle = r.color; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(r.x, r.y, r.r, 0, Math.PI * 2); ctx.stroke(); }
   ctx.globalAlpha = 1;
