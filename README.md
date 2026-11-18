@@ -1,6 +1,6 @@
 # Neon Games
 
-Une collection de neuf mini-jeux indépendants, gratuits et jouables directement dans le navigateur.
+Une collection de douze mini-jeux indépendants, gratuits et jouables directement dans le navigateur.
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github&logoColor=white)](https://github.com/kewinMarchand/neon-games)
 
