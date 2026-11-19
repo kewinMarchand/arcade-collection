@@ -6,7 +6,7 @@ const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
     title: 'Sorter',
-    subtitle: 'Remplis les palettes de 3 éléments identiques.',
+    subtitle: 'Remplis les 3 palettes selon leur couleur imposée.',
     renderHeader: () => {
       const options = document.createElement('div');
       options.className = 'game-options';
@@ -44,7 +44,7 @@ const shell = mountGameFrame({
 
           const rulesTitle = document.createElement('h3'); rulesTitle.className = 'arcade-panel__subtitle'; rulesTitle.textContent = 'Règles';
           const rules = document.createElement('p'); rules.className = 'help';
-          rules.textContent = 'Clique un objet de la première rangée (visible) sur les étagères : il part vers le haut pour remplir une palette de 3 éléments identiques. Si aucune palette ne convient, il va dans un des 5 blocs de défausse. La rangée dessous est visible en transparence mais non sélectionnable.';
+          rules.textContent = 'Clique un objet de la première rangée (visible) en bas : il remplit la palette correspondant à sa couleur imposée (3 éléments). Si aucune palette ne convient, il va dans un bloc de défausse. La rangée dessous est visible en transparence mais non sélectionnable.';
 
           const controlsTitle = document.createElement('h3'); controlsTitle.className = 'arcade-panel__subtitle'; controlsTitle.textContent = 'Contrôles';
           const controls = document.createElement('div'); controls.className = 'controls-legend';
@@ -101,7 +101,7 @@ const TYPES = [
 let state = 'ready'; // ready | playing | paused | over | win
 let score = 0, palettesDone = 0, level = 1;
 let shelves = []; // columns: array of item types, index 0 = front (selectable), index 1 = behind (dimmed/locked), rest hidden
-let palettes = []; // { type: number|null, items: number[] } size target 3
+let palettes = []; // { requiredType: number, items: number[] } size target 3, 3 palettes with imposed colors
 let discard = []; // array of item types, max 5
 let particles = [], rings = [], floatTexts = [], stars = [], anims = [];
 let last = 0, shake = 0, flash = 0, flashColor = '#ff648f';
@@ -112,15 +112,17 @@ function makeStars() {
 function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
 function setupLevel() {
-  palettes = Array.from({ length: 4 }, () => ({ type: null, items: [] }));
   discard = [];
   particles = []; rings = []; floatTexts = []; anims = []; shake = 0; flash = 0;
 
-  const typeCount = Math.min(6, TYPES.length);
-  const paletteGroups = 5 + Math.min(level, 4); // number of complete palettes to form
+  // 3 palettes with imposed colors
+  const typeIds = shuffle([...TYPES.keys()]).slice(0, 3);
+  palettes = typeIds.map((t) => ({ requiredType: t, items: [] }));
+
+  const paletteGroups = 6 + Math.min(level, 3); // number of complete triplets to sort (distributed among 3 imposed palettes)
   const pool = [];
   for (let i = 0; i < paletteGroups; i++) {
-    const t = i % typeCount;
+    const t = typeIds[i % typeIds.length];
     pool.push(t, t, t);
   }
   shuffle(pool);
@@ -165,22 +167,22 @@ function addFloat(x, y, text, color) { floatTexts.push({ x, y, text, color, life
 function shelfLayout() {
   const cols = shelves.length;
   if (!cols) return [];
-  const topY = 290;
+  const baseY = H - 60; // align items/shelves near bottom of the game
   const shelfGapY = 74; // vertical distance between platform rows (depth layers)
   const itemOffsetY = -28; // item sits on platform
   const margin = 50;
   const usable = W - margin * 2;
   const spacingX = Math.min(105, usable / Math.max(1, cols));
   const startX = W / 2 - (spacingX * (cols - 1)) / 2;
-  return shelves.map((col, i) => ({ x: startX + i * spacingX, baseY: topY, shelfGapY, itemOffsetY, col, i }));
+  return shelves.map((col, i) => ({ x: startX + i * spacingX, baseY, shelfGapY, itemOffsetY, col, i }));
 }
 
 function paletteSlots() {
   const n = palettes.length;
-  const slotW = 150, slotH = 64, gap = 16;
+  const slotW = 170, slotH = 72, gap = 22;
   const total = n * slotW + (n - 1) * gap;
-  const sx = W / 2 - total / 2 - 70;
-  const y = 88;
+  const sx = W / 2 - total / 2;
+  const y = 48;
   return Array.from({ length: n }, (_, i) => ({ x: sx + i * (slotW + gap), y, w: slotW, h: slotH }));
 }
 
@@ -189,7 +191,7 @@ function discardSlots() {
   const w = 54, h = 54, gap = 10;
   const total = n * w + (n - 1) * gap;
   const sx = W / 2 - total / 2;
-  const y = 168;
+  const y = 140;
   return Array.from({ length: n }, (_, i) => ({ x: sx + i * (w + gap), y, w, h }));
 }
 
@@ -207,17 +209,12 @@ function hitShelf(mx, my) {
 }
 
 function findTargetFor(type) {
-  // 1) palette with same type and space
+  // 1) matching imposed-color palette with space
   for (let i = 0; i < palettes.length; i++) {
     const p = palettes[i];
-    if (p.type === type && p.items.length < 3) return { kind: 'palette', index: i };
+    if (p.requiredType === type && p.items.length < 3) return { kind: 'palette', index: i };
   }
-  // 2) empty palette
-  for (let i = 0; i < palettes.length; i++) {
-    const p = palettes[i];
-    if (p.type === null && p.items.length === 0) return { kind: 'palette', index: i };
-  }
-  // 3) discard
+  // 2) discard
   if (discard.length < 5) return { kind: 'discard', index: discard.length };
   return null;
 }
@@ -247,7 +244,6 @@ function tryPickup(colIndex) {
   if (!target) {
     shake = 0.35; flash = 1; flashColor = '#ff648f';
     tone(120, 0.14, 'sawtooth', 0.045);
-    addFloat(W / 2, H / 2, 'Plus de place !', '#ff719c');
     // lose if cannot place
     state = 'over'; const st = $('#status'); if (st) st.textContent = 'Bloqué';
     return;
@@ -261,7 +257,6 @@ function tryPickup(colIndex) {
   const to = targetPosition(target);
   if (target.kind === 'palette') {
     const p = palettes[target.index];
-    if (p.type === null) p.type = type;
     p.items.push(type);
   } else {
     discard.push(type);
@@ -280,17 +275,17 @@ function onItemArrived(anim) {
   if (t.kind === 'palette') {
     const p = palettes[t.index];
     if (p.items.length >= 3) {
-      // palette completed
+      // palette completed (imposed color)
       palettesDone++; score += 40 + level * 8; updateHud();
       const ps = paletteSlots()[t.index];
       const cx = ps.x + ps.w / 2, cy = ps.y + ps.h / 2;
       addParticles(cx, cy, TYPES[anim.type].color, 30, 220);
       addRing(cx, cy, TYPES[anim.type].color); addRing(cx, cy, '#ffffff');
-      addFloat(cx, cy - 20, `PALETTE +${40 + level * 8}`, TYPES[anim.type].color);
+      addFloat(cx, cy - 20, `+${40 + level * 8}`, TYPES[anim.type].color);
       shake = 0.18; flash = 0.5; flashColor = '#69ffe1';
       tone(520, 0.08, 'sine', 0.03); tone(740, 0.1, 'sine', 0.03);
-      // clear palette after short visual persistence handled by resetting
-      p.type = null; p.items = [];
+      // clear palette but keep its imposed color
+      p.items = [];
     } else {
       tone(420 + p.items.length * 60, 0.05, 'sine', 0.018);
     }
@@ -515,48 +510,48 @@ function draw(t) {
   if (shake > 0) ctx.translate((Math.random() - 0.5) * 10 * shake, (Math.random() - 0.5) * 8 * shake);
   drawBackground(t);
 
-  // Top labels
-  ctx.textAlign = 'center';
-  ctx.fillStyle = 'rgba(232,251,255,0.78)'; ctx.font = '600 14px "Space Grotesk", sans-serif';
+  // Palette slots (3 palettes with imposed colors)
   const ps = paletteSlots();
-  const palettesCx = ps.length ? (ps[0].x + ps[ps.length - 1].x + ps[ps.length - 1].w) / 2 : W / 2;
-  ctx.fillText('Palettes à remplir (3 identiques)', palettesCx, 58);
-  const ds = discardSlots();
-  const discardCx = ds.length ? (ds[0].x + ds[ds.length - 1].x + ds[ds.length - 1].w) / 2 : W / 2;
-  ctx.fillText('Défausse (5)', discardCx, 156);
-
-  // Palette slots
   ps.forEach((sl, i) => {
     const p = palettes[i];
+    const color = TYPES[p.requiredType]?.color || '#69ffe1';
     const active = p.items.length > 0;
     ctx.save();
     ctx.fillStyle = 'rgba(8,24,30,0.72)';
-    ctx.strokeStyle = active ? (TYPES[p.type]?.color || '#69ffe1') : 'rgba(105,255,225,0.28)';
-    ctx.lineWidth = 2;
-    ctx.shadowColor = active ? (TYPES[p.type]?.color || '#69ffe1') : 'transparent';
-    ctx.shadowBlur = active ? 10 : 0;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2.5;
+    ctx.shadowColor = color;
+    ctx.shadowBlur = active ? 14 : 8;
     ctx.beginPath(); ctx.roundRect(sl.x, sl.y, sl.w, sl.h, 12); ctx.fill(); ctx.stroke();
     ctx.shadowBlur = 0;
     ctx.strokeStyle = 'rgba(255,255,255,0.08)'; ctx.lineWidth = 1;
     ctx.beginPath(); ctx.roundRect(sl.x + 5, sl.y + 5, sl.w - 10, sl.h - 10, 9); ctx.stroke();
-    // slot markers
+    // imposed color markers / empty slots
     for (let k = 0; k < 3; k++) {
-      const mx = sl.x + 18 + ((sl.w - 36) / 2) * k;
+      const mx = sl.x + 22 + ((sl.w - 44) / 2) * k;
       const my = sl.y + sl.h / 2;
       if (p.items[k] === undefined) {
-        ctx.strokeStyle = 'rgba(105,255,225,0.18)'; ctx.lineWidth = 1.5;
-        ctx.beginPath(); ctx.arc(mx, my, 10, 0, Math.PI * 2); ctx.stroke();
+        ctx.save();
+        ctx.globalAlpha = 0.22;
+        drawColumnsSymbol(mx, my, 10, p.requiredType, color, 0, t);
+        ctx.restore();
+        ctx.strokeStyle = color;
+        ctx.globalAlpha = 0.35;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.arc(mx, my, 13, 0, Math.PI * 2); ctx.stroke();
+        ctx.globalAlpha = 1;
       }
     }
     ctx.restore();
     p.items.forEach((type, k) => {
-      const mx = sl.x + 18 + ((sl.w - 36) / 2) * k;
+      const mx = sl.x + 22 + ((sl.w - 44) / 2) * k;
       const my = sl.y + sl.h / 2;
       drawModule(mx, my, type, 0.82, { alpha: 1, shadow: true }, t);
     });
   });
 
   // Discard slots
+  const ds = discardSlots();
   ds.forEach((sl, i) => {
     const filled = discard[i] !== undefined;
     ctx.save();
@@ -569,10 +564,6 @@ function draw(t) {
     ctx.restore();
     if (filled) drawModule(sl.x + sl.w / 2, sl.y + sl.h / 2, discard[i], 0.78, { alpha: 0.95 }, t);
   });
-
-  // Shelves and items
-  ctx.fillStyle = 'rgba(232,251,255,0.72)'; ctx.font = '600 14px "Space Grotesk", sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText('Étagères — choisis un objet de la première rangée (il monte vers le haut)', W / 2, 250);
 
   const layout = shelfLayout();
   for (const L of layout) {
@@ -587,9 +578,6 @@ function draw(t) {
     // row behind (index 1) - semi-transparent, non-selectable
     if (L.col.length > 1) {
       drawModule(L.x, L.baseY + L.shelfGapY + L.itemOffsetY, L.col[1], 0.92, { alpha: 0.38, shadow: false }, t);
-      // lock hint
-      ctx.save(); ctx.globalAlpha = 0.35; ctx.fillStyle = '#e8fbff'; ctx.font = '700 10px "DM Mono", monospace'; ctx.textAlign = 'center';
-      ctx.fillText('verrouillé', L.x, L.baseY + L.shelfGapY + L.itemOffsetY + 28); ctx.restore();
     }
 
     // front row (index 0) - visible and selectable
@@ -619,10 +607,10 @@ function draw(t) {
     ctx.fillStyle = 'rgba(2,8,12,0.72)'; ctx.fillRect(0, 0, W, H);
     ctx.textAlign = 'center'; ctx.shadowColor = '#69ffe1'; ctx.shadowBlur = 18; ctx.fillStyle = '#69ffe1';
     ctx.font = '800 40px "Space Grotesk", sans-serif';
-    let title = 'SORTER', sub = 'Clique pour commencer — remplis des palettes de 3 éléments';
+    let title = 'SORTER', sub = 'Clique pour commencer';
     if (state === 'paused') { title = 'PAUSE'; sub = 'P pour reprendre'; }
-    else if (state === 'over') { title = 'BLOQUÉ'; sub = 'Plus de placement possible — clique ou R pour recommencer'; ctx.fillStyle = '#ff719c'; ctx.shadowColor = '#ff719c'; }
-    else if (state === 'win') { title = 'NIVEAU TERMINÉ'; sub = 'Préparation du niveau suivant...'; ctx.fillStyle = '#78ffd0'; ctx.shadowColor = '#78ffd0'; }
+    else if (state === 'over') { title = 'BLOQUÉ'; sub = 'Clique ou R pour recommencer'; ctx.fillStyle = '#ff719c'; ctx.shadowColor = '#ff719c'; }
+    else if (state === 'win') { title = 'NIVEAU TERMINÉ'; sub = 'Niveau suivant...'; ctx.fillStyle = '#78ffd0'; ctx.shadowColor = '#78ffd0'; }
     ctx.fillText(title, W / 2, H / 2 - 10);
     ctx.shadowBlur = 0; ctx.fillStyle = '#e8fbff'; ctx.font = '16px "Space Grotesk", sans-serif';
     ctx.fillText(sub, W / 2, H / 2 + 28);
