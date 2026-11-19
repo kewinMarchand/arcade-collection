@@ -123,8 +123,8 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  min-height: calc(100svh - 60px);
-  padding: 64px max(24px, calc(50% - 580px));
+  min-height: auto;
+  padding: 56px max(24px, calc(50% - 580px)) 0;
   gap: 48px;
   overflow: hidden;
 }
@@ -253,15 +253,18 @@ body {
     filter 0.18s ease;
   box-shadow: 0 0 24px #bada5555, 0 4px 16px #00000055;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  isolation: isolate;
 }
 
 .button::before {
   content: "";
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   background: linear-gradient(135deg, #ffffff22 0%, transparent 60%);
   pointer-events: none;
+  z-index: 0;
 }
 
 .button:hover,
@@ -394,7 +397,7 @@ body {
    10. Collection / section-title
    ---------------------------------------------------------- */
 .collection {
-  padding: 56px max(24px, calc(50% - 580px)) 72px;
+  padding: 40px max(24px, calc(50% - 580px)) 72px;
 }
 
 .section-title {
@@ -540,9 +543,9 @@ body {
   .hero {
     flex-direction: column;
     min-height: auto;
-    padding-top: 60px;
-    padding-bottom: 60px;
-    gap: 40px;
+    padding-top: 48px;
+    padding-bottom: 0;
+    gap: 32px;
   }
 
   .hero-art {
@@ -566,8 +569,8 @@ body {
 
 @media (max-width: 540px) {
   .collection {
-    padding-top: 48px;
-    padding-bottom: 64px;
+    padding-top: 32px;
+    padding-bottom: 56px;
   }
 
   .section-title {
