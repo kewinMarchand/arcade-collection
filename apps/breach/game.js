@@ -58,7 +58,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
               'Clic / Entrée : capturer la souris et jouer',
               'ZQSD ou WASD / Flèches : se déplacer',
               'Souris : viser',
-              'Clic gauche : tirer (orbes rebondissantes)',
+              'Clic gauche : tirer (orbes de slime collantes)',
               'R : recharger',
               'Échap : libérer la souris (pause)'
             ]) { const li = document.createElement('li'); li.className = 'neon-panel__text'; li.textContent = t; ul.appendChild(li); }
@@ -95,11 +95,11 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
             <div id="overlay">
               <div class="card">
                 <h2><em>Neon</em> Breach</h2>
-                <p>FPS néon : éliminez les drones aliens, puis rejoignez la porte d'extraction pour terminer le niveau.</p>
+                <p>FPS néon : éliminez les vaisseaux aliens, puis rejoignez la porte d'extraction pour terminer le niveau.</p>
                 <div class="keys">
                   <div><kbd>Z</kbd><kbd>Q</kbd><kbd>S</kbd><kbd>D</kbd> / flèches — déplacement</div>
                   <div><kbd>Souris</kbd> — viser</div>
-                  <div><kbd>Clic</kbd> — tirer (orbes rebondissantes)</div>
+                  <div><kbd>Clic</kbd> — tirer (slime collant)</div>
                   <div><kbd>R</kbd> — recharger · <kbd>Échap</kbd> — pause</div>
                 </div>
                 <button id="start-btn" type="button">Entrer dans le secteur</button>
@@ -197,6 +197,8 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   const enemies = [];
   const bullets = [];
   const sparks = [];
+  const slimeSplats = [];
+  const slimeDrips = [];
 
   function addLight(x, y, z, color, intensity, dist) {
     const l = new THREE.PointLight(color, intensity, dist, 2);
@@ -233,67 +235,71 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   }
 
   function makeAlien(colorHex, idx) {
-    // Hostile drone/ship inspired by ship/lander design language: armored hull, canopy, fins, thrusters, neon trim
+    // Sleek, detailed invader ship/craft (ship/lander-inspired, appealing silhouette)
     const g = new THREE.Group();
-    const hull = new THREE.MeshStandardMaterial({ color: 0x12242e, emissive: colorHex, emissiveIntensity: 0.22, metalness: 0.55, roughness: 0.28 });
-    const armor = new THREE.MeshStandardMaterial({ color: 0x1b3340, emissive: colorHex, emissiveIntensity: 0.12, metalness: 0.45, roughness: 0.35 });
-    const glow = new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.95 });
-    const glowSoft = new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.55 });
-    const canopyMat = new THREE.MeshStandardMaterial({ color: 0xdffcff, emissive: colorHex, emissiveIntensity: 0.7, metalness: 0.1, roughness: 0.08, transparent: true, opacity: 0.9 });
-    const dark = new THREE.MeshStandardMaterial({ color: 0x081318, emissive: 0x020608, roughness: 0.9 });
+    const hullMat = new THREE.MeshStandardMaterial({ color: 0x163142, emissive: colorHex, emissiveIntensity: 0.28, metalness: 0.5, roughness: 0.26 });
+    const accentMat = new THREE.MeshStandardMaterial({ color: colorHex, emissive: colorHex, emissiveIntensity: 0.55, metalness: 0.25, roughness: 0.3 });
+    const darkMat = new THREE.MeshStandardMaterial({ color: 0x09161d, emissive: 0x03090c, roughness: 0.85 });
+    const canopyMat = new THREE.MeshStandardMaterial({ color: 0xe9fdff, emissive: colorHex, emissiveIntensity: 0.85, metalness: 0.05, roughness: 0.05, transparent: true, opacity: 0.92 });
+    const glowMat = new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.9 });
 
-    // main hull
-    const body = new THREE.Mesh(new THREE.BoxGeometry(0.72, 0.28, 0.92), hull);
-    g.add(body);
-    const nose = new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.5, 4), hull);
-    nose.rotation.x = Math.PI / 2; nose.rotation.y = Math.PI / 4; nose.position.set(0, -0.02, 0.6);
-    g.add(nose);
-    const tail = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.22, 0.32), armor);
-    tail.position.set(0, 0, -0.55);
-    g.add(tail);
+    // main saucer hull
+    const saucer = new THREE.Mesh(new THREE.SphereGeometry(0.5, 20, 14), hullMat);
+    saucer.scale.set(1.45, 0.45, 1.15);
+    g.add(saucer);
 
-    // armor plates / panels
-    const plateL = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.08, 0.55), armor); plateL.position.set(-0.42, 0.08, 0); g.add(plateL);
-    const plateR = plateL.clone(); plateR.position.x = 0.42; g.add(plateR);
-    const spine = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.1, 0.7), armor); spine.position.set(0, 0.16, -0.05); g.add(spine);
+    // upper dome/cockpit
+    const dome = new THREE.Mesh(new THREE.SphereGeometry(0.24, 16, 12, 0, Math.PI * 2, 0, Math.PI / 2), canopyMat);
+    dome.position.set(0, 0.12, 0.08);
+    dome.scale.set(1.15, 1, 1.15);
+    g.add(dome);
+    const core = new THREE.Mesh(new THREE.SphereGeometry(0.08, 12, 10), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+    core.position.set(0, 0.08, 0.2);
+    g.add(core);
 
-    // wings / fins
-    const wingGeo = new THREE.BoxGeometry(0.55, 0.05, 0.38);
-    const wingL = new THREE.Mesh(wingGeo, hull); wingL.position.set(-0.62, -0.02, -0.05); wingL.rotation.z = 0.18; wingL.rotation.y = 0.25; g.add(wingL);
-    const wingR = new THREE.Mesh(wingGeo, hull); wingR.position.set(0.62, -0.02, -0.05); wingR.rotation.z = -0.18; wingR.rotation.y = -0.25; g.add(wingR);
-    const fin = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.28, 0.22), hull); fin.position.set(0, 0.24, -0.42); g.add(fin);
+    // lower fuselage pod
+    const pod = new THREE.Mesh(new THREE.CapsuleGeometry(0.14, 0.22, 6, 12), hullMat);
+    pod.rotation.x = Math.PI / 2;
+    pod.position.set(0, -0.18, 0.05);
+    g.add(pod);
 
-    // canopy / sensor eye
-    const canopy = new THREE.Mesh(new THREE.SphereGeometry(0.16, 16, 12, 0, Math.PI * 2, 0, Math.PI / 2), canopyMat);
-    canopy.scale.set(1.2, 1, 1.5); canopy.position.set(0, 0.14, 0.18); g.add(canopy);
-    const eye = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 10), new THREE.MeshBasicMaterial({ color: 0xffffff }));
-    eye.position.set(0, 0.08, 0.52); g.add(eye);
-    const eyeRing = new THREE.Mesh(new THREE.TorusGeometry(0.09, 0.018, 8, 20), glow);
-    eyeRing.rotation.x = Math.PI / 2; eyeRing.position.set(0, 0.06, 0.5); g.add(eyeRing);
+    // wings
+    const wingGeo = new THREE.BoxGeometry(0.62, 0.06, 0.34);
+    const wL = new THREE.Mesh(wingGeo, accentMat); wL.position.set(-0.68, -0.02, -0.02); wL.rotation.z = 0.22; wL.rotation.y = 0.18; g.add(wL);
+    const wR = new THREE.Mesh(wingGeo, accentMat); wR.position.set(0.68, -0.02, -0.02); wR.rotation.z = -0.22; wR.rotation.y = -0.18; g.add(wR);
+    const wingTipL = new THREE.Mesh(new THREE.SphereGeometry(0.055, 10, 8), glowMat); wingTipL.position.set(-0.98, 0.06, -0.04); g.add(wingTipL);
+    const wingTipR = wingTipL.clone(); wingTipR.position.x = 0.98; g.add(wingTipR);
 
-    // thrusters
-    const thrusterGeo = new THREE.CylinderGeometry(0.07, 0.09, 0.16, 10);
-    const thrusterMat = new THREE.MeshStandardMaterial({ color: 0x223644, emissive: colorHex, emissiveIntensity: 0.25, metalness: 0.6, roughness: 0.3 });
-    const tL = new THREE.Mesh(thrusterGeo, thrusterMat); tL.rotation.x = Math.PI / 2; tL.position.set(-0.18, -0.04, -0.7); g.add(tL);
-    const tR = tL.clone(); tR.position.x = 0.18; g.add(tR);
-    const flameGeo = new THREE.ConeGeometry(0.06, 0.18, 8);
-    const fL = new THREE.Mesh(flameGeo, glow); fL.rotation.x = -Math.PI / 2; fL.position.set(-0.18, -0.04, -0.82); g.add(fL);
-    const fR = fL.clone(); fR.position.x = 0.18; g.add(fR);
+    // tail fins
+    const finGeo = new THREE.BoxGeometry(0.05, 0.24, 0.22);
+    const finL = new THREE.Mesh(finGeo, hullMat); finL.position.set(-0.14, 0.18, -0.38); finL.rotation.z = 0.25; g.add(finL);
+    const finR = finL.clone(); finR.position.set(0.14, 0.18, -0.38); finR.rotation.z = -0.25; g.add(finR);
 
-    // neon trim / outline
-    const trim = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.02, 8, 28), glowSoft);
-    trim.rotation.x = Math.PI / 2; trim.position.y = -0.16; g.add(trim);
-    const bar = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.03, 0.03), glow); bar.position.set(0, 0.02, 0.46); g.add(bar);
-    const bar2 = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.03, 0.4), glowSoft); bar2.position.set(-0.28, 0.06, 0.05); g.add(bar2);
-    const bar3 = bar2.clone(); bar3.position.x = 0.28; g.add(bar3);
+    // engine ring / thrusters
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.03, 10, 24), glowMat);
+    ring.rotation.x = Math.PI / 2; ring.position.set(0, -0.2, -0.18); g.add(ring);
+    const thruster = new THREE.Mesh(new THREE.ConeGeometry(0.07, 0.16, 10), accentMat);
+    thruster.rotation.x = -Math.PI / 2; thruster.position.set(0, -0.22, -0.36); g.add(thruster);
+    const flame = new THREE.Mesh(new THREE.ConeGeometry(0.045, 0.14, 8), glowMat);
+    flame.rotation.x = -Math.PI / 2; flame.position.set(0, -0.22, -0.47); g.add(flame);
 
-    // landing skids detail (lander-inspired accents)
-    const skid = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.04, 0.3), dark);
-    const s1 = skid.clone(); s1.position.set(-0.22, -0.18, 0.15); s1.rotation.x = 0.35; g.add(s1);
-    const s2 = skid.clone(); s2.position.set(0.22, -0.18, 0.15); s2.rotation.x = 0.35; g.add(s2);
+    // front sensor / eyes integrated as ship lights
+    for (const sx of [-0.18, 0.18]) {
+      const socket = new THREE.Mesh(new THREE.SphereGeometry(0.055, 10, 8), darkMat);
+      socket.position.set(sx, 0.0, 0.52); socket.scale.set(1, 1, 0.6); g.add(socket);
+      const light = new THREE.Mesh(new THREE.SphereGeometry(0.03, 8, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+      light.position.set(sx, 0.01, 0.56); g.add(light);
+    }
 
-    // edges for crisp style
-    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(0.72, 0.28, 0.92)), new THREE.LineBasicMaterial({ color: colorHex, transparent: true, opacity: 0.35 }));
+    // trim bars
+    const bar = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.03, 0.04), glowMat);
+    bar.position.set(0, -0.04, 0.46); g.add(bar);
+    const bar2 = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.04, 0.5), new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.5 }));
+    bar2.position.set(0, 0.18, -0.05); g.add(bar2);
+
+    // outline for crisp style
+    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.SphereGeometry(0.5, 12, 8)), new THREE.LineBasicMaterial({ color: colorHex, transparent: true, opacity: 0.18 }));
+    edges.scale.copy(saucer.scale);
     g.add(edges);
 
     g.userData.kind = 'alien';
@@ -501,6 +507,12 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     for (const b of bullets) scene.remove(b.mesh);
     bullets.length = 0;
   }
+  function clearSlimes() {
+    for (const s of slimeSplats) scene.remove(s.mesh);
+    slimeSplats.length = 0;
+    for (const d of slimeDrips) scene.remove(d.mesh);
+    slimeDrips.length = 0;
+  }
 
   function resetGame() {
     state.running = false; state.over = false; state.won = false;
@@ -512,6 +524,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     for (const e of enemies) { e.hp = 60; e.alive = true; e.group.visible = true; e.light.visible = true; e.cooldown = Math.random() * 1.2; e.group.position.set(e.base.x, 1.3, e.base.z); }
     for (const p of pickups) { p.alive = true; p.mesh.visible = true; }
     clearBullets();
+    clearSlimes();
     syncHud();
   }
   resetGame();
@@ -555,6 +568,26 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     if (objectiveEl) objectiveEl.textContent = 'Rechargement…';
   }
 
+  function stickSlime(pos, normal, scale = 1) {
+    const r = 0.22 * scale + Math.random() * 0.12 * scale;
+    const geo = new THREE.SphereGeometry(r, 14, 10);
+    const mat = new THREE.MeshStandardMaterial({ color: 0x6dff4a, emissive: 0x39ff14, emissiveIntensity: 0.9, transparent: true, opacity: 0.92, roughness: 0.25, metalness: 0.05 });
+    const m = new THREE.Mesh(geo, mat);
+    m.position.copy(pos.clone().add(normal.clone().multiplyScalar(0.03)));
+    const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), normal.clone().normalize());
+    m.quaternion.copy(q);
+    m.scale.set(1.2, 0.45, 1.2);
+    scene.add(m);
+    slimeSplats.push({ mesh: m, life: 18 + Math.random() * 8, max: 26, wobble: Math.random() * Math.PI * 2 });
+    // little droplets
+    for (let i = 0; i < 3; i++) {
+      const dm = new THREE.Mesh(new THREE.SphereGeometry(0.05 + Math.random() * 0.04, 8, 8), new THREE.MeshBasicMaterial({ color: 0x7cff5a, transparent: true, opacity: 0.9 }));
+      dm.position.copy(m.position).add(new THREE.Vector3((Math.random()-0.5)*0.18, (Math.random()-0.2)*0.1, (Math.random()-0.5)*0.18));
+      scene.add(dm);
+      slimeDrips.push({ mesh: dm, vel: normal.clone().multiplyScalar(0.2).add(new THREE.Vector3((Math.random()-0.5)*0.6, -0.2 - Math.random()*0.4, (Math.random()-0.5)*0.6)), life: 0.6 + Math.random()*0.5, gravity: 2.5, stick: false });
+    }
+  }
+
   const tmpV = new THREE.Vector3();
   function shoot() {
     if (!state.running || state.over || state.won) return;
@@ -568,13 +601,13 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     const dir = tmpV.clone().normalize();
     const pos = camera.position.clone().add(dir.clone().multiplyScalar(0.7)).add(new THREE.Vector3(0, -0.05, 0));
     const mesh = new THREE.Mesh(
-      new THREE.SphereGeometry(0.14, 18, 18),
-      new THREE.MeshStandardMaterial({ color: 0xcffff8, emissive: 0x69ffe1, emissiveIntensity: 1.8, metalness: 0.0, roughness: 0.12 })
+      new THREE.SphereGeometry(0.14, 16, 16),
+      new THREE.MeshStandardMaterial({ color: 0x9aff5c, emissive: 0x5cff2a, emissiveIntensity: 1.5, metalness: 0.0, roughness: 0.2, transparent: true, opacity: 0.95 })
     );
     mesh.position.copy(pos);
     scene.add(mesh);
     const vel = dir.multiplyScalar(22);
-    bullets.push({ mesh, vel, life: 3.2, bounces: 7, radius: 0.14, squash: 0 });
+    bullets.push({ mesh, vel, life: 3.0, radius: 0.14 });
     if (state.ammo === 0 && state.reserve > 0) reload();
   }
   window.addEventListener('mousedown', (e) => { if (e.button === 0) shoot(); });
@@ -588,17 +621,36 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 
   function spawnSparks(pos, color, n = 10) {
     for (let i = 0; i < n; i++) {
-      const m = new THREE.Mesh(new THREE.SphereGeometry(0.04, 6, 6), new THREE.MeshBasicMaterial({ color }));
+      const m = new THREE.Mesh(new THREE.SphereGeometry(0.04, 6, 6), new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.95 }));
       m.position.copy(pos);
       const v = new THREE.Vector3((Math.random() - 0.5) * 4, (Math.random() - 0.2) * 4, (Math.random() - 0.5) * 4);
       scene.add(m);
-      sparks.push({ m, v, life: 0.4 + Math.random() * 0.3 });
+      sparks.push({ m, v, life: 0.4 + Math.random() * 0.3, max: 0.7 });
+    }
+  }
+
+  function spawnSlimeBlood(pos, baseColor = 0x6dff4a) {
+    // explosion burst + bleeding slime
+    for (let i = 0; i < 18; i++) {
+      const r = 0.05 + Math.random() * 0.08;
+      const m = new THREE.Mesh(new THREE.SphereGeometry(r, 8, 8), new THREE.MeshStandardMaterial({ color: baseColor, emissive: 0x39ff14, emissiveIntensity: 0.8, transparent: true, opacity: 0.95, roughness: 0.3 }));
+      m.position.copy(pos).add(new THREE.Vector3((Math.random()-0.5)*0.3, (Math.random()-0.5)*0.3, (Math.random()-0.5)*0.3));
+      scene.add(m);
+      const v = new THREE.Vector3((Math.random() - 0.5) * 5, Math.random() * 3.5 + 0.5, (Math.random() - 0.5) * 5);
+      slimeDrips.push({ mesh: m, vel: v, life: 1.2 + Math.random() * 1.4, gravity: 5.5, stick: true, wobble: Math.random()*6 });
+    }
+    for (let i = 0; i < 10; i++) {
+      const m = new THREE.Mesh(new THREE.SphereGeometry(0.03, 6, 6), new THREE.MeshBasicMaterial({ color: 0xbaff7a, transparent: true, opacity: 0.9 }));
+      m.position.copy(pos);
+      const v = new THREE.Vector3((Math.random() - 0.5) * 6, (Math.random() - 0.2) * 5, (Math.random() - 0.5) * 6);
+      scene.add(m);
+      sparks.push({ m, v, life: 0.25 + Math.random() * 0.25, max: 0.5 });
     }
   }
 
   function killEnemy(e) {
     e.alive = false; e.group.visible = false; e.light.visible = false;
-    spawnSparks(e.group.position.clone(), 0xff7ab0, 26);
+    spawnSlimeBlood(e.group.position.clone(), 0x6dff4a);
     syncHud();
   }
 
@@ -664,7 +716,6 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       }
     }
 
-    // exit
     const ex = ox + exitCell.x * cs + cs / 2, ey = oy + exitCell.z * cs + cs / 2;
     mmCtx.fillStyle = exitState.active ? '#58ff9a' : '#ff6b5f';
     mmCtx.beginPath();
@@ -676,7 +727,6 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       mmCtx.beginPath(); mmCtx.arc(ex, ey, Math.max(5, cs * 0.45), 0, Math.PI * 2); mmCtx.stroke();
     }
 
-    // pickups
     for (const p of pickups) {
       if (!p.alive) continue;
       const gx = ox + (p.mesh.position.x / cell - 0.5) * cs + cs / 2;
@@ -687,7 +737,6 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       mmCtx.fill();
     }
 
-    // enemies
     for (const e of enemies) {
       if (!e.alive) continue;
       const gx = ox + (e.group.position.x / cell - 0.5) * cs + cs / 2;
@@ -701,7 +750,6 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       mmCtx.stroke();
     }
 
-    // player
     const px = ox + (camera.position.x / cell - 0.5) * cs + cs / 2;
     const py = oy + (camera.position.z / cell - 0.5) * cs + cs / 2;
     const dir = new THREE.Vector3();
@@ -738,9 +786,38 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       s.life -= dt;
       s.m.position.addScaledVector(s.v, dt);
       s.v.y -= 5 * dt;
-      s.m.material.opacity = Math.max(0, s.life / 0.6);
+      s.m.material.opacity = Math.max(0, s.life / (s.max || 0.7));
       s.m.material.transparent = true;
       if (s.life <= 0) { scene.remove(s.m); sparks.splice(i, 1); }
+    }
+
+    for (let i = slimeDrips.length - 1; i >= 0; i--) {
+      const d = slimeDrips[i];
+      d.life -= dt;
+      d.vel.y -= (d.gravity || 4) * dt;
+      d.mesh.position.addScaledVector(d.vel, dt);
+      if (d.mesh.position.y <= 0.04) {
+        d.mesh.position.y = 0.04;
+        if (d.stick && Math.random() < 0.5) {
+          stickSlime(d.mesh.position.clone(), new THREE.Vector3(0, 1, 0), 0.7);
+          scene.remove(d.mesh); slimeDrips.splice(i, 1); continue;
+        } else {
+          d.vel.y *= -0.15; d.vel.x *= 0.5; d.vel.z *= 0.5;
+        }
+      }
+      const r = d.life / (1.8);
+      d.mesh.material.opacity = Math.max(0, Math.min(0.95, r + 0.2));
+      if (d.life <= 0) { scene.remove(d.mesh); slimeDrips.splice(i, 1); }
+    }
+
+    for (let i = slimeSplats.length - 1; i >= 0; i--) {
+      const s = slimeSplats[i];
+      s.life -= dt;
+      s.wobble += dt * 1.5;
+      const w = 1 + Math.sin(s.wobble) * 0.03;
+      s.mesh.scale.set(1.2 * w, 0.45, 1.2 / w);
+      if (s.life < 4) s.mesh.material.opacity = Math.max(0, (s.life / 4) * 0.92);
+      if (s.life <= 0) { scene.remove(s.mesh); slimeSplats.splice(i, 1); }
     }
 
     for (const p of pickups) {
@@ -757,32 +834,22 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     for (let i = bullets.length - 1; i >= 0; i--) {
       const b = bullets[i];
       b.life -= dt;
-      b.squash = Math.max(0, b.squash - dt * 8);
-      b.vel.y -= 5.2 * dt;
       const prev = b.mesh.position.clone();
       b.mesh.position.addScaledVector(b.vel, dt);
 
+      let stuck = false, normal = new THREE.Vector3(0, 1, 0);
+      let hitPos = b.mesh.position.clone();
       if (b.mesh.position.y <= b.radius) {
-        b.mesh.position.y = b.radius;
-        if (b.vel.y < 0) { b.vel.y = -b.vel.y * 0.86; b.vel.x *= 0.97; b.vel.z *= 0.97; b.bounces--; b.squash = 1; }
+        hitPos.set(b.mesh.position.x, b.radius, b.mesh.position.z); normal.set(0, 1, 0); stuck = true;
       } else if (b.mesh.position.y >= 3.2 - b.radius) {
-        b.mesh.position.y = 3.2 - b.radius;
-        if (b.vel.y > 0) { b.vel.y = -b.vel.y * 0.82; b.bounces--; b.squash = 1; }
+        hitPos.set(b.mesh.position.x, 3.2 - b.radius, b.mesh.position.z); normal.set(0, -1, 0); stuck = true;
       }
-
-      if (isWallAt(b.mesh.position.x, prev.z)) {
-        b.mesh.position.x = prev.x;
-        b.vel.x = -b.vel.x * 0.9; b.vel.y *= 0.985; b.vel.z *= 0.985; b.bounces--; b.squash = 1;
-        spawnSparks(b.mesh.position.clone(), 0x69ffe1, 4);
+      if (!stuck && isWallAt(b.mesh.position.x, prev.z)) {
+        hitPos.copy(prev); normal.set(Math.sign(prev.x - b.mesh.position.x) || 1, 0, 0); stuck = true;
       }
-      if (isWallAt(b.mesh.position.x, b.mesh.position.z)) {
-        b.mesh.position.z = prev.z;
-        b.vel.z = -b.vel.z * 0.9; b.vel.y *= 0.985; b.vel.x *= 0.985; b.bounces--; b.squash = 1;
-        spawnSparks(b.mesh.position.clone(), 0x69ffe1, 4);
+      if (!stuck && isWallAt(b.mesh.position.x, b.mesh.position.z)) {
+        hitPos.set(b.mesh.position.x, prev.y, prev.z); normal.set(0, 0, Math.sign(prev.z - b.mesh.position.z) || 1); stuck = true;
       }
-
-      const stretch = 1 + b.squash * 0.35;
-      b.mesh.scale.set(1 / Math.sqrt(stretch), stretch, 1 / Math.sqrt(stretch));
 
       let hit = false;
       for (const e of enemies) {
@@ -793,14 +860,19 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
         const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
         if (dist < b.radius + e.radius) {
           e.hp -= 34;
-          spawnSparks(b.mesh.position.clone(), 0xff8fb0, 8);
+          spawnSparks(b.mesh.position.clone(), 0x9aff5c, 6);
           if (e.hp <= 0) killEnemy(e);
           hit = true;
           break;
         }
       }
 
-      if (hit || b.life <= 0 || b.bounces < 0 || b.vel.length() < 1.0) {
+      if (stuck) {
+        stickSlime(hitPos, normal, 1);
+        scene.remove(b.mesh);
+        bullets.splice(i, 1);
+      } else if (hit || b.life <= 0) {
+        if (hit) stickSlime(b.mesh.position.clone(), new THREE.Vector3(0, 1, 0), 0.6);
         scene.remove(b.mesh);
         bullets.splice(i, 1);
       }

@@ -159,12 +159,11 @@ function initStars() {
   stars = Array.from({ length: 160 }, () => ({
     x: Math.random() * W,
     y: Math.random() * H,
-    r: Math.random() < 0.15 ? 2.8 : Math.random() < 0.35 ? 2.0 : 1.1 + Math.random() * 0.8,
-    a: 0.45 + Math.random() * 0.55,
-    tw: Math.random() * Math.PI * 2,
-    sp: 0.8 + Math.random() * 2.0,
-    vy: 12 + Math.random() * 30,
-    vx: (Math.random() - 0.5) * 10,
+    r: Math.random() < 0.13 ? 2.6 : Math.random() < 0.35 ? 1.9 : 1 + Math.random() * 0.8,
+    a: 0.25 + Math.random() * 0.7,
+    phase: Math.random() * Math.PI * 2,
+    vy: 8 + Math.random() * 22,
+    vx: (Math.random() - 0.5) * 6,
   }));
 }
 
@@ -329,6 +328,9 @@ function update(dt) {
     lives--;
     $('#lives').textContent = String(lives);
     shake = 0.4;
+    ring(ball.x, H - 8, '#ff6d9c');
+    burst(ball.x, H - 8, '#ff6d9c', 18);
+    ripples.push({ x: ball.x, life: 0.45 });
     tone(110, 0.25, 'sawtooth', 0.045);
     if (lives <= 0) {
       state = 'over';
@@ -395,20 +397,7 @@ function draw() {
   ctx.fillRect(0, 0, W, H);
 
   const time = performance.now() * 0.001;
-  for (const s of stars) {
-    const tw = 0.5 + 0.5 * Math.sin(time * s.sp + s.tw);
-    ctx.globalAlpha = 0.3 + 0.6 * s.a * tw;
-    ctx.fillStyle = s.r > 2.2 ? '#ffffff' : '#dffcff';
-    ctx.shadowColor = '#7af7e0';
-    ctx.shadowBlur = s.r > 1.8 ? 8 : 3;
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.globalAlpha = 1;
-  ctx.shadowBlur = 0;
-
-  // Atmospheric layers over stars (depth) while keeping gameplay readable
+  // Atmospheric layers and nebulas
   const neb = (x, y, r, c) => {
     const rg = ctx.createRadialGradient(x, y, 0, x, y, r);
     rg.addColorStop(0, c);
@@ -416,12 +405,38 @@ function draw() {
     ctx.fillStyle = rg;
     ctx.fillRect(x - r, y - r, r * 2, r * 2);
   };
-  neb(W * 0.22, H * 0.18, 260, 'rgba(0, 224, 165, 0.08)');
-  neb(W * 0.78, H * 0.28, 240, 'rgba(36, 185, 155, 0.07)');
-  neb(W * 0.5, H * 0.75, 320, 'rgba(6, 40, 34, 0.22)');
+  neb(W * 0.22 + Math.sin(time * 0.17) * 30, H * 0.18, 260, 'rgba(0, 224, 165, 0.1)');
+  neb(W * 0.78, H * 0.28 + Math.cos(time * 0.13) * 20, 240, 'rgba(36, 185, 155, 0.08)');
+  neb(W * 0.5, H * 0.75, 320, 'rgba(6, 40, 34, 0.18)');
+
+  ctx.save();
+  ctx.strokeStyle = '#9bfff008';
+  ctx.lineWidth = 1;
+  for (let x = 0; x <= W; x += 60) { ctx.beginPath(); ctx.moveTo(x, 40); ctx.lineTo(x, H - 20); ctx.stroke(); }
+  for (let y = 40; y <= H - 20; y += 60) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+  ctx.restore();
+
+  for (const s of stars) {
+    const tw = 0.7 + Math.sin(time * 2 + s.phase) * 0.3;
+    ctx.globalAlpha = Math.max(0.12, s.a * tw);
+    ctx.fillStyle = s.r > 2.1 ? '#ffffff' : '#eafff7';
+    ctx.shadowColor = '#7af7e0';
+    ctx.shadowBlur = s.r > 1.8 ? 8 : 3;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fill();
+    if (s.r > 2.1) {
+      ctx.globalAlpha *= 0.35;
+      ctx.fillRect(s.x - 4, s.y, 8, 1);
+      ctx.fillRect(s.x, s.y - 4, 1, 8);
+    }
+  }
+  ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
+
   const haze = ctx.createLinearGradient(0, 0, 0, H);
-  haze.addColorStop(0, 'rgba(6, 18, 16, 0.12)');
-  haze.addColorStop(1, 'rgba(4, 12, 11, 0.28)');
+  haze.addColorStop(0, 'rgba(6, 18, 16, 0.08)');
+  haze.addColorStop(1, 'rgba(4, 12, 11, 0.18)');
   ctx.fillStyle = haze;
   ctx.fillRect(0, 0, W, H);
 
@@ -431,15 +446,33 @@ function draw() {
     ctx.save();
     ctx.translate(b.x + b.w / 2, b.y + b.h / 2);
     ctx.scale(s, 2 - s);
-    ctx.fillStyle = color;
     ctx.shadowColor = color;
     ctx.shadowBlur = 9 + b.pulse * 8;
+    const body = ctx.createLinearGradient(-b.w / 2, -b.h / 2, b.w / 2, b.h / 2);
+    body.addColorStop(0, color);
+    body.addColorStop(0.5, '#ffffff22');
+    body.addColorStop(1, color);
+    ctx.fillStyle = body;
     ctx.beginPath();
     ctx.roundRect(-b.w / 2, -b.h / 2, b.w, b.h, 5);
     ctx.fill();
     ctx.shadowBlur = 0;
-    ctx.fillStyle = '#ffffff55';
-    ctx.fillRect(-b.w / 2 + 6, -b.h / 2 + 4, b.w * 0.35, 3);
+    ctx.strokeStyle = '#ffffff55';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = '#06141288';
+    ctx.beginPath();
+    ctx.roundRect(-b.w / 2 + 5, -b.h / 2 + 4, b.w - 10, b.h - 8, 3);
+    ctx.fill();
+    ctx.strokeStyle = color + '88';
+    ctx.beginPath();
+    ctx.moveTo(-b.w / 2 + 8, 0); ctx.lineTo(b.w / 2 - 8, 0);
+    ctx.stroke();
+    ctx.fillStyle = '#ffffffaa';
+    ctx.fillRect(-b.w / 2 + 6, -b.h / 2 + 4, b.w * 0.28, 2);
+    ctx.fillStyle = '#eafff8cc';
+    ctx.beginPath(); ctx.arc(-b.w / 2 + 9, 0, 1.6, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(b.w / 2 - 9, 0, 1.6, 0, Math.PI * 2); ctx.fill();
     ctx.restore();
   });
 
@@ -447,18 +480,36 @@ function draw() {
   ctx.save();
   ctx.translate(paddle.x, H - 35.5);
   ctx.scale(1 / Math.sqrt(paddle.squash), paddle.squash);
-  ctx.fillStyle = '#69ffe1';
   ctx.shadowColor = '#69ffe1';
-  ctx.shadowBlur = 15;
+  ctx.shadowBlur = 16;
+  const padGrad = ctx.createLinearGradient(0, -8, 0, 8);
+  padGrad.addColorStop(0, '#dffff7');
+  padGrad.addColorStop(0.35, '#69ffe1');
+  padGrad.addColorStop(1, '#147765');
+  ctx.fillStyle = padGrad;
   ctx.beginPath();
-  ctx.roundRect(-paddle.w / 2, -6.5, paddle.w, 13, 7);
+  ctx.roundRect(-paddle.w / 2, -7, paddle.w, 14, 7);
   ctx.fill();
   ctx.shadowBlur = 0;
   ctx.strokeStyle = '#ffffff66';
-  ctx.lineWidth = 1.5;
+  ctx.lineWidth = 1.4;
   ctx.beginPath();
-  ctx.roundRect(-paddle.w / 2 + 2, -4.5, paddle.w - 4, 9, 6);
+  ctx.roundRect(-paddle.w / 2 + 2, -5, paddle.w - 4, 10, 6);
   ctx.stroke();
+  ctx.fillStyle = '#06231dcc';
+  ctx.beginPath();
+  ctx.roundRect(-18, -3.5, 36, 7, 4);
+  ctx.fill();
+  ctx.strokeStyle = '#8affdf99';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  ctx.fillStyle = '#baffef';
+  ctx.beginPath();
+  ctx.arc(-10, 0, 2, 0, Math.PI * 2);
+  ctx.arc(10, 0, 2, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#ffffff55';
+  ctx.fillRect(-paddle.w / 2 + 8, -5, paddle.w * 0.25, 2);
   ctx.restore();
 
   for (const gh of ghosts) {
@@ -512,20 +563,37 @@ function draw() {
   }
   ctx.globalAlpha = 1;
 
-  // Ball
+  // Ball (energy core)
   ctx.save();
   ctx.translate(ball.x, ball.y);
   ctx.scale(ball.sx, ball.sy);
-  ctx.fillStyle = '#ffe36e';
+  ctx.rotate(time * 3);
   ctx.shadowColor = '#ffe36e';
-  ctx.shadowBlur = 14;
+  ctx.shadowBlur = 16;
+  const core = ctx.createRadialGradient(-2, -2, 1, 0, 0, ball.r);
+  core.addColorStop(0, '#ffffff');
+  core.addColorStop(0.35, '#fff4b0');
+  core.addColorStop(0.7, '#ffe36e');
+  core.addColorStop(1, '#d9a900');
+  ctx.fillStyle = core;
   ctx.beginPath();
   ctx.arc(0, 0, ball.r, 0, Math.PI * 2);
   ctx.fill();
   ctx.shadowBlur = 0;
-  ctx.fillStyle = '#fff9c8';
+  ctx.strokeStyle = '#ffffff99';
+  ctx.lineWidth = 1.4;
   ctx.beginPath();
-  ctx.arc(-2.5, -2.5, 2.5, 0, Math.PI * 2);
+  ctx.arc(0, 0, ball.r - 2, 0.2, Math.PI * 1.5);
+  ctx.stroke();
+  ctx.strokeStyle = '#8a650088';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(-ball.r + 2, 0); ctx.lineTo(ball.r - 2, 0);
+  ctx.moveTo(0, -ball.r + 2); ctx.lineTo(0, ball.r - 2);
+  ctx.stroke();
+  ctx.fillStyle = '#ffffffcc';
+  ctx.beginPath();
+  ctx.arc(-2.2, -2.4, 2.1, 0, Math.PI * 2);
   ctx.fill();
   ctx.restore();
 

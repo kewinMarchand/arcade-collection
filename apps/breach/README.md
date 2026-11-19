@@ -1,22 +1,20 @@
 # Neon Breach
 
-FPS néon en vue subjective : infiltrez le secteur, éliminez les sentinelles et sécurisez la zone.
+FPS néon en vue subjective : infiltrez le secteur, éliminez les vaisseaux aliens et rejoignez la porte d'extraction.
 
-## Ouvrir Neon Breach
+## Jouer en ligne
 
 [Ouvrir Neon Breach](https://kewinmarchand.github.io/neon-games/apps/breach/)
 
 ## Le jeu
 
-- Clic / Entrée : capturer la souris et commencer
-- ZQSD / WASD / flèches : se déplacer
-- Souris : viser
-- Clic gauche : tirer
-- R : recharger
-- Échap : libérer la souris (pause)
+- **Clic / Entrée** : capturer la souris et jouer.
+- **ZQSD / WASD / Flèches** : se déplacer.
+- **Souris** : viser.
+- **Clic gauche** : tirer des orbes de slime (elles collent aux surfaces).
+- **R** : recharger.
+- **Échap** : libérer la souris (pause).
 
-Objectif : éliminer toutes les sentinelles du secteur. Récupérez les cellules d’énergie (vie) et les chargeurs.
+Objectif : éliminez tous les aliens pour activer la sortie, puis rejoignez la porte d'extraction. Récupérez les soins et munitions, et utilisez la mini-carte (▲ vous, rouge aliens, or munitions, vert sortie active).
 
-## Thème
-
-Le portail et les jeux utilisent une base CSS partagée (`neon/neon-tokens.css`, `neon-base.css`, `neon-components.css`).
+[Retour à la collection Neon Games](https://kewinmarchand.github.io/neon-games/)

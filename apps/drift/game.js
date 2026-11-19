@@ -115,7 +115,7 @@ const DIFF = {
   chaos: { speed: 0.52, speedGain: 0.012, spawn: 0.72, spawnMin: 0.26, orb: 0.22 },
 };
 
-let state = 'ready', lane = 2, carX = 0, score = 0, best = Number(localStorage.getItem('neonDriftBest')) || 0, items = [], elapsed = 0, last = 0, spawn = 0.7, shake = 0, particles = [], pulses = [], carSquash = 1, stars = [];
+let state = 'ready', lane = 2, carX = 0, score = 0, best = Number(localStorage.getItem('neonDriftBest')) || 0, items = [], elapsed = 0, last = 0, spawn = 0.7, shake = 0, particles = [], pulses = [], carSquash = 1, stars = [], screenFlash = 0;
 bestEl.textContent = String(best);
 carX = W * 0.5;
 
@@ -143,7 +143,7 @@ function lanePos(l, p) {
 
 function start() {
   const d = DIFF[difficultyInput.value] || DIFF.arcade;
-  state = 'playing'; lane = 2; carX = BOTTOM[2]; score = 0; elapsed = 0; spawn = d.spawn; shake = 0; items = []; particles = []; pulses = []; carSquash = 1;
+  state = 'playing'; lane = 2; carX = BOTTOM[2]; score = 0; elapsed = 0; spawn = d.spawn; shake = 0; items = []; particles = []; pulses = []; carSquash = 1; screenFlash = 0;
   initStars();
   statusEl.textContent = 'En course';
   audio.tone(440, 0.08, 'triangle', 0.03);
@@ -176,6 +176,7 @@ function moveLane(dir) {
 function update(dt) {
   carSquash += (1 - carSquash) * Math.min(1, dt * 12);
   shake = Math.max(0, shake - dt * 2.5);
+  screenFlash = Math.max(0, screenFlash - dt * 2.2);
   for (let i = particles.length - 1; i >= 0; i--) {
     const p = particles[i]; p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 260 * dt; p.life -= dt; if (p.life <= 0) particles.splice(i, 1);
   }
@@ -214,11 +215,12 @@ function update(dt) {
       const gain = bonusInput.checked ? 50 : 30;
       score += gain;
       carSquash = 1.12;
-      burst(pos.x, pos.y, '#ffd36b', 14, true); ring(pos.x, pos.y, '#ffeaa0');
+      screenFlash = Math.max(screenFlash, 0.06);
+      burst(pos.x, pos.y, '#ffd36b', 16, true); burst(pos.x, pos.y, '#fff3c4', 8, true); ring(pos.x, pos.y, '#ffeaa0');
       audio.tone(740, 0.08, 'sine', 0.03);
     } else {
-      burst(carX, H - 70, '#ff648f', 22); burst(pos.x, pos.y, '#ff648f', 12); ring(pos.x, pos.y, '#ff648f');
-      shake = 1; carSquash = 0.75; state = 'over'; statusEl.textContent = 'Terminé';
+      burst(carX, H - 70, '#ff648f', 24); burst(carX, H - 70, '#ffffff', 8); burst(pos.x, pos.y, '#ff648f', 14); ring(pos.x, pos.y, '#ff648f'); ring(carX, H - 70, '#ff648f');
+      shake = 1; screenFlash = Math.max(screenFlash, 0.2); carSquash = 0.75; state = 'over'; statusEl.textContent = 'Terminé';
       audio.seq([[180, 0.12, 'sawtooth', 0.05, 0], [120, 0.2, 'sawtooth', 0.04, 0.06]]);
     }
   }
@@ -228,7 +230,14 @@ function update(dt) {
 
 function drawRoad() {
   ctx.fillStyle = '#0b1836'; ctx.fillRect(0, 0, W, HORIZON);
-  const sky = ctx.createLinearGradient(0, 0, 0, HORIZON); sky.addColorStop(0, '#101c3b'); sky.addColorStop(1, '#0b1836'); ctx.fillStyle = sky; ctx.fillRect(0, 0, W, HORIZON);
+  const sky = ctx.createLinearGradient(0, 0, 0, HORIZON); sky.addColorStop(0, '#0d1833'); sky.addColorStop(0.6, '#0a1530'); sky.addColorStop(1, '#0b1836'); ctx.fillStyle = sky; ctx.fillRect(0, 0, W, HORIZON);
+  // Invaders-like decorative nebula + faint grid in sky
+  const neb = (x, y, r, color) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, color); g.addColorStop(1, 'transparent'); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2); };
+  neb(W * 0.25, HORIZON * 0.45, 170, '#00e0a512'); neb(W * 0.75, HORIZON * 0.35, 150, '#6b7dff14');
+  ctx.save(); ctx.strokeStyle = '#9bfff008'; ctx.lineWidth = 1;
+  for (let x = 0; x <= W; x += 60) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, HORIZON); ctx.stroke(); }
+  for (let y = 0; y <= HORIZON; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+  ctx.restore();
 
   const starTime = performance.now() * 0.001;
   for (const s of stars) {
@@ -263,21 +272,58 @@ function drawRoad() {
 
 function drawRock(pos, spin) {
   const r = 22 * pos.s;
-  ctx.save(); ctx.translate(pos.x, pos.y); ctx.rotate(spin * 0.3);
-  ctx.fillStyle = '#ff648f'; ctx.shadowColor = '#ff648f'; ctx.shadowBlur = 15;
-  ctx.beginPath();
-  const pts = [[0, -1], [0.7, -0.55], [1, 0.05], [0.55, 0.8], [-0.35, 0.95], [-0.9, 0.3], [-0.6, -0.5]];
-  pts.forEach(([px, py], i) => { const X = px * r, Y = py * r; i ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); });
-  ctx.closePath(); ctx.fill();
-  ctx.fillStyle = '#ffd7e6'; ctx.globalAlpha = 0.85; ctx.beginPath(); ctx.arc(-r * 0.3, -r * 0.35, r * 0.16, 0, Math.PI * 2); ctx.fill();
-  ctx.globalAlpha = 1; ctx.restore(); ctx.shadowBlur = 0;
+  ctx.save(); ctx.translate(pos.x, pos.y); ctx.rotate(spin * 0.35);
+  // detailed hazard mine/drone (no simple prism)
+  ctx.shadowColor = '#ff648f'; ctx.shadowBlur = 16;
+  ctx.strokeStyle = '#ff9bbb'; ctx.lineWidth = 2 * pos.s;
+  // outer ring
+  ctx.beginPath(); ctx.arc(0, 0, r * 1.05, 0, Math.PI * 2); ctx.stroke();
+  // spikes
+  ctx.fillStyle = '#ff648f';
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * Math.PI * 2;
+    const x1 = Math.cos(a) * r * 0.65, y1 = Math.sin(a) * r * 0.65;
+    const x2 = Math.cos(a) * r * 1.18, y2 = Math.sin(a) * r * 1.18;
+    const x3 = Math.cos(a + 0.18) * r * 0.72, y3 = Math.sin(a + 0.18) * r * 0.72;
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.lineTo(x3, y3); ctx.closePath(); ctx.fill();
+  }
+  // core body
+  const core = ctx.createRadialGradient(-r * 0.2, -r * 0.2, r * 0.1, 0, 0, r * 0.75);
+  core.addColorStop(0, '#ffd7e6'); core.addColorStop(0.45, '#ff648f'); core.addColorStop(1, '#7a1238');
+  ctx.fillStyle = core; ctx.beginPath(); ctx.arc(0, 0, r * 0.72, 0, Math.PI * 2); ctx.fill();
+  // inner tech markings
+  ctx.shadowBlur = 0; ctx.strokeStyle = '#ffd7e688'; ctx.lineWidth = 1.5 * pos.s;
+  ctx.beginPath(); ctx.arc(0, 0, r * 0.42, 0, Math.PI * 2); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(-r * 0.35, 0); ctx.lineTo(r * 0.35, 0); ctx.moveTo(0, -r * 0.35); ctx.lineTo(0, r * 0.35); ctx.stroke();
+  ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(-r * 0.18, -r * 0.18, r * 0.1, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
 }
 
 function drawOrb(pos, t) {
-  const r = 17 * pos.s * (1 + 0.08 * Math.sin(t * 0.006 + pos.spin));
-  ctx.fillStyle = '#ffd36b'; ctx.shadowColor = '#ffd36b'; ctx.shadowBlur = 18; ctx.beginPath(); ctx.arc(pos.x, pos.y, r, 0, Math.PI * 2); ctx.fill();
-  ctx.strokeStyle = '#fff3c4'; ctx.lineWidth = 2 * pos.s; ctx.beginPath(); ctx.arc(pos.x, pos.y, r * 1.45, 0, Math.PI * 2); ctx.stroke();
-  ctx.shadowBlur = 0; ctx.fillStyle = '#fffbe8'; ctx.beginPath(); ctx.arc(pos.x - r * 0.3, pos.y - r * 0.3, r * 0.28, 0, Math.PI * 2); ctx.fill();
+  const pulse = 1 + 0.08 * Math.sin(t * 0.006 + pos.spin);
+  const r = 17 * pos.s * pulse;
+  ctx.save(); ctx.translate(pos.x, pos.y); ctx.rotate(pos.spin * 0.6);
+  // detailed energy core orb
+  ctx.shadowColor = '#ffd36b'; ctx.shadowBlur = 18;
+  ctx.strokeStyle = '#fff3c4'; ctx.lineWidth = 2.2 * pos.s;
+  ctx.beginPath(); ctx.arc(0, 0, r * 1.5, 0, Math.PI * 2); ctx.stroke();
+  ctx.beginPath(); ctx.arc(0, 0, r * 1.15, 0, Math.PI * 1.3); ctx.stroke();
+  // segmented petals
+  ctx.fillStyle = '#ffd36baa';
+  for (let i = 0; i < 6; i++) {
+    const a = (i / 6) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.arc(Math.cos(a) * r * 0.55, Math.sin(a) * r * 0.55, r * 0.28, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  const core = ctx.createRadialGradient(-r * 0.25, -r * 0.25, r * 0.1, 0, 0, r);
+  core.addColorStop(0, '#fffbe8'); core.addColorStop(0.5, '#ffe58a'); core.addColorStop(1, '#ffbf3b');
+  ctx.fillStyle = core; ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.strokeStyle = '#ffffffaa'; ctx.lineWidth = 1.4 * pos.s;
+  ctx.beginPath(); ctx.moveTo(-r * 0.45, 0); ctx.lineTo(r * 0.45, 0); ctx.moveTo(0, -r * 0.45); ctx.lineTo(0, r * 0.45); ctx.stroke();
+  ctx.fillStyle = '#fffbe8'; ctx.beginPath(); ctx.arc(-r * 0.3, -r * 0.3, r * 0.22, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
 }
 
 function drawCar(t) {
@@ -285,16 +331,30 @@ function drawCar(t) {
   ctx.save(); ctx.translate(carX, H - 64); ctx.rotate(tilt);
   ctx.scale(1 / Math.sqrt(carSquash), carSquash);
   const fl = 10 + Math.random() * 14;
+  // thruster flames
   ctx.fillStyle = t % 160 < 80 ? '#7df3ff' : '#c9fbff'; ctx.shadowColor = '#7df3ff'; ctx.shadowBlur = 12;
   ctx.beginPath(); ctx.moveTo(-14, 18); ctx.quadraticCurveTo(-10, 18 + fl, -6, 18); ctx.closePath(); ctx.fill();
   ctx.beginPath(); ctx.moveTo(6, 18); ctx.quadraticCurveTo(10, 18 + fl, 14, 18); ctx.closePath(); ctx.fill();
   ctx.shadowBlur = 0;
+  // side fins / intakes
+  ctx.fillStyle = '#1d8f7a'; ctx.shadowColor = '#69ffe1'; ctx.shadowBlur = 8;
+  ctx.beginPath(); ctx.moveTo(-20, -2); ctx.lineTo(-28, 8); ctx.lineTo(-20, 12); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(20, -2); ctx.lineTo(28, 8); ctx.lineTo(20, 12); ctx.closePath(); ctx.fill();
+  ctx.shadowBlur = 0;
+  // main hull (detailed tech racer)
   const body = ctx.createLinearGradient(0, -30, 0, 22); body.addColorStop(0, '#ffffff'); body.addColorStop(0.32, '#caffed'); body.addColorStop(0.72, '#48e2c3'); body.addColorStop(1, '#137d6d');
-  ctx.fillStyle = body; ctx.shadowColor = '#69ffe1'; ctx.shadowBlur = 18; ctx.beginPath(); ctx.roundRect(-20, -26, 40, 46, 18); ctx.fill(); ctx.shadowBlur = 0;
+  ctx.fillStyle = body; ctx.shadowColor = '#69ffe1'; ctx.shadowBlur = 18; ctx.beginPath(); ctx.roundRect(-20, -26, 40, 46, 16); ctx.fill(); ctx.shadowBlur = 0;
+  // panel lines / vents
+  ctx.strokeStyle = '#0f5b4f55'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(-20, 0); ctx.lineTo(20, 0); ctx.moveTo(0, -26); ctx.lineTo(0, 20); ctx.stroke();
+  ctx.strokeStyle = '#0f5b4f88'; ctx.beginPath(); ctx.moveTo(-10, 10); ctx.lineTo(-4, 14); ctx.moveTo(10, 10); ctx.lineTo(4, 14); ctx.stroke();
+  // cockpit
   ctx.fillStyle = '#237d73'; ctx.beginPath(); ctx.ellipse(0, -8, 9, 11, 0, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = '#c2fff1'; ctx.beginPath(); ctx.ellipse(0, -11, 5, 6, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#c2fff1'; ctx.beginPath(); ctx.ellipse(-1.5, -11, 4.5, 5.5, -0.2, 0, Math.PI * 2); ctx.fill();
+  // headlights / status lights
   ctx.fillStyle = '#faffc4'; ctx.shadowColor = '#ffdc72'; ctx.shadowBlur = 8; ctx.fillRect(-16, 6, 4, 7); ctx.fillRect(12, 6, 4, 7); ctx.shadowBlur = 0;
-  ctx.strokeStyle = '#ffffffa8'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.roundRect(-18, -24, 36, 42, 16); ctx.stroke();
+  ctx.fillStyle = '#ff648f'; ctx.fillRect(-5, -20, 3, 3); ctx.fillRect(2, -20, 3, 3);
+  ctx.strokeStyle = '#ffffffa8'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.roundRect(-18, -24, 36, 42, 14); ctx.stroke();
   ctx.restore();
 }
 
@@ -306,8 +366,8 @@ function draw(t) {
   drawCar(t);
   for (const p of pulses) { ctx.globalAlpha = Math.max(0, p.life / 0.4); ctx.strokeStyle = p.color; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.stroke(); }
   ctx.globalAlpha = 1;
-  for (const p of particles) { ctx.globalAlpha = Math.min(1, p.life * 2.2); ctx.fillStyle = p.color; ctx.fillRect(p.x, p.y, p.s, p.s); }
-  ctx.globalAlpha = 1;
+  for (const p of particles) { ctx.globalAlpha = Math.min(1, p.life * 2.2); ctx.fillStyle = p.color; ctx.shadowColor = p.color; ctx.shadowBlur = 6; ctx.fillRect(p.x, p.y, p.s, p.s); }
+  ctx.globalAlpha = 1; ctx.shadowBlur = 0;
   if (state === 'playing' && elapsed > 2) {
     ctx.strokeStyle = 'rgba(125,243,255,.35)'; ctx.lineWidth = 2;
     for (let i = 0; i < 5; i++) {
@@ -320,7 +380,9 @@ function draw(t) {
       ctx.stroke();
     }
   }
-  ctx.globalAlpha = 1; ctx.restore();
+  ctx.globalAlpha = 1;
+  if (screenFlash > 0) { ctx.globalAlpha = screenFlash; ctx.fillStyle = '#ffd6e8'; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1; }
+  ctx.restore();
   if (state !== 'playing') {
     ctx.fillStyle = '#04100ddc'; ctx.fillRect(0, 0, W, H);
     ctx.textAlign = 'center'; ctx.fillStyle = '#69ffe1'; ctx.font = '800 32px system-ui';

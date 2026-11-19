@@ -301,6 +301,7 @@
     transform: translateY(1px) scale(0.98);
   }
 
+  .neon-frame__action--home,
   .neon-frame__action--source {
     width: 34px;
     min-height: 34px;
@@ -309,6 +310,7 @@
     flex: 0 0 34px;
   }
 
+  .neon-frame__action--home svg,
   .neon-frame__action--source svg {
     width: 18px;
     height: 18px;

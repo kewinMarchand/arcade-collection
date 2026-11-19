@@ -1,64 +1,73 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc"><title id="title">Neon Breaker</title><desc id="desc">Une balle lumineuse rebondit vers un mur de briques colorées.</desc><defs><linearGradient id="bg" y2="1"><stop stop-color="#10212a"/><stop offset="1" stop-color="#071018"/></linearGradient><filter id="g"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="720" height="380" rx="24" fill="url(#bg)"/>
-  <g class="stars" aria-hidden="true">
-    <circle cx="18" cy="26" r="2.2" fill="#ffffff" opacity="0.95"/>
-    <circle cx="54" cy="64" r="1.4" fill="#dffcff" opacity="0.8"/>
-    <circle cx="88" cy="18" r="1.8" fill="#ffffff" opacity="0.9"/>
-    <circle cx="126" cy="52" r="1.1" fill="#bff6ff" opacity="0.75"/>
-    <circle cx="164" cy="86" r="2.0" fill="#ffffff" opacity="0.92"/>
-    <circle cx="198" cy="24" r="1.3" fill="#dffcff" opacity="0.78"/>
-    <circle cx="236" cy="60" r="2.3" fill="#ffffff" opacity="0.95"/>
-    <circle cx="274" cy="14" r="1.5" fill="#bff6ff" opacity="0.8"/>
-    <circle cx="312" cy="46" r="1.0" fill="#ffffff" opacity="0.7"/>
-    <circle cx="348" cy="78" r="1.9" fill="#dffcff" opacity="0.88"/>
-    <circle cx="386" cy="22" r="1.4" fill="#ffffff" opacity="0.82"/>
-    <circle cx="424" cy="56" r="2.4" fill="#ffffff" opacity="0.96"/>
-    <circle cx="462" cy="32" r="1.1" fill="#bff6ff" opacity="0.72"/>
-    <circle cx="498" cy="84" r="1.7" fill="#dffcff" opacity="0.84"/>
-    <circle cx="536" cy="16" r="2.1" fill="#ffffff" opacity="0.93"/>
-    <circle cx="574" cy="62" r="1.3" fill="#dffcff" opacity="0.76"/>
-    <circle cx="612" cy="38" r="1.6" fill="#ffffff" opacity="0.86"/>
-    <circle cx="648" cy="74" r="1.1" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="684" cy="20" r="2.0" fill="#ffffff" opacity="0.92"/>
-    <circle cx="704" cy="96" r="1.4" fill="#dffcff" opacity="0.78"/>
-    <circle cx="36" cy="118" r="1.5" fill="#ffffff" opacity="0.8"/>
-    <circle cx="92" cy="148" r="1.0" fill="#bff6ff" opacity="0.65"/>
-    <circle cx="148" cy="108" r="2.0" fill="#ffffff" opacity="0.88"/>
-    <circle cx="206" cy="136" r="1.2" fill="#dffcff" opacity="0.72"/>
-    <circle cx="262" cy="112" r="1.7" fill="#ffffff" opacity="0.84"/>
-    <circle cx="322" cy="142" r="1.1" fill="#bff6ff" opacity="0.68"/>
-    <circle cx="378" cy="104" r="1.9" fill="#dffcff" opacity="0.86"/>
-    <circle cx="438" cy="132" r="1.3" fill="#ffffff" opacity="0.76"/>
-    <circle cx="492" cy="116" r="2.2" fill="#ffffff" opacity="0.9"/>
-    <circle cx="548" cy="146" r="1.0" fill="#bff6ff" opacity="0.66"/>
-    <circle cx="604" cy="110" r="1.6" fill="#dffcff" opacity="0.82"/>
-    <circle cx="662" cy="138" r="1.4" fill="#ffffff" opacity="0.78"/>
-    <circle cx="708" cy="156" r="1.8" fill="#ffffff" opacity="0.85"/>
-    <circle cx="24" cy="182" r="1.8" fill="#ffffff" opacity="0.84"/>
-    <circle cx="74" cy="214" r="1.2" fill="#dffcff" opacity="0.7"/>
-    <circle cx="132" cy="188" r="1.0" fill="#bff6ff" opacity="0.62"/>
-    <circle cx="188" cy="224" r="1.6" fill="#ffffff" opacity="0.8"/>
-    <circle cx="246" cy="176" r="2.1" fill="#dffcff" opacity="0.86"/>
-    <circle cx="304" cy="208" r="1.1" fill="#ffffff" opacity="0.68"/>
-    <circle cx="360" cy="184" r="1.5" fill="#bff6ff" opacity="0.74"/>
-    <circle cx="418" cy="216" r="1.9" fill="#ffffff" opacity="0.88"/>
-    <circle cx="476" cy="172" r="1.3" fill="#dffcff" opacity="0.72"/>
-    <circle cx="534" cy="202" r="1.0" fill="#ffffff" opacity="0.64"/>
-    <circle cx="590" cy="186" r="2.0" fill="#ffffff" opacity="0.85"/>
-    <circle cx="646" cy="218" r="1.4" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="698" cy="192" r="1.7" fill="#dffcff" opacity="0.82"/>
-    <circle cx="48" cy="252" r="1.1" fill="#ffffff" opacity="0.66"/>
-    <circle cx="112" cy="276" r="1.8" fill="#dffcff" opacity="0.8"/>
-    <circle cx="176" cy="246" r="1.3" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="238" cy="268" r="1.0" fill="#ffffff" opacity="0.6"/>
-    <circle cx="298" cy="242" r="1.6" fill="#ffffff" opacity="0.78"/>
-    <circle cx="356" cy="274" r="2.0" fill="#dffcff" opacity="0.84"/>
-    <circle cx="416" cy="248" r="1.2" fill="#bff6ff" opacity="0.68"/>
-    <circle cx="474" cy="272" r="1.5" fill="#ffffff" opacity="0.76"/>
-    <circle cx="532" cy="240" r="1.1" fill="#dffcff" opacity="0.64"/>
-    <circle cx="588" cy="266" r="1.9" fill="#ffffff" opacity="0.82"/>
-    <circle cx="646" cy="250" r="1.3" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="700" cy="278" r="1.7" fill="#ffffff" opacity="0.8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
+  <title id="title">Neon Breaker</title>
+  <desc id="desc">Raquette technologique, noyau d'énergie et modules de briques détaillés sur fond néon quadrillé.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c211d"/><stop offset="0.52" stop-color="#071713"/><stop offset="1" stop-color="#06100f"/>
+    </linearGradient>
+    <radialGradient id="neb1" cx="25%" cy="25%" r="35%"><stop offset="0" stop-color="#00e0a5" stop-opacity="0.12"/><stop offset="1" stop-color="#00e0a5" stop-opacity="0"/></radialGradient>
+    <radialGradient id="neb2" cx="75%" cy="45%" r="30%"><stop offset="0" stop-color="#24b99b" stop-opacity="0.12"/><stop offset="1" stop-color="#24b99b" stop-opacity="0"/></radialGradient>
+    <linearGradient id="paddle" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dffcff"/><stop offset="0.4" stop-color="#69ffe1"/><stop offset="1" stop-color="#1a7a6a"/></linearGradient>
+    <radialGradient id="ball" cx="35%" cy="35%" r="65%"><stop offset="0" stop-color="#fff"/><stop offset="0.4" stop-color="#b9fff0"/><stop offset="1" stop-color="#2fd6b8"/></radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="720" height="380" fill="url(#bg)"/>
+  <rect width="720" height="380" fill="url(#neb1)"/><rect width="720" height="380" fill="url(#neb2)"/>
+  <g stroke="#9bfff0" stroke-opacity="0.07" stroke-width="1">
+    <path d="M0 40H720M0 100H720M0 160H720M0 220H720M0 280H720M0 340H720"/>
+    <path d="M60 0V380M120 0V380M180 0V380M240 0V380M300 0V380M360 0V380M420 0V380M480 0V380M540 0V380M600 0V380M660 0V380"/>
+  </g>
+  <g fill="#f2fffc" opacity="0.7"><circle cx="40" cy="28" r="1.5"/><circle cx="150" cy="50" r="1"/><circle cx="280" cy="22" r="1.8"/><circle cx="460" cy="36" r="1.2"/><circle cx="620" cy="24" r="1.6"/></g>
+  <text x="360" y="48" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="26" letter-spacing="5">NEON BREAKER</text>
+
+  <!-- bricks (detailed modules) -->
+  <g filter="url(#glow)">
+    <g transform="translate(90,80)">
+      <rect width="78" height="28" rx="6" fill="#1b3f52" stroke="#ff6fae" stroke-opacity="0.8"/><rect x="6" y="5" width="66" height="18" rx="4" fill="#102733"/><rect x="10" y="11" width="30" height="3" rx="1.5" fill="#ff9fce"/><circle cx="66" cy="14" r="3" fill="#ffd36b"/>
+    </g>
+    <g transform="translate(178,80)">
+      <rect width="78" height="28" rx="6" fill="#1b3f52" stroke="#ffd36b" stroke-opacity="0.8"/><rect x="6" y="5" width="66" height="18" rx="4" fill="#102733"/><rect x="10" y="11" width="30" height="3" rx="1.5" fill="#ffe8a0"/><circle cx="66" cy="14" r="3" fill="#69ffe1"/>
+    </g>
+    <g transform="translate(266,80)">
+      <rect width="78" height="28" rx="6" fill="#1b3f52" stroke="#69ffe1" stroke-opacity="0.8"/><rect x="6" y="5" width="66" height="18" rx="4" fill="#102733"/><rect x="10" y="11" width="30" height="3" rx="1.5" fill="#b9fff0"/><circle cx="66" cy="14" r="3" fill="#ff6fae"/>
+    </g>
+    <g transform="translate(354,80)">
+      <rect width="78" height="28" rx="6" fill="#1b3f52" stroke="#8b8bff" stroke-opacity="0.8"/><rect x="6" y="5" width="66" height="18" rx="4" fill="#102733"/><rect x="10" y="11" width="30" height="3" rx="1.5" fill="#c4c4ff"/><circle cx="66" cy="14" r="3" fill="#ffd36b"/>
+    </g>
+    <g transform="translate(442,80)">
+      <rect width="78" height="28" rx="6" fill="#1b3f52" stroke="#7cff7a" stroke-opacity="0.8"/><rect x="6" y="5" width="66" height="18" rx="4" fill="#102733"/><rect x="10" y="11" width="30" height="3" rx="1.5" fill="#c8ffc7"/><circle cx="66" cy="14" r="3" fill="#8b8bff"/>
+    </g>
+    <g transform="translate(530,80)">
+      <rect width="78" height="28" rx="6" fill="#1b3f52" stroke="#ff9b5f" stroke-opacity="0.8"/><rect x="6" y="5" width="66" height="18" rx="4" fill="#102733"/><rect x="10" y="11" width="30" height="3" rx="1.5" fill="#ffd1b0"/><circle cx="66" cy="14" r="3" fill="#7cff7a"/>
+    </g>
+    <!-- row 2 partial (some broken effect implied) -->
+    <g transform="translate(134,118)">
+      <rect width="78" height="28" rx="6" fill="#1b3f52" stroke="#69ffe1" stroke-opacity="0.7"/><rect x="6" y="5" width="66" height="18" rx="4" fill="#102733"/><rect x="10" y="11" width="28" height="3" rx="1.5" fill="#b9fff0"/>
+    </g>
+    <g transform="translate(222,118)">
+      <rect width="78" height="28" rx="6" fill="#1b3f52" stroke="#ff6fae" stroke-opacity="0.7"/><rect x="6" y="5" width="66" height="18" rx="4" fill="#102733"/><rect x="10" y="11" width="28" height="3" rx="1.5" fill="#ff9fce"/>
+    </g>
+    <g transform="translate(398,118)">
+      <rect width="78" height="28" rx="6" fill="#1b3f52" stroke="#ffd36b" stroke-opacity="0.7"/><rect x="6" y="5" width="66" height="18" rx="4" fill="#102733"/><rect x="10" y="11" width="28" height="3" rx="1.5" fill="#ffe8a0"/>
+    </g>
+    <g transform="translate(486,118)">
+      <rect width="78" height="28" rx="6" fill="#1b3f52" stroke="#8b8bff" stroke-opacity="0.7"/><rect x="6" y="5" width="66" height="18" rx="4" fill="#102733"/><rect x="10" y="11" width="28" height="3" rx="1.5" fill="#c4c4ff"/>
+    </g>
   </g>
 
-<text x="360" y="56" text-anchor="middle" fill="#7af7e0" font-family="system-ui" font-weight="800" font-size="28" letter-spacing="6">NEON BREAKER</text><g stroke="#fff" stroke-opacity=".35" stroke-width="2"><g fill="#ff699b"><rect x="154" y="93" width="78" height="27" rx="6"/><rect x="241" y="93" width="78" height="27" rx="6"/><rect x="328" y="93" width="78" height="27" rx="6"/><rect x="415" y="93" width="78" height="27" rx="6"/><rect x="502" y="93" width="64" height="27" rx="6"/></g><g fill="#ffd36b"><rect x="154" y="130" width="78" height="27" rx="6"/><rect x="241" y="130" width="78" height="27" rx="6"/><rect x="328" y="130" width="78" height="27" rx="6"/><rect x="415" y="130" width="78" height="27" rx="6"/><rect x="502" y="130" width="64" height="27" rx="6"/></g><g fill="#63ffe1"><rect x="154" y="167" width="78" height="27" rx="6"/><rect x="241" y="167" width="78" height="27" rx="6"/><rect x="415" y="167" width="78" height="27" rx="6"/><rect x="502" y="167" width="64" height="27" rx="6"/></g></g><circle cx="355" cy="241" r="11" fill="#fff" filter="url(#g)"/><path d="M280 291q75-75 150 0" fill="none" stroke="#83ffe8" stroke-width="3" stroke-dasharray="7 8"/><rect x="286" y="307" width="148" height="15" rx="7" fill="#6affdf" filter="url(#g)"/><text x="360" y="354" text-anchor="middle" fill="#b9c9e8" font-family="system-ui" font-size="16" letter-spacing="3">CASSEZ LES BRIQUES · GARDEZ LA BALLE</text><a href="https://github.com/kewinMarchand/neon-breaker" target="_blank" rel="noopener noreferrer" aria-label="Code source de neon-breaker sur GitHub"><g transform="translate(676,340)"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" fill="#9fb0c8"/></g></a>
+  <!-- ball -->
+  <g filter="url(#glow)">
+    <circle cx="360" cy="235" r="11" fill="url(#ball)" stroke="#eaffff" stroke-opacity="0.7"/>
+    <circle cx="356" cy="231" r="3.5" fill="#fff" fill-opacity="0.85"/>
+    <path d="M360 224 A11 11 0 0 1 371 235" stroke="#fff" stroke-opacity="0.5" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- paddle -->
+  <g transform="translate(300,315)" filter="url(#glow)">
+    <rect x="0" y="0" width="120" height="18" rx="9" fill="url(#paddle)" stroke="#eaffff" stroke-opacity="0.6"/>
+    <rect x="14" y="4" width="92" height="10" rx="5" fill="#0b2628" fill-opacity="0.6"/>
+    <circle cx="30" cy="9" r="2.5" fill="#fff"/><circle cx="60" cy="9" r="2.5" fill="#69ffe1"/><circle cx="90" cy="9" r="2.5" fill="#fff"/>
+  </g>
+
+  <text x="360" y="360" text-anchor="middle" fill="#b9c9e8" font-family="system-ui,'Space Grotesk',sans-serif" font-size="14" letter-spacing="2">CASSEZ LES MODULES · GARDEZ LE NOYAU EN JEU</text>
 </svg>

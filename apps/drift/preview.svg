@@ -1,64 +1,61 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc"><title id="title">Neon Drift</title><desc id="desc">Une capsule de course néon file sur un circuit en perspective, entre rochers et orbes bonus.</desc><defs><linearGradient id="bg" y2="1"><stop stop-color="#10212a"/><stop offset="1" stop-color="#071018"/></linearGradient><linearGradient id="road" x2="0" y2="1"><stop stop-color="#172443"/><stop offset="1" stop-color="#090e1e"/></linearGradient><linearGradient id="car" x2="0" y2="1"><stop stop-color="#d9ffff"/><stop offset=".38" stop-color="#64ffe0"/><stop offset="1" stop-color="#138b94"/></linearGradient><filter id="g"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="720" height="380" rx="24" fill="url(#bg)"/>
-  <g class="stars" aria-hidden="true">
-    <circle cx="18" cy="26" r="2.2" fill="#ffffff" opacity="0.95"/>
-    <circle cx="54" cy="64" r="1.4" fill="#dffcff" opacity="0.8"/>
-    <circle cx="88" cy="18" r="1.8" fill="#ffffff" opacity="0.9"/>
-    <circle cx="126" cy="52" r="1.1" fill="#bff6ff" opacity="0.75"/>
-    <circle cx="164" cy="86" r="2.0" fill="#ffffff" opacity="0.92"/>
-    <circle cx="198" cy="24" r="1.3" fill="#dffcff" opacity="0.78"/>
-    <circle cx="236" cy="60" r="2.3" fill="#ffffff" opacity="0.95"/>
-    <circle cx="274" cy="14" r="1.5" fill="#bff6ff" opacity="0.8"/>
-    <circle cx="312" cy="46" r="1.0" fill="#ffffff" opacity="0.7"/>
-    <circle cx="348" cy="78" r="1.9" fill="#dffcff" opacity="0.88"/>
-    <circle cx="386" cy="22" r="1.4" fill="#ffffff" opacity="0.82"/>
-    <circle cx="424" cy="56" r="2.4" fill="#ffffff" opacity="0.96"/>
-    <circle cx="462" cy="32" r="1.1" fill="#bff6ff" opacity="0.72"/>
-    <circle cx="498" cy="84" r="1.7" fill="#dffcff" opacity="0.84"/>
-    <circle cx="536" cy="16" r="2.1" fill="#ffffff" opacity="0.93"/>
-    <circle cx="574" cy="62" r="1.3" fill="#dffcff" opacity="0.76"/>
-    <circle cx="612" cy="38" r="1.6" fill="#ffffff" opacity="0.86"/>
-    <circle cx="648" cy="74" r="1.1" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="684" cy="20" r="2.0" fill="#ffffff" opacity="0.92"/>
-    <circle cx="704" cy="96" r="1.4" fill="#dffcff" opacity="0.78"/>
-    <circle cx="36" cy="118" r="1.5" fill="#ffffff" opacity="0.8"/>
-    <circle cx="92" cy="148" r="1.0" fill="#bff6ff" opacity="0.65"/>
-    <circle cx="148" cy="108" r="2.0" fill="#ffffff" opacity="0.88"/>
-    <circle cx="206" cy="136" r="1.2" fill="#dffcff" opacity="0.72"/>
-    <circle cx="262" cy="112" r="1.7" fill="#ffffff" opacity="0.84"/>
-    <circle cx="322" cy="142" r="1.1" fill="#bff6ff" opacity="0.68"/>
-    <circle cx="378" cy="104" r="1.9" fill="#dffcff" opacity="0.86"/>
-    <circle cx="438" cy="132" r="1.3" fill="#ffffff" opacity="0.76"/>
-    <circle cx="492" cy="116" r="2.2" fill="#ffffff" opacity="0.9"/>
-    <circle cx="548" cy="146" r="1.0" fill="#bff6ff" opacity="0.66"/>
-    <circle cx="604" cy="110" r="1.6" fill="#dffcff" opacity="0.82"/>
-    <circle cx="662" cy="138" r="1.4" fill="#ffffff" opacity="0.78"/>
-    <circle cx="708" cy="156" r="1.8" fill="#ffffff" opacity="0.85"/>
-    <circle cx="24" cy="182" r="1.8" fill="#ffffff" opacity="0.84"/>
-    <circle cx="74" cy="214" r="1.2" fill="#dffcff" opacity="0.7"/>
-    <circle cx="132" cy="188" r="1.0" fill="#bff6ff" opacity="0.62"/>
-    <circle cx="188" cy="224" r="1.6" fill="#ffffff" opacity="0.8"/>
-    <circle cx="246" cy="176" r="2.1" fill="#dffcff" opacity="0.86"/>
-    <circle cx="304" cy="208" r="1.1" fill="#ffffff" opacity="0.68"/>
-    <circle cx="360" cy="184" r="1.5" fill="#bff6ff" opacity="0.74"/>
-    <circle cx="418" cy="216" r="1.9" fill="#ffffff" opacity="0.88"/>
-    <circle cx="476" cy="172" r="1.3" fill="#dffcff" opacity="0.72"/>
-    <circle cx="534" cy="202" r="1.0" fill="#ffffff" opacity="0.64"/>
-    <circle cx="590" cy="186" r="2.0" fill="#ffffff" opacity="0.85"/>
-    <circle cx="646" cy="218" r="1.4" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="698" cy="192" r="1.7" fill="#dffcff" opacity="0.82"/>
-    <circle cx="48" cy="252" r="1.1" fill="#ffffff" opacity="0.66"/>
-    <circle cx="112" cy="276" r="1.8" fill="#dffcff" opacity="0.8"/>
-    <circle cx="176" cy="246" r="1.3" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="238" cy="268" r="1.0" fill="#ffffff" opacity="0.6"/>
-    <circle cx="298" cy="242" r="1.6" fill="#ffffff" opacity="0.78"/>
-    <circle cx="356" cy="274" r="2.0" fill="#dffcff" opacity="0.84"/>
-    <circle cx="416" cy="248" r="1.2" fill="#bff6ff" opacity="0.68"/>
-    <circle cx="474" cy="272" r="1.5" fill="#ffffff" opacity="0.76"/>
-    <circle cx="532" cy="240" r="1.1" fill="#dffcff" opacity="0.64"/>
-    <circle cx="588" cy="266" r="1.9" fill="#ffffff" opacity="0.82"/>
-    <circle cx="646" cy="250" r="1.3" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="700" cy="278" r="1.7" fill="#ffffff" opacity="0.8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
+  <title id="title">Neon Drift</title>
+  <desc id="desc">Vaisseau de course néon sur piste en perspective, évitant une mine-drone et collectant un noyau d'énergie, sous un ciel quadrillé.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c211d"/><stop offset="0.45" stop-color="#071713"/><stop offset="1" stop-color="#06100f"/>
+    </linearGradient>
+    <radialGradient id="neb1" cx="22%" cy="20%" r="35%"><stop offset="0" stop-color="#00e0a5" stop-opacity="0.12"/><stop offset="1" stop-color="#00e0a5" stop-opacity="0"/></radialGradient>
+    <radialGradient id="neb2" cx="78%" cy="22%" r="30%"><stop offset="0" stop-color="#24b99b" stop-opacity="0.12"/><stop offset="1" stop-color="#24b99b" stop-opacity="0"/></radialGradient>
+    <linearGradient id="road" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#172443"/><stop offset="1" stop-color="#090e1e"/></linearGradient>
+    <linearGradient id="car" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9ffff"/><stop offset="0.38" stop-color="#64ffe0"/><stop offset="1" stop-color="#138b94"/></linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="720" height="380" fill="url(#bg)"/>
+  <rect width="720" height="380" fill="url(#neb1)"/><rect width="720" height="380" fill="url(#neb2)"/>
+
+  <!-- sky grid (invaders-style generalized) -->
+  <g stroke="#9bfff0" stroke-opacity="0.06" stroke-width="1">
+    <path d="M0 30H720M0 70H720M0 110H720M0 150H720"/>
+    <path d="M60 0V180M120 0V180M180 0V180M240 0V170M300 0V160M360 0V155M420 0V160M480 0V170M540 0V180M600 0V180M660 0V180"/>
+  </g>
+  <g fill="#f2fffc" opacity="0.75"><circle cx="40" cy="24" r="1.6"/><circle cx="140" cy="46" r="1"/><circle cx="260" cy="20" r="1.8"/><circle cx="420" cy="34" r="1.2"/><circle cx="560" cy="22" r="1.6"/><circle cx="660" cy="40" r="1"/></g>
+
+  <text x="360" y="48" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="26" letter-spacing="5">NEON DRIFT</text>
+
+  <path d="M215 110h290l120 250H95z" fill="url(#road)" stroke="#35d9cc" stroke-opacity="0.5" stroke-width="3"/>
+  <path d="M285 112l-50 246M435 112l50 246" stroke="#6c81ff" stroke-width="3" stroke-dasharray="18 17" opacity="0.8"/>
+  <path d="M360 110v250" stroke="#69ffe1" stroke-width="2" stroke-dasharray="14 18" opacity="0.35"/>
+
+  <!-- obstacle mine/drone -->
+  <g transform="translate(300,205)" filter="url(#glow)">
+    <circle cx="0" cy="0" r="18" fill="#2a1020" stroke="#ff6fae" stroke-width="2"/>
+    <g stroke="#ff6fae" stroke-width="3" stroke-linecap="round">
+      <line x1="0" y1="-24" x2="0" y2="-14"/><line x1="0" y1="14" x2="0" y2="24"/>
+      <line x1="-24" y1="0" x2="-14" y2="0"/><line x1="14" y1="0" x2="24" y2="0"/>
+      <line x1="-17" y1="-17" x2="-10" y2="-10"/><line x1="10" y1="10" x2="17" y2="17"/>
+      <line x1="17" y1="-17" x2="10" y2="-10"/><line x1="-10" y1="10" x2="-17" y2="17"/>
+    </g>
+    <circle cx="0" cy="0" r="8" fill="#ff9fce"/><circle cx="0" cy="0" r="3.5" fill="#fff"/>
   </g>
 
-<text x="360" y="54" text-anchor="middle" fill="#7af7e0" font-family="system-ui" font-weight="800" font-size="28" letter-spacing="6">NEON DRIFT</text><path d="M215 89h290l105 244H110z" fill="url(#road)" stroke="#35d9cc" stroke-opacity=".55" stroke-width="3"/><path d="M285 94l-46 235M435 94l46 235" stroke="#6c81ff" stroke-width="3" stroke-dasharray="18 17" opacity=".85"/><path d="M170 220h380" stroke="#ff64bc" stroke-width="5" opacity=".85" filter="url(#g)"/><path d="M260 220v-34q100-48 200 0v34" fill="none" stroke="#ff75cd" stroke-width="8" filter="url(#g)"/><g transform="translate(360 262) rotate(-6)" filter="url(#g)"><path d="M-24 42q-8 8-14 22m66-22q8 8 14 22" stroke="#7df3ff" stroke-width="6" stroke-linecap="round" opacity=".85"/><rect x="-26" y="-34" width="52" height="62" rx="24" fill="url(#car)" stroke="#eaffff" stroke-width="3"/><ellipse cx="0" cy="-12" rx="12" ry="14" fill="#237d73" stroke="#b6ffff" stroke-width="2"/><ellipse cx="0" cy="-16" rx="7" ry="8" fill="#c2fff1"/><rect x="-20" y="10" width="6" height="10" rx="2" fill="#faffc4"/><rect x="14" y="10" width="6" height="10" rx="2" fill="#faffc4"/><rect x="-23" y="-32" width="46" height="56" rx="21" fill="none" stroke="#ffffffa8" stroke-width="2"/></g><path d="M329 298l-16 26m74-28 16 26" stroke="#ffcf70" stroke-width="4" stroke-linecap="round" filter="url(#g)"/><g fill="#d8e8ff"><circle cx="154" cy="111" r="2"/><circle cx="565" cy="116" r="2"/><circle cx="110" cy="183" r="2"/><circle cx="612" cy="191" r="2"/></g><text x="360" y="354" text-anchor="middle" fill="#b9c9e8" font-family="system-ui" font-size="16" letter-spacing="3">ESQUIVEZ LES ROCHERS · RÉCOLTEZ LES ORBES</text><a href="https://github.com/kewinMarchand/neon-drift" target="_blank" rel="noopener noreferrer" aria-label="Code source de neon-drift sur GitHub"><g transform="translate(676,340)"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" fill="#9fb0c8"/></g></a>
+  <!-- energy orb collectible -->
+  <g transform="translate(430,225)" filter="url(#glow)">
+    <circle cx="0" cy="0" r="14" fill="#0f2a24" stroke="#69ffe1" stroke-width="2"/>
+    <polygon points="0,-9 8,0 0,9 -8,0" fill="#69ffe1" fill-opacity="0.85"/>
+    <circle cx="0" cy="0" r="4" fill="#fff"/>
+  </g>
+
+  <!-- detailed car/ship -->
+  <g transform="translate(360,292) rotate(-4)" filter="url(#glow)">
+    <path d="M-24 42q-8 8-14 20m66-20q8 8 14 20" stroke="#7df3ff" stroke-width="5" stroke-linecap="round" opacity="0.8"/>
+    <rect x="-26" y="-34" width="52" height="62" rx="24" fill="url(#car)" stroke="#eaffff" stroke-width="2.5" stroke-opacity="0.7"/>
+    <path d="M-26 0 L-36 12 L-24 14 Z" fill="#1fa88f"/><path d="M26 0 L36 12 L24 14 Z" fill="#1fa88f"/>
+    <ellipse cx="0" cy="-12" rx="12" ry="14" fill="#237d73" stroke="#b6ffff" stroke-width="2"/>
+    <ellipse cx="0" cy="-16" rx="7" ry="8" fill="#c2fff1"/>
+    <rect x="-10" y="10" width="20" height="6" rx="3" fill="#0b2628" fill-opacity="0.6"/>
+    <rect x="-20" y="18" width="6" height="8" rx="2" fill="#faffc4"/><rect x="14" y="18" width="6" height="8" rx="2" fill="#faffc4"/>
+  </g>
+
+  <text x="360" y="360" text-anchor="middle" fill="#b9c9e8" font-family="system-ui,'Space Grotesk',sans-serif" font-size="14" letter-spacing="2">ESQUIVEZ LES DRONES · RÉCOLTEZ LES NOYAUX</text>
 </svg>

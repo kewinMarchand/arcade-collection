@@ -26,6 +26,18 @@ function inferSourceUrl() {
   return 'https://github.com/kewinMarchand/neon-games';
 }
 
+function inferLandingUrl() {
+  try {
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    const idx = parts.lastIndexOf('apps');
+    if (idx !== -1) {
+      const base = parts.slice(0, idx).join('/');
+      return `${window.location.origin}/${base ? base + '/' : ''}`;
+    }
+  } catch (_) {}
+  return '../../';
+}
+
 function createFullscreenButton(target) {
   const btn = document.createElement('button');
   btn.type = 'button';
@@ -96,6 +108,26 @@ export function mountGameFrame({ mount, config }) {
 
   const actions = document.createElement('div');
   actions.className = 'neon-frame__actions';
+  const landingUrl = config.landingUrl || inferLandingUrl();
+  if (config.showLandingLink !== false && landingUrl) {
+    const homeLink = document.createElement('a');
+    homeLink.className = 'neon-frame__action neon-frame__action--home';
+    homeLink.href = landingUrl;
+    homeLink.setAttribute('aria-label', 'Retour à l’accueil');
+    homeLink.title = 'Accueil';
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('width', '18');
+    svg.setAttribute('height', '18');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('focusable', 'false');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M7.5 8.25A1.75 1.75 0 0 0 5.75 10v1.25h-.5A2.25 2.25 0 0 0 3 13.5v1.25A3.25 3.25 0 0 0 6.25 18h11.5A3.25 3.25 0 0 0 21 14.75V13.5a2.25 2.25 0 0 0-2.25-2.25h-.5V10a1.75 1.75 0 0 0-1.75-1.75h-9ZM7 10c0-.138.112-.25.25-.25h9.5c.138 0 .25.112.25.25v1.25H7V10Zm-1.75 2.75h13.5c.414 0 .75.336.75.75v1.25a1.75 1.75 0 0 1-1.75 1.75H6.25a1.75 1.75 0 0 1-1.75-1.75V13.5c0-.414.336-.75.75-.75Zm3.25 1.25a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-1.5-.25a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm1.5-1.25a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25 1.5a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm.75 1.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-.75-2.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z');
+    path.setAttribute('fill', 'currentColor');
+    svg.appendChild(path);
+    homeLink.appendChild(svg);
+    actions.append(homeLink);
+  }
   if (config.showFullscreenToggle !== false) actions.append(createFullscreenButton(frame));
   const sourceUrl = config.sourceUrl || inferSourceUrl();
   if (config.showSourceLink !== false && sourceUrl) {

@@ -367,11 +367,75 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     const color = alienColors[alien.row], bob = Math.sin(elapsed * 5 + alien.phase) * 2, step = Math.sin(elapsed * 10 + alien.phase) * 2;
     const s = alien.scale;
     ctx.save(); ctx.translate(alien.x + alien.w / 2, alien.y + alien.h / 2 + bob); ctx.scale(s, 2 - s);
-    ctx.shadowColor = color; ctx.shadowBlur = 17 + alien.hit * 10; ctx.fillStyle = color;
-    ctx.beginPath(); ctx.moveTo(-16, -5); ctx.lineTo(-12, -12); ctx.lineTo(-6, -14); ctx.lineTo(6, -14); ctx.lineTo(12, -10); ctx.lineTo(16, -3); ctx.lineTo(13, 7); ctx.lineTo(9, 8); ctx.lineTo(7, 13 + step); ctx.lineTo(2, 9); ctx.lineTo(-2, 9); ctx.lineTo(-7, 13 - step); ctx.lineTo(-9, 7); ctx.lineTo(-14, 6); ctx.closePath(); ctx.fill();
-    ctx.fillRect(-20, -5, 5, 9); ctx.fillRect(15, -5, 5, 9); ctx.shadowBlur = 0; ctx.fillStyle = '#10201c';
-    ctx.beginPath(); ctx.ellipse(-6, -2, 3, 4, -0.15, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.ellipse(6, -2, 3, 4, 0.15, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = '#fff'; ctx.fillRect(-7, -4, 1, 1); ctx.fillRect(5, -4, 1, 1); ctx.globalAlpha = 0.5; ctx.fillRect(-8, -11, 7, 2);
+    const glow = 17 + alien.hit * 12;
+    ctx.shadowColor = color; ctx.shadowBlur = glow;
+
+    // main hull / saucer body
+    const hull = ctx.createLinearGradient(0, -14, 0, 12);
+    hull.addColorStop(0, '#dffcff');
+    hull.addColorStop(0.25, color);
+    hull.addColorStop(1, '#0f2a2e');
+    ctx.fillStyle = hull;
+    ctx.beginPath();
+    ctx.moveTo(0, -14);
+    ctx.lineTo(10, -10);
+    ctx.lineTo(16, -3);
+    ctx.lineTo(13, 6);
+    ctx.lineTo(7, 8);
+    ctx.lineTo(0, 11);
+    ctx.lineTo(-7, 8);
+    ctx.lineTo(-13, 6);
+    ctx.lineTo(-16, -3);
+    ctx.lineTo(-10, -10);
+    ctx.closePath();
+    ctx.fill();
+
+    // wings / stabilizers
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.92;
+    ctx.beginPath(); ctx.moveTo(-14, -2); ctx.lineTo(-22, -6); ctx.lineTo(-20, 4); ctx.lineTo(-13, 5); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(14, -2); ctx.lineTo(22, -6); ctx.lineTo(20, 4); ctx.lineTo(13, 5); ctx.closePath(); ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // lower thruster pods
+    ctx.fillStyle = '#16343a';
+    ctx.beginPath(); ctx.roundRect(-9, 7, 6, 5 + step * 0.25, 2); ctx.fill();
+    ctx.beginPath(); ctx.roundRect(3, 7, 6, 5 - step * 0.25, 2); ctx.fill();
+
+    // cockpit dome
+    ctx.shadowBlur = 0;
+    const dome = ctx.createRadialGradient(-2, -7, 1, 0, -6, 7);
+    dome.addColorStop(0, '#ffffff');
+    dome.addColorStop(0.5, '#c8fbff');
+    dome.addColorStop(1, color);
+    ctx.fillStyle = dome;
+    ctx.beginPath(); ctx.ellipse(0, -6, 6.5, 5.5, 0, Math.PI, 0); ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.7)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.ellipse(0, -6, 6.5, 5.5, 0, Math.PI, 0); ctx.stroke();
+
+    // sensor eyes
+    ctx.fillStyle = '#10201c';
+    ctx.beginPath(); ctx.ellipse(-5, -1, 2.4, 3.2, -0.12, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(5, -1, 2.4, 3.2, 0.12, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(-5.8, -2.4, 1.2, 1.2); ctx.fillRect(4.6, -2.4, 1.2, 1.2);
+
+    // panel lines / tech details
+    ctx.strokeStyle = 'rgba(255,255,255,0.45)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(-10, -8); ctx.lineTo(-4, -3); ctx.lineTo(4, -3); ctx.lineTo(10, -8); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, -11); ctx.lineTo(0, 2); ctx.stroke();
+    ctx.globalAlpha = 0.45; ctx.fillStyle = '#fff'; ctx.fillRect(-8, -12, 6, 1.5); ctx.globalAlpha = 1;
+
+    // engine glow
+    ctx.shadowColor = color; ctx.shadowBlur = 10;
+    ctx.fillStyle = 'rgba(255,255,255,0.85)';
+    ctx.beginPath(); ctx.ellipse(-6, 12 + Math.max(0, step) * 0.3, 1.8, 2.8, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(6, 12 + Math.max(0, -step) * 0.3, 1.8, 2.8, 0, 0, Math.PI * 2); ctx.fill();
+
+    // wingtip lights
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(-22, -6, 1.6, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(22, -6, 1.6, 0, Math.PI * 2); ctx.fill();
     ctx.restore();
   }
   function drawBullets() {

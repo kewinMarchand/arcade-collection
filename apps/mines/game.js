@@ -5,8 +5,8 @@ import { indexOf, countAdjacent } from './game-logic.js';
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
-    title: 'Neon Mines',
-    subtitle: 'Révèle les cases, évite les mines.',
+    title: 'Neon Black Holes',
+    subtitle: 'Explore les secteurs, repère les trous noirs.',
     renderHeader: () => {
       const options = document.createElement('div');
       options.className = 'game-options';
@@ -42,7 +42,7 @@ const shell = mountGameFrame({
           const title = document.createElement('h2'); title.className = 'neon-panel__title'; title.textContent = 'Statut';
           const stats = document.createElement('div'); stats.className = 'panel-stats';
           const stat = (label, id, value) => { const wrap = document.createElement('div'); wrap.className = 'panel-stat'; const small = document.createElement('small'); small.textContent = label; const strong = document.createElement('strong'); strong.id = id; strong.textContent = value; wrap.append(small, strong); return wrap; };
-          stats.append(stat('RÉVÉLÉES', 'score', '0'), stat('RECORD', 'best', '-'), stat('MINES', 'mines-left', '12'), stat('ÉTAT', 'status', 'Prêt'));
+          stats.append(stat('SECTEURS', 'score', '0'), stat('RECORD', 'best', '-'), stat('TROUS NOIRS', 'mines-left', '12'), stat('ÉTAT', 'status', 'Prêt'));
           panel.append(title, stats); return panel;
         },
       },
@@ -54,8 +54,8 @@ const shell = mountGameFrame({
           const title = document.createElement('h2'); title.className = 'neon-panel__title'; title.textContent = 'Actions';
           const actions = document.createElement('div'); actions.className = 'panel-actions';
           const b = (id, text, cls) => { const btn = document.createElement('button'); btn.id = id; btn.type = 'button'; btn.textContent = text; if (cls) btn.className = cls; return btn; };
-          actions.append(b('pause', 'Pause'), b('restart', 'Recommencer'), b('new-game', 'Nouvelle partie', 'primary'));
-          const help = document.createElement('p'); help.className = 'help'; help.textContent = 'Clic : révéler • Clic droit : drapeau • P : pause';
+          actions.append(b('pause', 'Pause'), b('restart', 'Recommencer'), b('new-game', 'Nouvelle mission', 'primary'));
+          const help = document.createElement('p'); help.className = 'help'; help.textContent = 'Clic : scanner un secteur • Clic droit : poser un satellite balise • P : pause. Les satellites autour d\'un secteur indiquent les trous noirs voisins.';
           panel.append(title, actions, help); return panel;
         },
       },
@@ -63,7 +63,7 @@ const shell = mountGameFrame({
     screen: {
       mount: (el) => {
         const canvas = document.createElement('canvas');
-        canvas.id = 'game'; canvas.width = 600; canvas.height = 600; canvas.setAttribute('aria-label', 'Grille de Neon Mines');
+        canvas.id = 'game'; canvas.width = 600; canvas.height = 600; canvas.setAttribute('aria-label', 'Carte des secteurs de Neon Black Holes');
         el.appendChild(canvas);
       },
     },
@@ -85,23 +85,23 @@ const OFFSET_Y = Math.floor((W - GRID) / 2);
 const DIFF = { chill: 8, arcade: 12, chaos: 18 };
 let mineCount = DIFF.arcade;
 
-let mines = new Set(), revealed = new Set(), flags = new Set(), state = 'ready', first = true, score = 0, best = Number(localStorage.getItem('neonMinesBest')) || 0, last = 0, elapsed = 0, particles = [], pulses = [], shake = 0, stars = [];
+let mines = new Set(), revealed = new Set(), flags = new Set(), state = 'ready', first = true, score = 0, best = Number(localStorage.getItem('neonBlackHolesBest')) || 0, last = 0, elapsed = 0, particles = [], pulses = [], shockwaves = [], shake = 0, stars = [];
 $('#best').textContent = best || '-';
 $('#mines-left').textContent = String(mineCount);
 
 function setup() {
   const diff = difficultyInput?.value || 'arcade';
   mineCount = DIFF[diff] || 12;
-  mines = new Set(); revealed = new Set(); flags = new Set(); state = 'ready'; first = true; score = 0; elapsed = 0; particles = []; pulses = []; shake = 0;
-  stars = Array.from({ length: 120 }, () => ({
+  mines = new Set(); revealed = new Set(); flags = new Set(); state = 'ready'; first = true; score = 0; elapsed = 0; particles = []; pulses = []; shockwaves = []; shake = 0;
+  stars = Array.from({ length: 140 }, () => ({
     x: Math.random() * W,
     y: Math.random() * W,
     r: Math.random() < 0.12 ? 2.2 : Math.random() * 1.6 + 0.4,
     a: 0.3 + Math.random() * 0.7,
     tw: Math.random() * Math.PI * 2,
     sp: 0.5 + Math.random() * 1.2,
-    vy: 6 + Math.random() * 14,
-    vx: (Math.random() - 0.5) * 5,
+    vy: 4 + Math.random() * 10,
+    vx: (Math.random() - 0.5) * 4,
   }));
   $('#score').textContent = '0'; $('#mines-left').textContent = String(mineCount); $('#status').textContent = 'Prêt'; draw(0);
 }
@@ -114,23 +114,33 @@ function placeMines(safeX, safeY) {
   }
 }
 
-function burstCell(x, y, color, n = 14) {
+function burstCell(x, y, color, n = 12) {
   const px = OFFSET_X + x * CELL + CELL / 2, py = OFFSET_Y + y * CELL + CELL / 2;
   for (let i = 0; i < n; i++) {
-    const a = Math.random() * Math.PI * 2, sp = 40 + Math.random() * 180;
-    particles.push({ x: px, y: py, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0.35 + Math.random() * 0.4, color, s: 2 + Math.random() * 3 });
+    const a = Math.random() * Math.PI * 2, sp = 30 + Math.random() * 140;
+    particles.push({ x: px, y: py, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0.35 + Math.random() * 0.4, color, s: 1.5 + Math.random() * 2.5, glow: true });
   }
-  pulses.push({ x: px, y: py, r: 10, life: 0.4, color });
+  pulses.push({ x: px, y: py, r: 8, life: 0.45, color });
+}
+
+function blackHoleCollapse(x, y) {
+  const px = OFFSET_X + x * CELL + CELL / 2, py = OFFSET_Y + y * CELL + CELL / 2;
+  shockwaves.push({ x: px, y: py, r: 8, life: 0.9, color: '#b07cff' });
+  shockwaves.push({ x: px, y: py, r: 4, life: 0.7, color: '#ff648f' });
+  for (let i = 0; i < 36; i++) {
+    const a = Math.random() * Math.PI * 2, sp = 20 + Math.random() * 160;
+    particles.push({ x: px, y: py, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0.5 + Math.random() * 0.6, color: i % 2 ? '#b58aff' : '#ff648f', s: 1.5 + Math.random() * 3, glow: true, pull: true, px, py });
+  }
 }
 
 function reveal(x, y) {
   const i = indexOf(x, y, N);
   if (revealed.has(i) || flags.has(i) || state === 'paused' || state === 'over' || state === 'won') return;
-  if (first) { placeMines(x, y); first = false; state = 'playing'; $('#status').textContent = 'En jeu'; }
+  if (first) { placeMines(x, y); first = false; state = 'playing'; $('#status').textContent = 'Scan en cours'; }
   if (mines.has(i)) {
-    revealed.add(i); burstCell(x, y, '#ff648f', 28); shake = 1;
-    state = 'over'; $('#status').textContent = 'Mine !';
-    audio.seq([[180, 0.15, 'sawtooth', 0.05, 0], [120, 0.25, 'sawtooth', 0.05, 0.08]]);
+    revealed.add(i); blackHoleCollapse(x, y); shake = 1;
+    state = 'over'; $('#status').textContent = 'Trou noir !';
+    audio.seq([[120, 0.18, 'sawtooth', 0.05, 0], [80, 0.3, 'sine', 0.05, 0.1]]);
     draw(0); return;
   }
   const open = [i];
@@ -139,9 +149,10 @@ function reveal(x, y) {
     if (revealed.has(k) || flags.has(k)) continue;
     revealed.add(k);
     const px = k % N, py = Math.floor(k / N);
-    burstCell(px, py, '#69ffe1', 6);
-    audio.tone(260 + countAdjacent(mines, px, py, N, N) * 40, 0.04, 'triangle', 0.015);
-    if (countAdjacent(mines, px, py, N, N) === 0) {
+    burstCell(px, py, '#69ffe1', 5);
+    const n = countAdjacent(mines, px, py, N, N);
+    audio.tone(240 + n * 45, 0.04, 'triangle', 0.012);
+    if (n === 0) {
       for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
         const nx = px + dx, ny = py + dy;
         if (nx >= 0 && nx < N && ny >= 0 && ny < N) open.push(indexOf(nx, ny, N));
@@ -150,13 +161,93 @@ function reveal(x, y) {
   }
   score = revealed.size; $('#score').textContent = String(score);
   if (score === N * N - mineCount) {
-    state = 'won'; $('#status').textContent = 'Gagné';
+    state = 'won'; $('#status').textContent = 'Secteur sécurisé';
     let timeBest = best;
-    if (!timeBest || elapsed < timeBest) { timeBest = Math.floor(elapsed); localStorage.setItem('neonMinesBest', String(timeBest)); $('#best').textContent = timeBest + 's'; }
+    if (!timeBest || elapsed < timeBest) { timeBest = Math.floor(elapsed); localStorage.setItem('neonBlackHolesBest', String(timeBest)); $('#best').textContent = timeBest + 's'; }
     if (bonusInput.checked) audio.seq([[520, 0.08, 'sine', 0.03, 0], [660, 0.1, 'sine', 0.03, 0.08], [880, 0.12, 'sine', 0.03, 0.16]]);
     else audio.tone(660, 0.2, 'triangle', 0.03);
   }
   draw(0);
+}
+
+function drawSatellite(ctx, s = 1, alpha = 1) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.scale(s, s);
+  // body
+  const body = ctx.createLinearGradient(-3, -2, 3, 2);
+  body.addColorStop(0, '#eaffff'); body.addColorStop(1, '#6ccfd6');
+  ctx.fillStyle = body;
+  ctx.beginPath();
+  if (ctx.roundRect) ctx.roundRect(-3.2, -2.2, 6.4, 4.4, 1.2); else ctx.rect(-3.2, -2.2, 6.4, 4.4);
+  ctx.fill();
+  // panels
+  ctx.fillStyle = '#5b7cff';
+  ctx.strokeStyle = '#9befff'; ctx.lineWidth = 0.6;
+  ctx.fillRect(-8.5, -1.6, 4.4, 3.2); ctx.strokeRect(-8.5, -1.6, 4.4, 3.2);
+  ctx.fillRect(4.1, -1.6, 4.4, 3.2); ctx.strokeRect(4.1, -1.6, 4.4, 3.2);
+  ctx.beginPath(); ctx.moveTo(-4.1, 0); ctx.lineTo(-3.2, 0); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(3.2, 0); ctx.lineTo(4.1, 0); ctx.stroke();
+  // antenna
+  ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 0.7;
+  ctx.beginPath(); ctx.moveTo(0, -2.2); ctx.lineTo(0, -5.2); ctx.stroke();
+  ctx.fillStyle = '#ffd36b'; ctx.beginPath(); ctx.arc(0, -5.5, 0.9, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+}
+
+function drawSignalCount(x, y, n, t) {
+  // draw n small satellites arranged in a ring as visual count
+  const r = 12.5;
+  for (let k = 0; k < n; k++) {
+    const a = -Math.PI / 2 + (k / n) * Math.PI * 2 + Math.sin(t * 0.001 + k) * 0.08;
+    const sx = x + Math.cos(a) * r;
+    const sy = y + Math.sin(a) * r;
+    const rot = a + Math.PI / 2;
+    ctx.save();
+    ctx.translate(sx, sy);
+    ctx.rotate(rot);
+    drawSatellite(ctx, 0.62, 0.95);
+    ctx.restore();
+  }
+}
+
+function drawBlackHole(cx, cy, t, active = true) {
+  const pulse = active ? 1 + 0.05 * Math.sin(t * 0.004) : 1;
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.scale(pulse, pulse);
+  // accretion glow
+  const glow = ctx.createRadialGradient(0, 0, 4, 0, 0, 22);
+  glow.addColorStop(0, 'rgba(20,0,40,0.0)');
+  glow.addColorStop(0.45, 'rgba(120,60,255,0.25)');
+  glow.addColorStop(0.75, 'rgba(255,100,160,0.18)');
+  glow.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = glow;
+  ctx.beginPath(); ctx.arc(0, 0, 22, 0, Math.PI * 2); ctx.fill();
+  // rings
+  ctx.save();
+  ctx.rotate(t * 0.0015);
+  ctx.strokeStyle = 'rgba(181,138,255,0.7)';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.ellipse(0, 0, 16, 6, 0.3, 0, Math.PI * 2); ctx.stroke();
+  ctx.strokeStyle = 'rgba(255,120,170,0.55)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.ellipse(0, 0, 13, 4.5, -0.5, 0, Math.PI * 2); ctx.stroke();
+  ctx.restore();
+  // core
+  const core = ctx.createRadialGradient(-1, -1, 1, 0, 0, 9);
+  core.addColorStop(0, '#120018');
+  core.addColorStop(0.6, '#050008');
+  core.addColorStop(1, '#000000');
+  ctx.fillStyle = core;
+  ctx.shadowColor = '#b58aff';
+  ctx.shadowBlur = active ? 16 : 6;
+  ctx.beginPath(); ctx.arc(0, 0, 8.5, 0, Math.PI * 2); ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.strokeStyle = 'rgba(220,200,255,0.5)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.arc(0, 0, 9.5, 0, Math.PI * 2); ctx.stroke();
+  ctx.restore();
 }
 
 function draw(t) {
@@ -214,9 +305,7 @@ function draw(t) {
   }
   ctx.restore();
 
-  const numColors = ['', '#69ffe1', '#ffd36b', '#ff648f', '#b58aff', '#8bffbd', '#ff9d65', '#72bdff', '#fff'];
-
-  // Board frame (lets starfield breathe around the grid)
+  // Board frame
   ctx.save();
   ctx.fillStyle = 'rgba(4, 14, 22, 0.35)';
   ctx.strokeStyle = 'rgba(105, 255, 225, 0.22)';
@@ -250,13 +339,11 @@ function draw(t) {
       ctx.fill();
       ctx.stroke();
       ctx.shadowBlur = 0;
-      // inner sheen
       ctx.strokeStyle = 'rgba(180, 255, 245, 0.14)';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.roundRect(px + pad + 3, py + pad + 3, CELL - pad * 2 - 6, CELL * 0.28, 6);
       ctx.stroke();
-      // tiny corner stars
       ctx.fillStyle = 'rgba(220, 250, 255, 0.28)';
       ctx.fillRect(px + 8, py + 8, 2, 2);
       ctx.fillRect(px + CELL - 10, py + 8, 2, 2);
@@ -265,9 +352,9 @@ function draw(t) {
       g.addColorStop(0, 'rgba(7, 26, 31, 0.72)');
       g.addColorStop(1, 'rgba(4, 16, 21, 0.78)');
       ctx.fillStyle = g;
-      ctx.strokeStyle = mines.has(i) ? 'rgba(255, 100, 143, 0.55)' : 'rgba(105, 255, 225, 0.22)';
+      ctx.strokeStyle = mines.has(i) ? 'rgba(181, 138, 255, 0.55)' : 'rgba(105, 255, 225, 0.22)';
       ctx.lineWidth = 1.5;
-      ctx.shadowColor = mines.has(i) ? 'rgba(255, 100, 143, 0.25)' : 'rgba(105, 255, 225, 0.1)';
+      ctx.shadowColor = mines.has(i) ? 'rgba(181, 138, 255, 0.25)' : 'rgba(105, 255, 225, 0.1)';
       ctx.shadowBlur = mines.has(i) ? 14 : 6;
       ctx.beginPath();
       ctx.roundRect(px + pad, py + pad, CELL - pad * 2, CELL - pad * 2, 8);
@@ -278,96 +365,33 @@ function draw(t) {
     ctx.restore();
 
     if (isRevealed) {
-      const pulse = 1 + 0.03 * Math.sin(time * 0.005 + x + y);
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.scale(pulse, pulse);
       if (mines.has(i)) {
-        // space mine: core + rotating spikes + rings
-        const rot = time * 0.002 + (x + y);
-        ctx.shadowColor = '#ff648f';
-        ctx.shadowBlur = 18;
-        ctx.strokeStyle = '#ff9ab8';
-        ctx.lineWidth = 2.5;
-        for (let k = 0; k < 8; k++) {
-          const a = rot + (Math.PI * 2 * k) / 8;
-          const r1 = 8, r2 = 16;
-          ctx.beginPath();
-          ctx.moveTo(Math.cos(a) * r1, Math.sin(a) * r1);
-          ctx.lineTo(Math.cos(a) * r2, Math.sin(a) * r2);
-          ctx.stroke();
-          ctx.fillStyle = '#ffd1de';
-          ctx.beginPath();
-          ctx.arc(Math.cos(a) * r2, Math.sin(a) * r2, 1.8, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        const core = ctx.createRadialGradient(-2, -2, 1, 0, 0, 11);
-        core.addColorStop(0, '#fff0f5');
-        core.addColorStop(0.45, '#ff8fb0');
-        core.addColorStop(1, '#ff3f74');
-        ctx.fillStyle = core;
-        ctx.beginPath();
-        ctx.arc(0, 0, 11, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.shadowBlur = 0;
-        ctx.strokeStyle = 'rgba(255, 220, 235, 0.7)';
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.arc(0, 0, 14.5, 0, Math.PI * 2);
-        ctx.stroke();
+        drawBlackHole(cx, cy, time, true);
       } else {
         const n = countAdjacent(mines, x, y, N, N);
-        if (n) {
-          const col = numColors[n] || '#fff';
-          ctx.fillStyle = col;
-          ctx.shadowColor = col;
-          ctx.shadowBlur = 14;
-          ctx.font = '800 26px "Space Grotesk", system-ui, sans-serif';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(String(n), 0, 1);
-          ctx.shadowBlur = 0;
-        }
+        if (n) drawSignalCount(cx, cy, n, time);
       }
-      ctx.restore();
     } else if (flags.has(i)) {
-      // neon flag beacon
-      const bob = Math.sin(time * 0.004 + x * 0.7 + y) * 1.5;
+      const bob = Math.sin(time * 0.004 + x * 0.7 + y) * 1.2;
       ctx.save();
       ctx.translate(cx, cy + bob);
-      ctx.shadowColor = '#ffd36b';
-      ctx.shadowBlur = 14;
-      // pole
-      ctx.strokeStyle = '#cfefff';
-      ctx.lineWidth = 2.5;
-      ctx.beginPath();
-      ctx.moveTo(-6, 14);
-      ctx.lineTo(-6, -14);
-      ctx.stroke();
-      // pennant
-      const pg = ctx.createLinearGradient(-6, -14, 14, -4);
-      pg.addColorStop(0, '#fff3b0');
-      pg.addColorStop(1, '#ff9b3d');
-      ctx.fillStyle = pg;
-      ctx.beginPath();
-      ctx.moveTo(-6, -14);
-      ctx.lineTo(14, -6);
-      ctx.lineTo(-6, 1);
-      ctx.closePath();
-      ctx.fill();
-      // base glow
+      ctx.shadowColor = '#69ffe1';
+      ctx.shadowBlur = 10;
+      drawSatellite(ctx, 1.25, 1);
+      // base beacon ring
       ctx.shadowBlur = 0;
-      ctx.fillStyle = 'rgba(255, 211, 107, 0.35)';
+      ctx.strokeStyle = 'rgba(105,255,225,0.35)';
+      ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.ellipse(-2, 15, 10, 3, 0, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.ellipse(0, 12, 10, 3.5, 0, 0, Math.PI * 2);
+      ctx.stroke();
       ctx.restore();
     }
   }
 
   // Pulses
   for (const p of pulses) {
-    ctx.globalAlpha = Math.max(0, p.life / 0.4);
+    ctx.globalAlpha = Math.max(0, p.life / 0.45);
     ctx.strokeStyle = p.color;
     ctx.shadowColor = p.color;
     ctx.shadowBlur = 12;
@@ -376,21 +400,30 @@ function draw(t) {
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
     ctx.stroke();
   }
-  ctx.globalAlpha = 1;
-  ctx.shadowBlur = 0;
+  ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+
+  for (const s of shockwaves) {
+    ctx.globalAlpha = Math.max(0, s.life / 0.9);
+    ctx.strokeStyle = s.color;
+    ctx.shadowColor = s.color;
+    ctx.shadowBlur = 16;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1; ctx.shadowBlur = 0;
 
   // Particles
   for (const p of particles) {
-    ctx.globalAlpha = Math.min(1, p.life * 2.4);
+    ctx.globalAlpha = Math.min(1, p.life * 2.2);
     ctx.fillStyle = p.color;
-    ctx.shadowColor = p.color;
-    ctx.shadowBlur = 8;
+    if (p.glow) { ctx.shadowColor = p.color; ctx.shadowBlur = 8; }
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.s, 0, Math.PI * 2);
     ctx.fill();
   }
-  ctx.globalAlpha = 1;
-  ctx.shadowBlur = 0;
+  ctx.globalAlpha = 1; ctx.shadowBlur = 0;
 
   ctx.restore();
 
@@ -412,8 +445,8 @@ function draw(t) {
     ctx.globalAlpha = 1;
     ctx.shadowBlur = 0;
 
-    const title = state === 'paused' ? 'PAUSE' : state === 'over' ? 'MINE !' : state === 'won' ? 'GRILLE SÉCURISÉE' : 'NEON MINES';
-    const sub = state === 'ready' ? 'Révèle ta première case' : state === 'paused' ? 'Clique sur Pause pour reprendre' : 'Recommencer pour rejouer';
+    const title = state === 'paused' ? 'PAUSE' : state === 'over' ? 'TROU NOIR !' : state === 'won' ? 'SECTEUR SÉCURISÉ' : 'NEON BLACK HOLES';
+    const sub = state === 'ready' ? 'Scanne ton premier secteur' : state === 'paused' ? 'Clique sur Pause pour reprendre' : 'Recommence pour une nouvelle mission';
     ctx.textAlign = 'center';
     ctx.shadowColor = '#69ffe1';
     ctx.shadowBlur = 22;
@@ -429,8 +462,8 @@ function draw(t) {
 
 function togglePause() {
   if (state === 'playing') { state = 'paused'; $('#status').textContent = 'Pause'; draw(0); }
-  else if (state === 'paused') { state = 'playing'; $('#status').textContent = 'En jeu'; last = performance.now(); draw(0); }
-  else if (state === 'ready') { state = 'playing'; $('#status').textContent = 'En jeu'; draw(0); }
+  else if (state === 'paused') { state = 'playing'; $('#status').textContent = 'Scan en cours'; last = performance.now(); draw(0); }
+  else if (state === 'ready') { state = 'playing'; $('#status').textContent = 'Scan en cours'; draw(0); }
 }
 
 function cellFromEvent(e) {
@@ -457,7 +490,7 @@ canvas.addEventListener('contextmenu', (e) => {
   if (!cell) return;
   const i = indexOf(cell.x, cell.y, N);
   if (revealed.has(i)) return;
-  if (flags.has(i)) flags.delete(i); else { flags.add(i); audio.tone(350, 0.03, 'square', 0.015); }
+  if (flags.has(i)) flags.delete(i); else { flags.add(i); audio.tone(350, 0.03, 'square', 0.015); pulses.push({ x: OFFSET_X + cell.x * CELL + CELL / 2, y: OFFSET_Y + cell.y * CELL + CELL / 2, r: 6, life: 0.3, color: '#69ffe1' }); }
   $('#mines-left').textContent = String(mineCount - flags.size);
   draw(0);
 });
@@ -469,7 +502,7 @@ window.addEventListener('keydown', (e) => { if (e.key.toLowerCase() === 'p') tog
 
 function frame(t) {
   const dt = Math.min((t - last) / 1000 || 0, 0.05);
-  if (state === 'playing') { elapsed += dt; $('#status').textContent = 'En jeu • ' + Math.floor(elapsed) + 's'; }
+  if (state === 'playing') { elapsed += dt; $('#status').textContent = 'Scan en cours • ' + Math.floor(elapsed) + 's'; }
   last = t;
   for (const s of stars) {
     s.y += s.vy * dt;
@@ -479,9 +512,16 @@ function frame(t) {
     if (s.x > W + 4) s.x = -4;
   }
   for (let i = particles.length - 1; i >= 0; i--) {
-    const p = particles[i]; p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 120 * dt; p.life -= dt; if (p.life <= 0) particles.splice(i, 1);
+    const p = particles[i];
+    if (p.pull) {
+      const dx = p.px - p.x, dy = p.py - p.y;
+      p.vx += dx * dt * 0.8; p.vy += dy * dt * 0.8;
+    }
+    p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 60 * dt; p.life -= dt;
+    if (p.life <= 0) particles.splice(i, 1);
   }
   for (let i = pulses.length - 1; i >= 0; i--) { pulses[i].r += 80 * dt; if ((pulses[i].life -= dt) <= 0) pulses.splice(i, 1); }
+  for (let i = shockwaves.length - 1; i >= 0; i--) { shockwaves[i].r += 120 * dt; if ((shockwaves[i].life -= dt) <= 0) shockwaves.splice(i, 1); }
   draw(t);
   requestAnimationFrame(frame);
 }

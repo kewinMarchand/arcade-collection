@@ -162,6 +162,9 @@ let shockwaves = [];
 let shipHit = 0;
 let shipScale = 1;
 let thrust = 0;
+let shake = 0;
+let screenFlash = 0;
+let blockPulse = 0;
 
 bestEl.textContent = String(best);
 
@@ -179,41 +182,52 @@ function blockEffect(a) {
   flashes.push({ a, life: 0.42 });
   const x = cx + Math.cos(a) * SHIELD_RADIUS;
   const y = cy + Math.sin(a) * SHIELD_RADIUS;
-  for (let k = 0; k < 16; k++) {
+  for (let k = 0; k < 18; k++) {
     const ang = a + Math.PI + (Math.random() - 0.5) * 2.2;
-    const sp = 60 + Math.random() * 180;
+    const sp = 70 + Math.random() * 210;
     sparks.push({
       x,
       y,
       vx: Math.cos(ang) * sp,
       vy: Math.sin(ang) * sp,
-      life: 0.3 + Math.random() * 0.35,
-      color: Math.random() < 0.5 ? '#baffeb' : '#69ffe1',
-      s: 2 + Math.random() * 2.5,
+      life: 0.28 + Math.random() * 0.4,
+      color: Math.random() < 0.45 ? '#ffffff' : (Math.random() < 0.7 ? '#baffeb' : '#69ffe1'),
+      s: 1.8 + Math.random() * 3,
+      square: Math.random() < 0.3,
+      spin: Math.random() * 8,
     });
   }
   popups.push({ a, life: 0.9, text: bonusInput.checked ? '+25' : '+10' });
-  shockwaves.push({ r: SHIELD_RADIUS - 6, life: 0.35, a });
+  shockwaves.push({ r: SHIELD_RADIUS - 8, life: 0.38, a });
+  shockwaves.push({ r: SHIELD_RADIUS + 2, life: 0.22, a, thin: true });
+  screenFlash = Math.max(screenFlash, 0.08);
+  shake = Math.max(shake, 0.18);
+  blockPulse = 1;
   audio.tone(520 + Math.random() * 120, 0.06, 'triangle', 0.03);
 }
 
 function hitEffect() {
-  shipHit = 0.45;
-  shipScale = 0.82;
-  for (let k = 0; k < 26; k++) {
+  shipHit = 0.5;
+  shipScale = 0.78;
+  shake = Math.max(shake, 0.9);
+  screenFlash = Math.max(screenFlash, 0.22);
+  for (let k = 0; k < 32; k++) {
     const ang = Math.random() * Math.PI * 2;
-    const sp = 40 + Math.random() * 220;
+    const sp = 50 + Math.random() * 240;
     sparks.push({
       x: cx,
       y: cy,
       vx: Math.cos(ang) * sp,
       vy: Math.sin(ang) * sp,
-      life: 0.35 + Math.random() * 0.5,
-      color: Math.random() < 0.5 ? '#ff648f' : '#ffd36b',
-      s: 2 + Math.random() * 3,
+      life: 0.35 + Math.random() * 0.55,
+      color: Math.random() < 0.45 ? '#ff648f' : (Math.random() < 0.6 ? '#ffd36b' : '#ffffff'),
+      s: 2 + Math.random() * 3.5,
+      square: Math.random() < 0.35,
+      spin: Math.random() * 8,
     });
   }
-  shockwaves.push({ r: CORE_RADIUS, life: 0.5, a: 0, full: true });
+  shockwaves.push({ r: CORE_RADIUS, life: 0.55, a: 0, full: true });
+  shockwaves.push({ r: CORE_RADIUS + 8, life: 0.35, a: 0, full: true });
   audio.seq([[180, 0.12, 'sawtooth', 0.05, 0], [120, 0.18, 'square', 0.04, 0.05]]);
 }
 
@@ -232,6 +246,9 @@ function start() {
   shockwaves = [];
   shipHit = 0;
   shipScale = 1;
+  shake = 0;
+  screenFlash = 0;
+  blockPulse = 0;
   scoreEl.textContent = '0';
   livesEl.textContent = String(lives);
   statusEl.textContent = 'Défense';
@@ -269,6 +286,9 @@ function update(dt) {
   thrust = state === 'playing' ? Math.min(1, thrust + dt * 2) : Math.max(0, thrust - dt * 2);
   shipHit = Math.max(0, shipHit - dt);
   shipScale += (1 - shipScale) * Math.min(1, dt * 10);
+  shake = Math.max(0, shake - dt * 2.6);
+  screenFlash = Math.max(0, screenFlash - dt * 1.8);
+  blockPulse = Math.max(0, blockPulse - dt * 4);
 
   for (const s of sparks) {
     s.x += s.vx * dt;
@@ -281,7 +301,7 @@ function update(dt) {
   for (let i = flashes.length - 1; i >= 0; i--) if ((flashes[i].life -= dt) <= 0) flashes.splice(i, 1);
   for (let i = popups.length - 1; i >= 0; i--) if ((popups[i].life -= dt) <= 0) popups.splice(i, 1);
   for (let i = shockwaves.length - 1; i >= 0; i--) {
-    shockwaves[i].r += 120 * dt;
+    shockwaves[i].r += 130 * dt;
     if ((shockwaves[i].life -= dt) <= 0) shockwaves.splice(i, 1);
   }
 
@@ -440,8 +460,13 @@ function drawShip(t) {
 
 function draw(t) {
   ctx.clearRect(0, 0, W, H);
+  ctx.save();
+  if (shake > 0) {
+    const m = shake * 10;
+    ctx.translate((Math.random() - 0.5) * m, (Math.random() - 0.5) * m);
+  }
 
-  // Space background
+  // Space background (Invaders-style gradient + nebula + grid + stars)
   const bg = ctx.createLinearGradient(0, 0, 0, H);
   bg.addColorStop(0, '#061327');
   bg.addColorStop(0.55, '#071420');
@@ -457,8 +482,16 @@ function draw(t) {
     ctx.fillStyle = g;
     ctx.fillRect(x - r, y - r, r * 2, r * 2);
   };
-  neb(W * 0.2, H * 0.25, 220, '#00e0a512');
-  neb(W * 0.78, H * 0.7, 260, '#2468b920');
+  neb(W * 0.2 + Math.sin(elapsed * 0.17) * 30, H * 0.25, 230, '#00e0a512');
+  neb(W * 0.78, H * 0.7 + Math.cos(elapsed * 0.13) * 24, 270, '#2468b920');
+
+  // Faint rectangular grid (decorative, Invaders-like)
+  ctx.save();
+  ctx.strokeStyle = '#9bfff00d';
+  ctx.lineWidth = 1;
+  for (let x = 0; x <= W; x += 60) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+  for (let y = 0; y <= H; y += 60) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+  ctx.restore();
 
   // Starfield (motion = impression d'avancer)
   for (const s of stars) {
@@ -488,16 +521,18 @@ function draw(t) {
 
   // Shockwaves
   for (const w of shockwaves) {
-    ctx.globalAlpha = Math.max(0, w.life / 0.5);
+    const maxLife = w.full ? 0.55 : (w.thin ? 0.22 : 0.38);
+    ctx.globalAlpha = Math.max(0, w.life / maxLife);
     ctx.strokeStyle = w.full ? '#ff648f' : '#69ffe1';
-    ctx.lineWidth = w.full ? 3 : 2;
+    ctx.lineWidth = w.full ? 3 : (w.thin ? 1.5 : 2.5);
     if (w.full) {
       ctx.beginPath();
       ctx.arc(cx, cy, w.r, 0, Math.PI * 2);
       ctx.stroke();
     } else {
+      const span = w.thin ? 0.38 : 0.5;
       ctx.beginPath();
-      ctx.arc(cx, cy, w.r, w.a - 0.5, w.a + 0.5);
+      ctx.arc(cx, cy, w.r, w.a - span, w.a + span);
       ctx.stroke();
     }
   }
@@ -569,24 +604,49 @@ function draw(t) {
   // Ship at center
   drawShip(t);
 
-  // Shield
+  // Shield (detailed tech arc)
   ctx.save();
   ctx.translate(cx, cy);
   ctx.rotate(angle);
-  ctx.strokeStyle = '#69ffe1';
+  const pulse = 1 + blockPulse * 0.12;
   ctx.shadowColor = '#69ffe1';
-  ctx.shadowBlur = 25;
-  ctx.lineWidth = 20;
+  ctx.shadowBlur = 26 + blockPulse * 12;
+  ctx.strokeStyle = '#4fe9cf';
+  ctx.lineWidth = 22;
   ctx.lineCap = 'round';
   ctx.beginPath();
   ctx.arc(0, 0, SHIELD_RADIUS, -SHIELD_HALF_ARC, SHIELD_HALF_ARC);
   ctx.stroke();
   ctx.shadowBlur = 0;
-  ctx.strokeStyle = '#eaffff88';
+  // inner energy rail
+  ctx.strokeStyle = '#eaffffcc';
   ctx.lineWidth = 3;
   ctx.beginPath();
-  ctx.arc(0, 0, SHIELD_RADIUS, -SHIELD_HALF_ARC * 0.85, SHIELD_HALF_ARC * 0.85);
+  ctx.arc(0, 0, SHIELD_RADIUS, -SHIELD_HALF_ARC * 0.88, SHIELD_HALF_ARC * 0.88);
   ctx.stroke();
+  // segmented outer plating
+  ctx.lineCap = 'butt';
+  ctx.strokeStyle = '#baffebaa';
+  ctx.lineWidth = 4;
+  const segs = 7;
+  for (let i = 0; i < segs; i++) {
+    const t0 = -SHIELD_HALF_ARC + (i / segs) * SHIELD_HALF_ARC * 2 + 0.06;
+    const t1 = t0 + (SHIELD_HALF_ARC * 2 / segs) - 0.12;
+    ctx.beginPath();
+    ctx.arc(0, 0, SHIELD_RADIUS + 11 * pulse, t0, t1);
+    ctx.stroke();
+  }
+  // emitter nodes
+  ctx.fillStyle = '#eaffff';
+  for (const end of [-SHIELD_HALF_ARC, SHIELD_HALF_ARC]) {
+    const nx = Math.cos(end) * SHIELD_RADIUS;
+    const ny = Math.sin(end) * SHIELD_RADIUS;
+    ctx.shadowColor = '#69ffe1'; ctx.shadowBlur = 14;
+    ctx.beginPath(); ctx.arc(nx, ny, 5 + blockPulse * 2, 0, Math.PI * 2); ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#0b2d27'; ctx.beginPath(); ctx.arc(nx, ny, 2, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#eaffff';
+  }
   ctx.restore();
 
   // Shield flashes
@@ -610,9 +670,20 @@ function draw(t) {
   for (const s of sparks) {
     ctx.globalAlpha = Math.min(1, s.life * 2.4);
     ctx.fillStyle = s.color;
-    ctx.fillRect(s.x, s.y, s.s, s.s);
+    ctx.shadowColor = s.color;
+    ctx.shadowBlur = 8;
+    if (s.square) {
+      ctx.save();
+      ctx.translate(s.x, s.y);
+      ctx.rotate(elapsed * (s.spin || 6));
+      ctx.fillRect(-s.s / 2, -s.s / 2, s.s, s.s);
+      ctx.restore();
+    } else {
+      ctx.fillRect(s.x, s.y, s.s, s.s);
+    }
   }
   ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
 
   // Popups
   for (const p of popups) {
@@ -627,6 +698,15 @@ function draw(t) {
   }
   ctx.shadowBlur = 0;
   ctx.globalAlpha = 1;
+
+  if (screenFlash > 0) {
+    ctx.globalAlpha = screenFlash;
+    ctx.fillStyle = '#b8fff0';
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalAlpha = 1;
+  }
+
+  ctx.restore();
 
   if (state !== 'playing') {
     ctx.fillStyle = '#04100ddc';

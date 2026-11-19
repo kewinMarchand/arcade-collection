@@ -1,64 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc"><title id="title">Neon Orbiter</title><desc id="desc">Un lander néon descend sous ses réacteurs vers une plate-forme d'alunissage bonus.</desc><defs><linearGradient id="bg" y2="1"><stop stop-color="#10212a"/><stop offset="1" stop-color="#071018"/></linearGradient><linearGradient id="lm" x2="0" y2="1"><stop stop-color="#ffffff"/><stop offset=".5" stop-color="#caffed"/><stop offset="1" stop-color="#2bbfa3"/></linearGradient><filter id="g"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="720" height="380" rx="24" fill="url(#bg)"/>
-  <g class="stars" aria-hidden="true">
-    <circle cx="18" cy="26" r="2.2" fill="#ffffff" opacity="0.95"/>
-    <circle cx="54" cy="64" r="1.4" fill="#dffcff" opacity="0.8"/>
-    <circle cx="88" cy="18" r="1.8" fill="#ffffff" opacity="0.9"/>
-    <circle cx="126" cy="52" r="1.1" fill="#bff6ff" opacity="0.75"/>
-    <circle cx="164" cy="86" r="2.0" fill="#ffffff" opacity="0.92"/>
-    <circle cx="198" cy="24" r="1.3" fill="#dffcff" opacity="0.78"/>
-    <circle cx="236" cy="60" r="2.3" fill="#ffffff" opacity="0.95"/>
-    <circle cx="274" cy="14" r="1.5" fill="#bff6ff" opacity="0.8"/>
-    <circle cx="312" cy="46" r="1.0" fill="#ffffff" opacity="0.7"/>
-    <circle cx="348" cy="78" r="1.9" fill="#dffcff" opacity="0.88"/>
-    <circle cx="386" cy="22" r="1.4" fill="#ffffff" opacity="0.82"/>
-    <circle cx="424" cy="56" r="2.4" fill="#ffffff" opacity="0.96"/>
-    <circle cx="462" cy="32" r="1.1" fill="#bff6ff" opacity="0.72"/>
-    <circle cx="498" cy="84" r="1.7" fill="#dffcff" opacity="0.84"/>
-    <circle cx="536" cy="16" r="2.1" fill="#ffffff" opacity="0.93"/>
-    <circle cx="574" cy="62" r="1.3" fill="#dffcff" opacity="0.76"/>
-    <circle cx="612" cy="38" r="1.6" fill="#ffffff" opacity="0.86"/>
-    <circle cx="648" cy="74" r="1.1" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="684" cy="20" r="2.0" fill="#ffffff" opacity="0.92"/>
-    <circle cx="704" cy="96" r="1.4" fill="#dffcff" opacity="0.78"/>
-    <circle cx="36" cy="118" r="1.5" fill="#ffffff" opacity="0.8"/>
-    <circle cx="92" cy="148" r="1.0" fill="#bff6ff" opacity="0.65"/>
-    <circle cx="148" cy="108" r="2.0" fill="#ffffff" opacity="0.88"/>
-    <circle cx="206" cy="136" r="1.2" fill="#dffcff" opacity="0.72"/>
-    <circle cx="262" cy="112" r="1.7" fill="#ffffff" opacity="0.84"/>
-    <circle cx="322" cy="142" r="1.1" fill="#bff6ff" opacity="0.68"/>
-    <circle cx="378" cy="104" r="1.9" fill="#dffcff" opacity="0.86"/>
-    <circle cx="438" cy="132" r="1.3" fill="#ffffff" opacity="0.76"/>
-    <circle cx="492" cy="116" r="2.2" fill="#ffffff" opacity="0.9"/>
-    <circle cx="548" cy="146" r="1.0" fill="#bff6ff" opacity="0.66"/>
-    <circle cx="604" cy="110" r="1.6" fill="#dffcff" opacity="0.82"/>
-    <circle cx="662" cy="138" r="1.4" fill="#ffffff" opacity="0.78"/>
-    <circle cx="708" cy="156" r="1.8" fill="#ffffff" opacity="0.85"/>
-    <circle cx="24" cy="182" r="1.8" fill="#ffffff" opacity="0.84"/>
-    <circle cx="74" cy="214" r="1.2" fill="#dffcff" opacity="0.7"/>
-    <circle cx="132" cy="188" r="1.0" fill="#bff6ff" opacity="0.62"/>
-    <circle cx="188" cy="224" r="1.6" fill="#ffffff" opacity="0.8"/>
-    <circle cx="246" cy="176" r="2.1" fill="#dffcff" opacity="0.86"/>
-    <circle cx="304" cy="208" r="1.1" fill="#ffffff" opacity="0.68"/>
-    <circle cx="360" cy="184" r="1.5" fill="#bff6ff" opacity="0.74"/>
-    <circle cx="418" cy="216" r="1.9" fill="#ffffff" opacity="0.88"/>
-    <circle cx="476" cy="172" r="1.3" fill="#dffcff" opacity="0.72"/>
-    <circle cx="534" cy="202" r="1.0" fill="#ffffff" opacity="0.64"/>
-    <circle cx="590" cy="186" r="2.0" fill="#ffffff" opacity="0.85"/>
-    <circle cx="646" cy="218" r="1.4" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="698" cy="192" r="1.7" fill="#dffcff" opacity="0.82"/>
-    <circle cx="48" cy="252" r="1.1" fill="#ffffff" opacity="0.66"/>
-    <circle cx="112" cy="276" r="1.8" fill="#dffcff" opacity="0.8"/>
-    <circle cx="176" cy="246" r="1.3" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="238" cy="268" r="1.0" fill="#ffffff" opacity="0.6"/>
-    <circle cx="298" cy="242" r="1.6" fill="#ffffff" opacity="0.78"/>
-    <circle cx="356" cy="274" r="2.0" fill="#dffcff" opacity="0.84"/>
-    <circle cx="416" cy="248" r="1.2" fill="#bff6ff" opacity="0.68"/>
-    <circle cx="474" cy="272" r="1.5" fill="#ffffff" opacity="0.76"/>
-    <circle cx="532" cy="240" r="1.1" fill="#dffcff" opacity="0.64"/>
-    <circle cx="588" cy="266" r="1.9" fill="#ffffff" opacity="0.82"/>
-    <circle cx="646" cy="250" r="1.3" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="700" cy="278" r="1.7" fill="#ffffff" opacity="0.8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
+  <title id="title">Neon Orbiter</title>
+  <desc id="desc">Module d'alunissage détaillé descendant vers des plateformes néon sur un terrain accidenté, sous un ciel spatial quadrillé.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c211d"/><stop offset="0.45" stop-color="#071713"/><stop offset="1" stop-color="#06100f"/>
+    </linearGradient>
+    <radialGradient id="neb1" cx="25%" cy="25%" r="35%"><stop offset="0" stop-color="#00e0a5" stop-opacity="0.12"/><stop offset="1" stop-color="#00e0a5" stop-opacity="0"/></radialGradient>
+    <radialGradient id="neb2" cx="75%" cy="35%" r="30%"><stop offset="0" stop-color="#24b99b" stop-opacity="0.12"/><stop offset="1" stop-color="#24b99b" stop-opacity="0"/></radialGradient>
+    <linearGradient id="hull" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eaffff"/><stop offset="0.4" stop-color="#7fffe5"/><stop offset="1" stop-color="#1b8f7b"/></linearGradient>
+    <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3a0"/><stop offset="0.4" stop-color="#73ffe2" stop-opacity="0.85"/><stop offset="1" stop-color="#00b998" stop-opacity="0"/></linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="720" height="380" fill="url(#bg)"/>
+  <rect width="720" height="380" fill="url(#neb1)"/><rect width="720" height="380" fill="url(#neb2)"/>
+  <g stroke="#9bfff0" stroke-opacity="0.07" stroke-width="1">
+    <path d="M0 40H720M0 100H720M0 160H720M0 220H720"/>
+    <path d="M60 0V260M120 0V260M180 0V260M240 0V260M300 0V260M360 0V260M420 0V260M480 0V260M540 0V260M600 0V260M660 0V260"/>
+  </g>
+  <g fill="#f2fffc" opacity="0.75"><circle cx="40" cy="28" r="1.6"/><circle cx="130" cy="52" r="1"/><circle cx="240" cy="24" r="1.8"/><circle cx="380" cy="40" r="1.2"/><circle cx="520" cy="26" r="1.6"/><circle cx="660" cy="44" r="1"/></g>
+  <text x="360" y="48" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="26" letter-spacing="5">NEON ORBITER</text>
+
+  <!-- terrain -->
+  <path d="M0 300 L60 280 L120 300 L180 260 L260 290 L340 250 L420 285 L500 240 L560 275 L640 255 L720 290 L720 380 L0 380 Z" fill="#0a1f22" stroke="#69ffe1" stroke-opacity="0.35" stroke-width="2"/>
+  <path d="M0 305 L60 285 L120 305 L180 265 L260 295 L340 255 L420 290 L500 245 L560 280 L640 260 L720 295" fill="none" stroke="#2dd6b8" stroke-opacity="0.25" stroke-width="1.5"/>
+
+  <!-- landing pads -->
+  <g filter="url(#glow)">
+    <g transform="translate(180,255)">
+      <rect x="-30" y="0" width="60" height="8" rx="3" fill="#1b4250" stroke="#69ffe1" stroke-width="2"/>
+      <rect x="-2" y="-18" width="4" height="18" fill="#69ffe1" opacity="0.7"/>
+      <circle cx="0" cy="-22" r="4" fill="#69ffe1"/><text x="0" y="-30" text-anchor="middle" fill="#69ffe1" font-family="system-ui,monospace" font-size="10" font-weight="700">x2</text>
+      <rect x="-24" y="8" width="4" height="16" fill="#16343a"/><rect x="20" y="8" width="4" height="16" fill="#16343a"/>
+    </g>
+    <g transform="translate(500,235)">
+      <rect x="-34" y="0" width="68" height="8" rx="3" fill="#1b4250" stroke="#ffd36b" stroke-width="2"/>
+      <rect x="-2" y="-18" width="4" height="18" fill="#ffd36b" opacity="0.7"/>
+      <circle cx="0" cy="-22" r="4" fill="#ffd36b"/><text x="0" y="-30" text-anchor="middle" fill="#ffd36b" font-family="system-ui,monospace" font-size="10" font-weight="700">x5</text>
+      <rect x="-28" y="8" width="4" height="20" fill="#16343a"/><rect x="24" y="8" width="4" height="20" fill="#16343a"/>
+    </g>
   </g>
 
-<text x="360" y="55" text-anchor="middle" fill="#7af7e0" font-family="system-ui" font-weight="800" font-size="28" letter-spacing="6">NEON ORBITER</text><path d="M40 300l60-28 55 40 70-52 65 44 60-30 70 36 55-24 60 30 55-14 60 26" fill="#0a1524" stroke="#35d9cc" stroke-width="2.5" filter="url(#g)"/><g filter="url(#g)"><path d="M480 296h110" stroke="#ffe36e" stroke-width="6" stroke-linecap="round"/><text x="535" y="282" text-anchor="middle" fill="#ffe36e" font-family="system-ui" font-weight="800" font-size="16">×2</text></g><g filter="url(#g)"><path d="M300 296h64" stroke="#ffe36e" stroke-width="6" stroke-linecap="round"/><text x="332" y="282" text-anchor="middle" fill="#ffe36e" font-family="system-ui" font-weight="800" font-size="14">×3</text></g><g transform="translate(430 150) rotate(8)" filter="url(#g)"><path d="M-6 12q-4 16-9 24m27-24q4 16 9 24" stroke="#ffcf70" stroke-width="5" stroke-linecap="round"/><path d="M-3 10q-2 18 0 26 2-8 3-26" fill="#fff3a0"/><rect x="-14" y="-18" width="28" height="34" rx="11" fill="url(#lm)" stroke="#eaffff" stroke-width="2.5"/><circle cx="0" cy="-6" r="6" fill="#c2fff1" stroke="#ffffffb0" stroke-width="1.5"/><path d="M-8 12l-6 9m30-9 6 9" stroke="#caffed" stroke-width="3"/></g><path d="M430 90q60 30 55 55" fill="none" stroke="#7c88ff" stroke-width="2.5" stroke-dasharray="5 9" opacity=".8"/><text x="360" y="354" text-anchor="middle" fill="#b9c9e8" font-family="system-ui" font-size="16" letter-spacing="3">GRAVITÉ · CARBURANT · ALUNISSAGE</text><a href="https://github.com/kewinMarchand/neon-orbiter" target="_blank" rel="noopener noreferrer" aria-label="Code source de neon-orbiter sur GitHub"><g transform="translate(676,340)"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" fill="#9fb0c8"/></g></a>
+  <!-- lander -->
+  <g transform="translate(360,150)" filter="url(#glow)">
+    <path d="M-10 18 L0 44 L10 18 Z" fill="url(#flame)" opacity="0.9"/>
+    <rect x="-18" y="-14" width="36" height="28" rx="10" fill="url(#hull)" stroke="#eaffff" stroke-opacity="0.7"/>
+    <rect x="-10" y="-4" width="20" height="10" rx="4" fill="#0b2628" fill-opacity="0.7"/>
+    <ellipse cx="0" cy="-10" rx="8" ry="6" fill="#c8fbff" fill-opacity="0.9"/>
+    <line x1="0" y1="-16" x2="0" y2="-24" stroke="#69ffe1" stroke-width="2"/><circle cx="0" cy="-26" r="2.5" fill="#ffd36b"/>
+    <path d="M-18 6 L-30 18 L-22 20 Z" fill="#2dd6b8"/><path d="M18 6 L30 18 L22 20 Z" fill="#2dd6b8"/>
+    <rect x="-28" y="20" width="10" height="3" rx="1.5" fill="#184a42"/><rect x="18" y="20" width="10" height="3" rx="1.5" fill="#184a42"/>
+    <line x1="-12" y1="14" x2="-24" y2="20" stroke="#69ffe1" stroke-width="2"/><line x1="12" y1="14" x2="24" y2="20" stroke="#69ffe1" stroke-width="2"/>
+  </g>
+
+  <text x="360" y="360" text-anchor="middle" fill="#b9c9e8" font-family="system-ui,'Space Grotesk',sans-serif" font-size="14" letter-spacing="2">CONTRÔLEZ LA POUSSÉE · ALUNISSEZ EN DOUCEUR</text>
 </svg>

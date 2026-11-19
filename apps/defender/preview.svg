@@ -1,162 +1,64 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
   <title id="title">Neon Defender</title>
-  <desc id="desc">Un vaisseau néon au centre de l'espace oriente son bouclier rotatif pour intercepter des photons entrants.</desc>
+  <desc id="desc">Vaisseau central avec bouclier technologique segmenté interceptant des photons sur fond spatial néon quadrillé.</desc>
   <defs>
     <linearGradient id="space" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#061327"/>
-      <stop offset="0.55" stop-color="#071420"/>
-      <stop offset="1" stop-color="#040b14"/>
+      <stop offset="0" stop-color="#0c211d"/><stop offset="0.5" stop-color="#071713"/><stop offset="1" stop-color="#06100f"/>
     </linearGradient>
-    <linearGradient id="hull" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="0.32" stop-color="#caffed"/>
-      <stop offset="0.72" stop-color="#48e2c3"/>
-      <stop offset="1" stop-color="#137d6d"/>
-    </linearGradient>
-    <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#fff3a0"/>
-      <stop offset="0.35" stop-color="#73ffe2" stop-opacity="0.85"/>
-      <stop offset="1" stop-color="#00b998" stop-opacity="0"/>
-    </linearGradient>
-    <radialGradient id="neb1" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#00e0a5" stop-opacity="0.18"/>
-      <stop offset="1" stop-color="#00e0a5" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="neb2" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#2468b9" stop-opacity="0.2"/>
-      <stop offset="1" stop-color="#2468b9" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="6" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="3" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
+    <radialGradient id="neb1" cx="22%" cy="28%" r="35%"><stop offset="0" stop-color="#00e0a5" stop-opacity="0.14"/><stop offset="1" stop-color="#00e0a5" stop-opacity="0"/></radialGradient>
+    <radialGradient id="neb2" cx="78%" cy="70%" r="32%"><stop offset="0" stop-color="#24b99b" stop-opacity="0.14"/><stop offset="1" stop-color="#24b99b" stop-opacity="0"/></radialGradient>
+    <linearGradient id="hull" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="0.32" stop-color="#caffed"/><stop offset="0.72" stop-color="#48e2c3"/><stop offset="1" stop-color="#137d6d"/></linearGradient>
+    <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3a0"/><stop offset="0.35" stop-color="#73ffe2" stop-opacity="0.85"/><stop offset="1" stop-color="#00b998" stop-opacity="0"/></linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
-
-  <rect width="720" height="380" rx="24" fill="url(#space)"/>
-  <g class="stars" aria-hidden="true">
-    <circle cx="18" cy="26" r="2.2" fill="#ffffff" opacity="0.95"/>
-    <circle cx="54" cy="64" r="1.4" fill="#dffcff" opacity="0.8"/>
-    <circle cx="88" cy="18" r="1.8" fill="#ffffff" opacity="0.9"/>
-    <circle cx="126" cy="52" r="1.1" fill="#bff6ff" opacity="0.75"/>
-    <circle cx="164" cy="86" r="2.0" fill="#ffffff" opacity="0.92"/>
-    <circle cx="198" cy="24" r="1.3" fill="#dffcff" opacity="0.78"/>
-    <circle cx="236" cy="60" r="2.3" fill="#ffffff" opacity="0.95"/>
-    <circle cx="274" cy="14" r="1.5" fill="#bff6ff" opacity="0.8"/>
-    <circle cx="312" cy="46" r="1.0" fill="#ffffff" opacity="0.7"/>
-    <circle cx="348" cy="78" r="1.9" fill="#dffcff" opacity="0.88"/>
-    <circle cx="386" cy="22" r="1.4" fill="#ffffff" opacity="0.82"/>
-    <circle cx="424" cy="56" r="2.4" fill="#ffffff" opacity="0.96"/>
-    <circle cx="462" cy="32" r="1.1" fill="#bff6ff" opacity="0.72"/>
-    <circle cx="498" cy="84" r="1.7" fill="#dffcff" opacity="0.84"/>
-    <circle cx="536" cy="16" r="2.1" fill="#ffffff" opacity="0.93"/>
-    <circle cx="574" cy="62" r="1.3" fill="#dffcff" opacity="0.76"/>
-    <circle cx="612" cy="38" r="1.6" fill="#ffffff" opacity="0.86"/>
-    <circle cx="648" cy="74" r="1.1" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="684" cy="20" r="2.0" fill="#ffffff" opacity="0.92"/>
-    <circle cx="704" cy="96" r="1.4" fill="#dffcff" opacity="0.78"/>
-    <circle cx="36" cy="118" r="1.5" fill="#ffffff" opacity="0.8"/>
-    <circle cx="92" cy="148" r="1.0" fill="#bff6ff" opacity="0.65"/>
-    <circle cx="148" cy="108" r="2.0" fill="#ffffff" opacity="0.88"/>
-    <circle cx="206" cy="136" r="1.2" fill="#dffcff" opacity="0.72"/>
-    <circle cx="262" cy="112" r="1.7" fill="#ffffff" opacity="0.84"/>
-    <circle cx="322" cy="142" r="1.1" fill="#bff6ff" opacity="0.68"/>
-    <circle cx="378" cy="104" r="1.9" fill="#dffcff" opacity="0.86"/>
-    <circle cx="438" cy="132" r="1.3" fill="#ffffff" opacity="0.76"/>
-    <circle cx="492" cy="116" r="2.2" fill="#ffffff" opacity="0.9"/>
-    <circle cx="548" cy="146" r="1.0" fill="#bff6ff" opacity="0.66"/>
-    <circle cx="604" cy="110" r="1.6" fill="#dffcff" opacity="0.82"/>
-    <circle cx="662" cy="138" r="1.4" fill="#ffffff" opacity="0.78"/>
-    <circle cx="708" cy="156" r="1.8" fill="#ffffff" opacity="0.85"/>
-    <circle cx="24" cy="182" r="1.8" fill="#ffffff" opacity="0.84"/>
-    <circle cx="74" cy="214" r="1.2" fill="#dffcff" opacity="0.7"/>
-    <circle cx="132" cy="188" r="1.0" fill="#bff6ff" opacity="0.62"/>
-    <circle cx="188" cy="224" r="1.6" fill="#ffffff" opacity="0.8"/>
-    <circle cx="246" cy="176" r="2.1" fill="#dffcff" opacity="0.86"/>
-    <circle cx="304" cy="208" r="1.1" fill="#ffffff" opacity="0.68"/>
-    <circle cx="360" cy="184" r="1.5" fill="#bff6ff" opacity="0.74"/>
-    <circle cx="418" cy="216" r="1.9" fill="#ffffff" opacity="0.88"/>
-    <circle cx="476" cy="172" r="1.3" fill="#dffcff" opacity="0.72"/>
-    <circle cx="534" cy="202" r="1.0" fill="#ffffff" opacity="0.64"/>
-    <circle cx="590" cy="186" r="2.0" fill="#ffffff" opacity="0.85"/>
-    <circle cx="646" cy="218" r="1.4" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="698" cy="192" r="1.7" fill="#dffcff" opacity="0.82"/>
-    <circle cx="48" cy="252" r="1.1" fill="#ffffff" opacity="0.66"/>
-    <circle cx="112" cy="276" r="1.8" fill="#dffcff" opacity="0.8"/>
-    <circle cx="176" cy="246" r="1.3" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="238" cy="268" r="1.0" fill="#ffffff" opacity="0.6"/>
-    <circle cx="298" cy="242" r="1.6" fill="#ffffff" opacity="0.78"/>
-    <circle cx="356" cy="274" r="2.0" fill="#dffcff" opacity="0.84"/>
-    <circle cx="416" cy="248" r="1.2" fill="#bff6ff" opacity="0.68"/>
-    <circle cx="474" cy="272" r="1.5" fill="#ffffff" opacity="0.76"/>
-    <circle cx="532" cy="240" r="1.1" fill="#dffcff" opacity="0.64"/>
-    <circle cx="588" cy="266" r="1.9" fill="#ffffff" opacity="0.82"/>
-    <circle cx="646" cy="250" r="1.3" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="700" cy="278" r="1.7" fill="#ffffff" opacity="0.8"/>
+  <rect width="720" height="380" fill="url(#space)"/>
+  <rect width="720" height="380" fill="url(#neb1)"/><rect width="720" height="380" fill="url(#neb2)"/>
+  <g stroke="#9bfff0" stroke-opacity="0.07" stroke-width="1">
+    <path d="M0 40H720M0 100H720M0 160H720M0 220H720M0 280H720M0 340H720"/>
+    <path d="M60 0V380M120 0V380M180 0V380M240 0V380M300 0V380M360 0V380M420 0V380M480 0V380M540 0V380M600 0V380M660 0V380"/>
   </g>
+  <g fill="#f2fffc" opacity="0.75"><circle cx="30" cy="26" r="1.6"/><circle cx="100" cy="60" r="1"/><circle cx="210" cy="22" r="1.8"/><circle cx="340" cy="40" r="1.1"/><circle cx="500" cy="28" r="1.7"/><circle cx="640" cy="50" r="1.2"/><circle cx="690" cy="20" r="1.5"/></g>
+  <text x="360" y="48" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="26" letter-spacing="5">NEON DEFENDER</text>
 
-
-  <ellipse cx="180" cy="120" rx="190" ry="140" fill="url(#neb1)"/>
-  <ellipse cx="560" cy="280" rx="220" ry="160" fill="url(#neb2)"/>
-  <g stroke="#9fe7ff" stroke-linecap="round" opacity="0.22">
-    <line x1="110" y1="20" x2="110" y2="58" stroke-width="1.5"/><line x1="250" y1="10" x2="250" y2="46" stroke-width="1.2"/>
-    <line x1="500" y1="300" x2="500" y2="345" stroke-width="1.5"/><line x1="640" y1="250" x2="640" y2="292" stroke-width="1.2"/>
-    <line x1="60" y1="250" x2="60" y2="286" stroke-width="1.2"/>
-  </g>
-
-  <text x="360" y="52" text-anchor="middle" fill="#69ffe1" font-family="system-ui,Segoe UI,sans-serif" font-weight="800" font-size="28" letter-spacing="6">NEON DEFENDER</text>
-
-  <!-- orbit rings -->
   <g fill="none" stroke="#69ffe1">
-    <circle cx="360" cy="205" r="72" opacity="0.18"/>
-    <circle cx="360" cy="205" r="108" opacity="0.28"/>
-    <circle cx="360" cy="205" r="160" opacity="0.14"/>
+    <circle cx="360" cy="205" r="72" opacity="0.16"/>
+    <circle cx="360" cy="205" r="108" opacity="0.26"/>
+    <circle cx="360" cy="205" r="160" opacity="0.12"/>
   </g>
 
-  <!-- incoming photons -->
   <g filter="url(#glow)">
     <g>
       <line x1="205" y1="110" x2="245" y2="132" stroke="#ffd36b" stroke-width="2" stroke-dasharray="4 6" opacity="0.6"/>
-      <circle cx="200" cy="105" r="8" fill="#ffd36b"/>
-      <circle cx="200" cy="105" r="12" fill="none" stroke="#fff3c4" stroke-width="2"/>
+      <circle cx="200" cy="105" r="8" fill="#ffd36b"/><circle cx="200" cy="105" r="12" fill="none" stroke="#fff3c4" stroke-width="2"/>
     </g>
     <g>
       <line x1="535" y1="110" x2="500" y2="138" stroke="#ffd36b" stroke-width="2" stroke-dasharray="4 6" opacity="0.6"/>
-      <circle cx="540" cy="105" r="8" fill="#ffd36b"/>
-      <circle cx="540" cy="105" r="12" fill="none" stroke="#fff3c4" stroke-width="2"/>
+      <circle cx="540" cy="105" r="8" fill="#ffd36b"/><circle cx="540" cy="105" r="12" fill="none" stroke="#fff3c4" stroke-width="2"/>
     </g>
     <g>
       <line x1="560" y1="300" x2="520" y2="268" stroke="#ffd36b" stroke-width="2" stroke-dasharray="4 6" opacity="0.6"/>
-      <circle cx="565" cy="305" r="8" fill="#ffd36b"/>
-      <circle cx="565" cy="305" r="12" fill="none" stroke="#fff3c4" stroke-width="2"/>
+      <circle cx="565" cy="305" r="8" fill="#ffd36b"/><circle cx="565" cy="305" r="12" fill="none" stroke="#fff3c4" stroke-width="2"/>
     </g>
   </g>
 
-  <!-- ship at center -->
   <g transform="translate(360 205)" filter="url(#glow)">
-    <!-- engine flame -->
     <path d="M-10 18 L-6 46 L0 24 L6 46 L10 18 Z" fill="url(#flame)"/>
-    <!-- hull -->
     <rect x="-24" y="-28" width="48" height="44" rx="17" fill="url(#hull)" stroke="#eaffff" stroke-width="2" stroke-opacity="0.7"/>
-    <!-- wings -->
-    <path d="M-24 -2 L-38 14 L-24 16 Z" fill="#1fa88f"/>
-    <path d="M24 -2 L38 14 L24 16 Z" fill="#1fa88f"/>
-    <!-- cockpit -->
-    <ellipse cx="0" cy="-8" rx="10" ry="11" fill="#237d73"/>
-    <ellipse cx="0" cy="-11" rx="5.5" ry="6.5" fill="#c2fff1"/>
-    <!-- lights -->
-    <rect x="-18" y="6" width="4.5" height="7" rx="1" fill="#faffc4"/>
-    <rect x="13.5" y="6" width="4.5" height="7" rx="1" fill="#faffc4"/>
+    <path d="M-24 -2 L-38 14 L-24 16 Z" fill="#1fa88f"/><path d="M24 -2 L38 14 L24 16 Z" fill="#1fa88f"/>
+    <ellipse cx="0" cy="-8" rx="10" ry="11" fill="#237d73"/><ellipse cx="0" cy="-11" rx="5.5" ry="6.5" fill="#c2fff1"/>
+    <rect x="-18" y="6" width="4.5" height="7" rx="1" fill="#faffc4"/><rect x="13.5" y="6" width="4.5" height="7" rx="1" fill="#faffc4"/>
+    <circle cx="0" cy="22" r="4" fill="#69ffe1" fill-opacity="0.7"/>
   </g>
 
-  <!-- rotating shield arc -->
-  <g filter="url(#glow)">
-    <path d="M 360 97 A 108 108 0 0 1 454 150" fill="none" stroke="#69ffe1" stroke-width="20" stroke-linecap="round"/>
-    <path d="M 362 103 A 108 108 0 0 1 446 150" fill="none" stroke="#eaffff" stroke-width="3.5" stroke-linecap="round" opacity="0.55"/>
+  <!-- detailed tech shield arc -->
+  <g filter="url(#glow)" transform="translate(360 205)">
+    <path d="M 0 -108 A 108 108 0 0 1 94 -55" fill="none" stroke="#69ffe1" stroke-width="18" stroke-linecap="round"/>
+    <path d="M 2 -102 A 102 102 0 0 1 88 -52" fill="none" stroke="#eaffff" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+    <g stroke="#69ffe1" stroke-width="3" opacity="0.7">
+      <line x1="18" y1="-100" x2="24" y2="-112"/><line x1="46" y1="-92" x2="54" y2="-102"/><line x1="70" y1="-78" x2="80" y2="-86"/>
+    </g>
+    <circle cx="0" cy="-108" r="4" fill="#fff"/><circle cx="94" cy="-55" r="4" fill="#fff"/>
   </g>
 
-  <text x="360" y="352" text-anchor="middle" fill="#b9c9e8" font-family="system-ui,Segoe UI,sans-serif" font-size="16" letter-spacing="3">PILOTEZ • ORIENTEZ • PROTÉGEZ</text>
+  <text x="360" y="360" text-anchor="middle" fill="#b9c9e8" font-family="system-ui,'Space Grotesk',sans-serif" font-size="14" letter-spacing="2">ORIENTEZ LE BOUCLIER · INTERCEPTEZ LES PHOTONS</text>
 </svg>

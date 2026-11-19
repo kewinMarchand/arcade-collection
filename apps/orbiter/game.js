@@ -85,18 +85,18 @@ const DIFF = {
   chaos: { gravity: 75, thrust: 145, fuel: 10, roundGain: 10 },
 };
 
-let state = 'ready', round = 1, score = 0, gravity = 60, best = Number(localStorage.getItem('neonOrbiterBest')) || 0, last = 0, elapsed = 0, shake = 0, terrain = [], pads = [], stars = [], particles = [], rings = [], banner = '', bannerTimer = 0, keys = new Set(), ship = { x: 110, y: 70, vx: 14, vy: 0, tilt: 0, fuel: 100 }, shipScale = 1;
+let state = 'ready', round = 1, score = 0, gravity = 60, best = Number(localStorage.getItem('neonOrbiterBest')) || 0, last = 0, elapsed = 0, shake = 0, terrain = [], pads = [], stars = [], particles = [], rings = [], banner = '', bannerTimer = 0, keys = new Set(), ship = { x: 110, y: 70, vx: 14, vy: 0, tilt: 0, fuel: 100 }, shipScale = 1, screenFlash = 0;
 $('#best').textContent = String(best);
 
 function makeStars() {
-  stars = Array.from({ length: 120 }, () => ({
+  stars = Array.from({ length: 150 }, () => ({
     x: Math.random() * W,
     y: Math.random() * H,
-    s: Math.random() < 0.15 ? 2.2 : 0.8 + Math.random() * 1.2,
+    s: Math.random() < 0.13 ? 2.2 : 0.8 + Math.random() * 1.3,
     tw: Math.random() * Math.PI * 2,
     z: 0.3 + Math.random() * 0.7,
-    vy: 4 + Math.random() * 10,
-    vx: (Math.random() - 0.5) * 4,
+    vy: 4 + Math.random() * 12,
+    vx: (Math.random() - 0.5) * 5,
   }));
 }
 
@@ -117,7 +117,7 @@ function makeTerrain() {
 
 function reset() {
   const d = DIFF[difficultyInput.value] || DIFF.arcade;
-  round = 1; score = 0; gravity = d.gravity; elapsed = 0; shake = 0; particles = []; rings = []; banner = ''; bannerTimer = 0; shipScale = 1;
+  round = 1; score = 0; gravity = d.gravity; elapsed = 0; shake = 0; particles = []; rings = []; banner = ''; bannerTimer = 0; shipScale = 1; screenFlash = 0;
   ship = { x: 110, y: 70, vx: 14, vy: 0, tilt: 0, fuel: 100 };
   makeTerrain();
   $('#score').textContent = '0'; $('#fuel').textContent = '100%'; $('#status').textContent = 'Prêt';
@@ -139,19 +139,20 @@ function burst(x, y, color, n) {
 }
 
 function crash(reason) {
-  burst(ship.x, ship.y, '#ff6dbe', 30); burst(ship.x, ship.y, '#ff8c42', 16);
-  rings.push({ x: ship.x, y: ship.y, life: 0.6, crash: true });
-  shake = 1; shipScale = 0.6; state = 'over'; $('#status').textContent = reason;
+  burst(ship.x, ship.y, '#ff6dbe', 34); burst(ship.x, ship.y, '#ff8c42', 18); burst(ship.x, ship.y, '#ffffff', 10);
+  rings.push({ x: ship.x, y: ship.y, life: 0.7, crash: true });
+  rings.push({ x: ship.x, y: ship.y, life: 0.45, crash: true, r: 4 });
+  shake = 1; screenFlash = 0.22; shipScale = 0.55; state = 'over'; $('#status').textContent = reason;
   audio.seq([[200, 0.12, 'sawtooth', 0.05, 0], [120, 0.25, 'sawtooth', 0.05, 0.06]]);
   if (score > best) { best = score; localStorage.setItem('neonOrbiterBest', String(best)); $('#best').textContent = String(best); }
 }
 
 function update(dt) {
-  elapsed += dt; shake = Math.max(0, shake - dt * 3); bannerTimer = Math.max(0, bannerTimer - dt); shipScale += (1 - shipScale) * Math.min(1, dt * 8);
+  elapsed += dt; shake = Math.max(0, shake - dt * 3); bannerTimer = Math.max(0, bannerTimer - dt); shipScale += (1 - shipScale) * Math.min(1, dt * 8); screenFlash = Math.max(0, screenFlash - dt * 2.2);
   for (let i = particles.length - 1; i >= 0; i--) {
-    const p = particles[i]; p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 120 * dt; p.life -= dt; if (p.life <= 0) particles.splice(i, 1);
+    const p = particles[i]; p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 120 * dt; p.vx *= 0.995; p.life -= dt; if (p.life <= 0) particles.splice(i, 1);
   }
-  for (let i = rings.length - 1; i >= 0; i--) { rings[i].r = (rings[i].r || 8) + 90 * dt; if ((rings[i].life -= dt) <= 0) rings.splice(i, 1); }
+  for (let i = rings.length - 1; i >= 0; i--) { rings[i].r = (rings[i].r || 8) + 95 * dt; if ((rings[i].life -= dt) <= 0) rings.splice(i, 1); }
   for (const s of stars) {
     s.y += s.vy * dt;
     s.x += s.vx * dt;
@@ -183,8 +184,13 @@ function update(dt) {
       const pts = 50 * pad.m + (bonusInput.checked ? Math.round(ship.fuel * 0.5) : 0);
       score += pts; $('#score').textContent = String(score);
       banner = `ALUNISSAGE ×${pad.m} +${pts}`; bannerTimer = 1.6;
-      shipScale = 0.85;
-      rings.push({ x: (pad.x0 + pad.x1) / 2, y: pad.y, life: 0.8, r: 8 }); burst(ship.x, ship.y - 8, '#69ffe1', 18);
+      shipScale = 0.82;
+      screenFlash = Math.max(screenFlash, 0.1);
+      const padCx = (pad.x0 + pad.x1) / 2;
+      rings.push({ x: padCx, y: pad.y, life: 0.9, r: 8 });
+      rings.push({ x: padCx, y: pad.y, life: 0.55, r: 4 });
+      burst(ship.x, ship.y - 8, '#69ffe1', 20);
+      burst(padCx, pad.y - 2, '#ffe36e', 12);
       audio.seq([[520, 0.08, 'sine', 0.03, 0], [720, 0.1, 'sine', 0.03, 0.06]]);
       if (score > best) { best = score; localStorage.setItem('neonOrbiterBest', String(best)); $('#best').textContent = String(best); }
       round++; gravity = Math.min(130, d.gravity + round * d.roundGain);
@@ -200,7 +206,23 @@ function update(dt) {
 function draw(t) {
   ctx.clearRect(0, 0, W, H); ctx.save();
   if (shake > 0) ctx.translate((Math.random() - 0.5) * 12 * shake, (Math.random() - 0.5) * 8 * shake);
-  const bg = ctx.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#0c1a33'); bg.addColorStop(1, '#061013'); ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+  // Invaders-style space background: gradient + nebula + faint grid + stars
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#08162a'); bg.addColorStop(0.55, '#071420'); bg.addColorStop(1, '#050d16');
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+  const neb = (x, y, r, color) => {
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, color); g.addColorStop(1, 'transparent');
+    ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2);
+  };
+  neb(W * 0.22 + Math.sin(elapsed * 0.12) * 20, H * 0.22, 240, '#00e0a514');
+  neb(W * 0.78, H * 0.35 + Math.cos(elapsed * 0.1) * 18, 220, '#4aa8ff14');
+  ctx.save(); ctx.strokeStyle = '#9bfff00a'; ctx.lineWidth = 1;
+  for (let x = 0; x <= W; x += 60) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H * 0.78); ctx.stroke(); }
+  for (let y = 0; y <= H * 0.78; y += 60) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+  ctx.restore();
+
   for (const s of stars) {
     ctx.globalAlpha = 0.35 + 0.65 * Math.abs(Math.sin(s.tw + t * 0.002)) * s.z;
     ctx.fillStyle = s.s > 1.8 ? '#ffffff' : '#d5e9ff';
@@ -208,53 +230,117 @@ function draw(t) {
     ctx.shadowBlur = s.s > 1.6 ? 7 : 0;
     ctx.fillRect(s.x, s.y, s.s, s.s);
   }
-  ctx.globalAlpha = 1;
-  ctx.shadowBlur = 0;
+  ctx.globalAlpha = 1; ctx.shadowBlur = 0;
 
-  ctx.beginPath(); ctx.moveTo(terrain[0].x, terrain[0].y);
-  for (const p of terrain) ctx.lineTo(p.x, p.y);
-  ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
-  ctx.fillStyle = '#0a1524'; ctx.fill();
-  ctx.strokeStyle = '#35d9cc'; ctx.shadowColor = '#35d9cc'; ctx.shadowBlur = 10; ctx.lineWidth = 2.5;
-  ctx.beginPath(); ctx.moveTo(terrain[0].x, terrain[0].y); for (const p of terrain) ctx.lineTo(p.x, p.y); ctx.stroke(); ctx.shadowBlur = 0;
-
-  for (const p of pads) {
-    const pulse = 0.6 + 0.4 * Math.sin(t * 0.006);
-    ctx.strokeStyle = '#ffe36e'; ctx.shadowColor = '#ffe36e'; ctx.shadowBlur = 14 * pulse; ctx.lineWidth = 5;
-    ctx.beginPath(); ctx.moveTo(p.x0, p.y); ctx.lineTo(p.x1, p.y); ctx.stroke(); ctx.shadowBlur = 0;
-    ctx.fillStyle = '#ffe36e'; ctx.font = '800 14px system-ui'; ctx.textAlign = 'center'; ctx.fillText('×' + p.m, (p.x0 + p.x1) / 2, p.y - 12);
+  // Terrain (detailed neon crust)
+  if (terrain.length) {
+    ctx.beginPath(); ctx.moveTo(terrain[0].x, terrain[0].y);
+    for (const p of terrain) ctx.lineTo(p.x, p.y);
+    ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
+    const fill = ctx.createLinearGradient(0, 360, 0, H);
+    fill.addColorStop(0, '#0b1b2a'); fill.addColorStop(1, '#050a12');
+    ctx.fillStyle = fill; ctx.fill();
+    ctx.strokeStyle = '#35d9cc'; ctx.shadowColor = '#35d9cc'; ctx.shadowBlur = 10; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(terrain[0].x, terrain[0].y); for (const p of terrain) ctx.lineTo(p.x, p.y); ctx.stroke();
+    ctx.shadowBlur = 0;
+    // subtle surface ridges
+    ctx.strokeStyle = '#35d9cc22'; ctx.lineWidth = 1;
+    for (let i = 1; i < terrain.length - 1; i += 2) {
+      const p = terrain[i];
+      ctx.beginPath(); ctx.moveTo(p.x - 6, Math.min(H - 8, p.y + 10)); ctx.lineTo(p.x + 6, Math.min(H - 8, p.y + 16)); ctx.stroke();
+    }
   }
 
+  // Landing pads (detailed platforms)
+  for (const p of pads) {
+    const pulse = 0.6 + 0.4 * Math.sin(t * 0.006);
+    const cxp = (p.x0 + p.x1) / 2;
+    ctx.strokeStyle = '#7a5b00'; ctx.lineWidth = 2; ctx.shadowBlur = 0;
+    ctx.beginPath(); ctx.moveTo(p.x0 + 6, p.y); ctx.lineTo(p.x0 + 10, p.y + 14); ctx.moveTo(p.x1 - 6, p.y); ctx.lineTo(p.x1 - 10, p.y + 14); ctx.stroke();
+    ctx.strokeStyle = '#ffe36e'; ctx.shadowColor = '#ffe36e'; ctx.shadowBlur = 14 * pulse; ctx.lineWidth = 6; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(p.x0, p.y); ctx.lineTo(p.x1, p.y); ctx.stroke();
+    ctx.shadowBlur = 0; ctx.lineCap = 'butt';
+    // deck segments
+    ctx.fillStyle = '#2a2208';
+    for (let x = p.x0 + 4; x < p.x1 - 4; x += 12) ctx.fillRect(x, p.y - 4, 6, 3);
+    // beacon lights
+    for (const bx of [p.x0 + 4, p.x1 - 4]) {
+      ctx.fillStyle = Math.sin(t * 0.01 + bx) > 0 ? '#fff4b0' : '#ffb347';
+      ctx.shadowColor = '#ffe36e'; ctx.shadowBlur = 10;
+      ctx.beginPath(); ctx.arc(bx, p.y - 8, 2.5, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#ffe36e'; ctx.font = '800 14px system-ui'; ctx.textAlign = 'center'; ctx.fillText('×' + p.m, cxp, p.y - 14);
+  }
+
+  // Impact/landing rings
   for (const r of rings) {
-    ctx.globalAlpha = Math.max(0, r.life / 0.8);
+    const maxLife = r.crash ? 0.7 : 0.9;
+    ctx.globalAlpha = Math.max(0, r.life / maxLife);
     ctx.strokeStyle = r.crash ? '#ff6dbe' : '#69ffe1'; ctx.lineWidth = 2.5;
+    ctx.shadowColor = r.crash ? '#ff6dbe' : '#69ffe1'; ctx.shadowBlur = 10;
     ctx.beginPath();
     if (r.crash) ctx.arc(r.x, r.y, r.r || 8, 0, Math.PI * 2);
     else ctx.arc(r.x, r.y - 4, r.r || 8, Math.PI, Math.PI * 2);
     ctx.stroke();
   }
-  ctx.globalAlpha = 1;
+  ctx.globalAlpha = 1; ctx.shadowBlur = 0;
 
+  // Lander (detailed neon tech module)
   ctx.save(); ctx.translate(ship.x, ship.y); ctx.rotate(ship.tilt); ctx.scale(shipScale, shipScale);
   const main = (keys.has(' ') || keys.has('arrowup') || keys.has('z') || keys.has('w')) && ship.fuel > 0 && state === 'playing';
+  const side = (keys.has('arrowright') || keys.has('d') ? 1 : 0) - (keys.has('arrowleft') || keys.has('q') || keys.has('a') ? 1 : 0);
   if (main) {
-    const fl = 12 + Math.random() * 10; const fg = ctx.createLinearGradient(0, 10, 0, 10 + fl); fg.addColorStop(0, '#fff3a0'); fg.addColorStop(1, '#ff8c4200');
-    ctx.fillStyle = fg; ctx.beginPath(); ctx.moveTo(-5, 10); ctx.lineTo(0, 10 + fl); ctx.lineTo(5, 10); ctx.closePath(); ctx.fill();
+    const fl = 14 + Math.random() * 12;
+    const fg = ctx.createLinearGradient(0, 10, 0, 12 + fl); fg.addColorStop(0, '#fff8c9'); fg.addColorStop(0.45, '#7dffe2cc'); fg.addColorStop(1, '#ff8c4200');
+    ctx.fillStyle = fg; ctx.shadowColor = '#7dffe2'; ctx.shadowBlur = 14;
+    ctx.beginPath(); ctx.moveTo(-6, 10); ctx.lineTo(0, 12 + fl); ctx.lineTo(6, 10); ctx.closePath(); ctx.fill();
+    ctx.shadowBlur = 0;
   }
-  const body = ctx.createLinearGradient(0, -14, 0, 10); body.addColorStop(0, '#ffffff'); body.addColorStop(0.5, '#caffed'); body.addColorStop(1, '#2bbfa3');
-  ctx.fillStyle = body; ctx.shadowColor = '#69ffe1'; ctx.shadowBlur = 16; ctx.beginPath(); ctx.roundRect(-10, -13, 20, 24, 8); ctx.fill(); ctx.shadowBlur = 0;
-  ctx.strokeStyle = '#ffffffb0'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.roundRect(-8, -11, 16, 20, 7); ctx.stroke();
-  ctx.fillStyle = '#c2fff1'; ctx.beginPath(); ctx.ellipse(0, -3, 4, 5, 0, 0, Math.PI * 2); ctx.fill();
-  ctx.strokeStyle = '#caffed'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(-7, 9); ctx.lineTo(-12, 16); ctx.moveTo(7, 9); ctx.lineTo(12, 16); ctx.stroke();
-  ctx.fillStyle = '#faffc4'; ctx.fillRect(-12, 14, 5, 2.5); ctx.fillRect(7, 14, 5, 2.5);
+  if (side && ship.fuel > 0 && state === 'playing') {
+    const sx = side * 14, dir = -side;
+    ctx.fillStyle = '#7dffe2cc'; ctx.beginPath(); ctx.moveTo(sx, -2); ctx.lineTo(sx + dir * (8 + Math.random() * 5), 0); ctx.lineTo(sx, 3); ctx.fill();
+  }
+  // thruster pods
+  ctx.fillStyle = '#1d8f7a'; ctx.shadowColor = '#69ffe1'; ctx.shadowBlur = 8;
+  ctx.beginPath(); ctx.roundRect(-15, 2, 6, 9, 2); ctx.fill();
+  ctx.beginPath(); ctx.roundRect(9, 2, 6, 9, 2); ctx.fill();
+  ctx.shadowBlur = 0;
+  // hull/body
+  const body = ctx.createLinearGradient(0, -16, 0, 12); body.addColorStop(0, '#ffffff'); body.addColorStop(0.35, '#caffed'); body.addColorStop(0.7, '#48e2c3'); body.addColorStop(1, '#1f8a78');
+  ctx.fillStyle = body; ctx.shadowColor = '#69ffe1'; ctx.shadowBlur = 16; ctx.beginPath(); ctx.roundRect(-12, -14, 24, 24, 7); ctx.fill(); ctx.shadowBlur = 0;
+  // panel lines & tech details
+  ctx.strokeStyle = '#0f5b4f55'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(-12, -4); ctx.lineTo(12, -4); ctx.moveTo(0, -14); ctx.lineTo(0, 10); ctx.stroke();
+  ctx.strokeStyle = '#ffffffaa'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.roundRect(-10.5, -12.5, 21, 21, 6); ctx.stroke();
+  // cockpit dome
+  ctx.fillStyle = '#237d73'; ctx.beginPath(); ctx.ellipse(0, -5, 5.5, 6.5, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#c2fff1'; ctx.beginPath(); ctx.ellipse(-1, -6.5, 2.8, 3.5, -0.2, 0, Math.PI * 2); ctx.fill();
+  // antenna
+  ctx.strokeStyle = '#caffed'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(4, -14); ctx.lineTo(8, -20); ctx.stroke();
+  ctx.fillStyle = '#faffc4'; ctx.shadowColor = '#ffd36b'; ctx.shadowBlur = 6; ctx.beginPath(); ctx.arc(8, -20, 2, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+  // status lights
+  ctx.fillStyle = ship.fuel < 25 && Math.floor(t / 200) % 2 === 0 ? '#ff648f' : '#faffc4';
+  ctx.fillRect(-8, 4, 3, 2); ctx.fillRect(5, 4, 3, 2);
+  // legs
+  ctx.strokeStyle = '#caffed'; ctx.lineWidth = 2.5; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(-7, 10); ctx.lineTo(-13, 16); ctx.lineTo(-16, 18);
+  ctx.moveTo(7, 10); ctx.lineTo(13, 16); ctx.lineTo(16, 18); ctx.stroke();
+  ctx.fillStyle = '#faffc4'; ctx.shadowColor = '#ffe36e'; ctx.shadowBlur = 6;
+  ctx.beginPath(); ctx.roundRect(-18, 17, 6, 3, 1); ctx.fill();
+  ctx.beginPath(); ctx.roundRect(12, 17, 6, 3, 1); ctx.fill();
+  ctx.shadowBlur = 0; ctx.lineCap = 'butt';
   ctx.restore();
 
-  for (const p of particles) { ctx.globalAlpha = Math.min(1, p.life * 2.2); ctx.fillStyle = p.color; ctx.fillRect(p.x, p.y, p.s, p.s); }
-  ctx.globalAlpha = 1;
+  // Particles
+  for (const p of particles) { ctx.globalAlpha = Math.min(1, p.life * 2.2); ctx.fillStyle = p.color; ctx.shadowColor = p.color; ctx.shadowBlur = 6; ctx.fillRect(p.x, p.y, p.s, p.s); }
+  ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+
   if (bannerTimer > 0 && state === 'playing') {
     ctx.globalAlpha = Math.min(1, bannerTimer * 2); ctx.textAlign = 'center'; ctx.font = '900 24px system-ui'; ctx.fillStyle = '#d9ff76'; ctx.shadowColor = '#d9ff76'; ctx.shadowBlur = 18;
     ctx.fillText(banner, W / 2, 60); ctx.shadowBlur = 0; ctx.globalAlpha = 1;
   }
+  if (screenFlash > 0) { ctx.globalAlpha = screenFlash; ctx.fillStyle = '#ffd6e8'; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1; }
   ctx.restore();
 
   if (state !== 'playing') {

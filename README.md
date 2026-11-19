@@ -1,7 +1,6 @@
 # Neon Games
 
-Une collection de treize mini-jeux indépendants, gratuits et jouables directement dans le navigateur.
-
+Une collection de quinze mini-jeux indépendants, gratuits et jouables directement dans le navigateur.
 
 ## Ouvrir Neon Games
 
@@ -45,11 +44,11 @@ Une collection de treize mini-jeux indépendants, gratuits et jouables directeme
 
 [Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/defender/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/defender) — Orientez le bouclier pour intercepter les photons.
 
-### Neon Mines
+### Neon Black Holes
 
-[![Aperçu de Neon Mines](apps/mines/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/mines/)
+[![Aperçu de Neon Black Holes](apps/mines/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/mines/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/mines/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/mines) — Déduisez l'emplacement des mines à partir des indices.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/mines/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/mines) — Explorez les secteurs spatiaux et repérez les trous noirs grâce aux satellites.
 
 ### Neon Serpent
 
@@ -61,34 +60,44 @@ Une collection de treize mini-jeux indépendants, gratuits et jouables directeme
 
 [![Aperçu de Neon Orbiter](apps/orbiter/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/orbiter/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/orbiter/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/orbiter) — Alunissez en douceur : gravité, carburant et plates-formes bonus.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/orbiter/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/orbiter) — Alunissez en douceur : gravité, carburant et plateformes bonus.
 
 ### Neon Maze
 
-[![Apercu de Neon Maze](apps/maze/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/maze/)
+[![Aperçu de Neon Maze](apps/maze/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/maze/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/maze/) . [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/maze) - Mangez les pastilles, echappez aux fantomes, passez au niveau suivant.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/maze/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/maze) — Mangez les pastilles, échappez aux fantômes, passez au niveau suivant.
 
 ### Neon Pong
 
-[![Apercu de Neon Pong](apps/pong/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/pong/)
+[![Aperçu de Neon Pong](apps/pong/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/pong/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/pong/) . [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/pong) - Renvoyez la balle, marquez des points, premier a 11.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/pong/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/pong) — Renvoyez la balle, marquez des points, premier à 11.
 
 ### Neon Strike
 
-[![Apercu de Neon Strike](apps/strike/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/strike/)
+[![Aperçu de Neon Strike](apps/strike/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/strike/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/strike/) . [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/strike) - Abattez les vaisseaux avant qu'ils ne vous atteignent.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/strike/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/strike) — Abattez les vaisseaux avant qu'ils ne vous atteignent.
 
 ### Neon Breach
 
 [![Aperçu de Neon Breach](apps/breach/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/breach/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/breach/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/breach) — FPS néon en vue subjective : infiltrez le secteur et éliminez les sentinelles.
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/breach/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/breach) — FPS néon en vue subjective : infiltrez le secteur et éliminez les drones aliens.
+
+### Neon Jumper
+
+[![Aperçu de Neon Jumper](apps/jumper/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/jumper/)
+
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/jumper/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/jumper) — Plateformer néon : sautez de plateforme en plateforme et atteignez le portail.
+
+### Neon Sorter
+
+[![Aperçu de Neon Sorter](apps/sorter/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/sorter/)
+
+[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/sorter/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/sorter) — Triez les modules identiques et expédiez les conteneurs avant saturation.
 
 ## Thème
 
-Ce portail et les jeux utilisent une base CSS partagée (`neon/neon-tokens.css`, `neon-base.css`, `neon-components.css`).
-
-Ce dépôt (monorepo `neon-games`) regroupe le portail et les jeux de la collection.
+Ce dépôt utilise le thème Neon partagé (`packages/theme-neon`) et le cadre de jeu commun (`packages/ui`).

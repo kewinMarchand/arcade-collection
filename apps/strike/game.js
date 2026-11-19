@@ -120,7 +120,7 @@ let waveKills = 0, waveTarget = 8;
 let flashTimer = 0;
 
 function initStars() {
-  stars = Array.from({ length: 200 }, () => ({ x: Math.random() * W, y: Math.random() * H, s: Math.random() * 1.5 + 0.5, tw: Math.random() * Math.PI * 2 }));
+  stars = Array.from({ length: 140 }, () => ({ x: Math.random() * W, y: Math.random() * H, s: Math.random() * 1.4 + 0.4, tw: Math.random() * Math.PI * 2 }));
 }
 
 function start() {
@@ -239,9 +239,20 @@ function update(dt) {
 
     e.z -= e.speed * dt;
     if (e.z <= 0) {
+      const hitX = sx(e), hitY = sy(e);
       enemies.splice(i, 1);
-      if (shield > 0) { shield--; shieldEl.textContent = String(shield); audio.tone(300, 0.1, 'sawtooth', 0.03); }
-      else { lives--; livesEl.textContent = String(lives); audio.tone(180, 0.2, 'sawtooth', 0.04); shake = 1; if (lives <= 0) { state = 'over'; } }
+      burst(hitX, hitY, e.color, 28);
+      for (let k = 0; k < 2; k++) particles.push({ x: hitX, y: hitY, vx: (Math.random()-0.5)*260, vy: -40-Math.random()*120, life: 0.35, color: '#ffffff', s: 3 });
+      flashTimer = 0.12;
+      shake = 1;
+      if (shield > 0) {
+        shield--; shieldEl.textContent = String(shield);
+        audio.tone(300, 0.12, 'sawtooth', 0.03);
+      } else {
+        lives--; livesEl.textContent = String(lives);
+        audio.tone(180, 0.22, 'sawtooth', 0.045);
+        if (lives <= 0) { state = 'over'; }
+      }
     }
   }
 }
@@ -378,33 +389,38 @@ function draw() {
   ctx.save();
   if (shake > 0) ctx.translate((Math.random() - 0.5) * 16 * shake, (Math.random() - 0.5) * 12 * shake);
 
-  // background
-  const g = ctx.createRadialGradient(CX, CY, 0, CX, CY, W * 0.7);
-  g.addColorStop(0, '#1a1a3a'); g.addColorStop(1, '#06060f');
+  // background (invaders-style generalized: gradient + nebula + faint rectangular grid + stars)
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, '#0c211d'); g.addColorStop(0.45, '#071713'); g.addColorStop(1, '#060b12');
   ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const neb = (x, y, r, c) => { const rg = ctx.createRadialGradient(x, y, 0, x, y, r); rg.addColorStop(0, c); rg.addColorStop(1, 'transparent'); ctx.fillStyle = rg; ctx.fillRect(x-r,y-r,r*2,r*2); };
+  neb(W*0.25 + Math.sin(elapsed*0.17)*30, H*0.22, 260, 'rgba(0,224,165,0.10)');
+  neb(W*0.78, H*0.30 + Math.cos(elapsed*0.13)*20, 240, 'rgba(36,185,155,0.11)');
+  ctx.save(); ctx.strokeStyle = 'rgba(155,255,240,0.045)'; ctx.lineWidth = 1;
+  for (let x = 0; x <= W; x += 60) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+  for (let y = 0; y <= H; y += 60) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+  ctx.restore();
 
-  // grid floor
-  ctx.strokeStyle = 'rgba(123,255,224,0.15)'; ctx.lineWidth = 1;
+  // stars
+  for (const s of stars) {
+    const tw = 0.45 + 0.55 * Math.sin(elapsed * (1.2 + s.s) + s.tw);
+    ctx.globalAlpha = Math.max(0.15, (0.25 + s.s * 0.25) * tw);
+    ctx.fillStyle = s.s > 1.2 ? '#baffeb' : '#f2fffc';
+    ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
+  // perspective grid floor
+  ctx.strokeStyle = 'rgba(123,255,224,0.16)'; ctx.lineWidth = 1;
   for (let i = 0; i < 12; i++) {
-    const t = i / 11;
-    const y = CY + (H - CY) * t * 0.9;
+    const tt = i / 11;
+    const y = CY + (H - CY) * tt * 0.9;
     ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
   }
   for (let i = -6; i <= 6; i++) {
     const x = CX + i * 80;
     ctx.beginPath(); ctx.moveTo(x, CY); ctx.lineTo(CX + (x - CX) * 4, H); ctx.stroke();
   }
-
-  // stars
-  ctx.fillStyle = '#fff';
-  for (let i = 0; i < 80; i++) {
-    const starX = (i * 137 + 40) % W;
-    const starY = (i * 79 + 18) % (H / 2);
-    const r = i % 7 === 0 ? 1.8 : 1.0;
-    ctx.globalAlpha = 0.3 + (i % 5) * 0.1;
-    ctx.beginPath(); ctx.arc(starX, starY, r, 0, Math.PI * 2); ctx.fill();
-  }
-  ctx.globalAlpha = 1;
 
   // enemies sorted far to near for correct overlap
   const sorted = enemies.slice().sort((a, b) => b.z - a.z);

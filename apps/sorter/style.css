@@ -1,0 +1,3 @@
+:root { color-scheme: dark; }
+body.game { }
+.neon-screen canvas { touch-action: manipulation; cursor: pointer; }

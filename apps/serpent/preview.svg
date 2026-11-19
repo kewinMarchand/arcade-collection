@@ -1,72 +1,56 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
   <title id="title">Neon Serpent</title>
-  <desc id="desc">Serpent lumineux sur une grille néon vers une orbe rose.</desc>
+  <desc id="desc">Serpent mécanique néon détaillé sur grille, collectant un noyau d'énergie sur fond spatial quadrillé.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#10212a"/>
-      <stop offset="1" stop-color="#071018"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c211d"/><stop offset="0.52" stop-color="#071713"/><stop offset="1" stop-color="#06100f"/>
     </linearGradient>
-    <filter id="g" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="4" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
+    <radialGradient id="neb1" cx="22%" cy="28%" r="35%"><stop offset="0" stop-color="#00e0a5" stop-opacity="0.12"/><stop offset="1" stop-color="#00e0a5" stop-opacity="0"/></radialGradient>
+    <radialGradient id="neb2" cx="78%" cy="60%" r="30%"><stop offset="0" stop-color="#24b99b" stop-opacity="0.12"/><stop offset="1" stop-color="#24b99b" stop-opacity="0"/></radialGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
-  <rect width="720" height="380" rx="24" fill="url(#bg)"/>
-  <g class="stars" aria-hidden="true">
-    <circle cx="18" cy="26" r="2.2" fill="#ffffff" opacity="0.95"/>
-    <circle cx="54" cy="64" r="1.4" fill="#dffcff" opacity="0.8"/>
-    <circle cx="88" cy="18" r="1.8" fill="#ffffff" opacity="0.9"/>
-    <circle cx="126" cy="52" r="1.1" fill="#bff6ff" opacity="0.75"/>
-    <circle cx="164" cy="86" r="2.0" fill="#ffffff" opacity="0.92"/>
-    <circle cx="198" cy="24" r="1.3" fill="#dffcff" opacity="0.78"/>
-    <circle cx="236" cy="60" r="2.3" fill="#ffffff" opacity="0.95"/>
-    <circle cx="274" cy="14" r="1.5" fill="#bff6ff" opacity="0.8"/>
-    <circle cx="312" cy="46" r="1.0" fill="#ffffff" opacity="0.7"/>
-    <circle cx="348" cy="78" r="1.9" fill="#dffcff" opacity="0.88"/>
-    <circle cx="386" cy="22" r="1.4" fill="#ffffff" opacity="0.82"/>
-    <circle cx="424" cy="56" r="2.4" fill="#ffffff" opacity="0.96"/>
-    <circle cx="462" cy="32" r="1.1" fill="#bff6ff" opacity="0.72"/>
-    <circle cx="498" cy="84" r="1.7" fill="#dffcff" opacity="0.84"/>
-    <circle cx="536" cy="16" r="2.1" fill="#ffffff" opacity="0.93"/>
-    <circle cx="574" cy="62" r="1.3" fill="#dffcff" opacity="0.76"/>
-    <circle cx="612" cy="38" r="1.6" fill="#ffffff" opacity="0.86"/>
-    <circle cx="648" cy="74" r="1.1" fill="#bff6ff" opacity="0.7"/>
-    <circle cx="684" cy="20" r="2.0" fill="#ffffff" opacity="0.92"/>
-    <circle cx="704" cy="96" r="1.4" fill="#dffcff" opacity="0.78"/>
+  <rect width="720" height="380" fill="url(#bg)"/>
+  <rect width="720" height="380" fill="url(#neb1)"/><rect width="720" height="380" fill="url(#neb2)"/>
+  <!-- decorative background grid -->
+  <g stroke="#9bfff0" stroke-opacity="0.06" stroke-width="1">
+    <path d="M0 40H720M0 100H720M0 160H720M0 220H720M0 280H720M0 340H720"/>
+    <path d="M60 0V380M120 0V380M180 0V380M240 0V380M300 0V380M360 0V380M420 0V380M480 0V380M540 0V380M600 0V380M660 0V380"/>
   </g>
-  <g stroke="#69ffe1" stroke-opacity=".12" stroke-width="1">
-    <path d="M110 80v260M170 80v260M230 80v260M290 80v260M350 80v260M410 80v260M470 80v260M530 80v260M590 80v260"/>
-    <path d="M110 108h520M110 168h520M110 228h520M110 288h520"/>
+  <g fill="#f2fffc" opacity="0.75"><circle cx="40" cy="28" r="1.6"/><circle cx="150" cy="50" r="1"/><circle cx="300" cy="22" r="1.8"/><circle cx="520" cy="36" r="1.2"/><circle cx="660" cy="24" r="1.6"/></g>
+
+  <!-- gameplay grid -->
+  <g stroke="#69ffe1" stroke-opacity="0.15" stroke-width="1">
+    <path d="M110 70v260M170 70v260M230 70v260M290 70v260M350 70v260M410 70v260M470 70v260M530 70v260M590 70v260"/>
+    <path d="M110 90h480M110 150h480M110 210h480M110 270h480M110 330h480"/>
   </g>
-  <!-- snake body (blocky cells like the game) -->
-  <g filter="url(#g)">
-    <!-- tail segment -->
-    <rect x="130" y="268" width="28" height="28" rx="6" fill="#3fd9c0" opacity="0.7"/>
-    <rect x="160" y="268" width="28" height="28" rx="6" fill="#4ae0c8" opacity="0.75"/>
-    <rect x="190" y="238" width="28" height="28" rx="6" fill="#56e7d0" opacity="0.8"/>
-    <rect x="190" y="208" width="28" height="28" rx="6" fill="#60eed8" opacity="0.85"/>
-    <rect x="220" y="208" width="28" height="28" rx="6" fill="#69ffe1" opacity="0.9"/>
-    <rect x="250" y="208" width="28" height="28" rx="6" fill="#69ffe1" opacity="0.9"/>
-    <rect x="280" y="208" width="28" height="28" rx="6" fill="#69ffe1" opacity="0.9"/>
-    <rect x="310" y="208" width="28" height="28" rx="6" fill="#69ffe1" opacity="0.9"/>
-    <rect x="340" y="208" width="28" height="28" rx="6" fill="#69ffe1" opacity="0.9"/>
-    <rect x="340" y="178" width="28" height="28" rx="6" fill="#60eed8" opacity="0.9"/>
-    <rect x="340" y="148" width="28" height="28" rx="6" fill="#56e7d0" opacity="0.9"/>
-    <rect x="370" y="148" width="28" height="28" rx="6" fill="#60eed8" opacity="0.9"/>
-    <rect x="400" y="148" width="28" height="28" rx="6" fill="#69ffe1" opacity="0.9"/>
-    <rect x="400" y="178" width="28" height="28" rx="6" fill="#69ffe1" opacity="0.9"/>
-    <!-- head -->
-    <rect x="400" y="208" width="28" height="28" rx="6" fill="#7bffe5"/>
-    <circle cx="410" cy="218" r="3" fill="#06231d"/>
-    <circle cx="420" cy="218" r="3" fill="#06231d"/>
-    <circle cx="411" cy="217" r="1.2" fill="#fff"/>
-    <circle cx="421" cy="217" r="1.2" fill="#fff"/>
+  <rect x="110" y="70" width="480" height="260" rx="8" fill="none" stroke="#69ffe1" stroke-opacity="0.2" stroke-width="2"/>
+
+  <text x="360" y="48" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="26" letter-spacing="5">NEON SERPENT</text>
+
+  <!-- energy food -->
+  <g transform="translate(500,180)" filter="url(#glow)">
+    <circle cx="0" cy="0" r="14" fill="#1a1030" stroke="#ff6fae" stroke-width="2"/>
+    <polygon points="0,-9 8,0 0,9 -8,0" fill="#ff9fce"/>
+    <circle cx="0" cy="0" r="4" fill="#fff"/>
+    <circle cx="0" cy="0" r="18" fill="none" stroke="#ff6fae" stroke-opacity="0.3" stroke-width="2"/>
   </g>
-  <!-- food -->
-  <g transform="translate(220 130)" filter="url(#g)">
-    <circle cx="0" cy="0" r="10" fill="#ff6dbe"/>
-    <circle cx="-3" cy="-3" r="3" fill="#ffdcec" opacity="0.8"/>
+
+  <!-- serpent body modules -->
+  <g filter="url(#glow)">
+    <g transform="translate(230,210)"><rect x="-18" y="-18" width="36" height="36" rx="8" fill="#16343a" stroke="#69ffe1" stroke-opacity="0.7"/><rect x="-10" y="-10" width="20" height="20" rx="5" fill="#0b2628"/><circle cx="0" cy="0" r="4" fill="#69ffe1"/></g>
+    <g transform="translate(290,210)"><rect x="-18" y="-18" width="36" height="36" rx="8" fill="#16343a" stroke="#69ffe1" stroke-opacity="0.75"/><rect x="-10" y="-10" width="20" height="20" rx="5" fill="#0b2628"/><circle cx="0" cy="0" r="4" fill="#69ffe1"/></g>
+    <g transform="translate(350,210)"><rect x="-18" y="-18" width="36" height="36" rx="8" fill="#16343a" stroke="#69ffe1" stroke-opacity="0.8"/><rect x="-10" y="-10" width="20" height="20" rx="5" fill="#0b2628"/><circle cx="0" cy="0" r="4" fill="#69ffe1"/></g>
+    <g transform="translate(410,210)"><rect x="-18" y="-18" width="36" height="36" rx="8" fill="#16343a" stroke="#69ffe1" stroke-opacity="0.85"/><rect x="-10" y="-10" width="20" height="20" rx="5" fill="#0b2628"/><circle cx="0" cy="0" r="4" fill="#69ffe1"/></g>
+    <!-- head (detailed mech/drone) -->
+    <g transform="translate(470,210)">
+      <rect x="-20" y="-20" width="40" height="40" rx="10" fill="#1fa88f" stroke="#eaffff" stroke-opacity="0.7"/>
+      <rect x="-12" y="-8" width="18" height="16" rx="5" fill="#0b2628" fill-opacity="0.8"/>
+      <ellipse cx="8" cy="-6" rx="6" ry="5" fill="#c8fbff" fill-opacity="0.9"/>
+      <circle cx="10" cy="-6" r="2" fill="#10201c"/><circle cx="10.8" cy="-6.6" r="0.8" fill="#fff"/>
+      <rect x="14" y="-2" width="8" height="4" rx="2" fill="#ffd36b"/>
+      <path d="M-18 -10 L-24 -14 L-18 -2 Z" fill="#2dd6b8"/><path d="M-18 10 L-24 14 L-18 2 Z" fill="#2dd6b8"/>
+    </g>
   </g>
-  <text x="360" y="55" text-anchor="middle" fill="#7af7e0" font-family="system-ui,sans-serif" font-weight="800" font-size="28" letter-spacing="6">NEON SERPENT</text>
-  <text x="360" y="354" text-anchor="middle" fill="#b9c9e8" font-family="system-ui,sans-serif" font-size="16" letter-spacing="3">GRANDIS SANS TE MORDRE</text>
+
+  <text x="360" y="360" text-anchor="middle" fill="#b9c9e8" font-family="system-ui,'Space Grotesk',sans-serif" font-size="14" letter-spacing="2">GUIDEZ LE DRONE · COLLECTEZ LES NOYAUX</text>
 </svg>

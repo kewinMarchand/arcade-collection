@@ -1,28 +1,21 @@
-# Neon Mines
+# Neon Black Holes
 
-
-![Aperçu de Neon Mines : grille de démineur néon avec indices et mine](preview.svg)
-
-Jeu de puzzle logique : déduisez l'emplacement des mines grâce aux indices et révélez les cases sûres.
+Explorez des secteurs spatiaux et repérez les trous noirs cachés grâce aux satellites.
 
 ## Jouer en ligne
 
-[Ouvrir Neon Mines](https://kewinmarchand.github.io/neon-mines/)
+[Ouvrir Neon Black Holes](https://kewinmarchand.github.io/neon-games/apps/mines/)
+
+## Principe
+
+- **Clic gauche** : scanner/révéler un secteur.
+- **Clic droit** : poser ou retirer un satellite balise.
+- Les **satellites en orbite** autour d'un secteur révélé indiquent visuellement combien de trous noirs se trouvent dans les secteurs voisins (sans chiffres).
+- Révélez tous les secteurs sûrs pour sécuriser la zone. Touchez un trou noir et la mission échoue.
 
 ## Commandes
 
-- **Clic** : révéler une case
-- **Clic droit** : poser ou retirer un drapeau
-- **P** ou le bouton **Pause** : mettre en pause ou reprendre
-- **Recommencer** : relancer la partie
-- **Nouvelle partie** : recommencer depuis le début
-
-La première case révélée est toujours sûre. Le meilleur temps est conservé dans le navigateur.
+- **P** ou le bouton **Pause** : mettre en pause ou reprendre.
+- **Recommencer / Nouvelle mission** : relancer une partie.
 
 [Retour à la collection Neon Games](https://kewinmarchand.github.io/neon-games/)
-
-## Thème
-
-Thème **Boilerplate Neon** partagé (`neon/neon-tokens.css`, `neon-base.css`, `neon-components.css`) avec styles propres au jeu (`style.css`).
-
-Le jeu est publié avec GitHub Pages. Les tests se lancent avec `npm test` (Node.js 18+).
