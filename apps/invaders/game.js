@@ -273,7 +273,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     }
     for (const alien of aliens) if (intersects(playerBox, alien)) { loseLife(); break; }
     for (let i = aliens.length - 1; i >= 0; i--) {
-      if (aliens[i].y + aliens[i].h >= groundY) { burst(aliens[i].x + 16, groundY, alienColors[aliens[i].row], 18); aliens.splice(i, 1); loseLife(); }
+      if (aliens[i].y + aliens[i].h >= groundY) { burst(aliens[i].x + 16, groundY, alienColors[aliens[i].row % alienColors.length], 18); aliens.splice(i, 1); loseLife(); }
     }
     for (let i = playerBullets.length - 1; i >= 0; i--) {
       const b = playerBullets[i];
@@ -281,8 +281,8 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       if (hitIndex !== -1) {
         const alien = aliens[hitIndex], x = alien.x + alien.w / 2, y = alien.y + alien.h / 2;
         alien.hit = 1; alien.scale = 1.25;
-        burst(x, y, alienColors[alien.row], 18); dropPowerup(x, y);
-        aliens.splice(hitIndex, 1); playerBullets.splice(i, 1); score += 10; tone(180 + alien.row * 70, 0.09, 'triangle', 0.025);
+        burst(x, y, alienColors[alien.row % alienColors.length], 18); dropPowerup(x, y);
+        aliens.splice(hitIndex, 1); playerBullets.splice(i, 1); score += 10; tone(180 + (alien.row % alienColors.length) * 70, 0.09, 'triangle', 0.025);
       }
     }
     for (let i = powerups.length - 1; i >= 0; i--) {
@@ -364,7 +364,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     ctx.restore();
   }
   function drawAlien(alien) {
-    const color = alienColors[alien.row], bob = Math.sin(elapsed * 5 + alien.phase) * 2, step = Math.sin(elapsed * 10 + alien.phase) * 2;
+    const color = alienColors[alien.row % alienColors.length], bob = Math.sin(elapsed * 5 + alien.phase) * 2, step = Math.sin(elapsed * 10 + alien.phase) * 2;
     const s = alien.scale;
     ctx.save(); ctx.translate(alien.x + alien.w / 2, alien.y + alien.h / 2 + bob); ctx.scale(s, 2 - s);
     const glow = 17 + alien.hit * 12;

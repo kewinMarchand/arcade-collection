@@ -81,21 +81,21 @@
       </g>
     </g>
 
-    <!-- satellite count indicators (visual instead of numbers) -->
-    <!-- 2 satellites -->
+    <!-- satellite count indicators (visual instead of numbers, color-coded by danger level) -->
+    <!-- 2 satellites (green) -->
     <g transform="translate(230,102)" filter="url(#soft)">
-      <g transform="translate(-11,-4) rotate(-20)"><rect x="-3.2" y="-2.2" width="6.4" height="4.4" rx="1.2" fill="url(#sat)"/><rect x="-8.5" y="-1.6" width="4.4" height="3.2" fill="#5b7cff" stroke="#9befff" stroke-width="0.6"/><rect x="4.1" y="-1.6" width="4.4" height="3.2" fill="#5b7cff" stroke="#9befff" stroke-width="0.6"/><circle cx="0" cy="-5.5" r="0.9" fill="#ffd36b"/></g>
-      <g transform="translate(11,4) rotate(160)"><rect x="-3.2" y="-2.2" width="6.4" height="4.4" rx="1.2" fill="url(#sat)"/><rect x="-8.5" y="-1.6" width="4.4" height="3.2" fill="#5b7cff" stroke="#9befff" stroke-width="0.6"/><rect x="4.1" y="-1.6" width="4.4" height="3.2" fill="#5b7cff" stroke="#9befff" stroke-width="0.6"/><circle cx="0" cy="-5.5" r="0.9" fill="#ffd36b"/></g>
+      <g transform="translate(-11,-4) rotate(-20)"><rect x="-3.2" y="-2.2" width="6.4" height="4.4" rx="1.2" fill="url(#sat)"/><rect x="-8.5" y="-1.6" width="4.4" height="3.2" fill="#7cff7a" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.6"/><rect x="4.1" y="-1.6" width="4.4" height="3.2" fill="#7cff7a" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.6"/><circle cx="0" cy="-5.5" r="0.9" fill="#ffd36b"/></g>
+      <g transform="translate(11,4) rotate(160)"><rect x="-3.2" y="-2.2" width="6.4" height="4.4" rx="1.2" fill="url(#sat)"/><rect x="-8.5" y="-1.6" width="4.4" height="3.2" fill="#7cff7a" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.6"/><rect x="4.1" y="-1.6" width="4.4" height="3.2" fill="#7cff7a" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.6"/><circle cx="0" cy="-5.5" r="0.9" fill="#ffd36b"/></g>
     </g>
-    <!-- 1 satellite -->
+    <!-- 1 satellite (cyan) -->
     <g transform="translate(358,38)" filter="url(#soft)">
-      <g transform="translate(0,-10)"><rect x="-3.2" y="-2.2" width="6.4" height="4.4" rx="1.2" fill="url(#sat)"/><rect x="-8.5" y="-1.6" width="4.4" height="3.2" fill="#5b7cff" stroke="#9befff" stroke-width="0.6"/><rect x="4.1" y="-1.6" width="4.4" height="3.2" fill="#5b7cff" stroke="#9befff" stroke-width="0.6"/><circle cx="0" cy="-5.5" r="0.9" fill="#ffd36b"/></g>
+      <g transform="translate(0,-10)"><rect x="-3.2" y="-2.2" width="6.4" height="4.4" rx="1.2" fill="url(#sat)"/><rect x="-8.5" y="-1.6" width="4.4" height="3.2" fill="#69ffe1" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.6"/><rect x="4.1" y="-1.6" width="4.4" height="3.2" fill="#69ffe1" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.6"/><circle cx="0" cy="-5.5" r="0.9" fill="#ffd36b"/></g>
     </g>
-    <!-- 3 satellites -->
+    <!-- 3 satellites (gold) -->
     <g transform="translate(102,166)" filter="url(#soft)">
-      <g transform="translate(0,-11)"><rect x="-3.2" y="-2.2" width="6.4" height="4.4" rx="1.2" fill="url(#sat)"/><rect x="-8.5" y="-1.6" width="4.4" height="3.2" fill="#5b7cff" stroke="#9befff" stroke-width="0.6"/><rect x="4.1" y="-1.6" width="4.4" height="3.2" fill="#5b7cff" stroke="#9befff" stroke-width="0.6"/><circle cx="0" cy="-5.5" r="0.9" fill="#ffd36b"/></g>
-      <g transform="translate(10,6) rotate(120)"><rect x="-3.2" y="-2.2" width="6.4" height="4.4" rx="1.2" fill="url(#sat)"/><rect x="-8.5" y="-1.6" width="4.4" height="3.2" fill="#5b7cff" stroke="#9befff" stroke-width="0.6"/><rect x="4.1" y="-1.6" width="4.4" height="3.2" fill="#5b7cff" stroke="#9befff" stroke-width="0.6"/><circle cx="0" cy="-5.5" r="0.9" fill="#ffd36b"/></g>
-      <g transform="translate(-10,6) rotate(240)"><rect x="-3.2" y="-2.2" width="6.4" height="4.4" rx="1.2" fill="url(#sat)"/><rect x="-8.5" y="-1.6" width="4.4" height="3.2" fill="#5b7cff" stroke="#9befff" stroke-width="0.6"/><rect x="4.1" y="-1.6" width="4.4" height="3.2" fill="#5b7cff" stroke="#9befff" stroke-width="0.6"/><circle cx="0" cy="-5.5" r="0.9" fill="#ffd36b"/></g>
+      <g transform="translate(0,-11)"><rect x="-3.2" y="-2.2" width="6.4" height="4.4" rx="1.2" fill="url(#sat)"/><rect x="-8.5" y="-1.6" width="4.4" height="3.2" fill="#ffd36b" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.6"/><rect x="4.1" y="-1.6" width="4.4" height="3.2" fill="#ffd36b" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.6"/><circle cx="0" cy="-5.5" r="0.9" fill="#ffd36b"/></g>
+      <g transform="translate(10,6) rotate(120)"><rect x="-3.2" y="-2.2" width="6.4" height="4.4" rx="1.2" fill="url(#sat)"/><rect x="-8.5" y="-1.6" width="4.4" height="3.2" fill="#ffd36b" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.6"/><rect x="4.1" y="-1.6" width="4.4" height="3.2" fill="#ffd36b" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.6"/><circle cx="0" cy="-5.5" r="0.9" fill="#ffd36b"/></g>
+      <g transform="translate(-10,6) rotate(240)"><rect x="-3.2" y="-2.2" width="6.4" height="4.4" rx="1.2" fill="url(#sat)"/><rect x="-8.5" y="-1.6" width="4.4" height="3.2" fill="#ffd36b" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.6"/><rect x="4.1" y="-1.6" width="4.4" height="3.2" fill="#ffd36b" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.6"/><circle cx="0" cy="-5.5" r="0.9" fill="#ffd36b"/></g>
     </g>
 
     <!-- revealed black hole -->
@@ -110,8 +110,8 @@
     <g transform="translate(166,38)" filter="url(#glow)">
       <g transform="scale(1.25)">
         <rect x="-3.2" y="-2.2" width="6.4" height="4.4" rx="1.2" fill="url(#sat)"/>
-        <rect x="-8.5" y="-1.6" width="4.4" height="3.2" fill="#5b7cff" stroke="#9befff" stroke-width="0.6"/>
-        <rect x="4.1" y="-1.6" width="4.4" height="3.2" fill="#5b7cff" stroke="#9befff" stroke-width="0.6"/>
+        <rect x="-8.5" y="-1.6" width="4.4" height="3.2" fill="#69ffe1" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.6"/>
+        <rect x="4.1" y="-1.6" width="4.4" height="3.2" fill="#69ffe1" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.6"/>
         <line x1="0" y1="-2.2" x2="0" y2="-5.2" stroke="#fff" stroke-width="0.7"/>
         <circle cx="0" cy="-5.5" r="0.9" fill="#ffd36b"/>
       </g>

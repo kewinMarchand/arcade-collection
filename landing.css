@@ -9,7 +9,7 @@
       on les mappe sur les tokens bui-* existants.
    ---------------------------------------------------------- */
 :root {
-  --lime:  #69ffe1;   /* alias de --bui-color-primary  */
+  --lime:  #bada55;   /* alias de --bui-color-primary  */
   --text:  #f2f7f5;   /* alias de --bui-color-text     */
   --muted: #a9bab8;   /* alias de --bui-color-text-muted */
 
@@ -108,7 +108,7 @@ body {
   color: #061412;
   font-size: 1rem;
   font-weight: 800;
-  box-shadow: 0 0 14px #69ffe166;
+  box-shadow: 0 0 14px #bada5566;
   flex-shrink: 0;
 }
 
@@ -135,7 +135,7 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 55% at 72% 44%, #69ffe108 0%, transparent 65%),
+    radial-gradient(ellipse 60% 55% at 72% 44%, #bada5508 0%, transparent 65%),
     radial-gradient(ellipse 40% 35% at 15% 80%, #ff6dbe07 0%, transparent 55%),
     radial-gradient(ellipse 50% 40% at 85% 10%, #ffd36b06 0%, transparent 60%);
   pointer-events: none;
@@ -150,8 +150,8 @@ body {
     0deg,
     transparent,
     transparent 3px,
-    #69ffe104 3px,
-    #69ffe104 4px
+    #bada5504 3px,
+    #bada5504 4px
   );
   pointer-events: none;
   opacity: 0.35;
@@ -214,7 +214,7 @@ body {
   height: 7px;
   border-radius: 50%;
   background: var(--lime);
-  box-shadow: 0 0 8px var(--lime), 0 0 20px #69ffe188;
+  box-shadow: 0 0 8px var(--lime), 0 0 20px #bada5588;
   animation: pulse-dot 2s ease-in-out infinite;
 }
 
@@ -243,7 +243,7 @@ body {
     transform 0.16s ease,
     box-shadow 0.2s ease,
     filter 0.18s ease;
-  box-shadow: 0 0 24px #69ffe155, 0 4px 16px #00000055;
+  box-shadow: 0 0 24px #bada5555, 0 4px 16px #00000055;
   position: relative;
   overflow: hidden;
 }
@@ -259,14 +259,14 @@ body {
 .button:hover,
 .button:focus-visible {
   transform: translateY(-2px);
-  box-shadow: 0 0 40px #69ffe177, 0 8px 24px #00000066;
+  box-shadow: 0 0 40px #bada5577, 0 8px 24px #00000066;
   filter: brightness(1.08);
   outline: none;
 }
 
 .button:active {
   transform: translateY(1px);
-  box-shadow: 0 0 16px #69ffe144;
+  box-shadow: 0 0 16px #bada5544;
 }
 
 /* ----------------------------------------------------------
@@ -295,9 +295,9 @@ body {
 .orbit-one {
   width: 75%;
   aspect-ratio: 1;
-  border-color: #69ffe122;
+  border-color: #bada5522;
   animation-duration: 18s;
-  box-shadow: 0 0 20px #69ffe108 inset;
+  box-shadow: 0 0 20px #bada5508 inset;
 }
 
 .orbit-two {
@@ -325,7 +325,7 @@ body {
   border-radius: 50%;
   background: var(--lime);
   transform: translateY(-50%);
-  box-shadow: 0 0 10px var(--lime), 0 0 24px #69ffe188;
+  box-shadow: 0 0 10px var(--lime), 0 0 24px #bada5588;
 }
 
 .orbit-two::before {
@@ -339,11 +339,11 @@ body {
   width: 110px;
   height: 110px;
   border-radius: 50%;
-  background: radial-gradient(circle, #69ffe128 0%, #69ffe108 50%, transparent 70%);
+  background: radial-gradient(circle, #bada5528 0%, #bada5508 50%, transparent 70%);
   box-shadow:
-    0 0 40px #69ffe133,
-    0 0 80px #69ffe115,
-    inset 0 0 30px #69ffe115;
+    0 0 40px #bada5533,
+    0 0 80px #bada5515,
+    inset 0 0 30px #bada5515;
   animation: core-pulse 4s ease-in-out infinite;
 }
 
@@ -431,7 +431,7 @@ body {
   vertical-align: middle;
   display: inline-block;
   margin-right: 4px;
-  text-shadow: 0 0 20px #69ffe166;
+  text-shadow: 0 0 20px #bada5566;
 }
 
 /* ----------------------------------------------------------
@@ -462,7 +462,7 @@ body {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(135deg, #69ffe108 0%, transparent 50%);
+  background: linear-gradient(135deg, #bada5508 0%, transparent 50%);
   opacity: 0;
   transition: opacity 0.25s ease;
   pointer-events: none;
@@ -470,8 +470,8 @@ body {
 }
 
 .game-card:hover {
-  border-color: #69ffe155;
-  box-shadow: 0 0 32px #69ffe115, 0 8px 30px #00000055;
+  border-color: #bada5555;
+  box-shadow: 0 0 32px #bada5515, 0 8px 30px #00000055;
   transform: translateY(-3px);
 }
 

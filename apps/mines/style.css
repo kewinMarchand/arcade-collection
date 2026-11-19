@@ -1,1 +1,91 @@
 .neon-screen canvas { touch-action: manipulation; }
+
+.neon-panel__subtitle {
+  margin: 10px 0 2px;
+  color: #e8fbff;
+  font: 600 0.78rem "Space Grotesk", system-ui, sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.controls-legend, .indicator-legend {
+  display: grid;
+  gap: 6px;
+}
+
+.control-row, .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #b9d8e8;
+  line-height: 1.3;
+}
+
+.control-keys {
+  display: inline-flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.control-keys kbd {
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.12em 0.45em;
+  border: 1px solid #2b5d54;
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  background: #0f2322;
+  color: #69ffe1;
+  font: 600 0.72rem "DM Mono", monospace;
+  text-align: center;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.25);
+}
+
+.control-desc { color: #cfeff5; }
+
+.legend-swatch, .legend-icon {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--swatch);
+  box-shadow: 0 0 8px var(--swatch);
+  flex: 0 0 12px;
+}
+
+.legend-icon {
+  border-radius: 3px;
+}
+
+.legend-note {
+  margin: 4px 0 0;
+  font-size: 0.74rem;
+  color: #9ab8c8;
+  line-height: 1.35;
+}
+
+.legend-colors {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.legend-color-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.legend-dot {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--swatch) 70%, transparent);
+  background: color-mix(in srgb, var(--swatch) 18%, transparent);
+  color: var(--swatch);
+  font: 700 0.72rem "DM Mono", monospace;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--swatch) 35%, transparent);
+}

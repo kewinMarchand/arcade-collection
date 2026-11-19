@@ -2,6 +2,17 @@
 import { createAudio } from '../../packages/shared/src/audio.js';
 import { indexOf, countAdjacent } from './game-logic.js';
 
+const SIGNAL_COLORS = {
+  1: '#69ffe1',
+  2: '#7cff7a',
+  3: '#ffd36b',
+  4: '#ff9b5f',
+  5: '#ff6fae',
+  6: '#ff648f',
+  7: '#b58aff',
+  8: '#ffffff',
+};
+
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
@@ -55,8 +66,45 @@ const shell = mountGameFrame({
           const actions = document.createElement('div'); actions.className = 'panel-actions';
           const b = (id, text, cls) => { const btn = document.createElement('button'); btn.id = id; btn.type = 'button'; btn.textContent = text; if (cls) btn.className = cls; return btn; };
           actions.append(b('pause', 'Pause'), b('restart', 'Recommencer'), b('new-game', 'Nouvelle mission', 'primary'));
-          const help = document.createElement('p'); help.className = 'help'; help.textContent = 'Clic : scanner un secteur • Clic droit : poser un satellite balise • P : pause. Les satellites autour d\'un secteur indiquent les trous noirs voisins.';
-          panel.append(title, actions, help); return panel;
+
+          const controlsTitle = document.createElement('h3'); controlsTitle.className = 'neon-panel__subtitle'; controlsTitle.textContent = 'Contrôles';
+          const controls = document.createElement('div'); controls.className = 'controls-legend';
+          const control = (keys, desc) => {
+            const row = document.createElement('div'); row.className = 'control-row';
+            const keysWrap = document.createElement('span'); keysWrap.className = 'control-keys';
+            keys.forEach((k) => { const kbd = document.createElement('kbd'); kbd.textContent = k; keysWrap.appendChild(kbd); });
+            const label = document.createElement('span'); label.className = 'control-desc'; label.textContent = desc;
+            row.append(keysWrap, label); return row;
+          };
+          controls.append(
+            control(['Clic'], 'Scanner un secteur'),
+            control(['Clic droit'], 'Poser / retirer un satellite balise'),
+            control(['P'], 'Pause / reprendre'),
+          );
+
+          const legendTitle = document.createElement('h3'); legendTitle.className = 'neon-panel__subtitle'; legendTitle.textContent = 'Légende des indicateurs';
+          const legend = document.createElement('div'); legend.className = 'indicator-legend';
+          const legendItem = (color, text, isSwatch = true) => {
+            const item = document.createElement('div'); item.className = 'legend-item';
+            const swatch = document.createElement('span'); swatch.className = isSwatch ? 'legend-swatch' : 'legend-icon';
+            swatch.style.setProperty('--swatch', color);
+            const label = document.createElement('span'); label.textContent = text;
+            item.append(swatch, label); return item;
+          };
+          legend.append(
+            legendItem('#69ffe1', 'Balise posée', false),
+            legendItem('#b58aff', 'Trou noir', false),
+          );
+          const colorsTitle = document.createElement('p'); colorsTitle.className = 'legend-note'; colorsTitle.textContent = 'Satellites = nombre de trous noirs voisins (couleur par niveau) :';
+          const colors = document.createElement('div'); colors.className = 'legend-colors';
+          [1,2,3,4,5,6,7,8].forEach((n) => {
+            const item = document.createElement('div'); item.className = 'legend-color-item';
+            const dot = document.createElement('span'); dot.className = 'legend-dot'; dot.style.setProperty('--swatch', SIGNAL_COLORS[n]); dot.textContent = String(n);
+            item.appendChild(dot); colors.appendChild(item);
+          });
+
+          panel.append(title, actions, controlsTitle, controls, legendTitle, legend, colorsTitle, colors);
+          return panel;
         },
       },
     ],
@@ -170,20 +218,20 @@ function reveal(x, y) {
   draw(0);
 }
 
-function drawSatellite(ctx, s = 1, alpha = 1) {
+function drawSatellite(ctx, s = 1, alpha = 1, accent = '#5b7cff') {
   ctx.save();
   ctx.globalAlpha = alpha;
   ctx.scale(s, s);
   // body
   const body = ctx.createLinearGradient(-3, -2, 3, 2);
-  body.addColorStop(0, '#eaffff'); body.addColorStop(1, '#6ccfd6');
+  body.addColorStop(0, '#eaffff'); body.addColorStop(1, '#9fdce6');
   ctx.fillStyle = body;
   ctx.beginPath();
   if (ctx.roundRect) ctx.roundRect(-3.2, -2.2, 6.4, 4.4, 1.2); else ctx.rect(-3.2, -2.2, 6.4, 4.4);
   ctx.fill();
   // panels
-  ctx.fillStyle = '#5b7cff';
-  ctx.strokeStyle = '#9befff'; ctx.lineWidth = 0.6;
+  ctx.fillStyle = accent;
+  ctx.strokeStyle = 'rgba(255,255,255,0.6)'; ctx.lineWidth = 0.6;
   ctx.fillRect(-8.5, -1.6, 4.4, 3.2); ctx.strokeRect(-8.5, -1.6, 4.4, 3.2);
   ctx.fillRect(4.1, -1.6, 4.4, 3.2); ctx.strokeRect(4.1, -1.6, 4.4, 3.2);
   ctx.beginPath(); ctx.moveTo(-4.1, 0); ctx.lineTo(-3.2, 0); ctx.stroke();
@@ -196,8 +244,12 @@ function drawSatellite(ctx, s = 1, alpha = 1) {
 }
 
 function drawSignalCount(x, y, n, t) {
-  // draw n small satellites arranged in a ring as visual count
+  // draw n small satellites arranged in a ring as visual count (color-coded by danger level)
   const r = 12.5;
+  const color = SIGNAL_COLORS[n] || '#69ffe1';
+  ctx.save();
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 8;
   for (let k = 0; k < n; k++) {
     const a = -Math.PI / 2 + (k / n) * Math.PI * 2 + Math.sin(t * 0.001 + k) * 0.08;
     const sx = x + Math.cos(a) * r;
@@ -206,9 +258,10 @@ function drawSignalCount(x, y, n, t) {
     ctx.save();
     ctx.translate(sx, sy);
     ctx.rotate(rot);
-    drawSatellite(ctx, 0.62, 0.95);
+    drawSatellite(ctx, 0.62, 0.95, color);
     ctx.restore();
   }
+  ctx.restore();
 }
 
 function drawBlackHole(cx, cy, t, active = true) {
@@ -377,7 +430,7 @@ function draw(t) {
       ctx.translate(cx, cy + bob);
       ctx.shadowColor = '#69ffe1';
       ctx.shadowBlur = 10;
-      drawSatellite(ctx, 1.25, 1);
+      drawSatellite(ctx, 1.25, 1, '#69ffe1');
       // base beacon ring
       ctx.shadowBlur = 0;
       ctx.strokeStyle = 'rgba(105,255,225,0.35)';
