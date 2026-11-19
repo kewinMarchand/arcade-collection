@@ -5,7 +5,7 @@ import { clamp, overlaps, nextLane } from './game-logic.js';
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
-    title: 'Neon Drift',
+    title: 'Drift',
     subtitle: 'Glisse entre les portails, évite les obstacles.',
     renderHeader: () => {
       const options = document.createElement('div');
@@ -44,10 +44,10 @@ const shell = mountGameFrame({
         id: 'hud',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-left';
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Statut';
           const stats = document.createElement('div');
           stats.className = 'panel-stats';
@@ -68,10 +68,10 @@ const shell = mountGameFrame({
         id: 'actions',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-right';
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Actions';
           const actions = document.createElement('div');
           actions.className = 'panel-actions';
@@ -91,7 +91,7 @@ const shell = mountGameFrame({
         canvas.id = 'game';
         canvas.width = 800;
         canvas.height = 520;
-        canvas.setAttribute('aria-label', 'Circuit Neon Drift');
+        canvas.setAttribute('aria-label', 'Circuit Drift');
         el.appendChild(canvas);
       },
     },
@@ -115,7 +115,7 @@ const DIFF = {
   chaos: { speed: 0.52, speedGain: 0.012, spawn: 0.72, spawnMin: 0.26, orb: 0.22 },
 };
 
-let state = 'ready', lane = 2, carX = 0, score = 0, best = Number(localStorage.getItem('neonDriftBest')) || 0, items = [], elapsed = 0, last = 0, spawn = 0.7, shake = 0, particles = [], pulses = [], carSquash = 1, stars = [], screenFlash = 0;
+let state = 'ready', lane = 2, carX = 0, score = 0, best = Number(localStorage.getItem('ArcadeDriftBest')) || 0, items = [], elapsed = 0, last = 0, spawn = 0.7, shake = 0, particles = [], pulses = [], carSquash = 1, stars = [], screenFlash = 0;
 bestEl.textContent = String(best);
 carX = W * 0.5;
 
@@ -225,7 +225,7 @@ function update(dt) {
     }
   }
   scoreEl.textContent = String(score);
-  if (score > best) { best = score; bestEl.textContent = String(best); localStorage.setItem('neonDriftBest', String(best)); }
+  if (score > best) { best = score; bestEl.textContent = String(best); localStorage.setItem('ArcadeDriftBest', String(best)); }
 }
 
 function drawRoad() {
@@ -386,7 +386,7 @@ function draw(t) {
   if (state !== 'playing') {
     ctx.fillStyle = '#04100ddc'; ctx.fillRect(0, 0, W, H);
     ctx.textAlign = 'center'; ctx.fillStyle = '#69ffe1'; ctx.font = '800 32px system-ui';
-    ctx.fillText(state === 'ready' ? 'NEON DRIFT' : state === 'paused' ? 'PAUSE' : 'IMPACT', W / 2, H / 2);
+    ctx.fillText(state === 'ready' ? 'DRIFT' : state === 'paused' ? 'PAUSE' : 'IMPACT', W / 2, H / 2);
     ctx.fillStyle = '#edfffa'; ctx.font = '16px system-ui';
     ctx.fillText(state === 'ready' ? 'Appuie sur Espace ou Nouvelle partie' : state === 'paused' ? 'Clique sur Pause pour reprendre' : 'Clique ou Recommencer pour retenter', W / 2, H / 2 + 34);
   }

@@ -1,4 +1,4 @@
-# Neon Sorter
+# Sorter
 
 Jeu de tri néon sur étagères : sélectionne les objets de la première rangée pour les envoyer vers le haut et remplir des palettes de 3 éléments identiques.
 

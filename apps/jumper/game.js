@@ -5,7 +5,7 @@ const $ = (s) => document.querySelector(s);
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
-    title: 'Neon Jumper',
+    title: 'Jumper',
     subtitle: 'Saute, collecte les noyaux et atteins le portail.',
     renderHeader: () => {
       const options = document.createElement('div');
@@ -27,8 +27,8 @@ const shell = mountGameFrame({
         side: 'left', id: 'hud',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel'; panel.dataset.testid = 'game-panel-left';
-          const title = document.createElement('h2'); title.className = 'neon-panel__title'; title.textContent = 'Statut';
+          panel.className = 'arcade-panel'; panel.dataset.testid = 'game-panel-left';
+          const title = document.createElement('h2'); title.className = 'arcade-panel__title'; title.textContent = 'Statut';
           const stats = document.createElement('div'); stats.className = 'panel-stats';
           const stat = (label, id, value) => { const w = document.createElement('div'); w.className = 'panel-stat'; const s = document.createElement('small'); s.textContent = label; const v = document.createElement('strong'); v.id = id; v.textContent = value; w.append(s, v); return w; };
           stats.append(stat('NOYAUX', 'score', '0'), stat('VIES', 'lives', '3'), stat('NIVEAU', 'level', '1'), stat('ÉTAT', 'status', 'Prêt'));
@@ -39,8 +39,8 @@ const shell = mountGameFrame({
         side: 'right', id: 'actions',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel'; panel.dataset.testid = 'game-panel-right';
-          const title = document.createElement('h2'); title.className = 'neon-panel__title'; title.textContent = 'Actions';
+          panel.className = 'arcade-panel'; panel.dataset.testid = 'game-panel-right';
+          const title = document.createElement('h2'); title.className = 'arcade-panel__title'; title.textContent = 'Actions';
           const actions = document.createElement('div'); actions.className = 'panel-actions';
           const b = (id, text, cls) => { const btn = document.createElement('button'); btn.id = id; btn.type = 'button'; btn.textContent = text; if (cls) btn.className = cls; return btn; };
           actions.append(b('pause', 'Pause'), b('restart', 'Recommencer'), b('new-game', 'Nouvelle partie', 'primary'));
@@ -53,7 +53,7 @@ const shell = mountGameFrame({
     screen: {
       mount: (el) => {
         const canvas = document.createElement('canvas');
-        canvas.id = 'game'; canvas.width = 900; canvas.height = 560; canvas.setAttribute('aria-label', 'Zone de jeu Neon Jumper');
+        canvas.id = 'game'; canvas.width = 900; canvas.height = 560; canvas.setAttribute('aria-label', 'Zone de jeu Jumper');
         el.appendChild(canvas);
       }
     }
@@ -506,7 +506,7 @@ function drawOverlay(t) {
   ctx.textAlign = 'center';
   ctx.shadowColor = '#69ffe1'; ctx.shadowBlur = 18; ctx.fillStyle = '#69ffe1';
   ctx.font = '800 40px "Space Grotesk", sans-serif';
-  let title = 'NEON JUMPER', sub = 'Espace / ↑ pour commencer';
+  let title = 'JUMPER', sub = 'Espace / ↑ pour commencer';
   if (state === 'paused') { title = 'PAUSE'; sub = 'P pour reprendre'; }
   else if (state === 'over') { title = 'MISSION ÉCHOUÉE'; sub = 'Espace pour recommencer'; ctx.fillStyle = '#ff719c'; ctx.shadowColor = '#ff719c'; }
   else if (state === 'won') { title = 'SECTEUR TERMINÉ'; sub = 'Bravo ! Espace pour rejouer'; ctx.fillStyle = '#78ffd0'; ctx.shadowColor = '#78ffd0'; }

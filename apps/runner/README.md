@@ -1,13 +1,13 @@
-# Neon Runner
+# Runner
 
 
-![Aperçu de Neon Runner : un coureur lumineux saute par-dessus des obstacles néon](preview.svg)
+![Aperçu de Runner : un coureur lumineux saute par-dessus des obstacles néon](preview.svg)
 
 Jeu de course arcade : sautez et glissez pour éviter les obstacles et tenir la distance.
 
 ## Jouer en ligne
 
-[Ouvrir Neon Runner](https://kewinmarchand.github.io/neon-runner/)
+[Ouvrir Runner](https://kewinmarchand.github.io/arcade-runner/)
 
 ## Commandes
 
@@ -20,10 +20,10 @@ Jeu de course arcade : sautez et glissez pour éviter les obstacles et tenir la 
 
 Le meilleur score est conservé dans le navigateur.
 
-[Retour à la collection Neon Games](https://kewinmarchand.github.io/neon-games/)
+[Retour à la collection Arcade Collection](https://kewinmarchand.github.io/arcade-collection/)
 
 ## Thème
 
-Thème **Boilerplate Neon** partagé (`neon/neon-tokens.css`, `neon-base.css`, `neon-components.css`) avec styles propres au jeu (`style.css`).
+Thème **Boilerplate Arcade** partagé (`Arcade/arcade-tokens.css`, `arcade-base.css`, `arcade-components.css`) avec styles propres au jeu (`style.css`).
 
 Le jeu est publié avec GitHub Pages. Les tests se lancent avec `npm test` (Node.js 18+).

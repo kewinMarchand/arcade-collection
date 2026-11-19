@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
-  <title id="title">Neon Maze</title>
+  <title id="title">Maze</title>
   <desc id="desc">Labyrinthe néon avec murs technologiques, pastilles d'énergie, chasseur détaillé et fantômes stylisés sur fond quadrillé.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
@@ -19,7 +19,7 @@
   <g fill="#f2fffc" opacity="0.7">
     <circle cx="30" cy="26" r="1.5"/><circle cx="120" cy="48" r="1"/><circle cx="250" cy="22" r="1.8"/><circle cx="470" cy="34" r="1.2"/><circle cx="650" cy="24" r="1.6"/>
   </g>
-  <text x="360" y="44" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="24" letter-spacing="5">NEON MAZE</text>
+  <text x="360" y="44" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="24" letter-spacing="5">MAZE</text>
 
   <!-- maze walls (tech modules) -->
   <g filter="url(#glow)">

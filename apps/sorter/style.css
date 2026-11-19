@@ -1,8 +1,8 @@
 :root { color-scheme: dark; }
 body.game { }
-.neon-screen canvas { touch-action: manipulation; cursor: pointer; }
+.arcade-screen canvas { touch-action: manipulation; cursor: pointer; }
 
-.neon-panel__subtitle {
+.arcade-panel__subtitle {
   margin: 10px 0 2px;
   color: #e8fbff;
   font: 600 0.78rem "Space Grotesk", system-ui, sans-serif;

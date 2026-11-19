@@ -1,6 +1,6 @@
-.neon-screen canvas { touch-action: manipulation; }
+.arcade-screen canvas { touch-action: manipulation; }
 
-.neon-panel__subtitle {
+.arcade-panel__subtitle {
   margin: 10px 0 2px;
   color: #e8fbff;
   font: 600 0.78rem "Space Grotesk", system-ui, sans-serif;

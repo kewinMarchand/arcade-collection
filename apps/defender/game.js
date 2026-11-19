@@ -5,7 +5,7 @@ import { intercepted, crossesShield } from './game-logic.js';
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
-    title: 'Neon Defender',
+    title: 'Defender',
     subtitle: 'Pilote le vaisseau, oriente le bouclier, protège le noyau.',
     renderHeader: () => {
       const options = document.createElement('div');
@@ -47,10 +47,10 @@ const shell = mountGameFrame({
         id: 'hud',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-left';
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Statut';
           const stats = document.createElement('div');
           stats.className = 'panel-stats';
@@ -80,10 +80,10 @@ const shell = mountGameFrame({
         id: 'actions',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-right';
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Actions';
           const actions = document.createElement('div');
           actions.className = 'panel-actions';
@@ -110,7 +110,7 @@ const shell = mountGameFrame({
         canvas.id = 'game';
         canvas.width = 800;
         canvas.height = 520;
-        canvas.setAttribute('aria-label', 'Arène Neon Defender');
+        canvas.setAttribute('aria-label', 'Arène Defender');
         el.appendChild(canvas);
       },
     },
@@ -714,7 +714,7 @@ function draw(t) {
     ctx.fillStyle = '#69ffe1';
     ctx.font = '800 32px system-ui';
     ctx.textAlign = 'center';
-    const title = state === 'ready' ? 'Neon Defender' : state === 'paused' ? 'PAUSE' : 'VAISSEAU DÉTRUIT';
+    const title = state === 'ready' ? 'Defender' : state === 'paused' ? 'PAUSE' : 'VAISSEAU DÉTRUIT';
     ctx.fillText(title, cx, cy);
     ctx.fillStyle = '#edfffa';
     ctx.font = '16px system-ui';

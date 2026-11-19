@@ -5,7 +5,7 @@ import { safeLanding, groundAt } from './game-logic.js';
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
-    title: 'Neon Orbiter',
+    title: 'Orbiter',
     subtitle: 'Alunissez en douceur, manche après manche.',
     renderHeader: () => {
       const options = document.createElement('div');
@@ -38,8 +38,8 @@ const shell = mountGameFrame({
         side: 'left', id: 'hud',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel'; panel.dataset.testid = 'game-panel-left';
-          const title = document.createElement('h2'); title.className = 'neon-panel__title'; title.textContent = 'Statut';
+          panel.className = 'arcade-panel'; panel.dataset.testid = 'game-panel-left';
+          const title = document.createElement('h2'); title.className = 'arcade-panel__title'; title.textContent = 'Statut';
           const stats = document.createElement('div'); stats.className = 'panel-stats';
           const stat = (label, id, value) => { const wrap = document.createElement('div'); wrap.className = 'panel-stat'; const small = document.createElement('small'); small.textContent = label; const strong = document.createElement('strong'); strong.id = id; strong.textContent = value; wrap.append(small, strong); return wrap; };
           stats.append(stat('SCORE', 'score', '0'), stat('RECORD', 'best', '0'), stat('CARBURANT', 'fuel', '100%'), stat('ÉTAT', 'status', 'Prêt'));
@@ -50,8 +50,8 @@ const shell = mountGameFrame({
         side: 'right', id: 'actions',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel'; panel.dataset.testid = 'game-panel-right';
-          const title = document.createElement('h2'); title.className = 'neon-panel__title'; title.textContent = 'Actions';
+          panel.className = 'arcade-panel'; panel.dataset.testid = 'game-panel-right';
+          const title = document.createElement('h2'); title.className = 'arcade-panel__title'; title.textContent = 'Actions';
           const actions = document.createElement('div'); actions.className = 'panel-actions';
           const b = (id, text, cls) => { const btn = document.createElement('button'); btn.id = id; btn.type = 'button'; btn.textContent = text; if (cls) btn.className = cls; return btn; };
           actions.append(b('pause', 'Pause'), b('restart', 'Recommencer'), b('new-game', 'Nouvelle partie', 'primary'));
@@ -63,7 +63,7 @@ const shell = mountGameFrame({
     screen: {
       mount: (el) => {
         const canvas = document.createElement('canvas');
-        canvas.id = 'game'; canvas.width = 800; canvas.height = 520; canvas.setAttribute('aria-label', 'Descente Neon Orbiter');
+        canvas.id = 'game'; canvas.width = 800; canvas.height = 520; canvas.setAttribute('aria-label', 'Descente Orbiter');
         el.appendChild(canvas);
       },
     },
@@ -85,7 +85,7 @@ const DIFF = {
   chaos: { gravity: 75, thrust: 145, fuel: 10, roundGain: 10 },
 };
 
-let state = 'ready', round = 1, score = 0, gravity = 60, best = Number(localStorage.getItem('neonOrbiterBest')) || 0, last = 0, elapsed = 0, shake = 0, terrain = [], pads = [], stars = [], particles = [], rings = [], banner = '', bannerTimer = 0, keys = new Set(), ship = { x: 110, y: 70, vx: 14, vy: 0, tilt: 0, fuel: 100 }, shipScale = 1, screenFlash = 0;
+let state = 'ready', round = 1, score = 0, gravity = 60, best = Number(localStorage.getItem('ArcadeOrbiterBest')) || 0, last = 0, elapsed = 0, shake = 0, terrain = [], pads = [], stars = [], particles = [], rings = [], banner = '', bannerTimer = 0, keys = new Set(), ship = { x: 110, y: 70, vx: 14, vy: 0, tilt: 0, fuel: 100 }, shipScale = 1, screenFlash = 0;
 $('#best').textContent = String(best);
 
 function makeStars() {
@@ -144,7 +144,7 @@ function crash(reason) {
   rings.push({ x: ship.x, y: ship.y, life: 0.45, crash: true, r: 4 });
   shake = 1; screenFlash = 0.22; shipScale = 0.55; state = 'over'; $('#status').textContent = reason;
   audio.seq([[200, 0.12, 'sawtooth', 0.05, 0], [120, 0.25, 'sawtooth', 0.05, 0.06]]);
-  if (score > best) { best = score; localStorage.setItem('neonOrbiterBest', String(best)); $('#best').textContent = String(best); }
+  if (score > best) { best = score; localStorage.setItem('ArcadeOrbiterBest', String(best)); $('#best').textContent = String(best); }
 }
 
 function update(dt) {
@@ -192,7 +192,7 @@ function update(dt) {
       burst(ship.x, ship.y - 8, '#69ffe1', 20);
       burst(padCx, pad.y - 2, '#ffe36e', 12);
       audio.seq([[520, 0.08, 'sine', 0.03, 0], [720, 0.1, 'sine', 0.03, 0.06]]);
-      if (score > best) { best = score; localStorage.setItem('neonOrbiterBest', String(best)); $('#best').textContent = String(best); }
+      if (score > best) { best = score; localStorage.setItem('ArcadeOrbiterBest', String(best)); $('#best').textContent = String(best); }
       round++; gravity = Math.min(130, d.gravity + round * d.roundGain);
       ship = { x: 80 + Math.random() * 100, y: 70, vx: 12 + round * 2, vy: 0, tilt: 0, fuel: 100 };
       makeTerrain(); $('#status').textContent = 'Descente • Manche ' + round;
@@ -232,7 +232,7 @@ function draw(t) {
   }
   ctx.globalAlpha = 1; ctx.shadowBlur = 0;
 
-  // Terrain (detailed neon crust)
+  // Terrain (detailed Arcade crust)
   if (terrain.length) {
     ctx.beginPath(); ctx.moveTo(terrain[0].x, terrain[0].y);
     for (const p of terrain) ctx.lineTo(p.x, p.y);
@@ -286,7 +286,7 @@ function draw(t) {
   }
   ctx.globalAlpha = 1; ctx.shadowBlur = 0;
 
-  // Lander (detailed neon tech module)
+  // Lander (detailed Arcade tech module)
   ctx.save(); ctx.translate(ship.x, ship.y); ctx.rotate(ship.tilt); ctx.scale(shipScale, shipScale);
   const main = (keys.has(' ') || keys.has('arrowup') || keys.has('z') || keys.has('w')) && ship.fuel > 0 && state === 'playing';
   const side = (keys.has('arrowright') || keys.has('d') ? 1 : 0) - (keys.has('arrowleft') || keys.has('q') || keys.has('a') ? 1 : 0);
@@ -345,7 +345,7 @@ function draw(t) {
 
   if (state !== 'playing') {
     ctx.fillStyle = '#04100ddc'; ctx.fillRect(0, 0, W, H); ctx.textAlign = 'center'; ctx.fillStyle = '#69ffe1'; ctx.font = '800 32px system-ui';
-    ctx.fillText(state === 'ready' ? 'NEON ORBITER' : state === 'paused' ? 'PAUSE' : 'ÉCRASEMENT', W / 2, H / 2);
+    ctx.fillText(state === 'ready' ? 'ORBITER' : state === 'paused' ? 'PAUSE' : 'ÉCRASEMENT', W / 2, H / 2);
     ctx.fillStyle = '#edfffa'; ctx.font = '16px system-ui';
     ctx.fillText(state === 'ready' ? 'Espace pour entamer la descente' : state === 'paused' ? 'Clique sur Pause pour reprendre' : 'Clique ou Recommencer pour retenter', W / 2, H / 2 + 34);
   }

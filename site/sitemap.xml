@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://kewinmarchand.github.io/neon-games/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/invaders/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/breaker/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/columns/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/drift/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/runner/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/defender/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/mines/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/serpent/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/orbiter/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/maze/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/pong/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/strike/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/breach/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/jumper/</loc></url>
-  <url><loc>https://kewinmarchand.github.io/neon-games/apps/sorter/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/invaders/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/breaker/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/columns/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/drift/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/runner/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/defender/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/mines/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/snake/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/orbiter/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/maze/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/pong/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/strike/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/breach/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/jumper/</loc></url>
+  <url><loc>https://kewinmarchand.github.io/arcade-collection/apps/sorter/</loc></url>
 </urlset>

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kewinmarchand.github.io/neon-games/sitemap.xml
+Sitemap: https://kewinmarchand.github.io/arcade-collection/sitemap.xml

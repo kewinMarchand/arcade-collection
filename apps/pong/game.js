@@ -3,7 +3,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
-    title: 'Neon Pong',
+    title: 'Pong',
     subtitle: 'Renvoyez la balle, marquez des points.',
     renderHeader: () => {
       const options = document.createElement('div');
@@ -38,10 +38,10 @@ const shell = mountGameFrame({
         id: 'hud',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-left';
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Score';
           const stats = document.createElement('div');
           stats.className = 'panel-stats';
@@ -66,10 +66,10 @@ const shell = mountGameFrame({
         id: 'actions',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-right';
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Actions';
           const actions = document.createElement('div');
           actions.className = 'panel-actions';
@@ -86,7 +86,7 @@ const shell = mountGameFrame({
         canvas.id = 'game';
         canvas.width = 800;
         canvas.height = 500;
-        canvas.setAttribute('aria-label', 'Jeu Neon Pong');
+        canvas.setAttribute('aria-label', 'Jeu Pong');
         el.appendChild(canvas);
       },
     },
@@ -441,7 +441,7 @@ function draw() {
   if (state !== 'playing') {
     ctx.fillStyle = 'rgba(6,20,18,0.72)'; ctx.fillRect(0, 0, W, H);
     ctx.textAlign = 'center'; ctx.fillStyle = '#7bffe5'; ctx.shadowColor = '#7bffe5'; ctx.shadowBlur = 18; ctx.font = '800 36px system-ui';
-    ctx.fillText(state === 'ready' ? 'NEON PONG' : state === 'paused' ? 'PAUSE' : (scoreL >= WIN ? 'VICTOIRE JOUEUR' : 'VICTOIRE ADVERSAIRE'), W / 2, H / 2);
+    ctx.fillText(state === 'ready' ? 'PONG' : state === 'paused' ? 'PAUSE' : (scoreL >= WIN ? 'VICTOIRE JOUEUR' : 'VICTOIRE ADVERSAIRE'), W / 2, H / 2);
     ctx.shadowBlur = 0;
     ctx.fillStyle = '#edfffa'; ctx.font = '16px system-ui';
     ctx.fillText(state === 'ready' ? 'Espace pour lancer' : state === 'paused' ? 'Clique sur Pause' : 'Clique ou Recommencer', W / 2, H / 2 + 36);

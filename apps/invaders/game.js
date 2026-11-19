@@ -4,7 +4,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   const shell = mountGameFrame({
     mount: document.getElementById('shell-mount'),
     config: {
-      title: 'Neon Invaders',
+      title: 'Invaders',
       subtitle: 'Défendez la base • Secteur 07',
       renderHeader: () => {
         const options = document.createElement('div');
@@ -42,13 +42,13 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
           id: 'briefing',
           render: () => {
             const panel = document.createElement('div');
-            panel.className = 'neon-panel';
+            panel.className = 'arcade-panel';
             panel.dataset.testid = 'game-panel-left';
             const title = document.createElement('h2');
-            title.className = 'neon-panel__title';
+            title.className = 'arcade-panel__title';
             title.textContent = 'Briefing';
             const p = document.createElement('p');
-            p.className = 'neon-panel__text';
+            p.className = 'arcade-panel__text';
             p.textContent = 'Défendez la base contre la flotte. Options de partie dans le header.';
             panel.append(title, p);
             return panel;
@@ -59,14 +59,14 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
           id: 'controls',
           render: () => {
             const panel = document.createElement('div');
-            panel.className = 'neon-panel';
+            panel.className = 'arcade-panel';
             panel.dataset.testid = 'game-panel-right';
             const title = document.createElement('h2');
-            title.className = 'neon-panel__title';
+            title.className = 'arcade-panel__title';
             title.textContent = 'Commandes';
             const ul = document.createElement('ul');
-            ul.className = 'neon-panel__list';
-            const li = (text) => { const l = document.createElement('li'); l.className = 'neon-panel__text'; l.textContent = text; ul.appendChild(l); };
+            ul.className = 'arcade-panel__list';
+            const li = (text) => { const l = document.createElement('li'); l.className = 'arcade-panel__text'; l.textContent = text; ul.appendChild(l); };
             li('ESPACE : tir');
             li('A / D ou ← → : déplacement');
             li('Tactile : boutons ← • tir • →');
@@ -105,7 +105,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
           canvas.id = 'gameCanvas';
           canvas.width = 900;
           canvas.height = 600;
-          canvas.setAttribute('aria-label', 'Jeu Neon Invaders');
+          canvas.setAttribute('aria-label', 'Jeu Invaders');
           el.appendChild(canvas);
         },
       },
@@ -496,7 +496,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     if (shake > 0) ctx.translate(randomBetween(-shake, shake), randomBetween(-shake, shake));
     drawBackground(); drawGround(); for (const alien of aliens) drawAlien(alien);
     drawBullets(); drawPowerups(); drawParticles(); drawPlayer(); drawHUD();
-    if (state === 'ready') drawOverlay('NEON INVADERS', 'La flotte approche…', '#69ffe1');
+    if (state === 'ready') drawOverlay('INVADERS', 'La flotte approche…', '#69ffe1');
     else if (state === 'gameover') drawOverlay('MISSION ÉCHOUÉE', `Score final : ${score}`, '#ff719c');
     else if (state === 'won') drawOverlay('SECTEUR SECURISE', `Niveau ${level} - Score final : ${score}`, '#78ffd0');
     if (bannerTimer > 0 && state === 'playing') {

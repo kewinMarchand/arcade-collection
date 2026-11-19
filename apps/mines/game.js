@@ -1,4 +1,4 @@
-ï»¿import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
+import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 import { createAudio } from '../../packages/shared/src/audio.js';
 import { indexOf, countAdjacent } from './game-logic.js';
 
@@ -16,8 +16,8 @@ const SIGNAL_COLORS = {
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
-    title: 'Neon Black Holes',
-    subtitle: 'Explore les secteurs, repÃ¨re les trous noirs.',
+    title: 'Black Holes',
+    subtitle: 'Explore les secteurs, repère les trous noirs.',
     renderHeader: () => {
       const options = document.createElement('div');
       options.className = 'game-options';
@@ -38,7 +38,7 @@ const shell = mountGameFrame({
         return wrap;
       };
       options.append(
-        mk('DifficultÃ©', 'difficulty', 'select', '<option value="chill">Chill</option><option value="arcade" selected>Arcade</option><option value="chaos">Chaos</option>'),
+        mk('Difficulté', 'difficulty', 'select', '<option value="chill">Chill</option><option value="arcade" selected>Arcade</option><option value="chaos">Chaos</option>'),
         mk('Bonus', 'bonus'),
         mk('Sons', 'sound')
       );
@@ -49,11 +49,11 @@ const shell = mountGameFrame({
         side: 'left', id: 'hud',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel'; panel.dataset.testid = 'game-panel-left';
-          const title = document.createElement('h2'); title.className = 'neon-panel__title'; title.textContent = 'Statut';
+          panel.className = 'arcade-panel'; panel.dataset.testid = 'game-panel-left';
+          const title = document.createElement('h2'); title.className = 'arcade-panel__title'; title.textContent = 'Statut';
           const stats = document.createElement('div'); stats.className = 'panel-stats';
           const stat = (label, id, value) => { const wrap = document.createElement('div'); wrap.className = 'panel-stat'; const small = document.createElement('small'); small.textContent = label; const strong = document.createElement('strong'); strong.id = id; strong.textContent = value; wrap.append(small, strong); return wrap; };
-          stats.append(stat('SECTEURS', 'score', '0'), stat('RECORD', 'best', '-'), stat('TROUS NOIRS', 'mines-left', '12'), stat('Ã‰TAT', 'status', 'PrÃªt'));
+          stats.append(stat('SECTEURS', 'score', '0'), stat('RECORD', 'best', '-'), stat('TROUS NOIRS', 'mines-left', '12'), stat('ÉTAT', 'status', 'Prêt'));
           panel.append(title, stats); return panel;
         },
       },
@@ -61,13 +61,13 @@ const shell = mountGameFrame({
         side: 'right', id: 'actions',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel'; panel.dataset.testid = 'game-panel-right';
-          const title = document.createElement('h2'); title.className = 'neon-panel__title'; title.textContent = 'Actions';
+          panel.className = 'arcade-panel'; panel.dataset.testid = 'game-panel-right';
+          const title = document.createElement('h2'); title.className = 'arcade-panel__title'; title.textContent = 'Actions';
           const actions = document.createElement('div'); actions.className = 'panel-actions';
           const b = (id, text, cls) => { const btn = document.createElement('button'); btn.id = id; btn.type = 'button'; btn.textContent = text; if (cls) btn.className = cls; return btn; };
           actions.append(b('pause', 'Pause'), b('restart', 'Recommencer'), b('new-game', 'Nouvelle mission', 'primary'));
 
-          const controlsTitle = document.createElement('h3'); controlsTitle.className = 'neon-panel__subtitle'; controlsTitle.textContent = 'ContrÃ´les';
+          const controlsTitle = document.createElement('h3'); controlsTitle.className = 'arcade-panel__subtitle'; controlsTitle.textContent = 'Contrôles';
           const controls = document.createElement('div'); controls.className = 'controls-legend';
           const control = (keys, desc) => {
             const row = document.createElement('div'); row.className = 'control-row';
@@ -82,7 +82,7 @@ const shell = mountGameFrame({
             control(['P'], 'Pause / reprendre'),
           );
 
-          const legendTitle = document.createElement('h3'); legendTitle.className = 'neon-panel__subtitle'; legendTitle.textContent = 'LÃ©gende des indicateurs';
+          const legendTitle = document.createElement('h3'); legendTitle.className = 'arcade-panel__subtitle'; legendTitle.textContent = 'Légende des indicateurs';
           const legend = document.createElement('div'); legend.className = 'indicator-legend';
           const legendItem = (color, text, isSwatch = true) => {
             const item = document.createElement('div'); item.className = 'legend-item';
@@ -92,7 +92,7 @@ const shell = mountGameFrame({
             item.append(swatch, label); return item;
           };
           legend.append(
-            legendItem('#69ffe1', 'Balise posÃ©e', false),
+            legendItem('#69ffe1', 'Balise posée', false),
             legendItem('#b58aff', 'Trou noir', false),
           );
           const colorsTitle = document.createElement('p'); colorsTitle.className = 'legend-note'; colorsTitle.textContent = 'Satellites = nombre de trous noirs voisins (couleur par niveau) :';
@@ -111,7 +111,7 @@ const shell = mountGameFrame({
     screen: {
       mount: (el) => {
         const canvas = document.createElement('canvas');
-        canvas.id = 'game'; canvas.width = 600; canvas.height = 600; canvas.setAttribute('aria-label', 'Carte des secteurs de Neon Black Holes');
+        canvas.id = 'game'; canvas.width = 600; canvas.height = 600; canvas.setAttribute('aria-label', 'Carte des secteurs de Black Holes');
         el.appendChild(canvas);
       },
     },
@@ -133,7 +133,7 @@ const OFFSET_Y = Math.floor((W - GRID) / 2);
 const DIFF = { chill: 8, arcade: 12, chaos: 18 };
 let mineCount = DIFF.arcade;
 
-let mines = new Set(), revealed = new Set(), flags = new Set(), state = 'ready', first = true, score = 0, best = Number(localStorage.getItem('neonBlackHolesBest')) || 0, last = 0, elapsed = 0, particles = [], pulses = [], shockwaves = [], shake = 0, stars = [];
+let mines = new Set(), revealed = new Set(), flags = new Set(), state = 'ready', first = true, score = 0, best = Number(localStorage.getItem('ArcadeBlackHolesBest')) || 0, last = 0, elapsed = 0, particles = [], pulses = [], shockwaves = [], shake = 0, stars = [];
 $('#best').textContent = best || '-';
 $('#mines-left').textContent = String(mineCount);
 
@@ -151,7 +151,7 @@ function setup() {
     vy: 4 + Math.random() * 10,
     vx: (Math.random() - 0.5) * 4,
   }));
-  $('#score').textContent = '0'; $('#mines-left').textContent = String(mineCount); $('#status').textContent = 'PrÃªt'; draw(0);
+  $('#score').textContent = '0'; $('#mines-left').textContent = String(mineCount); $('#status').textContent = 'Prêt'; draw(0);
 }
 
 function placeMines(safeX, safeY) {
@@ -209,9 +209,9 @@ function reveal(x, y) {
   }
   score = revealed.size; $('#score').textContent = String(score);
   if (score === N * N - mineCount) {
-    state = 'won'; $('#status').textContent = 'Secteur sÃ©curisÃ©';
+    state = 'won'; $('#status').textContent = 'Secteur sécurisé';
     let timeBest = best;
-    if (!timeBest || elapsed < timeBest) { timeBest = Math.floor(elapsed); localStorage.setItem('neonBlackHolesBest', String(timeBest)); $('#best').textContent = timeBest + 's'; }
+    if (!timeBest || elapsed < timeBest) { timeBest = Math.floor(elapsed); localStorage.setItem('ArcadeBlackHolesBest', String(timeBest)); $('#best').textContent = timeBest + 's'; }
     if (bonusInput.checked) audio.seq([[520, 0.08, 'sine', 0.03, 0], [660, 0.1, 'sine', 0.03, 0.08], [880, 0.12, 'sine', 0.03, 0.16]]);
     else audio.tone(660, 0.2, 'triangle', 0.03);
   }
@@ -498,7 +498,7 @@ function draw(t) {
     ctx.globalAlpha = 1;
     ctx.shadowBlur = 0;
 
-    const title = state === 'paused' ? 'PAUSE' : state === 'over' ? 'TROU NOIR !' : state === 'won' ? 'SECTEUR SÃ‰CURISÃ‰' : 'NEON BLACK HOLES';
+    const title = state === 'paused' ? 'PAUSE' : state === 'over' ? 'TROU NOIR !' : state === 'won' ? 'SECTEUR SÉCURISÉ' : 'BLACK HOLES';
     const sub = state === 'ready' ? 'Scanne ton premier secteur' : state === 'paused' ? 'Clique sur Pause pour reprendre' : 'Recommence pour une nouvelle mission';
     ctx.textAlign = 'center';
     ctx.shadowColor = '#69ffe1';
@@ -556,7 +556,7 @@ window.addEventListener('keydown', (e) => { if (e.key.toLowerCase() === 'p') tog
 
 function frame(t) {
   const dt = Math.min((t - last) / 1000 || 0, 0.05);
-  if (state === 'playing') { elapsed += dt; $('#status').textContent = 'Scan en cours â€¢ ' + Math.floor(elapsed) + 's'; }
+  if (state === 'playing') { elapsed += dt; $('#status').textContent = 'Scan en cours • ' + Math.floor(elapsed) + 's'; }
   last = t;
   for (const s of stars) {
     s.y += s.vy * dt;

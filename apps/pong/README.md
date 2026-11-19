@@ -1,11 +1,11 @@
-# Neon Pong
+# Pong
 
 Pong néon : renvoyez la balle, marquez des points.
 
 
-## Ouvrir Neon Pong
+## Ouvrir Pong
 
-[Ouvrir Neon Pong](https://kewinmarchand.github.io/neon-games/apps/pong/)
+[Ouvrir Pong](https://kewinmarchand.github.io/arcade-collection/apps/pong/)
 
 ## Le jeu
 
@@ -16,4 +16,4 @@ Pong néon : renvoyez la balle, marquez des points.
 
 ## Thème
 
-Le portail et les jeux utilisent une base CSS partagée (`neon/neon-tokens.css`, `neon-base.css`, `neon-components.css`).
+Le portail et les jeux utilisent une base CSS partagée (`Arcade/arcade-tokens.css`, `arcade-base.css`, `arcade-components.css`).

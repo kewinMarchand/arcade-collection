@@ -1,10 +1,10 @@
-# Neon Black Holes
+# Black Holes
 
 Explorez des secteurs spatiaux et repérez les trous noirs cachés grâce aux satellites.
 
 ## Jouer en ligne
 
-[Ouvrir Neon Black Holes](https://kewinmarchand.github.io/neon-games/apps/mines/)
+[Ouvrir Black Holes](https://kewinmarchand.github.io/arcade-collection/apps/mines/)
 
 ## Principe
 
@@ -18,4 +18,4 @@ Explorez des secteurs spatiaux et repérez les trous noirs cachés grâce aux sa
 - **P** ou le bouton **Pause** : mettre en pause ou reprendre.
 - **Recommencer / Nouvelle mission** : relancer une partie.
 
-[Retour à la collection Neon Games](https://kewinmarchand.github.io/neon-games/)
+[Retour à la collection Arcade Collection](https://kewinmarchand.github.io/arcade-collection/)

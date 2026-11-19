@@ -1,6 +1,6 @@
 {
-  "name": "Neon Games",
-  "description": "Collection de mini-jeux néon jouables dans le navigateur, déployée sur GitHub Pages.",
+  "name": "Arcade Collection",
+  "description": "Collection de mini-jeux jouables dans le navigateur, déployée sur GitHub Pages.",
   "apps": [
     "breach",
     "breaker",
@@ -14,7 +14,7 @@
     "orbiter",
     "pong",
     "runner",
-    "serpent",
+    "snake",
     "sorter",
     "strike"
   ]

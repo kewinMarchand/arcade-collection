@@ -5,7 +5,7 @@ import { obstacleHits } from './game-logic.js';
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
-    title: 'Neon Runner',
+    title: 'Runner',
     subtitle: 'Saute, glisse et tiens le rythme.',
     renderHeader: () => {
       const options = document.createElement('div');
@@ -44,10 +44,10 @@ const shell = mountGameFrame({
         id: 'hud',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-left';
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Statut';
           const stats = document.createElement('div');
           stats.className = 'panel-stats';
@@ -68,10 +68,10 @@ const shell = mountGameFrame({
         id: 'actions',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-right';
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Actions';
           const actions = document.createElement('div');
           actions.className = 'panel-actions';
@@ -91,7 +91,7 @@ const shell = mountGameFrame({
         canvas.id = 'game';
         canvas.width = 800;
         canvas.height = 520;
-        canvas.setAttribute('aria-label', 'Parcours Neon Runner');
+        canvas.setAttribute('aria-label', 'Parcours Runner');
         el.appendChild(canvas);
       },
     },
@@ -533,7 +533,7 @@ function draw(t) {
 
   if (state !== 'playing') {
     ctx.fillStyle = '#04100ddc'; ctx.fillRect(0, 0, W, H); ctx.textAlign = 'center'; ctx.fillStyle = '#c7a2ff'; ctx.font = '800 32px system-ui';
-    ctx.fillText(state === 'ready' ? 'NEON RUNNER' : state === 'paused' ? 'PAUSE' : 'CHUTE !', W / 2, H / 2);
+    ctx.fillText(state === 'ready' ? 'RUNNER' : state === 'paused' ? 'PAUSE' : 'CHUTE !', W / 2, H / 2);
     ctx.fillStyle = '#edfffa'; ctx.font = '16px system-ui';
     ctx.fillText(state === 'ready' ? 'Espace ou clic pour courir' : state === 'paused' ? 'Clique sur Pause pour reprendre' : `Niveau ${level} - Clique ou Recommencer pour retenter`, W / 2, H / 2 + 34);
   }

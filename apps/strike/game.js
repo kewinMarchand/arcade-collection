@@ -3,7 +3,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
-    title: 'Neon Strike',
+    title: 'Strike',
     subtitle: 'Abattez les vaisseaux avant qu\'ils ne vous atteignent.',
     renderHeader: () => {
       const options = document.createElement('div');
@@ -37,10 +37,10 @@ const shell = mountGameFrame({
         id: 'hud',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-left';
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Statut';
           const stats = document.createElement('div');
           stats.className = 'panel-stats';
@@ -65,10 +65,10 @@ const shell = mountGameFrame({
         id: 'actions',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-right';
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Actions';
           const actions = document.createElement('div');
           actions.className = 'panel-actions';
@@ -85,7 +85,7 @@ const shell = mountGameFrame({
         canvas.id = 'game';
         canvas.width = 900;
         canvas.height = 600;
-        canvas.setAttribute('aria-label', 'Jeu Neon Strike');
+        canvas.setAttribute('aria-label', 'Jeu Strike');
         el.appendChild(canvas);
       },
     },
@@ -570,7 +570,7 @@ function draw() {
   if (state !== 'playing') {
     ctx.fillStyle = 'rgba(6,6,15,0.8)'; ctx.fillRect(0, 0, W, H);
     ctx.textAlign = 'center'; ctx.fillStyle = '#7bffe5'; ctx.font = '800 40px system-ui';
-    const title = state === 'ready' ? 'NEON STRIKE' : state === 'over' ? 'MISSION ECHOUEE' : state === 'paused' ? 'PAUSE' : 'VAGUE TERMINEE';
+    const title = state === 'ready' ? 'STRIKE' : state === 'over' ? 'MISSION ECHOUEE' : state === 'paused' ? 'PAUSE' : 'VAGUE TERMINEE';
     ctx.fillText(title, CX, CY - 20);
     ctx.fillStyle = '#edfffa'; ctx.font = '16px system-ui';
     const hint = state === 'ready' ? 'Clique pour lancer' : state === 'paused' ? 'Espace, P ou clic pour reprendre' : 'Clique, Espace ou Recommencer';

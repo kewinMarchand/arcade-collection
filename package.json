@@ -1,9 +1,9 @@
 {
-  "name": "neon-games",
+  "name": "arcade-collection",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Collection de mini-jeux néon statiques pour GitHub Pages.",
+  "description": "Collection de mini-jeux statiques pour GitHub Pages.",
   "scripts": {
     "postinstall": "node scripts/vendor.js",
     "dev": "node scripts/serve.js 4098",

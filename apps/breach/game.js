@@ -1,4 +1,4 @@
-ï»¿import * as THREE from 'https://esm.sh/three@0.160.0';
+import * as THREE from 'https://esm.sh/three@0.160.0';
 import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 
 (() => {
@@ -6,13 +6,13 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   mountGameFrame({
     mount: document.getElementById('shell-mount'),
     config: {
-      title: 'Neon Breach',
+      title: 'Breach',
       subtitle: 'Infiltrez le secteur, neutralisez les aliens, rejoignez la sortie.',
       renderHeader: () => {
         const options = document.createElement('div');
         options.className = 'game-options';
         options.setAttribute('aria-label', 'Options de jeu');
-        options.innerHTML = '<span class="option">FPS nÃ©on Â· mini-carte Â· extraction</span>';
+        options.innerHTML = '<span class="option">FPS néon · mini-carte · extraction</span>';
         return options;
       },
       panels: [
@@ -21,14 +21,14 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
           id: 'hud',
           render: () => {
             const panel = document.createElement('div');
-            panel.className = 'neon-panel';
+            panel.className = 'arcade-panel';
             panel.dataset.testid = 'game-panel-left';
             const title = document.createElement('h2');
-            title.className = 'neon-panel__title';
+            title.className = 'arcade-panel__title';
             title.textContent = 'Briefing';
             const p = document.createElement('p');
-            p.className = 'neon-panel__text';
-            p.textContent = 'Ã‰liminez tous les drones aliens pour activer la porte de sortie, puis rejoignez-la pour extraire du secteur.';
+            p.className = 'arcade-panel__text';
+            p.textContent = 'Éliminez tous les drones aliens pour activer la porte de sortie, puis rejoignez-la pour extraire du secteur.';
             const stats = document.createElement('div');
             stats.className = 'panel-stats';
             const mk = (label, id, value) => {
@@ -37,7 +37,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
               const v = document.createElement('strong'); v.id = `panel-${id}`; v.textContent = value;
               w.append(s, v); return w;
             };
-            stats.append(mk('SANTÃ‰', 'health', '100'), mk('MUNITIONS', 'ammo', '24'), mk('CIBLES', 'targets', '0'));
+            stats.append(mk('SANTÉ', 'health', '100'), mk('MUNITIONS', 'ammo', '24'), mk('CIBLES', 'targets', '0'));
             panel.append(title, p, stats);
             return panel;
           }
@@ -47,21 +47,21 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
           id: 'controls',
           render: () => {
             const panel = document.createElement('div');
-            panel.className = 'neon-panel';
+            panel.className = 'arcade-panel';
             panel.dataset.testid = 'game-panel-right';
             const title = document.createElement('h2');
-            title.className = 'neon-panel__title';
+            title.className = 'arcade-panel__title';
             title.textContent = 'Commandes';
             const ul = document.createElement('ul');
-            ul.className = 'neon-panel__list';
+            ul.className = 'arcade-panel__list';
             for (const t of [
-              'Clic / EntrÃ©e : capturer la souris et jouer',
-              'ZQSD ou WASD / FlÃ¨ches : se dÃ©placer',
+              'Clic / Entrée : capturer la souris et jouer',
+              'ZQSD ou WASD / Flèches : se déplacer',
               'Souris : viser',
               'Clic gauche : tirer (orbes de slime collantes)',
               'R : recharger',
-              'Ã‰chap : libÃ©rer la souris (pause)'
-            ]) { const li = document.createElement('li'); li.className = 'neon-panel__text'; li.textContent = t; ul.appendChild(li); }
+              'Échap : libérer la souris (pause)'
+            ]) { const li = document.createElement('li'); li.className = 'arcade-panel__text'; li.textContent = t; ul.appendChild(li); }
             panel.append(title, ul);
             return panel;
           }
@@ -75,7 +75,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
             <div id="hud">
               <div id="hud-top">
                 <div class="hud-box">
-                  <span class="hud-label">SantÃ©</span>
+                  <span class="hud-label">Santé</span>
                   <span class="hud-value" id="hud-health">100</span>
                   <div id="health-bar-wrap"><div id="health-bar"></div></div>
                 </div>
@@ -89,18 +89,18 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
               <div id="damage-flash"></div>
               <div id="hud-bottom">
                 <div class="hud-box" id="ammo">Munitions <span id="hud-ammo">24</span> / <span id="hud-reserve">72</span></div>
-                <div class="hud-box" id="objective">Objectif : Ã©liminez tous les aliens pour activer la sortie.</div>
+                <div class="hud-box" id="objective">Objectif : éliminez tous les aliens pour activer la sortie.</div>
               </div>
             </div>
             <div id="overlay">
               <div class="card">
-                <h2><em>Neon</em> Breach</h2>
-                <p>FPS nÃ©on : Ã©liminez les vaisseaux aliens, puis rejoignez la porte d'extraction pour terminer le niveau.</p>
+                <h2><em>Arcade</em> Breach</h2>
+                <p>FPS néon : éliminez les vaisseaux aliens, puis rejoignez la porte d'extraction pour terminer le niveau.</p>
                 <div class="keys">
-                  <div><kbd>Z</kbd><kbd>Q</kbd><kbd>S</kbd><kbd>D</kbd> / flÃ¨ches â€” dÃ©placement</div>
-                  <div><kbd>Souris</kbd> â€” viser</div>
-                  <div><kbd>Clic</kbd> â€” tirer (slime collant)</div>
-                  <div><kbd>R</kbd> â€” recharger Â· <kbd>Ã‰chap</kbd> â€” pause</div>
+                  <div><kbd>Z</kbd><kbd>Q</kbd><kbd>S</kbd><kbd>D</kbd> / flèches — déplacement</div>
+                  <div><kbd>Souris</kbd> — viser</div>
+                  <div><kbd>Clic</kbd> — tirer (slime collant)</div>
+                  <div><kbd>R</kbd> — recharger · <kbd>Échap</kbd> — pause</div>
                 </div>
                 <button id="start-btn" type="button">Entrer dans le secteur</button>
                 <div id="message"></div>
@@ -112,7 +112,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       footer: () => {
         const wrap = document.createElement('div');
         wrap.className = 'game-footer';
-        wrap.innerHTML = '<span class="neon-panel__text">Mini-carte : â–² vous Â· rouge aliens Â· or munitions Â· vert sortie active.</span>';
+        wrap.innerHTML = '<span class="arcade-panel__text">Mini-carte : ? vous · rouge aliens · or munitions · vert sortie active.</span>';
         return wrap;
       }
     }
@@ -213,7 +213,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     l.position.set(x, y, z); scene.add(l);
   }
 
-  function addNeonWall(x, z) {
+  function addArcadeWall(x, z) {
     const p = worldOf(x, z);
     const baseMat = new THREE.MeshStandardMaterial({ color: 0x0a1e2a, emissive: 0x061824, emissiveIntensity: 0.55, metalness: 0.35, roughness: 0.5 });
     const wall = new THREE.Mesh(new THREE.BoxGeometry(cell, 3.2, cell), baseMat);
@@ -225,15 +225,15 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     edges.position.copy(wall.position);
     scene.add(edges);
 
-    const neonMatA = new THREE.MeshBasicMaterial({ color: 0x3dffe0, transparent: true, opacity: 0.95 });
-    const neonMatB = new THREE.MeshBasicMaterial({ color: 0x8b7bff, transparent: true, opacity: 0.75 });
+    const ArcadeMatA = new THREE.MeshBasicMaterial({ color: 0x3dffe0, transparent: true, opacity: 0.95 });
+    const ArcadeMatB = new THREE.MeshBasicMaterial({ color: 0x8b7bff, transparent: true, opacity: 0.75 });
     const strips = [
-      { geo: new THREE.BoxGeometry(cell * 0.9, 0.06, 0.06), pos: [0, 1.05, cell / 2 + 0.03], mat: neonMatA },
-      { geo: new THREE.BoxGeometry(cell * 0.9, 0.06, 0.06), pos: [0, 1.05, -cell / 2 - 0.03], mat: neonMatA },
-      { geo: new THREE.BoxGeometry(0.06, 0.06, cell * 0.9), pos: [cell / 2 + 0.03, 1.05, 0], mat: neonMatA },
-      { geo: new THREE.BoxGeometry(0.06, 0.06, cell * 0.9), pos: [-cell / 2 - 0.03, 1.05, 0], mat: neonMatA },
-      { geo: new THREE.BoxGeometry(0.08, 2.2, 0.08), pos: [cell / 2 - 0.35, 1.4, cell / 2 - 0.35], mat: neonMatB },
-      { geo: new THREE.BoxGeometry(0.08, 2.2, 0.08), pos: [-cell / 2 + 0.35, 1.4, -cell / 2 + 0.35], mat: neonMatB },
+      { geo: new THREE.BoxGeometry(cell * 0.9, 0.06, 0.06), pos: [0, 1.05, cell / 2 + 0.03], mat: ArcadeMatA },
+      { geo: new THREE.BoxGeometry(cell * 0.9, 0.06, 0.06), pos: [0, 1.05, -cell / 2 - 0.03], mat: ArcadeMatA },
+      { geo: new THREE.BoxGeometry(0.06, 0.06, cell * 0.9), pos: [cell / 2 + 0.03, 1.05, 0], mat: ArcadeMatA },
+      { geo: new THREE.BoxGeometry(0.06, 0.06, cell * 0.9), pos: [-cell / 2 - 0.03, 1.05, 0], mat: ArcadeMatA },
+      { geo: new THREE.BoxGeometry(0.08, 2.2, 0.08), pos: [cell / 2 - 0.35, 1.4, cell / 2 - 0.35], mat: ArcadeMatB },
+      { geo: new THREE.BoxGeometry(0.08, 2.2, 0.08), pos: [-cell / 2 + 0.35, 1.4, -cell / 2 + 0.35], mat: ArcadeMatB },
     ];
     for (const s of strips) {
       const m = new THREE.Mesh(s.geo, s.mat);
@@ -243,7 +243,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   }
 
   function makeAlien(colorHex, idx) {
-    // Cute neon alien creature (more appealing, organic silhouette)
+    // Cute Arcade alien creature (more appealing, organic silhouette)
     const g = new THREE.Group();
     const bodyMat = new THREE.MeshStandardMaterial({ color: colorHex, emissive: colorHex, emissiveIntensity: 0.42, metalness: 0.05, roughness: 0.35 });
     const bellyMat = new THREE.MeshStandardMaterial({ color: 0xf4fff8, emissive: colorHex, emissiveIntensity: 0.12, metalness: 0.0, roughness: 0.4, transparent: true, opacity: 0.9 });
@@ -417,7 +417,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       const t = map[z][x];
       const p = worldOf(x, z);
       if (t === 1) {
-        addNeonWall(x, z);
+        addArcadeWall(x, z);
       } else {
         if ((x + z) % 4 === 0) addLight(p.x, 2.7, p.z, 0x32ffd8, 0.55, 10);
         if (t === 3) {
@@ -530,8 +530,8 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
     updateExitVisual();
     if (objectiveEl && !state.reloading && !state.won && !state.over) {
       objectiveEl.textContent = left > 0
-        ? `Objectif : Ã©liminez ${left} alien${left > 1 ? 's' : ''} pour activer la sortie.`
-        : 'Sortie activÃ©e : rejoignez la porte verte (bas-droite sur la carte) pour extraire.';
+        ? `Objectif : éliminez ${left} alien${left > 1 ? 's' : ''} pour activer la sortie.`
+        : 'Sortie activée : rejoignez la porte verte (bas-droite sur la carte) pour extraire.';
     }
   }
 
@@ -600,7 +600,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
       state.running = true; overlay.classList.add('hidden');
     } else {
       state.running = false;
-      if (!state.over && !state.won) setOverlay(true, '<em>Pause</em>', 'La souris a Ã©tÃ© libÃ©rÃ©e. Cliquez pour reprendre.', 'Reprendre');
+      if (!state.over && !state.won) setOverlay(true, '<em>Pause</em>', 'La souris a été libérée. Cliquez pour reprendre.', 'Reprendre');
     }
   });
 
@@ -626,8 +626,8 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   function reload() {
     if (state.reloading || state.ammo >= 24 || state.reserve <= 0) return;
     state.reloading = true; state.reloadT = 1.1;
-    msgEl.textContent = 'Rechargementâ€¦';
-    if (objectiveEl) objectiveEl.textContent = 'Rechargementâ€¦';
+    msgEl.textContent = 'Rechargement…';
+    if (objectiveEl) objectiveEl.textContent = 'Rechargement…';
   }
 
   function stickSlime(pos, normal, scale = 1) {
@@ -735,11 +735,11 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 
   function win() {
     state.won = true; state.running = false; document.exitPointerLock?.();
-    setOverlay(true, '<em>Extraction rÃ©ussie</em>', 'Vous avez rejoint la porte d\'extraction. Niveau terminÃ©.', 'Rejouer', `SantÃ© restante : ${Math.max(0, Math.round(state.health))}`);
+    setOverlay(true, '<em>Extraction réussie</em>', 'Vous avez rejoint la porte d\'extraction. Niveau terminé.', 'Rejouer', `Santé restante : ${Math.max(0, Math.round(state.health))}`);
   }
   function lose() {
     state.over = true; state.running = false; document.exitPointerLock?.();
-    setOverlay(true, 'Mission <em>Ã©chouÃ©e</em>', 'Vous avez Ã©tÃ© neutralisÃ© par les drones du secteur.', 'RÃ©essayer', `Aliens restants : ${enemies.filter(e => e.alive).length}`);
+    setOverlay(true, 'Mission <em>échouée</em>', 'Vous avez été neutralisé par les drones du secteur.', 'Réessayer', `Aliens restants : ${enemies.filter(e => e.alive).length}`);
   }
 
   for (const e of enemies) e.group.userData.enemyRef = e;

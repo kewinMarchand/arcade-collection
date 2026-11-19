@@ -1,8 +1,8 @@
 /*
- * UI commons Neon — composants + shell de jeu.
+ * UI commons Arcade — composants + shell de jeu.
  *
- * Règle du domaine : pas de composant « Neon ». Le shell de jeu est un COMPOSANT
- * générique (contenu central + panneaux latéraux) rendu avec le thème Neon.
+ * Règle du domaine : pas de composant « Arcade ». Le shell de jeu est un COMPOSANT
+ * générique (contenu central + panneaux latéraux) rendu avec le thème Arcade.
  */
 
 const FRAME_TESTIDS = {
@@ -20,10 +20,10 @@ function inferSourceUrl() {
     const idx = parts.lastIndexOf('apps');
     if (idx !== -1 && parts[idx + 1]) {
       const slug = parts[idx + 1];
-      return `https://github.com/kewinMarchand/neon-games/tree/main/apps/${slug}`;
+      return `https://github.com/kewinMarchand/arcade-collection/tree/main/apps/${slug}`;
     }
   } catch (_) {}
-  return 'https://github.com/kewinMarchand/neon-games';
+  return 'https://github.com/kewinMarchand/arcade-collection';
 }
 
 function inferLandingUrl() {
@@ -41,7 +41,7 @@ function inferLandingUrl() {
 function createFullscreenButton(target) {
   const btn = document.createElement('button');
   btn.type = 'button';
-  btn.className = 'neon-frame__action neon-frame__action--fullscreen';
+  btn.className = 'arcade-frame__action arcade-frame__action--fullscreen';
   const sync = () => {
     const active = typeof document !== 'undefined' && document.fullscreenElement === target;
     btn.textContent = active ? 'Quitter plein écran' : 'Plein écran';
@@ -77,28 +77,28 @@ export function mountGameFrame({ mount, config }) {
   if (mount.firstChild) mount.replaceChildren();
 
   const frame = document.createElement('main');
-  frame.className = 'neon-frame neon-frame--game';
+  frame.className = 'arcade-frame arcade-frame--game';
   frame.dataset.testid = FRAME_TESTIDS.frame;
   frame.setAttribute('data-title', title);
 
   const header = document.createElement('header');
-  header.className = 'neon-frame__header';
+  header.className = 'arcade-frame__header';
   header.dataset.testid = FRAME_TESTIDS.header;
   const brand = document.createElement('div');
-  brand.className = 'neon-frame__brand';
+  brand.className = 'arcade-frame__brand';
   const mark = document.createElement('span');
-  mark.className = 'neon-frame__mark';
+  mark.className = 'arcade-frame__mark';
   mark.setAttribute('aria-hidden', 'true');
   mark.textContent = '◆';
   const titles = document.createElement('div');
-  titles.className = 'neon-frame__titles';
+  titles.className = 'arcade-frame__titles';
   const h1 = document.createElement('h1');
-  h1.className = 'neon-frame__title';
+  h1.className = 'arcade-frame__title';
   h1.textContent = title;
   titles.append(h1);
   if (subtitle) {
     const p = document.createElement('p');
-    p.className = 'neon-frame__subtitle';
+    p.className = 'arcade-frame__subtitle';
     p.textContent = subtitle;
     titles.append(p);
   }
@@ -107,11 +107,11 @@ export function mountGameFrame({ mount, config }) {
   header.append(brand);
 
   const actions = document.createElement('div');
-  actions.className = 'neon-frame__actions';
+  actions.className = 'arcade-frame__actions';
   const landingUrl = config.landingUrl || inferLandingUrl();
   if (config.showLandingLink !== false && landingUrl) {
     const homeLink = document.createElement('a');
-    homeLink.className = 'neon-frame__action neon-frame__action--home';
+    homeLink.className = 'arcade-frame__action arcade-frame__action--home';
     homeLink.href = landingUrl;
     homeLink.setAttribute('aria-label', 'Retour à l’accueil');
     homeLink.title = 'Accueil';
@@ -132,7 +132,7 @@ export function mountGameFrame({ mount, config }) {
   const sourceUrl = config.sourceUrl || inferSourceUrl();
   if (config.showSourceLink !== false && sourceUrl) {
     const sourceLink = document.createElement('a');
-    sourceLink.className = 'neon-frame__action neon-frame__action--source';
+    sourceLink.className = 'arcade-frame__action arcade-frame__action--source';
     sourceLink.href = sourceUrl;
     sourceLink.target = '_blank';
     sourceLink.rel = 'noopener noreferrer';
@@ -156,16 +156,16 @@ export function mountGameFrame({ mount, config }) {
   if (typeof config.renderHeader === 'function') header.append(config.renderHeader());
 
   const body = document.createElement('div');
-  body.className = 'neon-frame__body';
+  body.className = 'arcade-frame__body';
   const left = document.createElement('aside');
-  left.className = 'neon-side neon-side--left';
+  left.className = 'arcade-side arcade-side--left';
   left.dataset.testid = FRAME_TESTIDS.panelLeft;
   const right = document.createElement('aside');
-  right.className = 'neon-side neon-side--right';
+  right.className = 'arcade-side arcade-side--right';
   right.dataset.testid = FRAME_TESTIDS.panelRight;
 
   const screenEl = document.createElement('section');
-  screenEl.className = 'neon-screen';
+  screenEl.className = 'arcade-screen';
   screenEl.dataset.testid = FRAME_TESTIDS.screen;
   if (screen && typeof screen.mount === 'function') screen.mount(screenEl);
 
@@ -173,7 +173,7 @@ export function mountGameFrame({ mount, config }) {
   frame.append(header, body);
 
   const footerEl = document.createElement('footer');
-  footerEl.className = 'neon-frame__footer';
+  footerEl.className = 'arcade-frame__footer';
   footerEl.dataset.testid = FRAME_TESTIDS.footer;
   if (typeof footer === 'function') footerEl.append(footer());
   else if (typeof footer === 'string') footerEl.textContent = footer;
@@ -187,7 +187,7 @@ export function mountGameFrame({ mount, config }) {
       const rendered = panel.render();
       if (rendered) {
         rendered.dataset.testid = rendered.dataset.testid || `game-panel-${panel.side}`;
-        rendered.classList.add('neon-panel--slot');
+        rendered.classList.add('arcade-panel--slot');
         slot.append(rendered);
       }
     }

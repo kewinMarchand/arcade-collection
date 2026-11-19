@@ -1,11 +1,11 @@
-# Neon Strike
+# Strike
 
 FPS néon : abattez les vaisseaux qui convergent vers vous.
 
 
-## Ouvrir Neon Strike
+## Ouvrir Strike
 
-[Ouvrir Neon Strike](https://kewinmarchand.github.io/neon-games/apps/strike/)
+[Ouvrir Strike](https://kewinmarchand.github.io/arcade-collection/apps/strike/)
 
 ## Le jeu
 
@@ -17,4 +17,4 @@ FPS néon : abattez les vaisseaux qui convergent vers vous.
 
 ## Thème
 
-Le portail et les jeux utilisent une base CSS partagée (`neon/neon-tokens.css`, `neon-base.css`, `neon-components.css`).
+Le portail et les jeux utilisent une base CSS partagée (`Arcade/arcade-tokens.css`, `arcade-base.css`, `arcade-components.css`).

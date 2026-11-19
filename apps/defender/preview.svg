@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
-  <title id="title">Neon Defender</title>
+  <title id="title">Defender</title>
   <desc id="desc">Vaisseau central avec bouclier technologique segmenté interceptant des photons sur fond spatial néon quadrillé.</desc>
   <defs>
     <linearGradient id="space" x1="0" y1="0" x2="0" y2="1">
@@ -18,7 +18,7 @@
     <path d="M60 0V380M120 0V380M180 0V380M240 0V380M300 0V380M360 0V380M420 0V380M480 0V380M540 0V380M600 0V380M660 0V380"/>
   </g>
   <g fill="#f2fffc" opacity="0.75"><circle cx="30" cy="26" r="1.6"/><circle cx="100" cy="60" r="1"/><circle cx="210" cy="22" r="1.8"/><circle cx="340" cy="40" r="1.1"/><circle cx="500" cy="28" r="1.7"/><circle cx="640" cy="50" r="1.2"/><circle cx="690" cy="20" r="1.5"/></g>
-  <text x="360" y="48" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="26" letter-spacing="5">NEON DEFENDER</text>
+  <text x="360" y="48" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="26" letter-spacing="5">DEFENDER</text>
 
   <g fill="none" stroke="#69ffe1">
     <circle cx="360" cy="205" r="72" opacity="0.16"/>

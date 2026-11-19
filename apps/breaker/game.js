@@ -3,7 +3,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
-    title: 'Neon Breaker',
+    title: 'Breaker',
     subtitle: 'Casse les briques • Garde la balle en jeu',
     renderHeader: () => {
       const options = document.createElement('div');
@@ -45,11 +45,11 @@ const shell = mountGameFrame({
         id: 'hud',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-left';
 
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Statut';
 
           const stats = document.createElement('div');
@@ -75,11 +75,11 @@ const shell = mountGameFrame({
         id: 'actions',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-right';
 
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Actions';
 
           const actions = document.createElement('div');
@@ -118,7 +118,7 @@ const shell = mountGameFrame({
         canvas.id = 'game';
         canvas.width = 900;
         canvas.height = 620;
-        canvas.setAttribute('aria-label', 'Jeu de casse-briques Neon Breaker');
+        canvas.setAttribute('aria-label', 'Jeu de casse-briques Breaker');
         el.appendChild(canvas);
       },
     },
@@ -657,7 +657,7 @@ function draw() {
     ctx.textAlign = 'center';
     ctx.fillStyle = '#69ffe1';
     ctx.font = '900 36px system-ui';
-    const title = state === 'ready' ? 'NEON BREAKER' : state === 'paused' ? 'PAUSE' : state === 'won' ? 'NIVEAU TERMINÉ' : 'PARTIE TERMINÉE';
+    const title = state === 'ready' ? 'BREAKER' : state === 'paused' ? 'PAUSE' : state === 'won' ? 'NIVEAU TERMINÉ' : 'PARTIE TERMINÉE';
     ctx.fillText(title, W / 2, H / 2);
     ctx.fillStyle = '#edfffa';
     ctx.font = '16px system-ui';

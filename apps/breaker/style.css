@@ -1,8 +1,8 @@
 /*
- * Neon Breaker - styles spécifiques au jeu.
- * Le cadre 100vh, les panneaux et les composants communs viennent du thème Neon.
+ * Breaker - styles spécifiques au jeu.
+ * Le cadre 100vh, les panneaux et les composants communs viennent du thème Arcade.
  */
 
-.neon-screen canvas {
+.arcade-screen canvas {
   touch-action: none;
 }

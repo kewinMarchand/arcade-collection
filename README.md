@@ -1,103 +1,103 @@
-# Neon Games
+# Arcade Collection
 
 Une collection de quinze mini-jeux indépendants, gratuits et jouables directement dans le navigateur.
 
-## Ouvrir Neon Games
+## Ouvrir Arcade Collection
 
-[Ouvrir Neon Games](https://kewinmarchand.github.io/neon-games/)
+[Ouvrir Arcade Collection](https://kewinmarchand.github.io/arcade-collection/)
 
 ## Les jeux
 
-### Neon Invaders
+### Invaders
 
-[![Aperçu de Neon Invaders](apps/invaders/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/invaders/)
+[![Aperçu de Invaders](apps/invaders/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/invaders/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/invaders/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/invaders) — Défendez votre base contre des vagues d'envahisseurs.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/invaders/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/invaders) — Défendez votre base contre des vagues d'envahisseurs.
 
-### Neon Breaker
+### Breaker
 
-[![Aperçu de Neon Breaker](apps/breaker/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/breaker/)
+[![Aperçu de Breaker](apps/breaker/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/breaker/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/breaker/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/breaker) — Cassez les briques et gardez la balle en jeu.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/breaker/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/breaker) — Cassez les briques et gardez la balle en jeu.
 
-### Neon Columns
+### Columns
 
-[![Aperçu de Neon Columns](apps/columns/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/columns/)
+[![Aperçu de Columns](apps/columns/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/columns/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/columns/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/columns) — Alignez des gemmes pour déclencher des réactions en chaîne.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/columns/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/columns) — Alignez des gemmes pour déclencher des réactions en chaîne.
 
-### Neon Drift
+### Drift
 
-[![Aperçu de Neon Drift](apps/drift/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/drift/)
+[![Aperçu de Drift](apps/drift/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/drift/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/drift/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/drift) — Pilotez une voiture sur le circuit, évitez les obstacles et récoltez les orbes.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/drift/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/drift) — Pilotez une voiture sur le circuit, évitez les obstacles et récoltez les orbes.
 
-### Neon Runner
+### Runner
 
-[![Aperçu de Neon Runner](apps/runner/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/runner/)
+[![Aperçu de Runner](apps/runner/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/runner/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/runner/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/runner) — Sautez et glissez pour éviter les obstacles.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/runner/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/runner) — Sautez et glissez pour éviter les obstacles.
 
-### Neon Defender
+### Defender
 
-[![Aperçu de Neon Defender](apps/defender/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/defender/)
+[![Aperçu de Defender](apps/defender/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/defender/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/defender/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/defender) — Orientez le bouclier pour intercepter les photons.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/defender/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/defender) — Orientez le bouclier pour intercepter les photons.
 
-### Neon Black Holes
+### Black Holes
 
-[![Aperçu de Neon Black Holes](apps/mines/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/mines/)
+[![Aperçu de Black Holes](apps/mines/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/mines/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/mines/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/mines) — Explorez les secteurs spatiaux et repérez les trous noirs grâce aux satellites.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/mines/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/mines) — Explorez les secteurs spatiaux et repérez les trous noirs grâce aux satellites.
 
-### Neon Serpent
+### Snake
 
-[![Aperçu de Neon Serpent](apps/serpent/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/serpent/)
+[![Aperçu de Snake](apps/snake/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/snake/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/serpent/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/serpent) — Grandissez sans vous mordre, la vitesse s'emballe.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/snake/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/snake) — Grandissez sans vous mordre, la vitesse s'emballe.
 
-### Neon Orbiter
+### Orbiter
 
-[![Aperçu de Neon Orbiter](apps/orbiter/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/orbiter/)
+[![Aperçu de Orbiter](apps/orbiter/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/orbiter/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/orbiter/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/orbiter) — Alunissez en douceur : gravité, carburant et plateformes bonus.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/orbiter/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/orbiter) — Alunissez en douceur : gravité, carburant et plateformes bonus.
 
-### Neon Maze
+### Maze
 
-[![Aperçu de Neon Maze](apps/maze/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/maze/)
+[![Aperçu de Maze](apps/maze/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/maze/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/maze/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/maze) — Mangez les pastilles, échappez aux fantômes, passez au niveau suivant.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/maze/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/maze) — Mangez les pastilles, échappez aux fantômes, passez au niveau suivant.
 
-### Neon Pong
+### Pong
 
-[![Aperçu de Neon Pong](apps/pong/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/pong/)
+[![Aperçu de Pong](apps/pong/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/pong/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/pong/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/pong) — Renvoyez la balle, marquez des points, premier à 11.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/pong/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/pong) — Renvoyez la balle, marquez des points, premier à 11.
 
-### Neon Strike
+### Strike
 
-[![Aperçu de Neon Strike](apps/strike/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/strike/)
+[![Aperçu de Strike](apps/strike/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/strike/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/strike/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/strike) — Abattez les vaisseaux avant qu'ils ne vous atteignent.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/strike/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/strike) — Abattez les vaisseaux avant qu'ils ne vous atteignent.
 
-### Neon Breach
+### Breach
 
-[![Aperçu de Neon Breach](apps/breach/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/breach/)
+[![Aperçu de Breach](apps/breach/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/breach/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/breach/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/breach) — FPS néon en vue subjective : infiltrez le secteur et éliminez les drones aliens.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/breach/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/breach) — FPS néon en vue subjective : infiltrez le secteur et éliminez les drones aliens.
 
-### Neon Jumper
+### Jumper
 
-[![Aperçu de Neon Jumper](apps/jumper/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/jumper/)
+[![Aperçu de Jumper](apps/jumper/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/jumper/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/jumper/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/jumper) — Plateformer néon : sautez de plateforme en plateforme et atteignez le portail.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/jumper/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/jumper) — Plateformer néon : sautez de plateforme en plateforme et atteignez le portail.
 
-### Neon Sorter
+### Sorter
 
-[![Aperçu de Neon Sorter](apps/sorter/preview.svg)](https://kewinmarchand.github.io/neon-games/apps/sorter/)
+[![Aperçu de Sorter](apps/sorter/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/sorter/)
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/neon-games/apps/sorter/) · [Code source](https://github.com/kewinMarchand/neon-games/tree/main/apps/sorter) — Triez les modules identiques et expédiez les conteneurs avant saturation.
+[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/sorter/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/sorter) — Triez les modules identiques et expédiez les conteneurs avant saturation.
 
 ## Thème
 
-Ce dépôt utilise le thème Neon partagé (`packages/theme-neon`) et le cadre de jeu commun (`packages/ui`).
+Ce dépôt utilise le thème Arcade partagé (`packages/theme-arcade`) et le cadre de jeu commun (`packages/ui`).

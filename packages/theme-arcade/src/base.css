@@ -1,6 +1,6 @@
 /*
- * Theme Neon - base (reset visuel + fond + cadre de jeu).
- * Le theme n'introduit aucune brique Neon metier : le cadre (.neon-frame--game) est
+ * Theme Arcade - base (reset visuel + fond + cadre de jeu).
+ * Le theme n'introduit aucune brique Arcade metier : le cadre (.arcade-frame--game) est
  * defini ici, de facon generique, et consomme les tokens `--bui-*`.
  */
 
@@ -37,13 +37,13 @@ body.game {
   overflow: hidden;
 }
 
-.neon-app {
+.arcade-app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.neon-frame {
+.arcade-frame {
   width: 100%;
   height: 100%;
   min-height: 0;
@@ -57,14 +57,14 @@ body.game {
 }
 
 /* Cadre de jeu commun à tous les jeux (ADR-004) : 100vh, pas de scroll de page. */
-.neon-frame--game {
+.arcade-frame--game {
   height: 100dvh;
   max-height: 100dvh;
   min-height: 0;
   overflow: hidden;
 }
 
-.neon-frame__header {
+.arcade-frame__header {
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
@@ -76,7 +76,7 @@ body.game {
   padding-bottom: 0;
 }
 
-.neon-frame__actions {
+.arcade-frame__actions {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,7 +84,7 @@ body.game {
   gap: 8px 12px;
 }
 
-.neon-frame__brand {
+.arcade-frame__brand {
   display: inline-flex;
   align-items: flex-start;
   justify-content: center;
@@ -92,7 +92,7 @@ body.game {
   min-width: 0;
 }
 
-.neon-frame__titles {
+.arcade-frame__titles {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -102,7 +102,7 @@ body.game {
   text-align: center;
 }
 
-.neon-frame__mark {
+.arcade-frame__mark {
   color: var(--bui-color-secondary, #ff72bb);
   font-size: 0.95rem;
   line-height: 1;
@@ -111,7 +111,7 @@ body.game {
   margin-top: 0.55em;
 }
 
-.neon-frame__title {
+.arcade-frame__title {
   margin: 0;
   color: var(--bui-color-primary, #69ffe1);
   font-size: clamp(1.25rem, 3vw, 2.1rem);
@@ -120,15 +120,15 @@ body.game {
   line-height: 1.1;
   text-shadow: 0 0 12px color-mix(in srgb, var(--bui-color-primary, #69ffe1) 53%, transparent), 0 0 24px color-mix(in srgb, var(--bui-color-primary, #69ffe1) 30%, transparent);
   text-align: center;
-  animation: neon-title-pulse 3.6s ease-in-out infinite;
+  animation: arcade-title-pulse 3.6s ease-in-out infinite;
 }
 
-@keyframes neon-title-pulse {
+@keyframes arcade-title-pulse {
   0%, 100% { text-shadow: 0 0 12px color-mix(in srgb, var(--bui-color-primary, #69ffe1) 53%, transparent), 0 0 24px color-mix(in srgb, var(--bui-color-primary, #69ffe1) 30%, transparent); }
   50% { text-shadow: 0 0 16px color-mix(in srgb, var(--bui-color-primary, #69ffe1) 70%, transparent), 0 0 34px color-mix(in srgb, var(--bui-color-primary, #69ffe1) 40%, transparent), 0 0 50px color-mix(in srgb, var(--bui-color-primary, #69ffe1) 18%, transparent); }
 }
 
-.neon-frame__subtitle {
+.arcade-frame__subtitle {
   margin: 0;
   color: var(--bui-color-text-muted, #a9bab8);
   font-family: var(--bui-font-family-mono, 'DM Mono', monospace);
@@ -138,7 +138,7 @@ body.game {
   text-align: center;
 }
 
-.neon-frame__body {
+.arcade-frame__body {
   flex: 1 1 0;
   min-height: 0;
   display: grid;
@@ -149,7 +149,7 @@ body.game {
   overflow: hidden;
 }
 
-.neon-side {
+.arcade-side {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -159,12 +159,12 @@ body.game {
   padding: 2px 0;
 }
 
-.neon-side--left,
-.neon-side--right {
+.arcade-side--left,
+.arcade-side--right {
   width: auto;
 }
 
-.neon-screen {
+.arcade-screen {
   position: relative;
   min-width: 0;
   min-height: 0;
@@ -177,17 +177,17 @@ body.game {
   justify-content: center;
   padding: 12px;
   box-shadow: 0 0 0 1px #69ffe110, 0 0 28px #69ffe10d, inset 0 0 40px #00100866;
-  animation: neon-screen-glow 4s ease-in-out infinite;
+  animation: arcade-screen-glow 4s ease-in-out infinite;
 }
 
-@keyframes neon-screen-glow {
+@keyframes arcade-screen-glow {
   0%, 100% { box-shadow: 0 0 0 1px #69ffe110, 0 0 24px #69ffe10a, inset 0 0 40px #00100866; }
   50% { box-shadow: 0 0 0 1px #69ffe118, 0 0 36px #69ffe114, inset 0 0 50px #00100855; }
 }
 
-.neon-screen > canvas,
-.neon-screen > .game-canvas,
-.neon-screen canvas {
+.arcade-screen > canvas,
+.arcade-screen > .game-canvas,
+.arcade-screen canvas {
   display: block;
   max-width: 100%;
   max-height: 100%;
@@ -196,8 +196,8 @@ body.game {
   object-fit: contain;
 }
 
-.neon-panel,
-.neon-panel--slot {
+.arcade-panel,
+.arcade-panel--slot {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -208,15 +208,15 @@ body.game {
   min-height: 0;
 }
 
-.neon-panel--slot {
+.arcade-panel--slot {
   flex: 0 0 auto;
 }
 
-.neon-side > .neon-panel--slot:only-child {
+.arcade-side > .arcade-panel--slot:only-child {
   flex: 1 1 auto;
 }
 
-.neon-frame__footer {
+.arcade-frame__footer {
   flex: 0 0 auto;
   display: flex;
   justify-content: center;
@@ -230,16 +230,16 @@ body.game {
   max-width: 100%;
 }
 
-.neon-frame__footer > * {
+.arcade-frame__footer > * {
   max-width: 100%;
 }
 
 @media (max-width: 980px) {
-  .neon-frame__body {
+  .arcade-frame__body {
     grid-template-columns: minmax(160px, 220px) minmax(0, 1fr) minmax(160px, 220px);
     gap: 12px;
   }
-  .neon-frame {
+  .arcade-frame {
     padding: 14px 16px;
     gap: 14px;
   }
@@ -251,19 +251,19 @@ body.game {
     max-height: 100dvh;
     overflow: hidden;
   }
-  .neon-frame {
+  .arcade-frame {
     height: 100dvh;
     max-height: 100dvh;
     padding: 10px 12px 12px;
     gap: 10px;
   }
-  .neon-frame__body {
+  .arcade-frame__body {
     grid-template-columns: 1fr;
     grid-template-rows: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
     gap: 10px;
     overflow: hidden;
   }
-  .neon-side--left {
+  .arcade-side--left {
     order: 1;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -271,12 +271,12 @@ body.game {
     overflow-y: hidden;
     max-height: 20vh;
   }
-  .neon-screen {
+  .arcade-screen {
     order: 2;
     min-height: 0;
     padding: 8px;
   }
-  .neon-side--right {
+  .arcade-side--right {
     order: 3;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -284,19 +284,19 @@ body.game {
     overflow-y: hidden;
     max-height: 20vh;
   }
-  .neon-side > .neon-panel--slot {
+  .arcade-side > .arcade-panel--slot {
     flex: 0 0 auto;
     min-width: 160px;
   }
-  .neon-side > .neon-panel--slot:only-child {
+  .arcade-side > .arcade-panel--slot:only-child {
     flex: 1 1 auto;
     min-width: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .neon-screen,
-  .neon-frame__title {
+  .arcade-screen,
+  .arcade-frame__title {
     animation: none !important;
   }
 }

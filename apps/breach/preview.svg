@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
-  <title id="title">Neon Breach</title>
+  <title id="title">Breach</title>
   <desc id="desc">Couloir FPS néon avec un drone alien détaillé, orbes de slime collées aux parois, mini-carte et porte d'extraction.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
@@ -20,7 +20,7 @@
       <stop offset="0.45" stop-color="#7cff5a"/>
       <stop offset="1" stop-color="#39ff14"/>
     </radialGradient>
-    <filter id="neon" x="-40%" y="-40%" width="180%" height="180%">
+    <filter id="Arcade" x="-40%" y="-40%" width="180%" height="180%">
       <feGaussianBlur stdDeviation="4" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
@@ -43,8 +43,8 @@
   <path d="M260 110 L460 110 L460 290 L260 290 Z" fill="#081722" stroke="#184453" stroke-width="2"/>
   <path d="M40 340 L260 290 L460 290 L680 340 Z" fill="url(#floor)"/>
 
-  <!-- neon trims -->
-  <g stroke="#3dffe0" stroke-width="3" opacity="0.85" filter="url(#neon)">
+  <!-- Arcade trims -->
+  <g stroke="#3dffe0" stroke-width="3" opacity="0.85" filter="url(#Arcade)">
     <line x1="62" y1="58" x2="246" y2="116"/>
     <line x1="658" y1="58" x2="474" y2="116"/>
     <line x1="260" y1="112" x2="460" y2="112"/>
@@ -52,7 +52,7 @@
   </g>
 
   <!-- extraction door (active) -->
-  <g transform="translate(360,200)" filter="url(#neon)">
+  <g transform="translate(360,200)" filter="url(#Arcade)">
     <rect x="-44" y="-62" width="88" height="110" rx="8" fill="#1c2e38" stroke="#58ff9a" stroke-width="3"/>
     <rect x="-30" y="-50" width="60" height="86" rx="6" fill="#0a3a22" fill-opacity="0.7"/>
     <ellipse cx="0" cy="0" rx="22" ry="34" fill="#1aff88" fill-opacity="0.18" stroke="#58ff9a" stroke-width="2"/>
@@ -68,8 +68,8 @@
     <circle cx="228" cy="182" r="5" fill="#7cff5a" opacity="0.85"/><circle cx="492" cy="166" r="4.5" fill="#7cff5a" opacity="0.8"/>
   </g>
 
-  <!-- cute neon alien creature -->
-  <g transform="translate(360,186)" filter="url(#neon)">
+  <!-- cute Arcade alien creature -->
+  <g transform="translate(360,186)" filter="url(#Arcade)">
     <ellipse cx="0" cy="10" rx="34" ry="30" fill="#ff65b5" fill-opacity="0.95"/>
     <ellipse cx="0" cy="-18" rx="23" ry="20" fill="#ff65b5" fill-opacity="0.98"/>
     <ellipse cx="0" cy="12" rx="18" ry="14" fill="#f4fff8" fill-opacity="0.85"/>
@@ -95,7 +95,7 @@
   </g>
 
   <!-- flying slime orb (projectile) -->
-  <g transform="translate(430,220)" filter="url(#neon)">
+  <g transform="translate(430,220)" filter="url(#Arcade)">
     <circle cx="0" cy="0" r="10" fill="url(#slime)"/>
     <circle cx="-3" cy="-3" r="3" fill="#f2ffd8" fill-opacity="0.8"/>
   </g>

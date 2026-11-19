@@ -4,7 +4,7 @@ import { createAudio } from '../../packages/shared/src/audio.js';
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
-    title: 'Neon Columns',
+    title: 'Columns',
     subtitle: 'Aligne les symboles • Fais grimper le score',
     renderHeader: () => {
       const options = document.createElement('div');
@@ -46,25 +46,25 @@ const shell = mountGameFrame({
         id: 'hud',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-left';
 
           const scoreTitle = document.createElement('h2');
-          scoreTitle.className = 'neon-panel__title';
+          scoreTitle.className = 'arcade-panel__title';
           scoreTitle.textContent = 'Score';
 
           const score = document.createElement('p');
-          score.className = 'neon-panel__value';
+          score.className = 'arcade-panel__value';
           score.id = 'score';
           score.textContent = '0';
 
           const status = document.createElement('p');
-          status.className = 'neon-panel__text';
+          status.className = 'arcade-panel__text';
           status.id = 'status';
           status.textContent = 'Prêt';
 
           const nextTitle = document.createElement('h2');
-          nextTitle.className = 'neon-panel__title';
+          nextTitle.className = 'arcade-panel__title';
           nextTitle.textContent = 'Suivant';
 
           const previewWrap = document.createElement('div');
@@ -85,11 +85,11 @@ const shell = mountGameFrame({
         id: 'actions',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-right';
 
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Actions';
 
           const actions = document.createElement('div');
@@ -128,7 +128,7 @@ const shell = mountGameFrame({
         canvas.id = 'game';
         canvas.width = 480;
         canvas.height = 720;
-        canvas.setAttribute('aria-label', 'Plateau Neon Columns');
+        canvas.setAttribute('aria-label', 'Plateau Columns');
         el.appendChild(canvas);
       },
     },
@@ -599,7 +599,7 @@ function draw(t) {
     ctx.textAlign = 'center';
     ctx.fillStyle = '#69ffe1';
     ctx.font = '800 28px system-ui';
-    const title = state === 'ready' ? 'NEON COLUMNS' : state === 'paused' ? 'PAUSE' : 'PARTIE TERMINÉE';
+    const title = state === 'ready' ? 'COLUMNS' : state === 'paused' ? 'PAUSE' : 'PARTIE TERMINÉE';
     ctx.fillText(title, canvas.width / 2, canvas.height / 2);
     ctx.fillStyle = '#edfffa';
     ctx.font = '14px system-ui';

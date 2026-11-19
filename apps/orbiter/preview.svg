@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
-  <title id="title">Neon Orbiter</title>
+  <title id="title">Orbiter</title>
   <desc id="desc">Module d'alunissage détaillé descendant vers des plateformes néon sur un terrain accidenté, sous un ciel spatial quadrillé.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
@@ -18,7 +18,7 @@
     <path d="M60 0V260M120 0V260M180 0V260M240 0V260M300 0V260M360 0V260M420 0V260M480 0V260M540 0V260M600 0V260M660 0V260"/>
   </g>
   <g fill="#f2fffc" opacity="0.75"><circle cx="40" cy="28" r="1.6"/><circle cx="130" cy="52" r="1"/><circle cx="240" cy="24" r="1.8"/><circle cx="380" cy="40" r="1.2"/><circle cx="520" cy="26" r="1.6"/><circle cx="660" cy="44" r="1"/></g>
-  <text x="360" y="48" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="26" letter-spacing="5">NEON ORBITER</text>
+  <text x="360" y="48" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="26" letter-spacing="5">ORBITER</text>
 
   <!-- terrain -->
   <path d="M0 300 L60 280 L120 300 L180 260 L260 290 L340 250 L420 285 L500 240 L560 275 L640 255 L720 290 L720 380 L0 380 Z" fill="#0a1f22" stroke="#69ffe1" stroke-opacity="0.35" stroke-width="2"/>

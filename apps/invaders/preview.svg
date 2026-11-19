@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
-  <title id="title">Neon Invaders</title>
+  <title id="title">Invaders</title>
   <desc id="desc">Une flotte d'aliens néon expressifs descend vers un vaisseau défenseur qui tire.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
@@ -97,7 +97,7 @@
     <path d="M80 40v300M160 40v300M240 40v300M320 40v300M400 40v300M480 40v300M560 40v300M640 40v300"/>
   </g>
 
-  <text x="360" y="52" text-anchor="middle" fill="#69ffe1" font-family="system-ui,Segoe UI,sans-serif" font-weight="800" font-size="28" letter-spacing="6">NEON INVADERS</text>
+  <text x="360" y="52" text-anchor="middle" fill="#69ffe1" font-family="system-ui,Segoe UI,sans-serif" font-weight="800" font-size="28" letter-spacing="6">INVADERS</text>
 
   <!-- alien fleet (detailed ship style) -->
   <g filter="url(#glow)">

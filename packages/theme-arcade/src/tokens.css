@@ -1,18 +1,18 @@
 /*
- * Theme Neon — tokens et overrides.
+ * Theme Arcade — tokens et overrides.
  *
- * Le theme Neon n'est PAS une brique de composants : il attache un theme
+ * Le theme Arcade n'est PAS une brique de composants : il attache un theme
  * (tokens / variables CSS / overrides) aux composants commons de
  * `boilerplates-ui` (`--bui-*`, classes `bui-*`).
  *
- * Tout identite visuelle Neon est portee par ce theme ; toute brique UI reutilise
+ * Tout identite visuelle Arcade est portee par ce theme ; toute brique UI reutilise
  * un composant commun.
  */
 
 :root {
   color-scheme: dark;
 
-  /* Neutres / surfaces (Neon) */
+  /* Neutres / surfaces (Arcade) */
   --bui-color-text: #f2f7f5;
   --bui-color-text-muted: #a9bab8;
   --bui-color-surface: #071018;
@@ -21,7 +21,7 @@
   --bui-color-border-subtle: #182635;
   --bui-color-backdrop: rgb(4 16 18 / 0.7);
 
-  /* Couleurs d'accent Neon */
+  /* Couleurs d'accent Arcade */
   --bui-color-primary: #69ffe1;
   --bui-color-primary-dark: #3fe6cb;
   --bui-color-on-primary: #061412;

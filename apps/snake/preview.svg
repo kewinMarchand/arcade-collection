@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
-  <title id="title">Neon Serpent</title>
+  <title id="title">Snake</title>
   <desc id="desc">Serpent lumineux sur une grille n├®on vers une orbe rose.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
@@ -67,6 +67,6 @@
     <circle cx="0" cy="0" r="10" fill="#ff6dbe"/>
     <circle cx="-3" cy="-3" r="3" fill="#ffdcec" opacity="0.8"/>
   </g>
-  <text x="360" y="55" text-anchor="middle" fill="#7af7e0" font-family="system-ui,sans-serif" font-weight="800" font-size="28" letter-spacing="6">NEON SERPENT</text>
+  <text x="360" y="55" text-anchor="middle" fill="#7af7e0" font-family="system-ui,sans-serif" font-weight="800" font-size="28" letter-spacing="6">Snake</text>
   <text x="360" y="354" text-anchor="middle" fill="#b9c9e8" font-family="system-ui,sans-serif" font-size="16" letter-spacing="3">GRANDIS SANS TE MORDRE</text>
 </svg>

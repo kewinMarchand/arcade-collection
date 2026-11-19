@@ -1,11 +1,11 @@
-# Neon Maze
+# Maze
 
 Labyrinthe néon : mangez les pastilles, échappez aux fantômes, passez au niveau suivant.
 
 
-## Ouvrir Neon Maze
+## Ouvrir Maze
 
-[Ouvrir Neon Maze](https://kewinmarchand.github.io/neon-games/apps/maze/)
+[Ouvrir Maze](https://kewinmarchand.github.io/arcade-collection/apps/maze/)
 
 ## Le jeu
 
@@ -17,4 +17,4 @@ Labyrinthe néon : mangez les pastilles, échappez aux fantômes, passez au nive
 
 ## Thème
 
-Le portail et les jeux utilisent une base CSS partagée (`neon/neon-tokens.css`, `neon-base.css`, `neon-components.css`).
+Le portail et les jeux utilisent une base CSS partagée (`Arcade/arcade-tokens.css`, `arcade-base.css`, `arcade-components.css`).

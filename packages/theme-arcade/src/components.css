@@ -1,7 +1,7 @@
 /*
- * Theme Neon - composants (overrides visuels) sur les composants commons `bui-*`.
+ * Theme Arcade - composants (overrides visuels) sur les composants commons `bui-*`.
  * Les classes demontables (`.bui-button`, `.bui-card`, `.bui-link`, ...) gardent leur
- * logique ; le theme n'introduit aucune brique Neon metier.
+ * logique ; le theme n'introduit aucune brique Arcade metier.
  */
 
 @layer components {
@@ -35,7 +35,7 @@
   }
 
   /* Panneaux lateraux du shell de jeu : contenus specifiques au jeu, sans modifier le cadre. */
-  .neon-panel__title {
+  .arcade-panel__title {
     margin: 0;
     color: var(--bui-color-primary, #69ffe1);
     font-size: 0.9rem;
@@ -44,7 +44,7 @@
     text-transform: uppercase;
   }
 
-  .neon-panel__value {
+  .arcade-panel__value {
     margin: 0;
     color: var(--bui-color-text, #f2f7f5);
     font-size: 1.5rem;
@@ -52,14 +52,14 @@
     line-height: 1.1;
   }
 
-  .neon-panel__text {
+  .arcade-panel__text {
     margin: 0;
     color: var(--bui-color-text-muted, #a9bab8);
     font-size: 0.88rem;
     line-height: 1.45;
   }
 
-  .neon-panel__list {
+  .arcade-panel__list {
     margin: 0;
     padding-left: 18px;
     display: grid;
@@ -271,7 +271,7 @@
     padding: 10px 12px;
   }
 
-  .neon-frame__action {
+  .arcade-frame__action {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -289,20 +289,20 @@
     transition: border-color 0.18s ease, box-shadow 0.18s ease, color 0.18s ease, transform 0.14s ease;
   }
 
-  .neon-frame__action:hover,
-  .neon-frame__action:focus-visible {
+  .arcade-frame__action:hover,
+  .arcade-frame__action:focus-visible {
     border-color: var(--bui-color-primary, #69ffe1);
     color: var(--bui-color-primary, #69ffe1);
     box-shadow: 0 0 14px #22ffc033;
     transform: translateY(-1px);
   }
 
-  .neon-frame__action:active {
+  .arcade-frame__action:active {
     transform: translateY(1px) scale(0.98);
   }
 
-  .neon-frame__action--home,
-  .neon-frame__action--source {
+  .arcade-frame__action--home,
+  .arcade-frame__action--source {
     width: 34px;
     min-height: 34px;
     height: 34px;
@@ -310,15 +310,15 @@
     flex: 0 0 34px;
   }
 
-  .neon-frame__action--home svg,
-  .neon-frame__action--source svg {
+  .arcade-frame__action--home svg,
+  .arcade-frame__action--source svg {
     width: 18px;
     height: 18px;
     display: block;
   }
 
-  .neon-frame--game:fullscreen,
-  .neon-frame--game.is-fullscreen {
+  .arcade-frame--game:fullscreen,
+  .arcade-frame--game.is-fullscreen {
     width: 100vw;
     height: 100dvh;
     max-height: 100dvh;
@@ -327,17 +327,17 @@
     background: radial-gradient(ellipse at 82% 4%, #193b3a 0, transparent 32%), #071018;
   }
 
-  .neon-frame--game:fullscreen .neon-frame__header,
-  .neon-frame--game.is-fullscreen .neon-frame__header,
-  .neon-frame--game:fullscreen .neon-frame__footer,
-  .neon-frame--game.is-fullscreen .neon-frame__footer,
-  .neon-frame--game:fullscreen .neon-side,
-  .neon-frame--game.is-fullscreen .neon-side {
+  .arcade-frame--game:fullscreen .arcade-frame__header,
+  .arcade-frame--game.is-fullscreen .arcade-frame__header,
+  .arcade-frame--game:fullscreen .arcade-frame__footer,
+  .arcade-frame--game.is-fullscreen .arcade-frame__footer,
+  .arcade-frame--game:fullscreen .arcade-side,
+  .arcade-frame--game.is-fullscreen .arcade-side {
     display: none !important;
   }
 
-  .neon-frame--game:fullscreen .neon-frame__body,
-  .neon-frame--game.is-fullscreen .neon-frame__body {
+  .arcade-frame--game:fullscreen .arcade-frame__body,
+  .arcade-frame--game.is-fullscreen .arcade-frame__body {
     flex: 1 1 auto;
     display: grid;
     grid-template-columns: minmax(0, 1fr) !important;
@@ -349,8 +349,8 @@
     overflow: hidden;
   }
 
-  .neon-frame--game:fullscreen .neon-screen,
-  .neon-frame--game.is-fullscreen .neon-screen {
+  .arcade-frame--game:fullscreen .arcade-screen,
+  .arcade-frame--game.is-fullscreen .arcade-screen {
     border: none;
     border-radius: 0;
     box-shadow: none;

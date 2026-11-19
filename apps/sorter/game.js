@@ -5,7 +5,7 @@ const $ = (s) => document.querySelector(s);
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
-    title: 'Neon Sorter',
+    title: 'Sorter',
     subtitle: 'Remplis les palettes de 3 éléments identiques.',
     renderHeader: () => {
       const options = document.createElement('div');
@@ -24,8 +24,8 @@ const shell = mountGameFrame({
         side: 'left', id: 'hud',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel'; panel.dataset.testid = 'game-panel-left';
-          const title = document.createElement('h2'); title.className = 'neon-panel__title'; title.textContent = 'Statut';
+          panel.className = 'arcade-panel'; panel.dataset.testid = 'game-panel-left';
+          const title = document.createElement('h2'); title.className = 'arcade-panel__title'; title.textContent = 'Statut';
           const stats = document.createElement('div'); stats.className = 'panel-stats';
           const stat = (label, id, value) => { const w = document.createElement('div'); w.className = 'panel-stat'; const s = document.createElement('small'); s.textContent = label; const v = document.createElement('strong'); v.id = id; v.textContent = value; w.append(s, v); return w; };
           stats.append(stat('SCORE', 'score', '0'), stat('PALETTES', 'ships', '0'), stat('NIVEAU', 'level', '1'), stat('ÉTAT', 'status', 'Prêt'));
@@ -36,17 +36,17 @@ const shell = mountGameFrame({
         side: 'right', id: 'actions',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel'; panel.dataset.testid = 'game-panel-right';
-          const title = document.createElement('h2'); title.className = 'neon-panel__title'; title.textContent = 'Actions';
+          panel.className = 'arcade-panel'; panel.dataset.testid = 'game-panel-right';
+          const title = document.createElement('h2'); title.className = 'arcade-panel__title'; title.textContent = 'Actions';
           const actions = document.createElement('div'); actions.className = 'panel-actions';
           const b = (id, text, cls) => { const btn = document.createElement('button'); btn.id = id; btn.type = 'button'; btn.textContent = text; if (cls) btn.className = cls; return btn; };
           actions.append(b('pause', 'Pause'), b('restart', 'Recommencer'), b('new-game', 'Nouvelle partie', 'primary'));
 
-          const rulesTitle = document.createElement('h3'); rulesTitle.className = 'neon-panel__subtitle'; rulesTitle.textContent = 'Règles';
+          const rulesTitle = document.createElement('h3'); rulesTitle.className = 'arcade-panel__subtitle'; rulesTitle.textContent = 'Règles';
           const rules = document.createElement('p'); rules.className = 'help';
           rules.textContent = 'Clique un objet de la première rangée (visible) sur les étagères : il part vers le haut pour remplir une palette de 3 éléments identiques. Si aucune palette ne convient, il va dans un des 5 blocs de défausse. La rangée dessous est visible en transparence mais non sélectionnable.';
 
-          const controlsTitle = document.createElement('h3'); controlsTitle.className = 'neon-panel__subtitle'; controlsTitle.textContent = 'Contrôles';
+          const controlsTitle = document.createElement('h3'); controlsTitle.className = 'arcade-panel__subtitle'; controlsTitle.textContent = 'Contrôles';
           const controls = document.createElement('div'); controls.className = 'controls-legend';
           const row = (key, desc) => {
             const r = document.createElement('div'); r.className = 'control-row';
@@ -65,7 +65,7 @@ const shell = mountGameFrame({
     screen: {
       mount: (el) => {
         const canvas = document.createElement('canvas');
-        canvas.id = 'game'; canvas.width = 960; canvas.height = 620; canvas.setAttribute('aria-label', 'Zone de jeu Neon Sorter');
+        canvas.id = 'game'; canvas.width = 960; canvas.height = 620; canvas.setAttribute('aria-label', 'Zone de jeu Sorter');
         el.appendChild(canvas);
       }
     }
@@ -470,7 +470,7 @@ function drawModule(x, y, type, scale = 1, opts = {}, t = 0) {
   ctx.fillStyle = 'rgba(8,20,26,0.75)';
   ctx.beginPath(); ctx.roundRect(-18, -14, 36, 28, 6); ctx.fill();
   ctx.shadowBlur = 0;
-  // draw Columns-style symbol as the item (from Neon Columns)
+  // draw Columns-style symbol as the item (from Columns)
   drawColumnsSymbol(0, 0, 11.5, tt.id, c, highlight ? 12 : 8, t);
   ctx.restore();
 }
@@ -608,7 +608,7 @@ function draw(t) {
     ctx.fillStyle = 'rgba(2,8,12,0.72)'; ctx.fillRect(0, 0, W, H);
     ctx.textAlign = 'center'; ctx.shadowColor = '#69ffe1'; ctx.shadowBlur = 18; ctx.fillStyle = '#69ffe1';
     ctx.font = '800 40px "Space Grotesk", sans-serif';
-    let title = 'NEON SORTER', sub = 'Clique pour commencer — remplis des palettes de 3 éléments';
+    let title = 'SORTER', sub = 'Clique pour commencer — remplis des palettes de 3 éléments';
     if (state === 'paused') { title = 'PAUSE'; sub = 'P pour reprendre'; }
     else if (state === 'over') { title = 'BLOQUÉ'; sub = 'Plus de placement possible — clique ou R pour recommencer'; ctx.fillStyle = '#ff719c'; ctx.shadowColor = '#ff719c'; }
     else if (state === 'win') { title = 'NIVEAU TERMINÉ'; sub = 'Préparation du niveau suivant...'; ctx.fillStyle = '#78ffd0'; ctx.shadowColor = '#78ffd0'; }

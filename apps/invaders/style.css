@@ -1,7 +1,7 @@
 /*
- * Neon Invaders — styles du jeu.
- * Le cadre (.neon-frame--game), le reset et les tokens de base viennent du theme
- * Neon (`packages/theme-neon`). Ici : visuels propres au jeu.
+ * Invaders — styles du jeu.
+ * Le cadre (.arcade-frame--game), le reset et les tokens de base viennent du theme
+ * Arcade (`packages/theme-arcade`). Ici : visuels propres au jeu.
  */
 
 :root {
@@ -14,7 +14,7 @@
 }
 
 body.game {
-  /* Le frame 100vh et l'overflow etat sont portes par le theme (packages/theme-neon). */
+  /* Le frame 100vh et l'overflow etat sont portes par le theme (packages/theme-arcade). */
 }
 
 /* Options rendues dans le header du shell (panneau specifique au jeu). */
@@ -60,13 +60,13 @@ body.game {
 }
 
 /* Zone de jeu : canvas centre, cadre identique au theme. */
-.neon-screen {
+.arcade-screen {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.neon-screen canvas {
+.arcade-screen canvas {
   display: block;
   width: 100%;
   height: auto;

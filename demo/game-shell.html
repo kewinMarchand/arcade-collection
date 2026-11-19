@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#071018" />
-  <title>Démo — Shell de jeu Neon</title>
-  <link rel="stylesheet" href="../packages/theme-neon/src/index.css" />
+  <title>Démo — Shell de jeu Arcade</title>
+  <link rel="stylesheet" href="../packages/theme-arcade/src/index.css" />
   <style>
     body.game { display: block; overflow: hidden; }
   </style>
@@ -27,14 +27,14 @@
             id: 'hud',
             render: () => {
               const panel = document.createElement('div');
-              panel.className = 'neon-panel';
+              panel.className = 'arcade-panel';
               panel.dataset.testid = 'demo-panel-hud';
               const title = document.createElement('h2');
-              title.className = 'neon-panel__title';
+              title.className = 'arcade-panel__title';
               title.textContent = 'Score';
               panel.append(title);
               const value = document.createElement('p');
-              value.className = 'neon-panel__value';
+              value.className = 'arcade-panel__value';
               value.textContent = '000';
               panel.append(value);
               return panel;
@@ -45,14 +45,14 @@
             id: 'controls',
             render: () => {
               const panel = document.createElement('div');
-              panel.className = 'neon-panel';
+              panel.className = 'arcade-panel';
               panel.dataset.testid = 'demo-panel-controls';
               const title = document.createElement('h2');
-              title.className = 'neon-panel__title';
+              title.className = 'arcade-panel__title';
               title.textContent = 'Commandes';
               panel.append(title);
               const text = document.createElement('p');
-              text.className = 'neon-panel__text';
+              text.className = 'arcade-panel__text';
               text.textContent = 'ESPACE : tir — A/D ou flèches : déplacement';
               panel.append(text);
               return panel;

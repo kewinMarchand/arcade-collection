@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
-  <title id="title">Neon Drift</title>
+  <title id="title">Drift</title>
   <desc id="desc">Vaisseau de course néon sur piste en perspective, évitant une mine-drone et collectant un noyau d'énergie, sous un ciel quadrillé.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
@@ -21,7 +21,7 @@
   </g>
   <g fill="#f2fffc" opacity="0.75"><circle cx="40" cy="24" r="1.6"/><circle cx="140" cy="46" r="1"/><circle cx="260" cy="20" r="1.8"/><circle cx="420" cy="34" r="1.2"/><circle cx="560" cy="22" r="1.6"/><circle cx="660" cy="40" r="1"/></g>
 
-  <text x="360" y="48" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="26" letter-spacing="5">NEON DRIFT</text>
+  <text x="360" y="48" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="26" letter-spacing="5">DRIFT</text>
 
   <path d="M215 110h290l120 250H95z" fill="url(#road)" stroke="#35d9cc" stroke-opacity="0.5" stroke-width="3"/>
   <path d="M285 112l-50 246M435 112l50 246" stroke="#6c81ff" stroke-width="3" stroke-dasharray="18 17" opacity="0.8"/>

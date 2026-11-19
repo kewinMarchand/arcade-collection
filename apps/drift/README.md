@@ -1,13 +1,13 @@
-# Neon Drift
+# Drift
 
 
-![Aperçu de Neon Drift : une voiture de course dérive sur une piste sous des portails néon](preview.svg)
+![Aperçu de Drift : une voiture de course dérive sur une piste sous des portails néon](preview.svg)
 
 Jeu d'arcade de pilotage : dirigez votre voiture sur la piste, évitez les obstacles et récoltez les orbes.
 
 ## Jouer en ligne
 
-[Ouvrir Neon Drift](https://kewinmarchand.github.io/neon-drift/)
+[Ouvrir Drift](https://kewinmarchand.github.io/arcade-drift/)
 
 ## Commandes
 
@@ -20,10 +20,10 @@ Jeu d'arcade de pilotage : dirigez votre voiture sur la piste, évitez les obsta
 
 Le meilleur score est conservé dans le navigateur.
 
-[Retour à la collection Neon Games](https://kewinmarchand.github.io/neon-games/)
+[Retour à la collection Arcade Collection](https://kewinmarchand.github.io/arcade-collection/)
 
 ## Thème
 
-Thème **Boilerplate Neon** partagé (`neon/neon-tokens.css`, `neon-base.css`, `neon-components.css`) avec styles propres au jeu (`style.css`).
+Thème **Boilerplate Arcade** partagé (`Arcade/arcade-tokens.css`, `arcade-base.css`, `arcade-components.css`) avec styles propres au jeu (`style.css`).
 
 Le jeu est publié avec GitHub Pages. Les tests se lancent avec `npm test` (Node.js 18+).

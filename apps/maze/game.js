@@ -3,7 +3,7 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
-    title: 'Neon Maze',
+    title: 'Maze',
     subtitle: 'Mangez les pastilles, échappez aux fantômes.',
     renderHeader: () => {
       const options = document.createElement('div');
@@ -41,10 +41,10 @@ const shell = mountGameFrame({
         id: 'hud',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-left';
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Statut';
           const stats = document.createElement('div');
           stats.className = 'panel-stats';
@@ -65,14 +65,14 @@ const shell = mountGameFrame({
         id: 'controls',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-right';
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Commandes';
           const ul = document.createElement('ul');
-          ul.className = 'neon-panel__list';
-          const li = (text) => { const l = document.createElement('li'); l.className = 'neon-panel__text'; l.textContent = text; ul.appendChild(l); };
+          ul.className = 'arcade-panel__list';
+          const li = (text) => { const l = document.createElement('li'); l.className = 'arcade-panel__text'; l.textContent = text; ul.appendChild(l); };
           li('Flèches / WASD : déplacement');
           li('Pastille : 10 pts');
           li('Super pastille : 50 pts + fantômes vulnérables');
@@ -88,7 +88,7 @@ const shell = mountGameFrame({
         canvas.id = 'gameCanvas';
         canvas.width = 600;
         canvas.height = 600;
-        canvas.setAttribute('aria-label', 'Jeu Neon Maze');
+        canvas.setAttribute('aria-label', 'Jeu Maze');
         el.appendChild(canvas);
       },
     },
@@ -677,7 +677,7 @@ function draw() {
   if (state !== 'playing') {
     ctx.fillStyle = 'rgba(6,20,18,0.72)'; ctx.fillRect(0, 0, W, H);
     ctx.textAlign = 'center'; ctx.fillStyle = '#7bffe5'; ctx.shadowColor = '#7bffe5'; ctx.shadowBlur = 16; ctx.font = '800 32px system-ui';
-    ctx.fillText(state === 'ready' ? 'NEON MAZE' : state === 'over' ? 'CAPTURE !' : 'NIVEAU TERMINE', W / 2, H / 2);
+    ctx.fillText(state === 'ready' ? 'MAZE' : state === 'over' ? 'CAPTURE !' : 'NIVEAU TERMINE', W / 2, H / 2);
     ctx.shadowBlur = 0;
     ctx.fillStyle = '#edfffa'; ctx.font = '16px system-ui';
     ctx.fillText(state === 'ready' ? 'Flèches / WASD pour commencer' : 'Entrée pour recommencer', W / 2, H / 2 + 34);

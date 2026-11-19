@@ -1,4 +1,4 @@
-# Neon Jumper
+# Jumper
 
 Plateformer néon simple : sautez de plateforme en plateforme, collectez les noyaux d'énergie, évitez les drones et atteignez le portail de sortie.
 

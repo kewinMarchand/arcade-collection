@@ -2,11 +2,11 @@
 
 - **Statut** : Acceptée
 - **Date** : 2026-11-18
-- **Contexte** : plan de consolidation `PLAN-CONSOLIDATION-NEON.md`, Phase 2 (jeux)
+- **Contexte** : plan de consolidation `PLAN-CONSOLIDATION-Arcade.md`, Phase 2 (jeux)
 
 ## Contexte
 
-Les jeux doivent migrer dans le monorepo `neon-games`, à partir de la base technique `boilerplate-html`, avec une intégration canvas/vanilla et un **shell** commun.
+Les jeux doivent migrer dans le monorepo `arcade-collection`, à partir de la base technique `boilerplate-html`, avec une intégration canvas/vanilla et un **shell** commun.
 
 ## Décision
 
@@ -20,12 +20,12 @@ Les jeux doivent migrer dans le monorepo `neon-games`, à partir de la base tech
 
 ## Conséquences
 
-- Tous les jeux du monorepo passent par le composant générique de shell (`packages/ui`) + thème Neon (`packages/theme-neon`).
+- Tous les jeux du monorepo passent par le composant générique de shell (`packages/ui`) + thème Arcade (`packages/theme-arcade`).
 - Les éléments spécifiques à un jeu (ex. « prochain élément » de Columns) vivent dans les panneaux latéraux, sans modifier le cadre.
 
 ## Suivi
 
-Référence : [ADR-0002](../../boilerplates-commun/doc/adr/0002-composants-communs-et-theme-neon.md) (composants communs + thème), [ADR-0003](../../boilerplates-commun/doc/adr/0003-structure-des-monorepos.md) (structure).
+Référence : [ADR-0002](../../boilerplates-commun/doc/adr/0002-composants-communs-et-theme-arcade.md) (composants communs + thème), [ADR-0003](../../boilerplates-commun/doc/adr/0003-structure-des-monorepos.md) (structure).
 
 ## Statut
 

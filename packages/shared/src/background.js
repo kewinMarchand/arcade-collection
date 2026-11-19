@@ -1,4 +1,4 @@
-export function drawNeonGridBackground(ctx, W, H, time = 0, opts = {}) {
+export function drawArcadeGridBackground(ctx, W, H, time = 0, opts = {}) {
   const {
     top = 0,
     bottom = H,

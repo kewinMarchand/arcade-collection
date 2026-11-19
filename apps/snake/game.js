@@ -5,7 +5,7 @@ import { nextCell, hitsWall, hitsSelf, opposite, freeCell } from './game-logic.j
 const shell = mountGameFrame({
   mount: document.getElementById('shell-mount'),
   config: {
-    title: 'Neon Serpent',
+    title: 'Snake',
     subtitle: 'Grandis sans te mordre.',
     renderHeader: () => {
       const options = document.createElement('div');
@@ -42,10 +42,10 @@ const shell = mountGameFrame({
         id: 'hud',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-left';
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Statut';
           const stats = document.createElement('div');
           stats.className = 'panel-stats';
@@ -66,10 +66,10 @@ const shell = mountGameFrame({
         id: 'actions',
         render: () => {
           const panel = document.createElement('div');
-          panel.className = 'neon-panel';
+          panel.className = 'arcade-panel';
           panel.dataset.testid = 'game-panel-right';
           const title = document.createElement('h2');
-          title.className = 'neon-panel__title';
+          title.className = 'arcade-panel__title';
           title.textContent = 'Actions';
           const actions = document.createElement('div');
           actions.className = 'panel-actions';
@@ -89,7 +89,7 @@ const shell = mountGameFrame({
         canvas.id = 'game';
         canvas.width = 600;
         canvas.height = 600;
-        canvas.setAttribute('aria-label', 'Grille Neon Serpent');
+        canvas.setAttribute('aria-label', 'Grille Snake');
         el.appendChild(canvas);
       },
     },
@@ -112,7 +112,7 @@ const DIFF = {
   chaos: { startTick: 0.11, minTick: 0.055, accel: 0.00055 },
 };
 
-let state = 'ready', dir = 'right', pending = null, snake = [], food = null, bonusFood = null, bonusTimer = 0, score = 0, best = Number(localStorage.getItem('neonSerpentBest')) || 0, tick = 0.14, acc = 0, last = 0, eatPulse = 0, shake = 0, particles = [], rings = [], headScale = 1;
+let state = 'ready', dir = 'right', pending = null, snake = [], food = null, bonusFood = null, bonusTimer = 0, score = 0, best = Number(localStorage.getItem('snakeBest') || localStorage.getItem('ArcadeSerpentBest')) || 0, tick = 0.14, acc = 0, last = 0, eatPulse = 0, shake = 0, particles = [], rings = [], headScale = 1;
 let digesting = [];
 let tailShrink = 0;
 let stars = [];
@@ -210,7 +210,7 @@ function update(dt) {
     burst(px, py, '#ff6dbe', 24); ring(px, py, '#ff6dbe'); shake = 1; headScale = 0.7;
     state = 'over'; $('#status').textContent = 'Mordu !';
     audio.seq([[220, 0.12, 'sawtooth', 0.05, 0], [150, 0.2, 'sawtooth', 0.04, 0.07]]);
-    if (score > best) { best = score; localStorage.setItem('neonSerpentBest', String(best)); $('#best').textContent = String(best); }
+    if (score > best) { best = score; localStorage.setItem('snakeBest', String(best)); $('#best').textContent = String(best); }
     return;
   }
 
@@ -340,7 +340,7 @@ function draw(t) {
   if (state !== 'playing') {
     ctx.fillStyle = '#04100ddc'; ctx.fillRect(0, 0, W, H); ctx.textAlign = 'center';
     ctx.fillStyle = '#69ffe1'; ctx.font = '800 32px system-ui';
-    ctx.fillText(state === 'ready' ? 'NEON SERPENT' : state === 'paused' ? 'PAUSE' : 'MORDU !', W / 2, H / 2);
+    ctx.fillText(state === 'ready' ? 'SNAKE' : state === 'paused' ? 'PAUSE' : 'MORDU !', W / 2, H / 2);
     ctx.fillStyle = '#edfffa'; ctx.font = '16px system-ui';
     ctx.fillText(state === 'ready' ? 'Espace ou une fl├¿che pour jouer' : state === 'paused' ? 'Clique sur Pause pour reprendre' : 'Clique ou Recommencer pour retenter', W / 2, H / 2 + 34);
   }

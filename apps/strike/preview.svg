@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
-  <title id="title">Neon Strike</title>
+  <title id="title">Strike</title>
   <desc id="desc">Viseur néon face à des vaisseaux ennemis détaillés approchant sur un fond spatial quadrillé avec grille de perspective.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
@@ -50,7 +50,7 @@
     <line x1="360" y1="190" x2="720" y2="380"/>
   </g>
 
-  <text x="360" y="48" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="26" letter-spacing="5">NEON STRIKE</text>
+  <text x="360" y="48" text-anchor="middle" fill="#69ffe1" font-family="system-ui,'Space Grotesk',sans-serif" font-weight="800" font-size="26" letter-spacing="5">STRIKE</text>
 
   <!-- enemy ships -->
   <g filter="url(#glow)">
