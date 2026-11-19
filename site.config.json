@@ -1,56 +1,21 @@
 {
-  "name": "Boilerplate HTML",
-  "description": "Boilerplate HTML, CSS et JavaScript natifs, sans framework ni étape de build, outillé pour la validation, les tests end-to-end et l'accessibilité.",
-  "url": "https://www.example.com",
-  "locale": "fr_FR",
-  "themeColor": "#1d4ed8",
-  "navigation": [
-    {
-      "href": "/",
-      "label": "Accueil"
-    },
-    {
-      "href": "/catalogue",
-      "label": "Catalogue"
-    },
-    {
-      "href": "/blog",
-      "label": "Blog"
-    },
-    {
-      "href": "/taches",
-      "label": "Tâches"
-    },
-    {
-      "href": "/contact",
-      "label": "Contact"
-    }
-  ],
-  "legalNavigation": [
-    {
-      "href": "/mentions-legales",
-      "label": "Mentions légales"
-    },
-    {
-      "href": "/donnees-personnelles",
-      "label": "Données personnelles"
-    },
-    {
-      "href": "/accessibilite",
-      "label": "Accessibilité : non conforme"
-    },
-    {
-      "href": "/plan-du-site",
-      "label": "Plan du site"
-    }
-  ],
-  "publisher": {
-    "companyName": "Exemple SAS",
-    "email": "contact@example.com"
-  },
-  "accessibility": {
-    "auditDate": null,
-    "complianceRate": null,
-    "auditor": null
-  }
+  "name": "Neon Games",
+  "description": "Collection de mini-jeux néon jouables dans le navigateur, déployée sur GitHub Pages.",
+  "apps": [
+    "breach",
+    "breaker",
+    "columns",
+    "defender",
+    "drift",
+    "invaders",
+    "jumper",
+    "maze",
+    "mines",
+    "orbiter",
+    "pong",
+    "runner",
+    "serpent",
+    "sorter",
+    "strike"
+  ]
 }

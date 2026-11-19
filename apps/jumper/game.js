@@ -92,6 +92,10 @@ window.addEventListener('keyup', e => keys.delete(e.key.toLowerCase()));
 $('#pause').onclick = togglePause;
 $('#restart').onclick = resetGame;
 $('#new-game').onclick = () => { levelIndex = 0; resetGame(); };
+canvas.addEventListener('pointerdown', () => {
+  if (state === 'ready' || state === 'over' || state === 'won' || state === 'levelclear') startOrNext();
+  else if (state === 'paused') { state = 'playing'; $('#status').textContent = 'En jeu'; last = performance.now(); }
+});
 
 let state = 'ready';
 let levelIndex = 0;
@@ -185,6 +189,7 @@ function startOrNext() {
 function togglePause() {
   if (state === 'playing') { state = 'paused'; $('#status').textContent = 'Pause'; }
   else if (state === 'paused') { state = 'playing'; $('#status').textContent = 'En jeu'; last = performance.now(); }
+  else startOrNext();
 }
 
 function updateHud() {

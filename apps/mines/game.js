@@ -517,6 +517,7 @@ function togglePause() {
   if (state === 'playing') { state = 'paused'; $('#status').textContent = 'Pause'; draw(0); }
   else if (state === 'paused') { state = 'playing'; $('#status').textContent = 'Scan en cours'; last = performance.now(); draw(0); }
   else if (state === 'ready') { state = 'playing'; $('#status').textContent = 'Scan en cours'; draw(0); }
+  else { setup(); }
 }
 
 function cellFromEvent(e) {

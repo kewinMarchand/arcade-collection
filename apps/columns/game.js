@@ -333,7 +333,7 @@ function pause() {
     state = 'playing';
     last = performance.now();
     $('#status').textContent = 'En jeu';
-  } else if (state === 'ready') {
+  } else if (state === 'ready' || state === 'over') {
     start();
   }
 }

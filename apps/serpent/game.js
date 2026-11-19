@@ -154,7 +154,7 @@ function start() { if (state === 'playing') return; reset(); state = 'playing'; 
 function pause() {
   if (state === 'playing') { state = 'paused'; $('#status').textContent = 'Pause'; }
   else if (state === 'paused') { state = 'playing'; last = performance.now(); $('#status').textContent = 'En jeu'; }
-  else if (state === 'ready') start();
+  else start();
 }
 
 function burst(x, y, color, n) {

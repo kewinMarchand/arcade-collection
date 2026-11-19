@@ -263,7 +263,7 @@ function pause() {
     state = 'playing';
     last = performance.now();
     statusEl.textContent = 'Défense';
-  } else if (state === 'ready') {
+  } else if (state === 'ready' || state === 'over') {
     start();
   }
 }

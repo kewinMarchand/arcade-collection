@@ -243,82 +243,92 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   }
 
   function makeAlien(colorHex, idx) {
-    // Sleek, detailed invader ship/craft (appealing neon silhouette)
+    // Cute neon alien creature (more appealing, organic silhouette)
     const g = new THREE.Group();
-    const hullMat = new THREE.MeshStandardMaterial({ color: 0x123243, emissive: colorHex, emissiveIntensity: 0.38, metalness: 0.58, roughness: 0.22 });
-    const accentMat = new THREE.MeshStandardMaterial({ color: colorHex, emissive: colorHex, emissiveIntensity: 0.7, metalness: 0.3, roughness: 0.22 });
-    const darkMat = new THREE.MeshStandardMaterial({ color: 0x08131a, emissive: 0x020709, roughness: 0.8, metalness: 0.1 });
-    const canopyMat = new THREE.MeshPhysicalMaterial({ color: 0xdffcff, emissive: colorHex, emissiveIntensity: 0.55, metalness: 0.0, roughness: 0.04, transparent: true, opacity: 0.78, transmission: 0.05 });
-    const glowMat = new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.95 });
+    const bodyMat = new THREE.MeshStandardMaterial({ color: colorHex, emissive: colorHex, emissiveIntensity: 0.42, metalness: 0.05, roughness: 0.35 });
+    const bellyMat = new THREE.MeshStandardMaterial({ color: 0xf4fff8, emissive: colorHex, emissiveIntensity: 0.12, metalness: 0.0, roughness: 0.4, transparent: true, opacity: 0.9 });
+    const darkMat = new THREE.MeshStandardMaterial({ color: 0x07131a, roughness: 0.2, metalness: 0.1 });
+    const eyeWhiteMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 0.25, roughness: 0.15 });
+    const glowMat = new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.9 });
 
-    // main saucer hull
-    const saucer = new THREE.Mesh(new THREE.SphereGeometry(0.5, 22, 16), hullMat);
-    saucer.scale.set(1.5, 0.42, 1.18);
-    g.add(saucer);
+    // body blob
+    const body = new THREE.Mesh(new THREE.SphereGeometry(0.42, 24, 18), bodyMat);
+    body.scale.set(1.15, 1.0, 1.0);
+    body.position.y = 0.02;
+    g.add(body);
 
-    // underglow disc
-    const under = new THREE.Mesh(new THREE.CircleGeometry(0.48, 24), new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.22, side: THREE.DoubleSide }));
-    under.rotation.x = Math.PI / 2;
-    under.position.set(0, -0.2, 0);
-    g.add(under);
+    // head bump
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.28, 20, 16), bodyMat);
+    head.scale.set(1.05, 0.95, 0.95);
+    head.position.set(0, 0.32, 0.08);
+    g.add(head);
 
-    // upper dome/cockpit
-    const dome = new THREE.Mesh(new THREE.SphereGeometry(0.25, 18, 14, 0, Math.PI * 2, 0, Math.PI / 2), canopyMat);
-    dome.position.set(0, 0.1, 0.08);
-    dome.scale.set(1.18, 1.0, 1.18);
-    g.add(dome);
-    const core = new THREE.Mesh(new THREE.SphereGeometry(0.085, 12, 10), new THREE.MeshBasicMaterial({ color: 0xffffff }));
-    core.position.set(0, 0.06, 0.22);
-    g.add(core);
+    // belly
+    const belly = new THREE.Mesh(new THREE.SphereGeometry(0.24, 18, 14), bellyMat);
+    belly.scale.set(1.0, 0.85, 0.55);
+    belly.position.set(0, -0.02, 0.28);
+    g.add(belly);
 
-    // lower fuselage pod
-    const pod = new THREE.Mesh(new THREE.CapsuleGeometry(0.15, 0.24, 6, 12), hullMat);
-    pod.rotation.x = Math.PI / 2;
-    pod.position.set(0, -0.17, 0.04);
-    g.add(pod);
-
-    // wings
-    const wingGeo = new THREE.BoxGeometry(0.66, 0.055, 0.36);
-    const wL = new THREE.Mesh(wingGeo, accentMat); wL.position.set(-0.7, -0.02, -0.02); wL.rotation.z = 0.24; wL.rotation.y = 0.2; g.add(wL);
-    const wR = new THREE.Mesh(wingGeo, accentMat); wR.position.set(0.7, -0.02, -0.02); wR.rotation.z = -0.24; wR.rotation.y = -0.2; g.add(wR);
-    const wingTipMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 });
-    const wingTipL = new THREE.Mesh(new THREE.SphereGeometry(0.05, 10, 8), wingTipMat); wingTipL.position.set(-1.02, 0.07, -0.04); g.add(wingTipL);
-    const wingTipR = wingTipL.clone(); wingTipR.position.x = 1.02; g.add(wingTipR);
-
-    // tail fins
-    const finGeo = new THREE.BoxGeometry(0.045, 0.26, 0.22);
-    const finMat = new THREE.MeshStandardMaterial({ color: 0x163d4d, emissive: colorHex, emissiveIntensity: 0.35, metalness: 0.4, roughness: 0.3 });
-    const finL = new THREE.Mesh(finGeo, finMat); finL.position.set(-0.15, 0.18, -0.4); finL.rotation.z = 0.28; g.add(finL);
-    const finR = finL.clone(); finR.position.set(0.15, 0.18, -0.4); finR.rotation.z = -0.28; g.add(finR);
-
-    // engine ring / thrusters
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.21, 0.03, 10, 28), glowMat);
-    ring.rotation.x = Math.PI / 2; ring.position.set(0, -0.2, -0.2); g.add(ring);
-    const thruster = new THREE.Mesh(new THREE.ConeGeometry(0.075, 0.17, 12), accentMat);
-    thruster.rotation.x = -Math.PI / 2; thruster.position.set(0, -0.22, -0.38); g.add(thruster);
-    const flame = new THREE.Mesh(new THREE.ConeGeometry(0.05, 0.16, 10), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.85 }));
-    flame.rotation.x = -Math.PI / 2; flame.position.set(0, -0.22, -0.49); g.add(flame);
-
-    // front sensor / eyes integrated as ship lights
-    for (const sx of [-0.18, 0.18]) {
-      const socket = new THREE.Mesh(new THREE.SphereGeometry(0.058, 10, 8), darkMat);
-      socket.position.set(sx, 0.0, 0.54); socket.scale.set(1, 1, 0.55); g.add(socket);
-      const light = new THREE.Mesh(new THREE.SphereGeometry(0.032, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
-      light.position.set(sx, 0.01, 0.575); g.add(light);
-      const glow = new THREE.Mesh(new THREE.CircleGeometry(0.07, 12), new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.35, side: THREE.DoubleSide }));
-      glow.position.set(sx, 0.01, 0.585); g.add(glow);
+    // ears/antenna nubs
+    for (const sx of [-1, 1]) {
+      const stalk = new THREE.Mesh(new THREE.CapsuleGeometry(0.035, 0.18, 4, 8), bodyMat);
+      stalk.position.set(sx * 0.16, 0.56, 0.0);
+      stalk.rotation.z = sx * -0.35;
+      g.add(stalk);
+      const tip = new THREE.Mesh(new THREE.SphereGeometry(0.065, 12, 10), glowMat);
+      tip.position.set(sx * 0.23, 0.68, 0.0);
+      g.add(tip);
+      const tipCore = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+      tipCore.position.set(sx * 0.23, 0.68, 0.03);
+      g.add(tipCore);
     }
 
-    // trim bars
-    const bar = new THREE.Mesh(new THREE.BoxGeometry(0.54, 0.028, 0.035), glowMat);
-    bar.position.set(0, -0.045, 0.48); g.add(bar);
-    const bar2 = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.035, 0.55), new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.45 }));
-    bar2.position.set(0, 0.17, -0.03); g.add(bar2);
+    // eyes
+    for (const sx of [-1, 1]) {
+      const eye = new THREE.Mesh(new THREE.SphereGeometry(0.105, 16, 14), eyeWhiteMat);
+      eye.position.set(sx * 0.13, 0.3, 0.32);
+      eye.scale.set(1, 1.1, 0.7);
+      g.add(eye);
+      const pupil = new THREE.Mesh(new THREE.SphereGeometry(0.05, 12, 10), darkMat);
+      pupil.position.set(sx * 0.13, 0.29, 0.39);
+      g.add(pupil);
+      const shine = new THREE.Mesh(new THREE.SphereGeometry(0.02, 8, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+      shine.position.set(sx * 0.105, 0.325, 0.42);
+      g.add(shine);
+    }
 
-    // outline for crisp style
-    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.SphereGeometry(0.5, 14, 10)), new THREE.LineBasicMaterial({ color: colorHex, transparent: true, opacity: 0.22 }));
-    edges.scale.copy(saucer.scale);
-    g.add(edges);
+    // mouth
+    const mouth = new THREE.Mesh(new THREE.TorusGeometry(0.07, 0.015, 8, 16, Math.PI), darkMat);
+    mouth.position.set(0, 0.16, 0.36);
+    mouth.rotation.z = Math.PI;
+    mouth.rotation.x = 0.15;
+    g.add(mouth);
+
+    // little arms
+    for (const sx of [-1, 1]) {
+      const arm = new THREE.Mesh(new THREE.CapsuleGeometry(0.045, 0.16, 4, 8), bodyMat);
+      arm.position.set(sx * 0.46, 0.02, 0.08);
+      arm.rotation.z = sx * 0.9;
+      arm.rotation.x = 0.4;
+      g.add(arm);
+      const hand = new THREE.Mesh(new THREE.SphereGeometry(0.055, 10, 8), bodyMat);
+      hand.position.set(sx * 0.58, -0.04, 0.15);
+      g.add(hand);
+    }
+
+    // feet
+    for (const sx of [-1, 1]) {
+      const foot = new THREE.Mesh(new THREE.SphereGeometry(0.09, 12, 10), bodyMat);
+      foot.scale.set(1.15, 0.55, 1.2);
+      foot.position.set(sx * 0.16, -0.34, 0.12);
+      g.add(foot);
+    }
+
+    // soft outline glow ring
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.34, 0.02, 8, 28), new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.35 }));
+    ring.rotation.x = Math.PI / 2;
+    ring.position.set(0, -0.12, 0);
+    g.add(ring);
 
     g.userData.kind = 'alien';
     g.userData.variant = idx % 5;
@@ -341,44 +351,64 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
 
   function makeAmmoPickup() {
     const g = new THREE.Group();
-    const bodyMat = new THREE.MeshStandardMaterial({ color: 0x1e2a33, emissive: 0x0b141c, metalness: 0.7, roughness: 0.28 });
-    const gold = new THREE.MeshStandardMaterial({ color: 0xffd36b, emissive: 0xffa020, emissiveIntensity: 1.15, metalness: 0.4, roughness: 0.25 });
-    const glow = new THREE.MeshBasicMaterial({ color: 0xfff2b0 });
-    const trim = new THREE.MeshBasicMaterial({ color: 0xffc85a, transparent: true, opacity: 0.9 });
+    // Slime canister pickup (fits slime weapon theme)
+    const glassMat = new THREE.MeshPhysicalMaterial({ color: 0xbfffe6, emissive: 0x39ff88, emissiveIntensity: 0.15, metalness: 0.0, roughness: 0.08, transparent: true, opacity: 0.45, transmission: 0.2 });
+    const slimeMat = new THREE.MeshStandardMaterial({ color: 0x7cff4f, emissive: 0x39ff14, emissiveIntensity: 1.1, metalness: 0.0, roughness: 0.25, transparent: true, opacity: 0.95 });
+    const capMat = new THREE.MeshStandardMaterial({ color: 0x1f3640, emissive: 0x0b1820, metalness: 0.75, roughness: 0.25 });
+    const accentMat = new THREE.MeshStandardMaterial({ color: 0x69ffe1, emissive: 0x2affd8, emissiveIntensity: 0.9, metalness: 0.35, roughness: 0.2 });
+    const glowMat = new THREE.MeshBasicMaterial({ color: 0x9aff6b, transparent: true, opacity: 0.9 });
 
-    const caseMesh = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.44, 0.24), bodyMat);
-    g.add(caseMesh);
-    const frame = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(0.36, 0.44, 0.24)), new THREE.LineBasicMaterial({ color: 0xffd36b, transparent: true, opacity: 0.5 }));
-    g.add(frame);
+    // glass shell
+    const shell = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.19, 0.5, 20), glassMat);
+    g.add(shell);
 
+    // slime inside
+    const slime = new THREE.Mesh(new THREE.CylinderGeometry(0.135, 0.155, 0.38, 16), slimeMat);
+    slime.position.y = -0.02;
+    g.add(slime);
+
+    // bubbles/highlights in slime
     for (let i = 0; i < 3; i++) {
-      const cellMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.048, 0.048, 0.32, 12), gold);
-      cellMesh.position.set(-0.095 + i * 0.095, 0.0, 0.125);
-      g.add(cellMesh);
-      const tip = new THREE.Mesh(new THREE.SphereGeometry(0.03, 8, 8), glow);
-      tip.position.set(-0.095 + i * 0.095, 0.17, 0.125);
-      g.add(tip);
+      const b = new THREE.Mesh(new THREE.SphereGeometry(0.03 + i * 0.008, 10, 8), new THREE.MeshBasicMaterial({ color: 0xdfffcc, transparent: true, opacity: 0.75 }));
+      b.position.set((i - 1) * 0.05, -0.08 + i * 0.09, 0.06 - i * 0.02);
+      g.add(b);
     }
 
-    const cap = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.07, 0.26), gold);
-    cap.position.y = 0.23; g.add(cap);
-    const base = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.06, 0.26), gold);
-    base.position.y = -0.23; g.add(base);
+    // top cap
+    const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.18, 0.09, 20), capMat);
+    cap.position.y = 0.285;
+    g.add(cap);
+    const capTop = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.11, 0.06, 16), accentMat);
+    capTop.position.y = 0.34;
+    g.add(capTop);
 
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.028, 8, 30), trim);
-    ring.rotation.x = Math.PI / 2; ring.position.y = 0.0; g.add(ring);
+    // bottom base
+    const base = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.21, 0.07, 20), capMat);
+    base.position.y = -0.285;
+    g.add(base);
 
-    const core = new THREE.Mesh(new THREE.OctahedronGeometry(0.1, 0), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffe08a, emissiveIntensity: 1.2, metalness: 0.2, roughness: 0.1 }));
-    core.position.set(0, 0.34, 0); g.add(core);
+    // rings/trim
+    const ring1 = new THREE.Mesh(new THREE.TorusGeometry(0.185, 0.018, 10, 28), accentMat);
+    ring1.rotation.x = Math.PI / 2; ring1.position.y = 0.12; g.add(ring1);
+    const ring2 = new THREE.Mesh(new THREE.TorusGeometry(0.19, 0.018, 10, 28), accentMat);
+    ring2.rotation.x = Math.PI / 2; ring2.position.y = -0.16; g.add(ring2);
 
-    const plate = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.12, 0.02), new THREE.MeshBasicMaterial({ color: 0x101820 }));
-    plate.position.set(0, 0.02, 0.131); g.add(plate);
-    for (let i = 0; i < 3; i++) {
-      const ind = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.025, 0.01), glow);
-      ind.position.set(0, 0.06 - i * 0.05, 0.145); g.add(ind);
+    // label plate
+    const plate = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.12, 0.02), new THREE.MeshBasicMaterial({ color: 0x0b1820, transparent: true, opacity: 0.85 }));
+    plate.position.set(0, 0.0, 0.175);
+    g.add(plate);
+    for (let i = 0; i < 2; i++) {
+      const drop = new THREE.Mesh(new THREE.SphereGeometry(0.025, 8, 8), glowMat);
+      drop.position.set(-0.03 + i * 0.06, 0.02 - i * 0.04, 0.188);
+      g.add(drop);
     }
 
-    g.scale.setScalar(1.1);
+    // floating glow orb on top
+    const orb = new THREE.Mesh(new THREE.SphereGeometry(0.045, 12, 10), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0x7cff4f, emissiveIntensity: 1.4, roughness: 0.1 }));
+    orb.position.set(0, 0.43, 0);
+    g.add(orb);
+
+    g.scale.setScalar(1.05);
     return g;
   }
 
@@ -554,8 +584,16 @@ import { mountGameFrame } from '../../packages/ui/src/gameFrame.js';
   resetGame();
 
   function tryLock() { if (!state.over && !state.won) renderer.domElement.requestPointerLock?.(); }
-  startBtn.addEventListener('click', () => { if (state.over || state.won) resetGame(); tryLock(); });
-  host.addEventListener('click', (e) => { if (e.target === startBtn) return; if (document.pointerLockElement !== renderer.domElement && !state.over && !state.won) tryLock(); });
+  startBtn.addEventListener('click', (e) => { e.stopPropagation(); if (state.over || state.won) resetGame(); tryLock(); });
+  overlay.addEventListener('click', (e) => {
+    if (e.target === startBtn) return;
+    if (state.over || state.won) { resetGame(); tryLock(); return; }
+    if (document.pointerLockElement !== renderer.domElement) tryLock();
+  });
+  host.addEventListener('click', (e) => {
+    if (e.target === startBtn || overlay.contains(e.target)) return;
+    if (document.pointerLockElement !== renderer.domElement && !state.over && !state.won) tryLock();
+  });
 
   document.addEventListener('pointerlockchange', () => {
     if (document.pointerLockElement === renderer.domElement) {

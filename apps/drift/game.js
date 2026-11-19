@@ -152,7 +152,7 @@ function start() {
 function pause() {
   if (state === 'playing') { state = 'paused'; statusEl.textContent = 'Pause'; }
   else if (state === 'paused') { state = 'playing'; last = performance.now(); statusEl.textContent = 'En course'; }
-  else if (state === 'ready') start();
+  else start();
 }
 
 function burst(x, y, color, n, up) {

@@ -68,25 +68,48 @@
     <circle cx="228" cy="182" r="5" fill="#7cff5a" opacity="0.85"/><circle cx="492" cy="166" r="4.5" fill="#7cff5a" opacity="0.8"/>
   </g>
 
-  <!-- detailed alien ship/drone -->
-  <g transform="translate(360,188)" filter="url(#neon)">
-    <ellipse cx="0" cy="4" rx="42" ry="14" fill="#163142" stroke="#ff65b5" stroke-opacity="0.4"/>
-    <ellipse cx="0" cy="0" rx="34" ry="12" fill="#204255"/>
-    <ellipse cx="0" cy="-6" rx="16" ry="10" fill="#e9fdff" fill-opacity="0.85" stroke="#ff65b5" stroke-width="2"/>
-    <circle cx="0" cy="-8" r="4" fill="#ffffff"/>
-    <path d="M-40 2 L-62 -8 L-48 10 Z" fill="#ff65b5" fill-opacity="0.85"/>
-    <path d="M40 2 L62 -8 L48 10 Z" fill="#ff65b5" fill-opacity="0.85"/>
-    <circle cx="-62" cy="-8" r="4" fill="#ff9fce"/><circle cx="62" cy="-8" r="4" fill="#ff9fce"/>
-    <ellipse cx="0" cy="16" rx="12" ry="5" fill="#09161d" stroke="#ff65b5" stroke-opacity="0.5"/>
-    <ellipse cx="0" cy="18" rx="7" ry="3" fill="#ff65b5" fill-opacity="0.9"/>
-    <circle cx="-10" cy="2" r="3" fill="#fff"/><circle cx="10" cy="2" r="3" fill="#fff"/>
-    <rect x="-18" y="0" width="36" height="3" rx="1.5" fill="#ff65b5" fill-opacity="0.8"/>
+  <!-- cute neon alien creature -->
+  <g transform="translate(360,186)" filter="url(#neon)">
+    <ellipse cx="0" cy="10" rx="34" ry="30" fill="#ff65b5" fill-opacity="0.95"/>
+    <ellipse cx="0" cy="-18" rx="23" ry="20" fill="#ff65b5" fill-opacity="0.98"/>
+    <ellipse cx="0" cy="12" rx="18" ry="14" fill="#f4fff8" fill-opacity="0.85"/>
+    <!-- antennae -->
+    <line x1="-12" y1="-34" x2="-18" y2="-52" stroke="#ff65b5" stroke-width="4" stroke-linecap="round"/>
+    <line x1="12" y1="-34" x2="18" y2="-52" stroke="#ff65b5" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="-18" cy="-54" r="6" fill="#ff9fce"/><circle cx="18" cy="-54" r="6" fill="#ff9fce"/>
+    <circle cx="-18" cy="-54" r="2.5" fill="#ffffff"/><circle cx="18" cy="-54" r="2.5" fill="#ffffff"/>
+    <!-- eyes -->
+    <ellipse cx="-11" cy="-18" rx="9" ry="10" fill="#ffffff"/>
+    <ellipse cx="11" cy="-18" rx="9" ry="10" fill="#ffffff"/>
+    <circle cx="-10" cy="-17" r="4.5" fill="#07131a"/><circle cx="12" cy="-17" r="4.5" fill="#07131a"/>
+    <circle cx="-12" cy="-20" r="2" fill="#ffffff"/><circle cx="10" cy="-20" r="2" fill="#ffffff"/>
+    <!-- mouth -->
+    <path d="M -7 -6 Q 0 2 7 -6" fill="none" stroke="#07131a" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- arms -->
+    <path d="M -30 6 Q -44 10 -48 22" fill="none" stroke="#ff65b5" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 30 6 Q 44 10 48 22" fill="none" stroke="#ff65b5" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="-48" cy="22" r="5" fill="#ff65b5"/><circle cx="48" cy="22" r="5" fill="#ff65b5"/>
+    <!-- feet -->
+    <ellipse cx="-12" cy="36" rx="8" ry="5" fill="#ff65b5"/><ellipse cx="12" cy="36" rx="8" ry="5" fill="#ff65b5"/>
+    <ellipse cx="0" cy="4" rx="28" ry="4" fill="#ff9fce" fill-opacity="0.25"/>
   </g>
 
   <!-- flying slime orb (projectile) -->
   <g transform="translate(430,220)" filter="url(#neon)">
     <circle cx="0" cy="0" r="10" fill="url(#slime)"/>
     <circle cx="-3" cy="-3" r="3" fill="#f2ffd8" fill-opacity="0.8"/>
+  </g>
+
+  <!-- slime canister ammo pickup -->
+  <g transform="translate(520,262)" filter="url(#soft)">
+    <rect x="-14" y="-24" width="28" height="48" rx="8" fill="#bfffe6" fill-opacity="0.35" stroke="#69ffe1" stroke-opacity="0.5"/>
+    <rect x="-11" y="-14" width="22" height="30" rx="6" fill="#7cff4f" fill-opacity="0.9"/>
+    <rect x="-16" y="-28" width="32" height="8" rx="3" fill="#1f3640"/>
+    <rect x="-16" y="20" width="32" height="6" rx="3" fill="#1f3640"/>
+    <rect x="-15" y="-4" width="30" height="3" rx="1.5" fill="#69ffe1" fill-opacity="0.8"/>
+    <rect x="-15" y="10" width="30" height="3" rx="1.5" fill="#69ffe1" fill-opacity="0.8"/>
+    <circle cx="-3" cy="-4" r="3" fill="#dfffcc" fill-opacity="0.8"/><circle cx="4" cy="4" r="2.5" fill="#dfffcc" fill-opacity="0.7"/>
+    <circle cx="0" cy="-34" r="4" fill="#ffffff"/><circle cx="0" cy="-34" r="4" fill="#7cff4f" fill-opacity="0.6"/>
   </g>
 
   <!-- minimap -->
