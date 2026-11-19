@@ -310,6 +310,11 @@
     flex: 0 0 34px;
   }
 
+  .arcade-frame__action--source {
+    color: var(--bui-color-primary, #69ffe1);
+    border-color: color-mix(in srgb, var(--bui-color-primary, #69ffe1) 45%, transparent);
+  }
+
   .arcade-frame__action--home svg,
   .arcade-frame__action--source svg {
     width: 18px;

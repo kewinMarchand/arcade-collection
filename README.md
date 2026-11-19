@@ -1,103 +1,24 @@
 # Arcade Collection
 
-Une collection de quinze mini-jeux indépendants, gratuits et jouables directement dans le navigateur.
+Monorepo des jeux d'arcade pour la pause caf?.
+
+Une collection de quinze mini-jeux ind?pendants, jouables directement dans le navigateur.
 
 ## Ouvrir Arcade Collection
 
-[Ouvrir Arcade Collection](https://kewinmarchand.github.io/arcade-collection/)
+- [Jouer en ligne](https://kewinmarchand.github.io/arcade-collection/)
+- [Code source](https://github.com/kewinMarchand/arcade-collection)
 
 ## Les jeux
 
-### Invaders
+| | | |
+| --- | --- | --- |
+| <a href="https://kewinmarchand.github.io/arcade-collection/apps/mines/"><img src="apps/mines/preview.svg" alt="Aper?u de Black Holes" width="100%"></a><br><strong>Black Holes</strong><br>Explorez les secteurs spatiaux et rep?rez les trous noirs gr?ce aux satellites.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/mines/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/mines">Code source</a> | <a href="https://kewinmarchand.github.io/arcade-collection/apps/breaker/"><img src="apps/breaker/preview.svg" alt="Aper?u de Breaker" width="100%"></a><br><strong>Breaker</strong><br>Cassez les briques et gardez la balle en jeu.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/breaker/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/breaker">Code source</a> | <a href="https://kewinmarchand.github.io/arcade-collection/apps/breach/"><img src="apps/breach/preview.svg" alt="Aper?u de Breach" width="100%"></a><br><strong>Breach *(B?ta)*</strong><br>Infiltrez le secteur en vue subjective et ?liminez les aliens.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/breach/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/breach">Code source</a> |
+| <a href="https://kewinmarchand.github.io/arcade-collection/apps/columns/"><img src="apps/columns/preview.svg" alt="Aper?u de Columns" width="100%"></a><br><strong>Columns</strong><br>Alignez des symboles pour d?clencher des r?actions en cha?ne.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/columns/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/columns">Code source</a> | <a href="https://kewinmarchand.github.io/arcade-collection/apps/defender/"><img src="apps/defender/preview.svg" alt="Aper?u de Defender" width="100%"></a><br><strong>Defender</strong><br>Orientez le bouclier pour intercepter les photons.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/defender/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/defender">Code source</a> | <a href="https://kewinmarchand.github.io/arcade-collection/apps/drift/"><img src="apps/drift/preview.svg" alt="Aper?u de Drift" width="100%"></a><br><strong>Drift</strong><br>Pilotez votre voiture sur le circuit, ?vitez les obstacles et r?coltez les orbes.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/drift/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/drift">Code source</a> |
+| <a href="https://kewinmarchand.github.io/arcade-collection/apps/invaders/"><img src="apps/invaders/preview.svg" alt="Aper?u de Invaders" width="100%"></a><br><strong>Invaders</strong><br>D?fendez votre base contre des vagues d'envahisseurs.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/invaders/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/invaders">Code source</a> | <a href="https://kewinmarchand.github.io/arcade-collection/apps/jumper/"><img src="apps/jumper/preview.svg" alt="Aper?u de Jumper" width="100%"></a><br><strong>Jumper</strong><br>Sautez de plateforme en plateforme, collectez les noyaux et atteignez le portail.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/jumper/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/jumper">Code source</a> | <a href="https://kewinmarchand.github.io/arcade-collection/apps/maze/"><img src="apps/maze/preview.svg" alt="Aper?u de Maze" width="100%"></a><br><strong>Maze</strong><br>Mangez les pastilles, ?chappez aux fant?mes, passez au niveau suivant.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/maze/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/maze">Code source</a> |
+| <a href="https://kewinmarchand.github.io/arcade-collection/apps/orbiter/"><img src="apps/orbiter/preview.svg" alt="Aper?u de Orbiter" width="100%"></a><br><strong>Orbiter</strong><br>Alunissez en douceur : gravit?, carburant et plateformes bonus.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/orbiter/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/orbiter">Code source</a> | <a href="https://kewinmarchand.github.io/arcade-collection/apps/pong/"><img src="apps/pong/preview.svg" alt="Aper?u de Pong" width="100%"></a><br><strong>Pong</strong><br>Renvoyez la balle, marquez des points, premier ? 11.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/pong/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/pong">Code source</a> | <a href="https://kewinmarchand.github.io/arcade-collection/apps/runner/"><img src="apps/runner/preview.svg" alt="Aper?u de Runner" width="100%"></a><br><strong>Runner *(B?ta)*</strong><br>Sautez et glissez pour ?viter les obstacles et tenir la distance.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/runner/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/runner">Code source</a> |
+| <a href="https://kewinmarchand.github.io/arcade-collection/apps/snake/"><img src="apps/snake/preview.svg" alt="Aper?u de Snake" width="100%"></a><br><strong>Snake</strong><br>Grandissez sans vous mordre, la vitesse s'emballe.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/snake/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/snake">Code source</a> | <a href="https://kewinmarchand.github.io/arcade-collection/apps/sorter/"><img src="apps/sorter/preview.svg" alt="Aper?u de Sorter" width="100%"></a><br><strong>Sorter *(B?ta)*</strong><br>Triez les symboles identiques et exp?diez les palettes avant saturation.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/sorter/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/sorter">Code source</a> | <a href="https://kewinmarchand.github.io/arcade-collection/apps/strike/"><img src="apps/strike/preview.svg" alt="Aper?u de Strike" width="100%"></a><br><strong>Strike *(B?ta)*</strong><br>Abattez les vaisseaux avant qu'ils ne vous atteignent.<br><a href="https://kewinmarchand.github.io/arcade-collection/apps/strike/">Jouer</a> ? <a href="https://github.com/kewinMarchand/arcade-collection/tree/main/apps/strike">Code source</a> |
 
-[![Aperçu de Invaders](apps/invaders/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/invaders/)
+## Th?me
 
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/invaders/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/invaders) — Défendez votre base contre des vagues d'envahisseurs.
-
-### Breaker
-
-[![Aperçu de Breaker](apps/breaker/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/breaker/)
-
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/breaker/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/breaker) — Cassez les briques et gardez la balle en jeu.
-
-### Columns
-
-[![Aperçu de Columns](apps/columns/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/columns/)
-
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/columns/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/columns) — Alignez des gemmes pour déclencher des réactions en chaîne.
-
-### Drift
-
-[![Aperçu de Drift](apps/drift/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/drift/)
-
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/drift/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/drift) — Pilotez une voiture sur le circuit, évitez les obstacles et récoltez les orbes.
-
-### Runner
-
-[![Aperçu de Runner](apps/runner/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/runner/)
-
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/runner/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/runner) — Sautez et glissez pour éviter les obstacles.
-
-### Defender
-
-[![Aperçu de Defender](apps/defender/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/defender/)
-
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/defender/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/defender) — Orientez le bouclier pour intercepter les photons.
-
-### Black Holes
-
-[![Aperçu de Black Holes](apps/mines/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/mines/)
-
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/mines/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/mines) — Explorez les secteurs spatiaux et repérez les trous noirs grâce aux satellites.
-
-### Snake
-
-[![Aperçu de Snake](apps/snake/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/snake/)
-
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/snake/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/snake) — Grandissez sans vous mordre, la vitesse s'emballe.
-
-### Orbiter
-
-[![Aperçu de Orbiter](apps/orbiter/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/orbiter/)
-
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/orbiter/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/orbiter) — Alunissez en douceur : gravité, carburant et plateformes bonus.
-
-### Maze
-
-[![Aperçu de Maze](apps/maze/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/maze/)
-
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/maze/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/maze) — Mangez les pastilles, échappez aux fantômes, passez au niveau suivant.
-
-### Pong
-
-[![Aperçu de Pong](apps/pong/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/pong/)
-
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/pong/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/pong) — Renvoyez la balle, marquez des points, premier à 11.
-
-### Strike
-
-[![Aperçu de Strike](apps/strike/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/strike/)
-
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/strike/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/strike) — Abattez les vaisseaux avant qu'ils ne vous atteignent.
-
-### Breach
-
-[![Aperçu de Breach](apps/breach/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/breach/)
-
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/breach/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/breach) — FPS néon en vue subjective : infiltrez le secteur et éliminez les drones aliens.
-
-### Jumper
-
-[![Aperçu de Jumper](apps/jumper/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/jumper/)
-
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/jumper/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/jumper) — Plateformer néon : sautez de plateforme en plateforme et atteignez le portail.
-
-### Sorter
-
-[![Aperçu de Sorter](apps/sorter/preview.svg)](https://kewinmarchand.github.io/arcade-collection/apps/sorter/)
-
-[Ouvrir le jeu](https://kewinmarchand.github.io/arcade-collection/apps/sorter/) · [Code source](https://github.com/kewinMarchand/arcade-collection/tree/main/apps/sorter) — Triez les modules identiques et expédiez les conteneurs avant saturation.
-
-## Thème
-
-Ce dépôt utilise le thème Arcade partagé (`packages/theme-arcade`) et le cadre de jeu commun (`packages/ui`).
+Ce d?p?t utilise le th?me arcade partag? (`packages/theme-arcade`) et le cadre de jeu commun (`packages/ui`).

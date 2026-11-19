@@ -80,6 +80,19 @@ body {
   color: var(--lime);
 }
 
+.topbar .repo-link {
+  color: var(--bui-color-primary, #69ffe1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.topbar .repo-link:hover,
+.topbar .repo-link:focus-visible {
+  color: var(--bui-color-primary, #69ffe1);
+  filter: drop-shadow(0 0 8px rgba(105, 255, 225, 0.45));
+}
+
 /* ----------------------------------------------------------
    4. Brand
    ---------------------------------------------------------- */
