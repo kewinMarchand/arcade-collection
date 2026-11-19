@@ -41,7 +41,7 @@
     <circle cx="110" cy="95" r="3.5"/><circle cx="190" cy="95" r="3.5"/><circle cx="270" cy="95" r="3.5"/><circle cx="350" cy="95" r="3.5"/><circle cx="430" cy="95" r="3.5"/><circle cx="510" cy="95" r="3.5"/><circle cx="610" cy="95" r="3.5"/>
     <circle cx="110" cy="170" r="3.5"/><circle cx="270" cy="170" r="3.5"/><circle cx="430" cy="170" r="3.5"/><circle cx="610" cy="170" r="3.5"/>
     <circle cx="110" cy="240" r="3.5"/><circle cx="270" cy="240" r="3.5"/><circle cx="430" cy="240" r="3.5"/><circle cx="610" cy="240" r="3.5"/>
-    <circle cx="190" cy="305" r="3.5"/><circle cx="270" cy="305" r="3.5"/><circle cx="350" cy="305" r="3.5"/><circle cx="430" y="305" r="3.5"/><circle cx="510" cy="305" r="3.5"/><circle cx="610" cy="305" r="3.5"/>
+    <circle cx="190" cy="305" r="3.5"/><circle cx="270" cy="305" r="3.5"/><circle cx="350" cy="305" r="3.5"/><circle cx="430" cy="305" r="3.5"/><circle cx="510" cy="305" r="3.5"/><circle cx="610" cy="305" r="3.5"/>
   </g>
   <!-- power cores -->
   <g filter="url(#glow)">
