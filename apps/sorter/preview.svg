@@ -22,9 +22,6 @@
     <path d="M60 0V380M120 0V380M180 0V380M240 0V380M300 0V380M360 0V380M420 0V380M480 0V380M540 0V380M600 0V380M660 0V380"/>
   </g>
 
-  <text x="270" y="34" text-anchor="middle" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13" font-weight="600" fill="#e8fbff" fill-opacity="0.8">Palettes (3 identiques)</text>
-  <text x="585" y="34" text-anchor="middle" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13" font-weight="600" fill="#e8fbff" fill-opacity="0.8">Défausse (5)</text>
-
   <!-- palettes -->
   <g>
     <g transform="translate(90,50)">
@@ -63,8 +60,6 @@
     <path d="M360 114 L353 126 L367 126 Z"/>
   </g>
 
-  <text x="360" y="188" text-anchor="middle" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13" font-weight="600" fill="#e8fbff" fill-opacity="0.75">Étagères — 1re rangée sélectionnable, rangée dessous verrouillée</text>
-
   <!-- shelves -->
   <!-- column 1 -->
   <g transform="translate(160,0)">
@@ -101,5 +96,4 @@
     <circle cx="0" cy="0" r="3" fill="#69ffe1"/>
   </g>
 
-  <text x="360" y="362" text-anchor="middle" fill="#b9c9e8" font-family="system-ui,'Space Grotesk',sans-serif" font-size="13" letter-spacing="1.5">SÉLECTIONNE DEVANT · LES OBJETS MONTENT · REMPLIS LES PALETTES</text>
-</svg>
+  </svg>

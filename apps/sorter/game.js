@@ -95,6 +95,7 @@ const TYPES = [
   { id: 2, name: 'Photon',       color: '#ffd36b', accent: '#ffd36b' },
   { id: 3, name: 'Cristal',      color: '#b58aff', accent: '#b58aff' },
   { id: 4, name: 'Drone',        color: '#8bffbd', accent: '#8bffbd' },
+  { id: 5, name: 'Réacteur',     color: '#ff9f5e', accent: '#ff9f5e' },
 ];
 
 let state = 'ready'; // ready | playing | paused | over | win
@@ -115,7 +116,7 @@ function setupLevel() {
   discard = [];
   particles = []; rings = []; floatTexts = []; anims = []; shake = 0; flash = 0;
 
-  const typeCount = Math.min(3 + Math.floor((level - 1) / 2), TYPES.length);
+  const typeCount = Math.min(6, TYPES.length);
   const paletteGroups = 5 + Math.min(level, 4); // number of complete palettes to form
   const pool = [];
   for (let i = 0; i < paletteGroups; i++) {
@@ -187,10 +188,8 @@ function discardSlots() {
   const n = 5;
   const w = 54, h = 54, gap = 10;
   const total = n * w + (n - 1) * gap;
-  const ps = paletteSlots();
-  const rightEdge = ps.length ? ps[ps.length - 1].x + ps[ps.length - 1].w : W / 2;
-  const sx = Math.min(rightEdge + 26, W - total - 20);
-  const y = 93;
+  const sx = W / 2 - total / 2;
+  const y = 168;
   return Array.from({ length: n }, (_, i) => ({ x: sx + i * (w + gap), y, w, h }));
 }
 
@@ -440,7 +439,7 @@ function drawColumnsSymbol(x, y, r, colorIndex, color, glow = 10, t = 0) {
     ctx.beginPath(); ctx.moveTo(0, -r); ctx.lineTo(0, r * 0.85); ctx.moveTo(-r * 0.78, -r * 0.15); ctx.lineTo(r * 0.78, -r * 0.15); ctx.stroke();
     ctx.fillStyle = '#ffffff66'; ctx.beginPath(); ctx.moveTo(-r * 0.08, -r * 0.82); ctx.lineTo(-r * 0.45, -r * 0.15); ctx.lineTo(-r * 0.08, -r * 0.15); ctx.closePath(); ctx.fill();
     ctx.fillStyle = color; ctx.globalAlpha = 0.7; ctx.fillRect(-r * 0.08, r * 0.35, r * 0.16, r * 0.2); ctx.globalAlpha = 1;
-  } else {
+  } else if (colorIndex === 4) {
     const body = ctx.createLinearGradient(0, -r, 0, r);
     body.addColorStop(0, '#eafff4'); body.addColorStop(0.4, color); body.addColorStop(1, '#0b4a35');
     ctx.fillStyle = body; ctx.strokeStyle = '#ffffff44'; ctx.lineWidth = Math.max(1, r * 0.06);
@@ -452,6 +451,26 @@ function drawColumnsSymbol(x, y, r, colorIndex, color, glow = 10, t = 0) {
     ctx.fillStyle = '#bfffe8'; ctx.globalAlpha = 0.9; ctx.beginPath(); ctx.arc(0, -r * 0.05, r * 0.1, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
     ctx.fillStyle = '#ffffff88'; ctx.fillRect(-r * 0.04, -r * 0.58, r * 0.08, r * 0.22);
     ctx.strokeStyle = '#ffffff33'; ctx.beginPath(); ctx.moveTo(-r * 0.45, r * 0.05); ctx.lineTo(r * 0.45, r * 0.05); ctx.stroke();
+  } else {
+    // Reactor / beacon symbol (6th type)
+    const body = ctx.createLinearGradient(0, -r, 0, r);
+    body.addColorStop(0, '#fff3e6'); body.addColorStop(0.35, color); body.addColorStop(1, '#5a2a10');
+    ctx.fillStyle = body; ctx.strokeStyle = '#ffffff55'; ctx.lineWidth = Math.max(1, r * 0.06);
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const a = -Math.PI / 2 + i * (Math.PI * 2 / 6);
+      const px = Math.cos(a) * r * 0.95, py = Math.sin(a) * r * 0.95;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.shadowBlur = 0;
+    const core = ctx.createRadialGradient(-r * 0.1, -r * 0.15, r * 0.05, 0, 0, r * 0.45);
+    core.addColorStop(0, '#fff7e6'); core.addColorStop(1, '#7a3a12');
+    ctx.fillStyle = core; ctx.beginPath(); ctx.arc(0, 0, r * 0.42 * pulse, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#ffffff88'; ctx.lineWidth = Math.max(1, r * 0.07);
+    ctx.beginPath(); ctx.moveTo(0, -r * 0.7); ctx.lineTo(0, -r * 0.42); ctx.moveTo(0, r * 0.42); ctx.lineTo(0, r * 0.7);
+    ctx.moveTo(-r * 0.6, 0); ctx.lineTo(-r * 0.42, 0); ctx.moveTo(r * 0.42, 0); ctx.lineTo(r * 0.6, 0); ctx.stroke();
+    ctx.fillStyle = '#fff1cf'; ctx.beginPath(); ctx.arc(0, 0, r * 0.14, 0, Math.PI * 2); ctx.fill();
   }
   ctx.restore();
 }
@@ -500,11 +519,11 @@ function draw(t) {
   ctx.textAlign = 'center';
   ctx.fillStyle = 'rgba(232,251,255,0.78)'; ctx.font = '600 14px "Space Grotesk", sans-serif';
   const ps = paletteSlots();
-  const palettesCx = ps.length ? (ps[0].x + ps[ps.length - 1].x + ps[ps.length - 1].w) / 2 : W * 0.35;
+  const palettesCx = ps.length ? (ps[0].x + ps[ps.length - 1].x + ps[ps.length - 1].w) / 2 : W / 2;
   ctx.fillText('Palettes à remplir (3 identiques)', palettesCx, 58);
   const ds = discardSlots();
-  const discardCx = ds.length ? (ds[0].x + ds[ds.length - 1].x + ds[ds.length - 1].w) / 2 : W * 0.82;
-  ctx.fillText('Défausse (5)', discardCx, 58);
+  const discardCx = ds.length ? (ds[0].x + ds[ds.length - 1].x + ds[ds.length - 1].w) / 2 : W / 2;
+  ctx.fillText('Défausse (5)', discardCx, 156);
 
   // Palette slots
   ps.forEach((sl, i) => {
@@ -551,17 +570,9 @@ function draw(t) {
     if (filled) drawModule(sl.x + sl.w / 2, sl.y + sl.h / 2, discard[i], 0.78, { alpha: 0.95 }, t);
   });
 
-  // Arrow hints (upward flow)
-  ctx.save();
-  ctx.strokeStyle = 'rgba(105,255,225,0.18)'; ctx.fillStyle = 'rgba(105,255,225,0.12)'; ctx.lineWidth = 1.5;
-  const arrowX = W / 2; const ay1 = 250, ay2 = 175;
-  ctx.beginPath(); ctx.moveTo(arrowX, ay1); ctx.lineTo(arrowX, ay2); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(arrowX, ay2 - 2); ctx.lineTo(arrowX - 7, ay2 + 8); ctx.lineTo(arrowX + 7, ay2 + 8); ctx.closePath(); ctx.fill();
-  ctx.restore();
-
   // Shelves and items
   ctx.fillStyle = 'rgba(232,251,255,0.72)'; ctx.font = '600 14px "Space Grotesk", sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText('Étagères — choisis un objet de la première rangée (il monte vers le haut)', W / 2, 238);
+  ctx.fillText('Étagères — choisis un objet de la première rangée (il monte vers le haut)', W / 2, 250);
 
   const layout = shelfLayout();
   for (const L of layout) {
